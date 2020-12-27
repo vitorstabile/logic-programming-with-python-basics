@@ -1,5 +1,6 @@
 age: int
-salary: float; height: float
+salary: float
+height: float
 genre: str
 name: str
 
