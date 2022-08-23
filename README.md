@@ -1,4 +1,4 @@
-<h1 align="center"> Logic Programming with Python </h1>
+<h1 align="center"> Python </h1>
 
 # Content
 
