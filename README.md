@@ -59,8 +59,20 @@
       - [Chapter 3 - Part 4.2: Copying Collections](#chapter3part4.2)
 4. [Chapter 4: Control Structures and Functions](#chapter4)
     - [Chapter 4 - Part 1: Control Structures](#chapter4part1)
+      - [Chapter 4 - Part 1.1: Conditional Branching](#chapter4part1.1)
+      - [Chapter 4 - Part 1.2: Looping](#chapter4part1.2)
+      - [Chapter 4 - Part 1.3: While Loops](#chapter4part1.3)
+      - [Chapter 4 - Part 1.4: For Loops](#chapter4part1.4)
     - [Chapter 4 - Part 2: Exception Handling](#chapter4part2)
+      - [Chapter 4 - Part 2.1: Catching and Raising Exceptions](#chapter4part2.1)
+      - [Chapter 4 - Part 2.2: Raising Exceptions](#chapter4part2.2)
+      - [Chapter 4 - Part 2.3: Custom Exceptions](#chapter4part2.3)
     - [Chapter 4 - Part 3: Custom Functions](#chapter4part3)
+      - [Chapter 4 - Part 3.1: Names and Docstrings](#chapter4part3.1)
+      - [Chapter 4 - Part 3.2: Argument and Parameter Unpacking](#chapter4part3.2)
+      - [Chapter 4 - Part 3.3: Accessing Variables in the Global Scope](#chapter4part3.3)
+      - [Chapter 4 - Part 3.4: Lambda Functions](#chapter4part3.4)
+      - [Chapter 4 - Part 3.5: Assertions](#chapter4part3.5)
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
@@ -176,30 +188,30 @@
 
 #### <a name="chapter4part1"></a>Chapter 4 - Part 1: Control Structures
 
-**Conditional Branching**
+###### <a name="chapter4part1.1"></a>Chapter 4 - Part 1.1: Conditional Branching
 
-**Looping**
+###### <a name="chapter4part1.2"></a>Chapter 4 - Part 1.2: Looping
 
-**while Loops**
+###### <a name="chapter4part1.3"></a>Chapter 4 - Part 1.3: While Loops
 
-**for Loops**
+###### <a name="chapter4part1.4"></a>Chapter 4 - Part 1.4: For Loops
 
 #### <a name="chapter4part2"></a>Chapter 4 - Part 2: Exception Handling
 
-**Catching and Raising Exceptions**
+###### <a name="chapter4part2.1"></a>Chapter 4 - Part 2.1: Catching and Raising Exceptions
 
-**Raising Exceptions**
+###### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Raising Exceptions
 
-**Custom Exceptions**
+###### <a name="chapter4part2.3"></a>Chapter 4 - Part 2.3: Custom Exceptions
 
-#### <a name="chapter4part2"></a>Chapter 4 - Part 2: Custom Functions
+#### <a name="chapter4part3"></a>Chapter 4 - Part 3: Custom Functions
 
-**Names and Docstrings**
+###### <a name="chapter4part3.1"></a>Chapter 4 - Part 3.1: Names and Docstrings
 
-**Argument and Parameter Unpacking**
+###### <a name="chapter4part3.2"></a>Chapter 4 - Part 3.2: Argument and Parameter Unpacking
 
-**Accessing Variables in the Global Scope**
+###### <a name="chapter4part3.3"></a>Chapter 4 - Part 3.3: Accessing Variables in the Global Scope
 
-**Lambda Functions**
+###### <a name="chapter4part3.4"></a>Chapter 4 - Part 3.4: Lambda Functions
 
-**Assertions**
+###### <a name="chapter4part3.5"></a>Chapter 4 - Part 3.5: Assertions
