@@ -9,7 +9,14 @@
     - [Chapter 1 - Part 4: Collection Data Types in Python](#chapter1part4)
     - [Chapter 1 - Part 5: Logical Operations in Python](#chapter1part5)
       - [Chapter 1 - Part 5.1: The Identity Operator](#chapter1part5.1)
+      - [Chapter 1 - Part 5.2: Comparison Operators](#chapter1part5.2)
+      - [Chapter 1 - Part 5.3: The Membership Operator](#chapter1part5.3)
+      - [Chapter 1 - Part 5.4: Logical Operators](#chapter1part5.4)
     - [Chapter 1 - Part 6: Control Flow Statements in Python](#chapter1part6)
+      - [Chapter 1 - Part 6.1: The if Statement](#chapter1part6.1)
+      - [Chapter 1 - Part 6.2: The while Statement](#chapter1part6.2)
+      - [Chapter 1 - Part 6.3: The for …in Statement](#chapter1part6.3)
+      - [Chapter 1 - Part 6.4: Basic Exception Handling](#chapter1part6.4)
     - [Chapter 1 - Part 7: Arithmetic Operators in Python](#chapter1part7)
     - [Chapter 1 - Part 8: Input/Output in Python](#chapter1part8)
     - [Chapter 1 - Part 9: Creating and Calling Functions in Python](#chapter1part9)
@@ -42,21 +49,21 @@
 
 ###### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
 
-**Comparison Operators**
+###### <a name="chapter1part5.2"></a>Chapter 1 - Part 5.2: Comparison Operators
 
-**The Membership Operator**
+###### <a name="chapter1part5.3"></a>Chapter 1 - Part 5.3: The Membership Operator
 
-**Logical Operators**
+###### <a name="chapter1part5.4"></a>Chapter 1 - Part 5.4: Logical Operators
 
 #### <a name="chapter1part6"></a>Chapter 1 - Part 6: Control Flow Statements in Python
 
-**The if Statement**
+###### <a name="chapter1part6.1"></a>Chapter 1 - Part 6.1: The if Statement
 
-**The while Statement**
+###### <a name="chapter1part6.2"></a>Chapter 1 - Part 6.2: The while Statement
 
-**The for …in Statement**
+###### <a name="chapter1part6.3"></a>Chapter 1 - Part 6.3: The for …in Statement
 
-**Basic Exception Handling**
+###### <a name="chapter1part6.4"></a>Chapter 1 - Part 6.4: Basic Exception Handling
 
 #### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
 
