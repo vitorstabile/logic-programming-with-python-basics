@@ -238,32 +238,32 @@
 
 #### <a name="chapter5part1"></a>Chapter 5 - Part 1: Modules and Packages
 
-###### <a name="chapter4part1.1"></a>Chapter 4 - Part 1.1: Packages
+###### <a name="chapter5part1.1"></a>Chapter 5 - Part 1.1: Packages
 
-###### <a name="chapter4part1.2"></a>Chapter 4 - Part 1.2: Custom Modules
+###### <a name="chapter5part1.2"></a>Chapter 5 - Part 1.2: Custom Modules
 
-###### <a name="chapter4part1.3"></a>Chapter 4 - Part 1.3: The TextUtil Module
+###### <a name="chapter5part1.3"></a>Chapter 5 - Part 1.3: The TextUtil Module
 
-###### <a name="chapter4part1.4"></a>Chapter 4 - Part 1.4: The CharGrid Module
+###### <a name="chapter5part1.4"></a>Chapter 5 - Part 1.4: The CharGrid Module
 
 #### <a name="chapter5part2"></a>Chapter 5 - Part 2: Overview of Python’s Standard Library
 
-###### <a name="chapter4part2.1"></a>Chapter 4 - Part 2.1: String Handling
+###### <a name="chapter5part2.1"></a>Chapter 5 - Part 2.1: String Handling
 
-###### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Command-Line Programming
+###### <a name="chapter5part2.2"></a>Chapter 5 - Part 2.2: Command-Line Programming
 
-###### <a name="chapter4part2.3"></a>Chapter 4 - Part 2.3: Mathematics and Numbers
+###### <a name="chapter5part2.3"></a>Chapter 5 - Part 2.3: Mathematics and Numbers
 
-###### <a name="chapter4part2.4"></a>Chapter 4 - Part 2.4: Times and Dates
+###### <a name="chapter5part2.4"></a>Chapter 5 - Part 2.4: Times and Dates
 
-###### <a name="chapter4part2.5"></a>Chapter 4 - Part 2.5: Algorithms and Collection Data Types
+###### <a name="chapter5part2.5"></a>Chapter 5 - Part 2.5: Algorithms and Collection Data Types
 
-###### <a name="chapter4part2.6"></a>Chapter 4 - Part 2.6: File Formats, Encodings, and Data Persistence
+###### <a name="chapter5part2.6"></a>Chapter 5 - Part 2.6: File Formats, Encodings, and Data Persistence
 
-###### <a name="chapter4part2.7"></a>Chapter 4 - Part 2.7: File, Directory, and Process Handling
+###### <a name="chapter5part2.7"></a>Chapter 5 - Part 2.7: File, Directory, and Process Handling
 
-###### <a name="chapter4part2.8"></a>Chapter 4 - Part 2.8: Networking and Internet Programming
+###### <a name="chapter5part2.8"></a>Chapter 5 - Part 2.8: Networking and Internet Programming
 
-###### <a name="chapter4part2.9"></a>Chapter 4 - Part 2.9: XML
+###### <a name="chapter5part2.9"></a>Chapter 5 - Part 2.9: XML
 
-###### <a name="chapter4part2.10"></a>Chapter 4 - Part 2.10: Other Modules
+###### <a name="chapter5part2.10"></a>Chapter 5 - Part 2.10: Other Modules
