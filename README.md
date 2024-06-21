@@ -41,9 +41,22 @@
       - [Chapter 2 - Part 4.8: Character Encodings](#chapter2part4.8)
 3. [Chapter 3: Collection Data Types](#chapter3)
     - [Chapter 3 - Part 1: Sequence Types](#chapter3part1)
+      - [Chapter 3 - Part 1.1: Tuples](#chapter3part1.1)
+      - [Chapter 3 - Part 1.2: Named Tuples](#chapter3part1.2)
+      - [Chapter 3 - Part 1.3: Lists](#chapter3part1.3)
+      - [Chapter 3 - Part 1.4: List Comprehensions](#chapter3part1.4)
     - [Chapter 3 - Part 2: Set Types](#chapter3part2)
+      - [Chapter 3 - Part 2.1: Sets](#chapter3part2.1)
+      - [Chapter 3 - Part 2.2: Set Comprehensions](#chapter3part2.2)
+      - [Chapter 3 - Part 2.3: Frozen Sets](#chapter3part2.3) 
     - [Chapter 3 - Part 3: Mapping Types](#chapter3part3)
+      - [Chapter 3 - Part 3.1: Dictionaries](#chapter3part3.1)
+      - [Chapter 3 - Part 3.2: Dictionary Comprehensions](#chapter3part3.2)
+      - [Chapter 3 - Part 3.3: Default Dictionaries](#chapter3part3.3)
+      - [Chapter 3 - Part 3.4: Ordered Dictionaries](#chapter3part3.4)
     - [Chapter 3 - Part 4: Iterating and Copying Collections](#chapter3part4)
+      - [Chapter 3 - Part 4.1: Iterators and Iterable Operations and Functions](#chapter3part4.1)
+      - [Chapter 3 - Part 4.2: Copying Collections](#chapter3part4.2)
 4. [Chapter 4: Control Structures and Functions](#chapter4)
     - [Chapter 4 - Part 1: Control Structures](#chapter4part1)
     - [Chapter 4 - Part 2: Exception Handling](#chapter4part2)
@@ -127,37 +140,37 @@
 
 #### <a name="chapter3part1"></a>Chapter 3 - Part 1: Sequence Types
 
-**Tuples**
+###### <a name="chapter3part1.1"></a>Chapter 3 - Part 1.1: Tuples
 
-**Named Tuples**
+###### <a name="chapter3part1.2"></a>Chapter 3 - Part 1.2: Named Tuples
 
-**Lists**
+###### <a name="chapter3part1.3"></a>Chapter 3 - Part 1.3: Lists
 
-**List Comprehensions**
+###### <a name="chapter3part1.4"></a>Chapter 3 - Part 1.4: List Comprehensions
 
 #### <a name="chapter3part2"></a>Chapter 3 - Part 2: Set Types
 
-**Sets**
+###### <a name="chapter3part2.1"></a>Chapter 3 - Part 2.1: Sets
 
-**Set Comprehensions**
+###### <a name="chapter3part2.2"></a>Chapter 3 - Part 2.2: Set Comprehensions
 
-**Frozen Sets**
+###### <a name="chapter3part2.3"></a>Chapter 3 - Part 2.3: Frozen Sets
 
 #### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
 
-**Dictionaries**
+###### <a name="chapter3part3.1"></a>Chapter 3 - Part 3.1: Dictionaries
 
-**Dictionary Comprehensions**
+###### <a name="chapter3part3.2"></a>Chapter 3 - Part 3.2: Dictionary Comprehensions
 
-**Default Dictionaries**
+###### <a name="chapter3part3.3"></a>Chapter 3 - Part 3.3: Default Dictionaries
 
-**Ordered Dictionaries**
+###### <a name="chapter3part3.4"></a>Chapter 3 - Part 3.4: Ordered Dictionaries
 
 #### <a name="chapter3part4"></a>Chapter 3 - Part 4: Iterating and Copying Collections
 
-**Iterators and Iterable Operations and Functions**
+###### <a name="chapter3part4.1"></a>Chapter 3 - Part 4.1: Iterators and Iterable Operations and Functions
 
-**Copying Collections**
+###### <a name="chapter3part4.2"></a>Chapter 3 - Part 4.2: Copying Collections
 
 ## <a name="chapter4"></a>Chapter 4: Control Structures and Functions
 
