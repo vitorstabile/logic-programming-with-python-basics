@@ -23,8 +23,22 @@
 2. [Chapter 2: Data Types](#chapter2)
     - [Chapter 2 - Part 1: Identifiers and Keywords](#chapter2part1)
     - [Chapter 2 - Part 2: Integral Types](#chapter2part2)
+      - [Chapter 2 - Part 2.1: Integers](#chapter2part2.1)
+      - [Chapter 2 - Part 2.2: Booleans](#chapter2part2.2)
+      - [Chapter 2 - Part 2.3: Integer Bitwise Operators](#chapter2part2.3)
     - [Chapter 2 - Part 3: Floating-Point Types](#chapter2part3)
+      - [Chapter 2 - Part 3.1: Floating-Point Numbers](#chapter2part3.1)
+      - [Chapter 2 - Part 3.2: Complex Numbers](#chapter2part3.2)
+      - [Chapter 2 - Part 3.3: Decimal Numbers](#chapter2part3.3)
     - [Chapter 2 - Part 4: Strings](#chapter2part4)
+      - [Chapter 2 - Part 4.1: Comparing Strings](#chapter2part4.1)
+      - [Chapter 2 - Part 4.2: Slicing and Striding Strings](#chapter2part4.2)
+      - [Chapter 2 - Part 4.3: String Operators and Methods](#chapter2part4.3)
+      - [Chapter 2 - Part 4.4: String Formatting with the str.format() Method](#chapter2part4.4)
+      - [Chapter 2 - Part 4.5: Field Names](#chapter2part4.5)
+      - [Chapter 2 - Part 4.6: Conversions](#chapter2part4.6)
+      - [Chapter 2 - Part 4.7: Format Specifications](#chapter2part4.7)
+      - [Chapter 2 - Part 4.8: Character Encodings](#chapter2part4.8)
 3. [Chapter 3: Collection Data Types](#chapter3)
     - [Chapter 3 - Part 1: Sequence Types](#chapter3part1)
     - [Chapter 3 - Part 2: Set Types](#chapter3part2)
@@ -77,37 +91,37 @@
 
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
-**Integers**
+###### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
 
-**Booleans**
+###### <a name="chapter2part2.2"></a>Chapter 2 - Part 2.2: Booleans
 
-**Integer Bitwise Operators**
+###### <a name="chapter2part2.3"></a>Chapter 2 - Part 2.3: Integer Bitwise Operators
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
 
-**Floating-Point Numbers**
+###### <a name="chapter2part3.1"></a>Chapter 2 - Part 3.1: Floating-Point Numbers
 
-**Complex Numbers**
+###### <a name="chapter2part3.2"></a>Chapter 2 - Part 3.2: Complex Numbers
 
-**Decimal Numbers**
+###### <a name="chapter2part3.3"></a>Chapter 2 - Part 3.3: Decimal Numbers
 
 #### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
 
-**Comparing Strings**
+###### <a name="chapter2part4.1"></a>Chapter 2 - Part 4.1: Comparing Strings
 
-**Slicing and Striding Strings**
+###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
-**String Operators and Methods**
+###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
 
-**String Formatting with the str.format() Method**
+###### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
 
-**Field Names**
+###### <a name="chapter2part4.5"></a>Chapter 2 - Part 4.5: Field Names
 
-**Conversions**
+###### <a name="chapter2part4.6"></a>Chapter 2 - Part 4.6: Conversions
 
-**Format Specifications**
+###### <a name="chapter2part4.7"></a>Chapter 2 - Part 4.7: Format Specifications
 
-**Character Encodings**
+###### <a name="chapter2part4.8"></a>Chapter 2 - Part 4.8: Character Encodings
 
 ## <a name="chapter3"></a>Chapter 3: Collection Data Types
 
