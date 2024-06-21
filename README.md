@@ -2,313 +2,169 @@
 
 # Content
 
-1. [Chapter 1: The Python Language](#chapter1)
-    - [Chapter 1 - Part 1: First Program in Python](#chapter1part1)
-    - [Chapter 1 - Part 2: Variables Types in Python](#chapter1part2)
-    - [Chapter 1 - Part 3: Data Output in Python](#chapter1part3)
-    - [Chapter 1 - Part 4: Data Processing in Python](#chapter1part4)
-    - [Chapter 1 - Part 5: Data Casting in Python](#chapter1part5)
-    - [Chapter 1 - Part 6: Data Input in Python](#chapter1part6)
-    - [Chapter 1 - Part 7: Conditional Statement in Python](#chapter1part7)
-    - [Chapter 1 - Part 8: While Statement in Python](#chapter1part8)
-    - [Chapter 1 - Part 9: For Statement in Python](#chapter1part9)
-    - [Chapter 1 - Part 10: Vectors in Python](#chapter1part10)
-    - [Chapter 1 - Part 11: Matrix in Python](#chapter1part11)
-2. [Chapter 2: Object Oriented](#chapter2)
-    - [Chapter 2 - Part 1: Abstraction](#chapter2part1)
-    - [Chapter 2 - Part 2: Encapsulation](#chapter2part2)
-    - [Chapter 2 - Part 3: Inheritance](#chapter2part3)
-    - [Chapter 2 - Part 4: Polymorphism](#chapter2part4)
+1. [Chapter 1: Rapid Introduction to Procedural Programming](#chapter1)
+    - [Chapter 1 - Part 1: Creating and Running Python Programs](#chapter1part1)
+    - [Chapter 1 - Part 2: Data Types in Python](#chapter1part2)
+    - [Chapter 1 - Part 3: Object References in Python](#chapter1part3)
+    - [Chapter 1 - Part 4: Collection Data Types in Python](#chapter1part4)
+    - [Chapter 1 - Part 5: Logical Operations in Python](#chapter1part5)
+    - [Chapter 1 - Part 6: Control Flow Statements in Python](#chapter1part6)
+    - [Chapter 1 - Part 7: Arithmetic Operators in Python](#chapter1part7)
+    - [Chapter 1 - Part 8: Input/Output in Python](#chapter1part8)
+    - [Chapter 1 - Part 9: Creating and Calling Functions in Python](#chapter1part9)
+2. [Chapter 2: Data Types](#chapter2)
+    - [Chapter 2 - Part 1: Identifiers and Keywords](#chapter2part1)
+    - [Chapter 2 - Part 2: Integral Types](#chapter2part2)
+    - [Chapter 2 - Part 3: Floating-Point Types](#chapter2part3)
+    - [Chapter 2 - Part 4: Strings](#chapter2part4)
+3. [Chapter 3: Collection Data Types](#chapter3)
+    - [Chapter 3 - Part 1: Sequence Types](#chapter3part1)
+    - [Chapter 3 - Part 2: Set Types](#chapter3part2)
+    - [Chapter 3 - Part 3: Mapping Types](#chapter3part3)
+    - [Chapter 3 - Part 4: Iterating and Copying Collections](#chapter3part4)
+4. [Chapter 4: Control Structures and Functions](#chapter4)
+    - [Chapter 4 - Part 1: Control Structures](#chapter4part1)
+    - [Chapter 4 - Part 2: Exception Handling](#chapter4part2)
+    - [Chapter 4 - Part 3: Custom Functions](#chapter4part3)
     
-## <a name="chapter1"></a>Chapter 1: The Python Language
+## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
-#### <a name="chapter1part1"></a>Chapter 1 - Part 1: First Program in Python
+#### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
 
-```python
+#### <a name="chapter1part2"></a>Chapter 1 - Part 2: Data Types in Python
 
-print("Hello World!")
+#### <a name="chapter1part3"></a>Chapter 1 - Part 3: Object References in Python
 
-```
+#### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
 
-#### <a name="chapter1part2"></a>Chapter 1 - Part 2: Variables Types in Python
+#### <a name="chapter1part5"></a>Chapter 1 - Part 5: Logical Operations in Python
 
-```python
+**The Identity Operator**
 
-age: int
-salary: float
-height: float
-genre: str
-name: str
+**Comparison Operators**
 
-age = 20
-salary = 5800.5
-height = 1.63
-genre = "F"
-name = "Maria Silva"
+**The Membership Operator**
 
-print(f"AGE = {age}")
-print(f"SALARY = {salary:.2f}")
-print(f"HEIGHT = {height:.2f}")
-print(f"GENRE = {genre}")
-print(f"NAME = {name}")
+**Logical Operators**
 
-```
+#### <a name="chapter1part6"></a>Chapter 1 - Part 6: Control Flow Statements in Python
 
-#### <a name="chapter1part3"></a>Chapter 1 - Part 3: Data Output in Python
+**The if Statement**
 
-```python
+**The while Statement**
 
-print("Good Morning", end="")
-print("Good Night", end="")
+**The for …in Statement**
 
-print()
+**Basic Exception Handling**
 
-print("Good Morning")
-print("Good Night")
+#### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
 
-x: int; y: int
-x = 10
-y = 20
-print(x)
-print(y)
+#### <a name="chapter1part8"></a>Chapter 1 - Part 8: Input/Output in Python
 
-z: float
-z = 2.3456
-print("{:.2f}".format(z))
+#### <a name="chapter1part9"></a>Chapter 1 - Part 9: Creating and Calling Functions in Python
 
-age: int
-salary: float
-name: str
-genre: str
+## <a name="chapter2"></a>Chapter 2: Data Types
 
-age = 32
-salary = 4560.9
-name = "Maria Silva"
-genre = "F"
+#### <a name="chapter2part1"></a>Chapter 2 - Part 1: Identifiers and Keywords
 
-print(f"The employee {name}, genre {genre}, earn {salary:.2f} and have {age} years old")
+#### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
-print("The employee {:s}, genre {:s}, earn {:.2f} and have {:d} years old".format(name, genre, salary, age))
+**Integers**
 
-```
+**Booleans**
 
-#### <a name="chapter1part4"></a>Chapter 1 - Part 4: Data Processing in Python
+**Integer Bitwise Operators**
 
-```python
+#### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
 
-x1: int
-y1: int
-x1 = 5
-y1 = 2 * x1
-print(x1)
-print(y1)
+**Floating-Point Numbers**
 
-x2: int
-y2: float
-x2 = 5
-y2 = 2 * x2
-print(x2)
-print(f"{y2:.1f}")
+**Complex Numbers**
 
-b1: float
-b2: float
-h: float
-area: float
-b1 = 6.0
-b2 = 8.0
-h = 5.0
-area = (b1 + b2) / 2.0 * h
-print(area)
+**Decimal Numbers**
 
-a: int
-b: int
-result: int
-a = 5
-b = 2
-result = a // b
-print(result)
+#### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
 
-```
+**Comparing Strings**
 
-#### <a name="chapter1part5"></a>Chapter 1 - Part 5: Data Casting in Python
+**Slicing and Striding Strings**
 
-```python
+**String Operators and Methods**
 
-a: float
-b: int
-a = 5.0
-b = int(a)
-print(b)
+**String Formatting with the str.format() Method**
 
-```
+**Field Names**
 
-#### <a name="chapter1part6"></a>Chapter 1 - Part 6: Data Input in Python
+**Conversions**
 
-```python
+**Format Specifications**
 
-salary1: float
-salary2: float
-name1: str
-name2: str
-age: int
-genre: str
+**Character Encodings**
 
-name1 = input("Name of the first person: ")
-salary1 = float(input("Salary of the first person: "))
+## <a name="chapter3"></a>Chapter 3: Collection Data Types
 
-name2 = input("Name of the second person: ")
-salary2 = float(input("Salary of the second person: "))
+#### <a name="chapter3part1"></a>Chapter 3 - Part 1: Sequence Types
 
-age = int(input("Age: "))
-genre = input("Genre (F/M): ")
+**Tuples**
 
-print(f"Name 1: {name1}")
-print(f"Salary 1: {salary1:.2f}")
-print(f"Name 2: {name2}")
-print(f"Salary 2: {salary2:.2f}")
-print(f"Age: {age}")
-print(f"Genre: {genre}")
+**Named Tuples**
 
-```
+**Lists**
 
-#### <a name="chapter1part7"></a>Chapter 1 - Part 7: Conditional Statement in Python
+**List Comprehensions**
 
-```python
+#### <a name="chapter3part2"></a>Chapter 3 - Part 2: Set Types
 
-time: int
+**Sets**
 
-time = int(input("Enter a time of day: "))
+**Set Comprehensions**
 
-if 6 <= time < 12:
-    print("Good Morning!")
-elif 12 <= time < 18:
-    print("Good Afternoon!")
-else:
-    print("Good Night")
+**Frozen Sets**
 
-```
+#### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
 
-#### <a name="chapter1part8"></a>Chapter 1 - Part 8: While Statement in Python
+**Dictionaries**
 
-```python
+**Dictionary Comprehensions**
 
-x: int
-sum: int
+**Default Dictionaries**
 
-sum = 0
-x = int(input("Enter the first number: "))
+**Ordered Dictionaries**
 
-while x != 0:
-    sum = sum + x
-    x = int(input("Enter another number: "))
+#### <a name="chapter3part4"></a>Chapter 3 - Part 4: Iterating and Copying Collections
 
-print("SUM = ", sum)
+**Iterators and Iterable Operations and Functions**
 
-```
+**Copying Collections**
 
-#### <a name="chapter1part9"></a>Chapter 1 - Part 9: For Statement in Python
+## <a name="chapter4"></a>Chapter 4: Control Structures and Functions
 
-```python
+#### <a name="chapter4part1"></a>Chapter 4 - Part 1: Control Structures
 
-x: int
-sum: int
+**Conditional Branching**
 
-N = int(input("How many number will be enter? "))
+**Looping**
 
-sum = 0
-for i in range(0, N):
-    x = int(input("Enter a number: "))
-    sum = sum + x
+**while Loops**
 
-print("SUM = ", sum)
+**for Loops**
 
-```
+#### <a name="chapter4part2"></a>Chapter 4 - Part 2: Exception Handling
 
-#### <a name="chapter1part10"></a>Chapter 1 - Part 10: Vectors in Python
+**Catching and Raising Exceptions**
 
-```python
+**Raising Exceptions**
 
-N: int
-N = int(input("How many numbers will be enter? "))
-vet: [float] = [0 for x in range(N)]
+**Custom Exceptions**
 
-for i in range(0, N):
-    vet[i] = float(input("Enter a number: "))
+#### <a name="chapter4part2"></a>Chapter 4 - Part 2: Custom Functions
 
-print()
-print("TYPED NUMBERS")
-for i in range(0, N):
-    print(f"{vet[i]:.1f}")
+**Names and Docstrings**
 
-```
+**Argument and Parameter Unpacking**
 
-#### <a name="chapter1part11"></a>Chapter 1 - Part 11: Matrix in Python
+**Accessing Variables in the Global Scope**
 
-```python
+**Lambda Functions**
 
-M: int
-N: int
-
-M = int(input("How many rows the matrix will be? "))
-N = int(input("How many columns the matrix will be? "))
-
-mat: [[int]] = [[0 for x in range(N)] for x in range(M)]
-
-for i in range(0, M):
-    for j in range(0, N):
-        mat[i][j] = int(input(f"Element [{i},{j}]: "))
-
-print()
-print("Typed Matrix:")
-for i in range(0, M):
-    for j in range(0, N):
-        print(f"{mat[i][j]} ", end="")
-    print()
-
-```
-## <a name="chapter2"></a>Chapter 2: Object Oriented
-
-#### <a name="chapter2part1"></a>Chapter 2 - Part 1: Abstraction
-
-How it represents a real object in our system. It must have identity (Class) given by properties (attributes) and methods (functions).
-
-o Class: Structured type that can contain members - Representation of an entity (Product, Customer), service (ProductService, CustomerService), drivers (ProductController), utilities (calculator) and others (views, repositories).
-o Attributes (Data or Fields - Ex: Customer has attribute name, email, cpf and etc.)
-o Methods (Class functions and operations - Ex: Consult email, consult cpf, change cpf)
-
-• A class can also have:
-o Constructors (Special class operation, performed at instantiation of the class. Used to start attribute values ​​or to force the object to receive data or dependency on its instantiation (Dependency injection))
-o Overload of constructors or methods (Esoecify more than one constructor or method in the class)
-Encapsulation (Getters and Setters)
-o Inheritance (from whom this class inherits)
-Polymorphism (A class has several forms or functions)
-
-• Object: They are the instance of the class or instance of the type - Ex: Product p1, Client customer1
-• Class: It is the definition of the type (Customer Class, Product Class)
-
-• Instantiation: When we instantiate primitive variables (double, int, String ...) it is instantiated in the memory stack. When the command New in Objects, Arrays and Lists is communicated, the dynamic location of memory occurs, where the object is allocated in another area of memory, called Heap and the object will point to the memory address.
-
-• Advantages of object orientation:
-o Reuse of the code and delegation of responsibilities
-
-#### <a name="chapter2part2"></a>Chapter 2 - Part 2: Encapsulation
-
-Adds security to an object-oriented application, as it hides class properties.
-
-o An object must not expose any attributes (use of access modifiers - private, protected ...)
-o Class attributes are usually accessed by special methods (Getters and Setters), avoiding direct access to the object's property.
-o Analogy with a television: When you click on the call button, we do not know what happens internally on the TV. We can say that the methods that connect the TV are encapsulated.
-
-#### <a name="chapter2part3"></a>Chapter 2 - Part 3: Inheritance
-
-Type of association between classes that allows a class to inherit all data and behavior from another
-
-o Can be used for code reuse
-o Used for polymorphism - A class has several uses
-The whole class java me, inherits from Object (Warper Classes)
-
-#### <a name="chapter2part4"></a>Chapter 2 - Part 4: Polymorphism
-
-A feature that allows variables of the same more generic type to be able to point to objects of different specific types, thus having different behaviors according to each specific type. In some cases, we must perform the upcasting or dowcasting of the object.
-
-<!-- URL's -->
+**Assertions**
