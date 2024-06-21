@@ -8,6 +8,7 @@
     - [Chapter 1 - Part 3: Object References in Python](#chapter1part3)
     - [Chapter 1 - Part 4: Collection Data Types in Python](#chapter1part4)
     - [Chapter 1 - Part 5: Logical Operations in Python](#chapter1part5)
+      - [Chapter 1 - Part 5.1: The Identity Operator](#chapter1part5.1)
     - [Chapter 1 - Part 6: Control Flow Statements in Python](#chapter1part6)
     - [Chapter 1 - Part 7: Arithmetic Operators in Python](#chapter1part7)
     - [Chapter 1 - Part 8: Input/Output in Python](#chapter1part8)
@@ -39,7 +40,7 @@
 
 #### <a name="chapter1part5"></a>Chapter 1 - Part 5: Logical Operations in Python
 
-**The Identity Operator**
+###### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
 
 **Comparison Operators**
 
