@@ -89,7 +89,36 @@
       - [Chapter 5 - Part 2.7: File, Directory, and Process Handling](#chapter5part2.7)
       - [Chapter 5 - Part 2.8: Networking and Internet Programming](#chapter5part2.8)
       - [Chapter 5 - Part 2.9: XML](#chapter5part2.9)
-      - [Chapter 5 - Part 2.10: Other Modules](#chapter5part2.10)
+      - [Chapter 5 - Part 2.10: Other Modules](#chapter5part2.10)  
+6. [Chapter 6: Object-Oriented Programming](#chapter6)
+    - [Chapter 6 - Part 1: The Object-Oriented Approach](#chapter6part1)
+      - [Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology](#chapter6part1.1)
+    - [Chapter 6 - Part 2: Custom Classes](#chapter6part2)
+      - [Chapter 6 - Part 2.1: Attributes and Methods](#chapter6part2.1)
+      - [Chapter 6 - Part 2.2: Inheritance and Polymorphism](#chapter6part2.2)
+      - [Chapter 6 - Part 2.3: Using Properties to Control Attribute Access](#chapter6part2.3)
+      - [Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types](#chapter6part2.4)
+      - [Chapter 6 - Part 2.5: Creating Data Types from Scratch](#chapter6part2.5)
+      - [Chapter 6 - Part 2.6: Creating Data Types from Other Data Types](#chapter6part2.6)
+    - [Chapter 6 - Part 3: Custom Collection Classes](#chapter6part3)
+      - [Chapter 6 - Part 3.1: Creating Classes That Aggregate Collections](#chapter6part3.1)
+      - [Chapter 6 - Part 3.2: Creating Collection Classes Using Aggregation](#chapter6part3.2)
+      - [Chapter 6 - Part 3.3: Creating Collection Classes Using Inheritance](#chapter6part3.3)
+7. [Chapter 7: File Handling](#chapter7)
+    - [Chapter 7 - Part 1: Writing and Reading Binary Data](#chapter7part1)
+      - [Chapter 7 - Part 1.1: Pickles with Optional Compression](#chapter7part1.1)
+      - [Chapter 7 - Part 1.2: Raw Binary Data with Optional Compression](#chapter7part1.2)
+    - [Chapter 7 - Part 2: Writing and Parsing Text Files](#chapter7part2)
+      - [Chapter 7 - Part 2.1: Writing Text](#chapter7part2.1)
+      - [Chapter 7 - Part 2.2: Parsing Text](#chapter7part2.2)
+      - [Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions](#chapter7part2.3)
+    - [Chapter 7 - Part 3: Writing and Parsing XML Files](#chapter7part3)
+      - [Chapter 7 - Part 3.1: Element Trees](#chapter7part3.1)
+      - [Chapter 7 - Part 3.2: DOM (Document Object Model)](#chapter7part3.2)
+      - [Chapter 7 - Part 3.3: Manually Writing XML](#chapter7part3.3)
+      - [Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)](#chapter7part3.4)
+    - [Chapter 7 - Part 4: Random Access Binary Files](#chapter7part4)
+      - [Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class](#chapter7part4.1)
       
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
@@ -267,3 +296,61 @@
 ###### <a name="chapter5part2.9"></a>Chapter 5 - Part 2.9: XML
 
 ###### <a name="chapter5part2.10"></a>Chapter 5 - Part 2.10: Other Modules
+
+## <a name="chapter6"></a>Chapter 6: Object-Oriented Programming
+
+#### <a name="chapter6part1"></a>Chapter 6 - Part 1: The Object-Oriented Approach
+
+###### <a name="chapter6part1.1"></a>Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology
+
+#### <a name="chapter6part2"></a>Chapter 6 - Part 2: Custom Classes
+
+###### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
+
+###### <a name="chapter6part2.2"></a>Chapter 6 - Part 2.2: Inheritance and Polymorphism
+
+###### <a name="chapter6part2.3"></a>Chapter 6 - Part 2.3: Using Properties to Control Attribute Access
+
+###### <a name="chapter6part2.4"></a>Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types
+
+###### <a name="chapter6part2.5"></a>Chapter 6 - Part 2.5: Creating Data Types from Scratch
+
+###### <a name="chapter6part2.6"></a>Chapter 6 - Part 2.6: Creating Data Types from Other Data Types
+
+#### <a name="chapter6part3"></a>Chapter 6 - Part 3: Custom Collection Classes
+
+###### <a name="chapter6part3.1"></a>Chapter 6 - Part 3.1: Creating Classes That Aggregate Collections
+
+###### <a name="chapter6part3.2"></a>Chapter 6 - Part 3.2: Creating Collection Classes Using Aggregation
+
+###### <a name="chapter6part3.3"></a>Chapter 6 - Part 3.3: Creating Collection Classes Using Inheritance
+
+## <a name="chapter7"></a>Chapter 7: File Handling
+
+#### <a name="chapter7part1"></a>Chapter 7 - Part 1: Writing and Reading Binary Data
+
+###### <a name="chapter7part1.1"></a>Chapter 7 - Part 1.1: Pickles with Optional Compression
+
+###### <a name="chapter7part1.2"></a>Chapter 7 - Part 1.2: Raw Binary Data with Optional Compression
+
+#### <a name="chapter7part2"></a>Chapter 7 - Part 2: Writing and Parsing Text Files
+
+###### <a name="chapter7part2.1"></a>Chapter 7 - Part 2.1: Writing Text
+
+###### <a name="chapter7part2.2"></a>Chapter 7 - Part 2.2: Parsing Text
+
+###### <a name="chapter7part2.3"></a>Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions
+
+#### <a name="chapter7part3"></a>Chapter 7 - Part 3: Writing and Parsing XML Files
+
+###### <a name="chapter7part3.1"></a>Chapter 7 - Part 3.1: Element Trees
+
+###### <a name="chapter7part3.2"></a>Chapter 7 - Part 3.2: DOM (Document Object Model
+
+###### <a name="chapter7part3.3"></a>Chapter 7 - Part 3.3: Manually Writing XML
+
+###### <a name="chapter7part3.4"></a>Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)
+
+#### <a name="chapter7part4"></a>Chapter 7 - Part 4: Random Access Binary Files
+
+###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class
