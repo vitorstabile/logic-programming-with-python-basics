@@ -424,11 +424,68 @@ To invert the identity test we use ```is not```.
 - ```>=``` greater than or equal to
 - ```>``` greater than
 
+```py
+a = 2
+b = 6
+print(a == b) # print: False
+print(a < b) # print: True
+print(a <= b, a != b, a >= b, a > b) # print: (True, True, False, False)
+```
 
+```py
+a = ["many paths"]
+b = ["many paths"]
+print(a is b) # print: False
+print(a == b) # print: True
+```
+
+The moral of this is to use == and != when comparing values, and to use ```is``` and ```is not``` only when comparing with ```None``` or when we really do want to see if two object references, rather than their values, are the same.
 
 ###### <a name="chapter1part5.3"></a>Chapter 1 - Part 5.3: The Membership Operator
 
+For data types that are sequences or collections such as strings, lists, and tuples, we can test for membership using the ```in``` operator,and for nonmembership using the ```not in``` operator.
+
+```py
+p = (4, "frog", 9, -33, 9, 2)
+print(2 in p) # print: True
+print("dog" not in p) # print: True
+```
+
+```py
+phrase = "Wild Swans by Jung Chang"
+print("J" in phrase) # print: True
+print("han" in phrase) # print: True
+```
+
 ###### <a name="chapter1part5.4"></a>Chapter 1 - Part 5.4: Logical Operators
+
+Python provides three logical operators: ```and```, ```or```, and ```not```. Both ```and``` and ```or``` use short-circuit logic and return the operand that determined the result—they do not return a Boolean (unless they actually have Boolean operands).
+
+```py
+five = 5
+two = 2
+zero = 0
+print(five and two) # print: 2
+print(two and five) # print: 5 
+print(five and zero) # print: 0
+```
+
+If the expression occurs in a Boolean context, the result is evaluated as a Boolean, so the preceding expressions would come out as ```True```, ```True```, and ```False``` in, say, an ```if``` statement.
+
+```py
+nought = 0
+five = 5
+two = 2
+zero = 0
+print(five or two) # print: 5
+print(two or five) # print: 2
+print(zero or five) # print: 5
+print(zero or nought) # print: 0
+```
+
+The ```or``` operator is similar; here the results in a Boolean context would be ```True```, ```True```, ```True```, and ```False```.
+
+The ```not``` unary operator evaluates its argument in a Boolean context and always returns a Boolean result, so to continue the earlier example, ```not (zero or nought)``` would produce ```True```, and ```not two``` would produce ```False```.
 
 #### <a name="chapter1part6"></a>Chapter 1 - Part 6: Control Flow Statements in Python
 
