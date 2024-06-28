@@ -312,6 +312,83 @@ The type() function returns the data type (also known as the "class”) of the d
 
 #### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
 
+There are four collection data types in the Python programming language:
+
+- List: is a collection which is ordered and changeable. Allows duplicate members.
+- Tuple: is a collection which is ordered and unchangeable. Allows duplicate members.
+- Set: is a collection which is unordered, unchangeable*, and unindexed. No duplicate members.
+- Dictionary: is a collection which is ordered** and changeable. No duplicate members.
+
+But here we will introduce just two: tuple and list. Python tuples and lists can be used to hold any number of data items of any data types. Tuples are immutable, so once they are created we cannot change them. Lists are mutable, so we can easily insert items and remove items whenever we want.
+
+Tuples are created using commas (,), as these examples show
+
+```py
+print("Denmark", "Finland", "Norway", "Sweden") # prints: ('Denmark', 'Finland', 'Norway', 'Sweden')
+```
+
+```py
+print("one",) # prints: ('one',)
+```
+
+An empty tuple is created by using empty parentheses, (). The comma is also used to separate arguments in function calls, so if we want to pass a tuple literal as an argument we must enclose it in parentheses to avoid confusion.
+
+Here are some example lists:
+
+```py
+print([1, 4, 9, 16, 25, 36, 49])
+print(['alpha', 'bravo', 'charlie', 'delta', 'echo'])
+print(['zebra', 49, -879, 'aardvark', 200])
+print([])
+```
+
+One way to create a list is to use square brackets ([]). The fourth list shown is an empty list.
+
+When lists and tuples are created (and when items are inserted in the case of lists), they take copies of the object references they are given. In the case of literal items such as integers or strings, an object of the appropriate
+data type is created in memory and suitably initialized, and then an object reference referring to the object is created, and it is this object reference that is put in the list or tuple.
+
+Tuples, lists, and strings are “sized”, that is, they are data types that have a notion of size, and data items of any such data type can be meaningfully passed to the len() function. (An exception is raised if a nonsized data item is passed to len().)
+
+```py
+len(("one",)) # 1
+```
+
+```py
+len([3, 5, 1, 2, "pause", 5]) # 6
+```
+
+```py
+len("automatically") # 13
+```
+
+All Python data items are objects (also called instances) of a particular data type (also called a class)
+
+Essentially, a method is simply a function that is called for a particular object. For example, the list type has an append() method, so we can append an object to a list like this:
+
+```py
+x = ["zebra", 49, -879, "aardvark", 200]
+x.append("more")
+print(x) # ['zebra', 49, -879, 'aardvark', 200, 'more']
+``` 
+
+The append() method mutates, that is, changes, the original list. This is possible because lists are mutable.
+
+The list type has many other methods, including insert() which is used to insert an item at a given index position,and remove() which removes an item at a given index position. As noted earlier, Python indexes are always 0-based.
+
+```py
+x = ['zebra', 49, -879, 'aardvark', 200, 'more', 'extra']
+print(x[0]) # print: zebra
+print(x[4]) # print: 200
+```
+
+Tuples are also sequences, so if x had been a tuple we could retrieve items using square brackets in exactly the same way aswe have done for the x list. But since lists are mutable (unlike strings and tuples which are immutable),we can also use the square brackets operator to set list elements.
+
+```py
+x = ['zebra', 49, -879, 'aardvark', 200, 'more', 'extra']
+x[1] = "forty nine"
+print(x) # print: ['zebra', 'forty nine', -879, 'aardvark', 200, 'more', 'extra']
+```
+
 #### <a name="chapter1part5"></a>Chapter 1 - Part 5: Logical Operations in Python
 
 ###### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
