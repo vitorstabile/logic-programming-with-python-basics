@@ -254,6 +254,46 @@ If a conversion fails, an exception is raised
 
 #### <a name="chapter1part3"></a>Chapter 1 - Part 3: Object References in Python
 
+Python doesn’t have variables as such, but instead has object references.
+
+When it comes to immutable objects like ints and strs, there is no discernable difference between a variable and an object reference.
+
+As for mutable objects, there is a difference, but it rarely matters in practice.
+
+Let’s look at a few tiny examples, and then discuss some of the details.
+
+```py
+x = "blue"
+y = "green"
+z = x
+```
+
+The syntax is simply objectReference = value.
+
+When Python executes the first statement it creates a str object with the text “blue”, and creates an object reference called x that refers to the str object.
+
+For all practical purposes we can say that “variable x has been assigned the ‘blue’ string”. The second statement is similar. The third statement creates a new object reference called z and sets it to refer to the same object that the x object reference refers to (in this case the str containing the text “blue”).
+
+The = operator is not the same as the variable assignment operator in some other languages. The = operator binds an object reference to an object in memory. If the object reference already exists, it is simply re-bound to refer to the object on the right of the = operator if the object reference does not exist it is created by the = operator.
+
+```py
+print(x, y, z) # prints: blue green blue
+z = y
+print(x, y, z) # prints: blue green green
+x = z
+print(x, y, z) # prints: green green green
+```
+
+After the fourth statement (x = z), all three object references are referring to the same str. Since there are no more object references to the “blue” string, Python is free to garbage-collect it.
+
+<br>
+
+<div align="center"><img src="img/objectreference-w610-h640.png" width=610 height=640><br><sub>Object references and objects (The circles represent object references.The rectangles represent objects in memory.) - (<a href='https://github.com/vitorstabile'>Work by Vitor Garcia</a>) </sub></div>
+
+<br>
+
+
+
 
 
 #### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
