@@ -421,8 +421,8 @@ To invert the identity test we use ```is not```.
 - <= less than or equal to,
 - == equal to
 - != not equal
--  >= greater than or equal to,
--  > greater than
+>= greater than or equal to
+> greater than
 
 
 
