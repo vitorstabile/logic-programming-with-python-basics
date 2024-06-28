@@ -733,7 +733,92 @@ The list += operator extends the list by appending each item of the iterable it 
 
 #### <a name="chapter1part8"></a>Chapter 1 - Part 8: Input/Output in Python
 
+Python provides the built-in ```input()``` function to accept input from the user. This function takes an optional string argument (which it prints on the console); it then waits for the user to type in a response and to finish by pressing ```Enter (or Return)```. If the user does not type any text but just presses Enter, the ```input()``` function returns an empty string; otherwise, it returns a string containing what the user typed, without any line terminator.
+
+```py
+print("Type integers, each followed by Enter; or just Enter to finish")
+total = 0
+count = 0
+while True:
+    try:
+        line = input("integer: ")
+        if line:
+            try:
+                number = int(line)
+            except ValueError as err:
+                break
+                continue
+            total += number
+            count += 1
+    except Exception:
+        break
+
+if count:
+    print("count =", count, "total =", total, "mean =", total / count)
+```
+
+```
+integer: 1
+integer: 2
+integer: 3
+integer: 
+('count =', 3, 'total =', 6, 'mean =', 2)
+```
+
 #### <a name="chapter1part9"></a>Chapter 1 - Part 9: Creating and Calling Functions in Python
+
+Python provides a means of encapsulating suites as functions which can be parameterized by the arguments they
+are passed. Here is the general syntax for creating a function:
+
+```
+def functionName(arguments):
+    suite
+```
+
+The ```arguments``` are optional and multiple arguments must be comma-separated.
+Every Python function has a return value; this defaults to ```None``` unlesswe return
+from the function using the syntax ```return value```, in which case ```value``` is returned.
+The return value can be just one value or a tuple of values. The return value can be ignored by the caller, in which case it is simply thrown away.
+
+Note that ```def``` is a statement that works in a similar way to the assignment operator. When def is executed a function object is created and an object reference with the specified name is created and set to refer to the function object. Since functions are objects, they can be stored in collection data types and passed as arguments to other functions, as we will see in later chapters.
+
+One frequent need when writing interactive console applications is to obtain an integer from the user. Here is a function that does just that:
+
+```py
+def get_int(msg):
+    while True:
+        try:
+            i = int(input(msg))
+            return i
+        except ValueError as err:
+            print(err)
+```
+
+This function takes one argument, ```msg```. Inside the ```while``` loop the user is prompted to enter an integer. If they enter something invalid a ```ValueError``` exception will be raised, the error message will be printed, and the loop will repeat. Once a valid integer is entered, it is returned to the caller. Here is how we would call it:
+
+```py
+age = get_int("enter your age: ")
+```
+
+A Python module is just a .py file that contains Python code, such as custom function and class (custom data type) definitions, and sometimes variables. To access the functionality in a module we must import it.
+
+```py
+import sys
+```
+
+Once a module has been imported, we can access any functions, classes, or variables that it contains. For example:
+
+```py
+print(sys.argv)
+```
+
+Let us look at just one example, the random module (in the standard library’s random.py file), which provides many useful functions:
+
+```py
+import random
+x = random.randint(1, 6)
+y = random.choice(["apple", "banana", "cherry", "durian"])
+```
 
 ## <a name="chapter2"></a>Chapter 2: Data Types
 
