@@ -393,7 +393,38 @@ print(x) # print: ['zebra', 'forty nine', -879, 'aardvark', 200, 'more', 'extra'
 
 ###### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
 
+The is operator is a binary operator that returns True if its left-hand object reference is referring to the same object as its right-hand object reference.
+
+```py
+a = ["Retention", 3, None]
+b = ["Retention", 3, None]
+print(a is b) # print: False
+b = a
+print(a is b) # print: True
+```
+
+One benefit of identity comparisons is that they are very fast. This is because the objects referred to do not have to be examined themselves. The is operator needs to compare only the memory addresses of the objects—the same address means the same object.
+
+The most common use case for is is to compare a data item with the built-in null object, None, which is often used as a place-marking value to signify “unknown” or “nonexistent”:
+
+```py
+a = "Something"
+b = None
+print(a is not None, b is None) # print: (True, True)
+```
+
+To invert the identity test we use ```is not```.
+
 ###### <a name="chapter1part5.2"></a>Chapter 1 - Part 5.2: Comparison Operators
+
+- < less than
+- <= less than or equal to,
+- == equal to
+- != not equal
+- >= greater than or equal to,
+- > greater than
+
+
 
 ###### <a name="chapter1part5.3"></a>Chapter 1 - Part 5.3: The Membership Operator
 
