@@ -642,6 +642,95 @@ valid integer entered: 13
 
 #### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
 
+Python provides a full set of arithmetic operators, including binary operators for the four basic mathematical operations:```+ addition```, ```- subtraction```,```* multiplication```, and ```/ division```. In addition, many Python data types can be used with augmented assignment operators such as ```+=``` and ```*=```. The ```+```, ```-```, and ```*``` operators all behave as expected when both of their operands are integers:
+
+```py
+print(5+6) # print: 11
+```
+
+```py
+print(3-7) # print: -4
+```
+
+```py
+print(4*8) # print: 32
+```
+
+The division operator produces a floating-point value, not an integer; many other languages will produce an integer, truncating any fractional part. If we need an integer result, we can always convert using ```int()``` (or use the truncating division operator ```//```.
+
+```py
+print(12/3) # print: 4.0
+```
+
+```py
+print(3/2) # print: 1.5
+```
+
+```py
+a = 5
+print(a) # print: 5
+a += 8
+print(a) # print: 13
+```
+
+The first point to remember is that the int data type is immutable—that is, once assigned, an int’s value cannot be changed. So, what actually happens behind the scenes when an augmented assignment operator is used on an immutable object is that the operation is performed, and an object holding the result is created; and then the target object reference is re-bound to refer to the result object rather than the object it referred to before. So, in the preceding case when the statement a += 8 is encountered, Python computes a + 8, stores the result in a new int object, and then rebinds a to refer to this new int. (And if the original object a was referring to has no more object references referring to it, it will be scheduled for garbage collection.) Figure 1.3 illustrates this point.
+
+Python overloads (i.e., reuses for a different data type) the + and += operators for both strings and lists, the former meaning concatenation and the latter meaning append for strings and extend (append another list) for lists:
+
+```py
+name = "John"
+print(name + "Doe") # print: 'JohnDoe'
+name += " Doe"
+print(name) # print: 'John Doe'
+```
+
+Like integers, strings are immutable, so when += is used a new string is created and the expression’s left-hand object reference is re-bound to it, exactly as described earlier for ints.
+
+Lists support the same syntax but are different behind the scenes:
+
+```py
+seeds = ["sesame", "sunflower"]
+seeds += ["pumpkin"]
+print(seeds) # print: ['sesame', 'sunflower', 'pumpkin']
+```
+
+Since lists are mutable, when += is used the original list object is modified, so no rebinding of seeds is necessary.
+
+The right-hand operand for the list += operator must be an iterable; if it is not an exception is raised:
+
+```py
+seeds += 5
+```
+
+```
+Traceback (most recent call last):
+...
+TypeError: 'int' object is not iterable
+```
+
+The correct way to extend a list is to use an iterable object, such as a list:
+
+```py
+seeds += [5]
+print(seeds) # print: ['sesame', 'sunflower', 'pumpkin', 5]
+
+And of course, the iterable object used to extend the list can itself have more than one item:
+
+```py
+seeds += [9, 1, 5, "poppy"]
+print(seeds) # print: ['sesame', 'sunflower', 'pumpkin', 5, 9, 1, 5, 'poppy'] 
+```
+
+Appending a plain string—for example, "durian"—rather than a list containing a string, ["durian"], leads to a logical but perhaps surprising result:
+
+```py
+seeds = ["sesame", "sunflower", "pumpkin"]
+seeds += "durian"
+print(seeds) # print: ['sesame', 'sunflower', 'pumpkin', 'd', 'u', 'r', 'i', 'a', 'n']
+```
+
+The list += operator extends the list by appending each item of the iterable it is provided with; and since a string is an iterable, this leads to each character in the string being appended individually. If we use the list append() method, the argument is always added as a single item.
+
 #### <a name="chapter1part8"></a>Chapter 1 - Part 8: Input/Output in Python
 
 #### <a name="chapter1part9"></a>Chapter 1 - Part 9: Creating and Calling Functions in Python
