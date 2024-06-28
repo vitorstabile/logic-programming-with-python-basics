@@ -491,11 +491,154 @@ The ```not``` unary operator evaluates its argument in a Boolean context and alw
 
 ###### <a name="chapter1part6.1"></a>Chapter 1 - Part 6.1: The if Statement
 
+The general syntax for Python’s if statement is this:
+
+```
+if boolean_expression1:
+    suite1
+elif boolean_expression2:
+    suite2
+...
+elif boolean_expressionN:
+    suiteN
+else:
+    else_suite
+```
+
+There can be zero or more ```elif``` clauses, and the final ```else``` clause is optional. If we want to account for a particular case, but want to do nothing if it occurs,we can use ```pass``` as that branch’s suite.
+
+Unlike most other programming languages, Python uses indentation to signify its block structure. The Python style guidelines recommend four spaces per level of indentation, and only spaces (no tabs).
+
+```py
+if x:
+    print("x is nonzero")
+```
+
+```py
+if lines < 1000:
+    print("small")
+elif lines < 10000:
+    print("medium")
+else:
+    print("large")
+```
+
 ###### <a name="chapter1part6.2"></a>Chapter 1 - Part 6.2: The while Statement
+
+The ```while``` statement is used to execute a suite zero or more times, the number of times depending on the state of the ```while``` loop’s Boolean expression.
+
+```
+while boolean_expression:
+    suite
+```
+
+The ```break``` statement switches control to the statement following the innermost loop in which the break statement appears—that is, it breaks out of the loop. The ```continue``` statement switches control to the start of the loop. Both ```break``` and ```continue``` are normally used inside if statements to conditionally change a loop’s behavior.
+
+```py
+while True:
+    item = get_next_item()
+    if not item:
+        break
+    process_item(item)
+```
 
 ###### <a name="chapter1part6.3"></a>Chapter 1 - Part 6.3: The for …in Statement
 
+Python’s ```for``` loop reuses the ```in``` keyword (which in other contexts is the membership operator), and has the following syntax:
+
+```
+for variable in iterable:
+    suite
+```
+
+Just like the ```while``` loop, the ```for``` loop supports both ```break``` and ```continue```, and also has an optional ```else``` clause.
+
+The ```variable``` is set to refer to each object in the ```iterable``` in turn. An ```iterable``` is any data type that can be iterated over, and includes strings (where the iteration is character by character), lists, tuples, and Python’s other collection data types.
+
+```py
+for country in ["Denmark", "Finland", "Norway", "Sweden"]:
+    print(country)
+```
+
+```py
+for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+    if letter in "AEIOU":
+        print(letter, "is a vowel")
+    else:
+        print(letter, "is a consonant")
+```
+
+In this snippet the first use of the ```in``` keyword is part of a ```for``` statement, with the variable ```letter``` taking on the values "A", "B", and so on up to "Z", changing at each iteration of the loop. On the snippet’s second line we use ```in``` again, but this time as the membership testing operator.
+
+```
+('A', 'is a vowel')
+('B', 'is a consonant')
+('C', 'is a consonant')
+('D', 'is a consonant')
+('E', 'is a vowel')
+('F', 'is a consonant')
+('G', 'is a consonant')
+('H', 'is a consonant')
+('I', 'is a vowel')
+('J', 'is a consonant')
+('K', 'is a consonant')
+('L', 'is a consonant')
+('M', 'is a consonant')
+('N', 'is a consonant')
+('O', 'is a vowel')
+('P', 'is a consonant')
+('Q', 'is a consonant')
+('R', 'is a consonant')
+('S', 'is a consonant')
+('T', 'is a consonant')
+('U', 'is a vowel')
+('V', 'is a consonant')
+('W', 'is a consonant')
+('X', 'is a consonant')
+('Y', 'is a consonant')
+('Z', 'is a consonant')
+```
+
 ###### <a name="chapter1part6.4"></a>Chapter 1 - Part 6.4: Basic Exception Handling
+
+Many of Python’s functions and methods indicate errors or other important events by raising an exception. An exception is an object like any other Python object, and when converted to a string (e.g., when printed), the exception produces a message text.
+
+```
+try:
+    try_suite
+except exception1 as variable1:
+    exception_suite1
+…
+except exceptionN as variableN:
+    exception_suiteN
+```
+
+Note that the ```as variable``` part is optional; we may care only that a particular exception was raised and not be interested in its message text.
+
+The logic works like this. If the statements in the ```try``` block’s suite all execute without raising an exception, the except blocks are skipped. If an exception is raised inside the ```try``` block, control is immediately passed to the suite corresponding to the first matching ```exception```—this means that any statements in the suite that follow the one that caused the exception will not be executed. If this occurs and if the ```as variable``` part is given, then inside the exception-handling suite, ```variable``` refers to the exception object.
+
+If an exception occurs in the handling ```except``` block, or if an exception is raised that does not match any of the ```except``` blocks in the first place, Python looks for a matching ```except``` block in the next enclosing scope. The search for a suitable exception handler works outward in scope and up the call stack until either a match is found and the exception is handled, or no match is found, in which case the program terminates with an unhandled exception. In the case of an unhandled exception, Python prints a traceback as well as the exception’s message text.
+
+```py
+s = input("enter an integer: ")
+try:
+    i = int(s)
+    print("valid integer entered:", i)
+except ValueError as err:
+    print(err)
+```
+
+If the user enters “3.5”, the output will be:
+
+```
+invalid literal for int() with base 10: '3.5'
+```
+
+But if they were to enter “13”, the output will be:
+
+```
+valid integer entered: 13
+```
 
 #### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
 
