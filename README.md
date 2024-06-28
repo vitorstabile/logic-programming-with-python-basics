@@ -292,9 +292,23 @@ After the fourth statement (x = z), all three object references are referring to
 
 <br>
 
+The names used for object references (called identifiers) have a few restrictions. In particular, they may not be the same as any of Python’s keywords, and must start with a letter or an underscore and be followed by zero or more nonwhitespace letter, underscore, or digit characters. There is no length limit, and the letters and digits are those defined by Unicode, that is, they include, but are not limited to, ASCII’s letters and digits (“a”, “b”, …, “z”, “A”, “B”,…, “Z”, “0”, “1”, …, “9”). Python identifiers are case-sensitive, so for example, LIMIT, Limit, and limit are three different identifiers.
 
+Python uses dynamic typing, which means that an object reference can be rebound to refer to a different object (which may be of a different data type) at any time. Languages that use strong typing (such as C++ and Java) allow only those operations that are defined for the data types involved to be performed. Python also applies this constraint, but it isn’t called strong typing in Python’s case because the valid operations can change—for example, if an object reference is re-bound to an object of a different data type.
 
+```py
+route = 866
+print(route, type(route)) # prints: 866 <class 'int'>
+```
 
+```py
+route = "North"
+print(route, type(route)) # prints: North <class 'str'>
+```
+
+Here we create a new object reference called route and set it to refer to a new int of value 866. At this point we could use / with route since division is a valid operation for integers. Then we reuse the route object reference to refer to a new str of value “North”, and the int object is scheduled for garbage collection since now no object reference refers to it. At this point using / with route would cause a TypeError to be raised since / is not a valid operation for a string.
+
+The type() function returns the data type (also known as the "class”) of the data item it is given—this function can be very useful for testing and debugging.
 
 #### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
 
