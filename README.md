@@ -125,9 +125,136 @@
 
 #### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
 
+Python code can be written using any plain text editor that can load and save text using either the ASCII or the UTF-8 Unicode character encoding.
+
+By default, Python files are assumed to use the UTF-8 character encoding, a superset of ASCII that can represent pretty well every character in every language. 
+
+Python files normally have an extension of .py, although on some Unix-like systems (e.g., Linux and Mac OS X) some Python applications have no extension, and Python GUI (Graphical User Interface) programs usually have an extension of .pyw, particularly onWindows and Mac OSX.
+
+Create a file called hello.py in a plain text editor with the following contents:
+
+```py
+#!/usr/bin/env python3
+
+print("Hello", "World!")
+```
+
+The first line is a comment. In Python,commentsbegin with a # and continue to the end of the line.
+
+The second line is blank—outside quoted strings, Python ignores blank lines, but they are often useful to humans to break up large blocks of code to make them easier to read.
+
+The third line is Python code. Here, the print() function is called with two arguments, each of type str (string; i.e., a sequence of characters).
+
+Each statement encountered in a .py file is executed in turn, starting with the first one and progressing line by line. This is different from some other languages, for example, C++ and Java, which have a particular function or method with a special name where they start from.
+
+We will assume that Windows users keep their Python code in the C:\py3eg directory and that Unix (i.e., Unix, Linux, and Mac OS X) users keep their code in the $HOME/py3eg directory. Save hello.py into the py3eg directory and close the text editor.
+
+Now that we have a program, we can run it. Python programs are executed by the Python interpreter, and normally this is done inside a console window.
+
+On Windows the console is called "Command Prompt"
+
+On Mac OS X the console is provided by the Terminal.app program (located in Applications/Utilities by default), available using Finder, and on other Unixes,we can use an xterm or the console provided by the windowing environment, for example, konsole or gnome-terminal.
+
+Start up a console, and on Windows enter the following commands
+
+```
+C:\>cd c:\py3eg
+C:\py3eg\>c:\python31\python.exe hello.py
+```
+
+Unix users enter this instead (assuming that Python 3 is in the PATH):*
+
+```
+$ cd $HOME/py3eg
+$ python3 hello.py
+```
+
+In both cases the output should be the same:
+
+```
+Hello World!
+```
+
+Although the program has just one executable statement, by running it we can infer some information about the print() function. For one thing, print() is a built-in part of the Python language—we didn’t need to “import” or “include” it from a library to make use of it. Also, it separates each item it prints with a single space, and prints a newline after the last item is printed.
+
 #### <a name="chapter1part2"></a>Chapter 1 - Part 2: Data Types in Python
 
+In programming, data type is an important concept.
+
+Variables can store data of different types, and different types can do different things.
+
+Python has the following data types built-in by default, in these categories:
+
+- Text Type: ```str```
+- Numeric Types: ```int```, ```float```, ```complex```
+- Sequence Types: ```list```, ```tuple```, ```range```
+- Mapping Type: ```dict```
+- Set Types: ```set```, ```frozenset```
+- Boolean Type: ```bool```
+- Binary Types: ```bytes```, ```bytearray```, ```memoryview```
+- None Type: ```NoneType```
+
+Python represents integers (positive and negative whole numbers) using the int type, and it represents strings (sequences of Unicode characters) using the str type.
+
+**Integers Examples**
+
+```
+-973
+210624583337114373395836055367340864637790190801098222508621955072
+0
+```
+
+Incidentally, the second number shown is the size of Python’s integers is limited only by machine memory, not by a fixed number of bytes.
+
+**Strings Examples**
+
+```
+"Infinitely Demanding"
+'Simon Critchley'
+'positively αβγ ÷©'
+''
+```
+
+Strings can be delimited by double or single quotes, as long as the same kind are used at both ends, and since Python uses Unicode, strings are not limited to ASCII characters, as the penultimate string shows. An empty string is simply one with nothing between the delimiters.
+
+Python uses square brackets ([]) to access an item from a sequence such as
+a string.
+
+```py
+print("Hard Times"[5])
+```
+
+```
+T
+```
+
+```py
+print("giraffe"[0])
+```
+
+```
+g
+```
+
+In Python, both str and the basic numeric types such as int are immutable, that is, once set, their value cannot be changed.
+
+To convert a data item from one type to another we can use the syntax datatype(item).
+
+```py
+int("45")
+```
+
+```py
+str(912)
+```
+
+The int() conversion is tolerant of leading and trailing whitespace, so int(" 45 ") would have worked just as well. The str() conversion can be
+applied to almost any data item. We can easily make our own custom data types support str() conversion, and also int() or other conversions if they make sense.
+If a conversion fails, an exception is raised
+
 #### <a name="chapter1part3"></a>Chapter 1 - Part 3: Object References in Python
+
+
 
 #### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
 
