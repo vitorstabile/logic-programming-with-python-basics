@@ -824,6 +824,50 @@ y = random.choice(["apple", "banana", "cherry", "durian"])
 
 #### <a name="chapter2part1"></a>Chapter 2 - Part 1: Identifiers and Keywords
 
+The names we give to our object references are called ```identifiers``` or just ```plain names```.
+
+Identifiers are case sensitive, so for example, ```TAXRATE```, ```Taxrate```, ```TaxRate```, ```taxRate```, and ```taxrate``` are five different identifiers.
+
+The second rule is that no identifier can have the same name as one of Python’s keywords, so we cannot use any of the names shown bellow
+
+| Keywords          | Description                                                                                                                                                 | 
+| :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| and               | This is a logical operator which returns true if both the operands are true else returns false.                                                             |
+| or                | This is also a logical operator which returns true if anyone operand is true else returns false.                                                            |             
+| not               | This is again a logical operator it returns True if the operand is false else returns false.                                                                |
+| if                | This is used to make a conditional statement.                                                                                                               |
+| elif              | Elif is a condition statement used with an if statement. The elif statement is executed if the previous conditions were not true.                           |
+| else              | Else is used with if and elif conditional statements. The else block is executed if the given condition is not true.                                        |
+| for               | This is used to create a loop.                                                                                                                              |
+| while             | This keyword is used to create a while loop.                                                                                                                |
+| break             | This is used to terminate the loop.                                                                                                                         |
+| as                | This is used to create an alternative.                                                                                                                      |
+| def               | It helps us to define functions.                                                                                                                            |
+| lambda            | It is used to define the anonymous function.                                                                                                                |
+| pass              | This is a null statement which means it will do nothing.                                                                                                    |
+| return            | It will return a value and exit the function.                                                                                                               |
+| True              | This is a boolean value.                                                                                                                                    |
+| False             | This is also a boolean value.                                                                                                                               |
+| try               | It makes a try-except statement.                                                                                                                            |
+| with              | The with keyword is used to simplify exception handling.                                                                                                    |
+| assert            | This function is used for debugging purposes. Usually used to check the correctness of code                                                                 |
+| class             | It helps us to define a class.                                                                                                                              |
+| continue          | It continues to the next iteration of a loop                                                                                                                |
+| del               | It deletes a reference to an object.                                                                                                                        |
+| except            | Used with exceptions, what to do when an exception occurs                                                                                                   |
+| finally           | Finally is used with exceptions, a block of code that will be executed no matter if there is an exception or not.                                           |
+| from              | It is used to import specific parts of any module.                                                                                                          |
+| global            | This declares a global variable.                                                                                                                            |
+| import            | This is used to import a module.                                                                                                                            |
+| in                | It’s used to check whether a value is present in a list, range, tuple, etc.                                                                                 |
+| is                | This is used to check if the two variables are equal or not.                                                                                                |
+| none              | This is a special constant used to denote a null value or avoid. It’s important to remember, 0, any empty container(e.g empty list) do not compute to None  |
+| nonlocal          | It’s declared a non-local variable.                                                                                                                         |
+| raise             | This raises an exception.                                                                                                                                   |
+| yield             | It ends a function and returns a generator.                                                                                                                 |
+| async             | It is used to create asynchronous coroutine.                                                                                                                |
+| await             | It releases the flow of control back to the event loop.                                                                                                     |
+
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
 ###### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
