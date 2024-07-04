@@ -868,6 +868,18 @@ The second rule is that no identifier can have the same name as one of Python’
 | async             | It is used to create asynchronous coroutine.                                                                                                                |
 | await             | It releases the flow of control back to the event loop.                                                                                                     |
 
+The first convention is: Don’t use the names of any of Python’s predefined identifiers for your own identifiers. So, avoid using ```NotImplemented``` and ```Ellipsis```, and the name of any of Python’s built-in data types (such as ```int```, ```float```, ```list```, ```str```, and ```tuple```), and any of Python’s built-in functions or exceptions. How can we tell whether an identifier falls into one of these categories? Python has a built-in function called ```dir()``` that returns a list of an object’s attributes. If it is called with no arguments it returns the list of Python’s built-in attributes. For example:
+
+```py
+print(dir())
+```
+
+```
+['__builtins__', '__doc__', '__file__', '__name__', '__package__']
+```
+
+
+
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
 ###### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
