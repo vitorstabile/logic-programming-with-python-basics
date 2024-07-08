@@ -1119,11 +1119,140 @@ print(Decimal(1) / Decimal(7)) # 0.1428571428571428571428571429
 
 #### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
 
+Strings are represented by the immutable ```str``` data type which holds a sequence of Unicode characters.
+
+The str data type can be called as a function to create string objects
+
+- with no arguments it returns an empty string
+- with a nonstring argument it returns the string form of the argument
+- with a string argument it returns a copy of the string
+
+```py
+x = str() 
+
+y = str(1) 
+
+z = str('abc') 
+
+print(x) #
+print(y) # 1
+print(z) # abc
+```
+
+Strings can be delimited by double or single quotes, as long as the same kind are used at both ends, and since Python uses Unicode, strings are not limited to ASCII characters, as the penultimate string shows. An empty string is simply one with nothing between the delimiters.
+
+```
+"Infinitely Demanding"
+'Simon Critchley'
+'positively αβγ ÷©'
+''
+```
+
+we can use a triple quoted string
+
+```
+text = """A triple quoted string like this can include 'quotes' and "quotes" without formality. We can also escape 
+newlines \ so this particular string is actually only two lines long."""
+```
+
+If we want to use quotes inside a normal quoted string we can do so without formality if they are different from the delimiting quotes; otherwise, we must escape them:
+
+```py
+a = "Single 'quotes' are fine; \"doubles\" must be escaped."
+b = 'Single \'quotes\' must be escaped; "doubles" are fine.'
+
+print(a) # Single 'quotes' are fine; "doubles" must be escaped.
+print(b) # Single 'quotes' must be escaped; "doubles" are fine.
+```
+
+Since ```.py``` files default to using the UTF-8 Unicode encoding, we can write any Unicode characters in our string literals without formality.
+
+```py
+print u'\u0420\u043e\u0441\u0441\u0438\u044f' # Россия
+```
+
+If we want to know the Unicode code point (the integer assigned to the character in the Unicode encoding) for a particular character in a string, we can use the built-in ```ord()```
+
+```py
+print(ord('t')) # 116
+
+print(hex(ord('t'))) # 0x74
+```
+
+Similarly, we can convert any integer that represents a valid code point into the corresponding Unicode character using the built-in ```chr()``` function
+
+```py
+s = "anarchists are " + chr(8734) + chr(0x23B7)
+
+print(s)
+```
+
+Python’s String Escapes
+
+| Syntax      | Meaning                                                              | 
+| :---------- | :-------------------------------------------------------------------:|
+| \newline    | Escape (i.e., ignore) the newline                                    |
+| \\          | Backslash (\)                                                        |             
+| \'          | Single quote (’)                                                     |
+| \"          | Double quote (")                                                     |
+| \a          | ASCII bell (BEL)                                                     |
+| \b          | ASCII backspace (BS)                                                 |
+| \f          | ASCII formfeed (FF)                                                  |
+| \n          | ASCII linefeed (LF)                                                  |
+| \N{name}    | Unicode character with the given name                                |
+| \ooo        | Character with the given octal value                                 |
+| \r          | ASCII carriage return (CR)                                           |
+| \t          | ASCII tab (TAB)                                                      |
+| \uhhhh      | Unicode character with the given 16-bit hexadecimal value            |
+| \Uhhhhhhhh  | Unicode character with the given 32-bit hexadecimal value            |
+| \v          | ASCII vertical tab (VT)                                              |
+| \xhh        | Character with the given 8-bit hexadecimal value                     |
+
 ###### <a name="chapter2part4.1"></a>Chapter 2 - Part 4.1: Comparing Strings
 
 ###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
 ###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
+ 
+| Escape                               | Description                                                                                                                                                                                                         | 
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+|  s.capitalize()                      | Returns a copy of str s with the first letter capitalized; see also the str.title() method                                                                                                                          |
+|  s.center(width, char)               | Returns a copy of s centered in a string of length width padded with spaces or optionally with char (a string of length 1); see str.ljust(), str.rjust(), and str.format()                                          |             
+|  s.count(t, start, end)              | Returns the number of occurrences of str t in str s (or in the start:end slice of s)                                                                                                                                |
+|  s.encode(encoding, err)             | Returns a bytes object that represents the string using the default encoding or using the specified encoding and handling errors according to the optional err argument                                             |
+|  s.endswith(x, start, end)           | Returns True if s (or the start:end slice of s) ends with str x or with any of the strings in tuple x; otherwise, returns False. See also str.startswith().                                                         |
+|  s.expandtabs(size)                  | Returns a copy of s with tabs replaced with spaces in multiples of 8 or of size if specified                                                                                                                        |
+|  s.find(t, start, end)               | Returns the leftmost position of t in s (or in the start:end slice of s) or -1 if not found. Use str.rfind() to find the rightmost position. See also str.index().                                                  |
+|  s.format(...)                       | Returns a copy of s formatted according to the given arguments.                                                                                                                                                     |
+|  s.index(t, start, end)              | Returns the leftmost position of t in s (or in the start:end slice of s) or raises ValueError if not found. Use str.rindex() to search from the right. See str.find().                                              |
+|  s.isalnum()                         | Returns True if s is nonempty and every character in s is alphanumeric                                                                                                                                              |
+|  s.isalpha()                         | Returns True if s is nonempty and every character in s is alphabetic                                                                                                                                                |
+|  s.isdecimal()                       | Returns True if s is nonempty and every character in s is a Unicode base 10 digit                                                                                                                                   |
+|  s.isdigit()                         | Returns True if s is nonempty and every character in s is an ASCII digit                                                                                                                                            |
+|  s.isidentifier()                    | Returns True if s is nonempty and is a valid identifier                                                                                                                                                             |
+|  s.islower()                         | Returns True if s has at least one lowercaseable character and all its lowercaseable characters are lowercase; see also str.isupper()                                                                               |
+|  s.isnumeric()                       | Returns True if s is nonempty and every character in s is a numeric Unicode character such as a digit or fraction                                                                                                   |
+|  s.isprintable()                     | Returns True if s is empty or if every character in s is considered to be printable, including space, but not newline                                                                                               |
+|  s.isspace()                         | Returns True if s is nonempty and every character in s is a whitespace character                                                                                                                                    |
+|  s.istitle()                         | Returns True if s is a nonempty title-cased string; see also str.title()                                                                                                                                            |
+|  s.isupper()                         | Returns True if str s has at least one uppercaseable character and all its uppercaseable characters are uppercase; see also str.islower()                                                                           |
+|  s.join(seq)                         | Returns the concatenation of every item in the sequence seq, with str s (which may be empty) between each one                                                                                                       |
+|  s.ljust(width, char)                | Returns a copy of s left-aligned in a string of length width padded with spaces or optionally with char (a string of length 1). Use str.rjust() to right-align and str.center() to center. See also str.format().   |
+|  s.lower()                           | Returns a lowercased copy of s; see also str.upper()                                                                                                                                                                |
+|  s.maketrans()                       | Companion of str.translate();                                                                                                                                                                                       |
+|  s.partition(t)                      | Returns a tuple of three strings—the part of str s before the leftmost str t, t, and the part of s after t; or if t isn’t in s returns s and two empty strings.                                                     |
+|  s.replace(t, u, n)                  | Returns a copy of s with every (or a maximum of n if given) occurrences of str t replaced with str u                                                                                                                |
+|  s.split(t, n)                       | Returns a list of strings splitting at most n times on str t; if n isn’t given, splits as many times as possible; if t isn’t given, splits on whitespace.                                                           |
+|  s.splitlines(f)                     | Returns the list of lines produced by splitting s on line terminators, stripping the terminators unless f is True                                                                                                   |
+|  s.startswith(x, start, end)         | Returns True if s (or the start:end slice of s) starts with str x or with any of the strings in tuple x; otherwise, returns False. See also str.endswith().                                                         |
+|  s.strip(chars)                      | Returns a copy of s with leading and trailing whitespace (or the characters in str chars) removed;str.lstrip() strips only at the start, and str.rstrip() strips only at the end                                    |
+|  s.swapcase()                        | Returns a copy of s with uppercase characters lowercased and lowercase characters uppercased; see also str.lower() and str.upper()                                                                                  |
+|  s.title()                           | Returns a copy of s where the first letter of each word is uppercased and all other letters are lowercased; see str.istitle()                                                                                       |
+|  s.translate()                       | Companion of str.maketrans();                                                                                                                                                                                       |
+|  s.upper()                           | Returns an uppercased copy of s; see also str.lower()                                                                                                                                                               |
+|  s.zfill(w)                          | Returns a copy of s, which if shorter than w is padded with leading zeros to make it w characters long                                                                                                              |
+
+
 
 ###### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
 
