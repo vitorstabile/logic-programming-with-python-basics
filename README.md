@@ -1210,6 +1210,56 @@ Python’s String Escapes
 
 ###### <a name="chapter2part4.1"></a>Chapter 2 - Part 4.1: Comparing Strings
 
+There is six ways to comparing strings in Python (```<, <=, ==, !=, >, and >=.```)
+
+```py
+print("Geek" == "Geek") # True
+print("Geek" < "geek") # True
+print("Geek" > "geek") # False
+print("Geek" != "Geek") # False
+```
+
+- The ```==``` operator compares the values of both operands and checks for value equality. The same is the case for ```!=```
+
+```py
+print("Geek" == "Geek") # True
+print("Geek" != "Geek") # False
+```
+
+- Whereas ```is``` operator checks whether both the operands refer to the same object or not. In this case, the id(). The same for ```is not```
+
+```py
+str1 = "Geek"
+str2 = "Geek"
+str3 = str1
+ 
+print("ID of str1 =", hex(id(str1))) # ID of str1 = 0x7f6037051570
+print("ID of str2 =", hex(id(str2))) # ID of str2 = 0x7f6037051570
+print("ID of str3 =", hex(id(str3))) # ID of str3 = 0x7f6037051570
+print(str1 is str1) # True
+print(str1 is str2) # True
+print(str1 is str3) # True
+ 
+str1 += "s"
+str4 = "Geeks"
+ 
+print("\nID of changed str1 =", hex(id(str1))) # ID of changed str1 = 0x7f60356137d8
+print("ID of str4 =", hex(id(str4))) # ID of str4 = 0x7f60356137a0
+print(str1 is str4) # False
+```
+
+The operators <, <=, >, and >= returns True if the first string is lexicographically larger than the second string.
+
+```py
+str1="Hello"
+str2="World"
+
+print(str1>str2) # False
+print(str1<str2) # True
+print(str1>=str2) # False
+print(str1<=str2) # True
+```
+
 ###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
 ###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
