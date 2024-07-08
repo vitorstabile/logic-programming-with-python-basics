@@ -1262,6 +1262,67 @@ print(str1<=str2) # True
 
 ###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
+Index positions into a string begin at 0 and go up to the length of the string minus 1.
+
+<br>
+
+<div align="center"><img src="img/stringindex-w621-h272.png" width=621 height=272><br><sub>Python String Index - (<a href='https://www.geeksforgeeks.org/string-slicing-in-python/?ref=lbp'>Work by Geeks for Geeks</a>) </sub></div>
+
+<br>
+
+The slice operator has three syntaxes:
+
+```
+seq[start]
+seq[start:end]
+seq[start:end:step]
+```
+
+```py
+# Python program to demonstrate
+# string slicing
+ 
+# String slicing
+String = 'ASTRING'
+ 
+# Using slice constructor
+s1 = slice(3)
+s2 = slice(1, 5, 2)
+s3 = slice(-1, -12, -2)
+ 
+print("String slicing") # String slicing
+print(String[s1]) # AST
+print(String[s2]) # SR
+print(String[s3]) # GITA
+```
+
+```
+arr[start:stop]         # items start through stop-1
+arr[start:]             # items start through the rest of the array
+arr[:stop]              # items from the beginning through stop-1
+arr[:]                  # a copy of the whole array
+arr[start:stop:step]    # start through not past stop, by step
+```
+
+```py
+# Python program to demonstrate
+# string slicing
+ 
+# String slicing
+String = 'GEEKSFORGEEKS'
+ 
+# Using indexing sequence
+print(String[:3]) # GEE
+```
+
+```py
+s = "The waxwork man"
+
+s = s[:12] + "wo" + s[12:]
+
+print(s) # 'The waxwork woman'
+```
+
 ###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
 
 Since strings are immutable sequences, all the functionality that can be used with immutable sequences can be used with strings.
@@ -1275,6 +1336,18 @@ print(len(text)) # 5
 ```
 
 We have seen that the + operator is overloaded to provide string concatenation.
+
+```py
+
+
+# Defining strings
+var1 = "Hello "
+var2 = "Geek"
+ 
+# + Operator is used to combine strings
+var3 = var1 + var2
+print(var3) # Hello Geek
+```
 
 In cases where we want to concatenate lots of strings the str.join() method offers a better solution.
 
@@ -1352,13 +1425,39 @@ We can check all most of the operation in the table above
 
 ###### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
 
+The ```str.format()``` method provides a very flexible and powerful way of creating strings.
+
+```py
+print("The novel '{0}' was published in {1}".format("Hard Times", 1854)) # The novel 'Hard Times' was published in 185
+
+print("{{{0}}} {1} ;-}}".format("I'm in braces", "I'm not")) # {I'm in braces} I'm not ;-}
+
+```
+
 ###### <a name="chapter2part4.5"></a>Chapter 2 - Part 4.5: Field Names
 
-###### <a name="chapter2part4.6"></a>Chapter 2 - Part 4.6: Conversions
+A field name can be either an integer corresponding to one of the str.format() method’s arguments, or the name of one of the method’s keyword arguments.
 
-###### <a name="chapter2part4.7"></a>Chapter 2 - Part 4.7: Format Specifications
+```py
+print("{who} turned {age} this year".format(who="She", age=88)) # She turned 88 this year
+print("The {who} was {0} last week".format(12, who="boy")) # The boy was 12 last week
+```
 
-###### <a name="chapter2part4.8"></a>Chapter 2 - Part 4.8: Character Encodings
+Field names may refer to collection data types—for example, lists
+
+```py
+stock = ["paper", "envelopes", "notepads", "pens", "paper clips"]
+
+print("We have {0[1]} and {0[2]} in stock".format(stock)) # We have envelopes and notepads in stock
+```
+
+With dictionaries
+
+```py
+d = dict(animal="elephant", weight=12000)
+
+print("The {0[animal]} weighs {0[weight]}kg".format(d)) # The elephant weighs 12000kg
+```
 
 ## <a name="chapter3"></a>Chapter 3: Collection Data Types
 
