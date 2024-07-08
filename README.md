@@ -975,7 +975,7 @@ Integer Bitwise Operators
 
 | Syntax      | Description                                                                                           | 
 | :---------- | :----------------------------------------------------------------------------------------------------:|
-| ```i | j``` | Bitwise OR of int i and int j; negative numbers are assumed to b represented using 2’s complement     |
+| i &#166; j  | Bitwise OR of int i and int j; negative numbers are assumed to b represented using 2’s complement     |
 | i ^ j       | Bitwise XOR (exclusive or) of i and j                                                                 |             
 | i & j       | Bitwise AND of i and j                                                                                |
 | i << j      | Shifts i left by j bits; like i * (2 ** j) without overflow checking                                  |
