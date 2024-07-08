@@ -822,6 +822,35 @@ y = random.choice(["apple", "banana", "cherry", "durian"])
 
 ## <a name="chapter2"></a>Chapter 2: Data Types
 
+Python Data types are the classification or categorization of data items. It represents the kind of value that tells what operations can be performed on a particular data. Since everything is an object in Python programming, Python data types are classes and variables are instances (objects) of these classes. The following are the standard or built-in data types in Python:
+
+<br>
+
+<div align="center"><img src="img/pythondatatype-w822-h505.png" width=822 height=505><br><sub>Python Data Types - (<a href='https://www.geeksforgeeks.org/python-data-types/'>Work by Geeks for Geeks</a>) </sub></div>
+
+<br>
+
+- Text Type: ```str```
+- Numeric Types: ```int```, ```float```, ```complex```
+- Sequence Types: ```list```, ```tuple```, ```range```
+- Mapping Type: ```dict```
+- Set Types: ```set```, ```frozenset```
+- Boolean Type: ```bool```
+- Binary Types: ```bytes```, ```bytearray```, ```memoryview```
+- None Type: ```NoneType```
+
+To define the values ​​of various data types of Python and check their data types we use the ```type()``` function.
+
+```py
+route = 866
+print(route, type(route)) # prints: 866 <class 'int'>
+```
+
+```py
+route = "North"
+print(route, type(route)) # prints: North <class 'str'>
+```
+
 #### <a name="chapter2part1"></a>Chapter 2 - Part 1: Identifiers and Keywords
 
 The names we give to our object references are called ```identifiers``` or just ```plain names```.
@@ -892,9 +921,82 @@ The second convention concerns the use of underscores (_). Names that begin and 
 
 #### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
+Python provides two built-in integral types, ```int``` and ```bool```. Both integers and Booleans are immutable.
+
+When used in Boolean expressions, ```0``` and ```False``` are ```False```, and any other ```integer``` and ```True``` are ```True```. When used in numerical expressions ```True``` evaluates to ```1``` and ```False``` to ```0```.
+
 ###### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
 
+The size of an integer is limited only by the machine’s memory.
+
+Above, we can check the numeric operations
+
+| Syntax        | Description                                                                                                                                                                            | 
+| :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| x + y         | Adds number x and number y                                                                                                                                                             |
+| x - y         | Subtracts y from x                                                                                                                                                                     |
+| x * y         | Multiplies x by y                                                                                                                                                                      |
+| x / y         | Divides x by y; always produces a ```float``` (or a complex if x or y is ```complex```)                                                                                                |
+| x // y        | Divides x by y; truncates any fractional part so always produces an ```int``` result; see also the ```round()``` function                                                              |
+| x % y         | Produces the modulus (remainder) of dividing x by y                                                                                                                                    |
+| x ** y        | Raises x to the power of y; see also the ```pow()``` functions                                                                                                                         |
+| -x            | Negates x; changes x’s sign if nonzero, does nothing if zero                                                                                                                           |
+| +x            | Does nothing; is sometimes used to clarify code                                                                                                                                        |
+| abs(x)        | Returns the absolute value of x                                                                                                                                                        |
+| divmod(x, y)  | Returns the quotient and remainder of dividing x by y as a tuple of two ```ints```                                                                                                     |
+| pow(x, y)     | Raises x to the power of y; the same as the ** operator                                                                                                                                |
+| pow(x, y, z)  | A faster alternative to (x ** y) % z                                                                                                                                                   |
+| round(x, n)   | Returns x rounded to n integral digits if n is a negative int or returns x rounded to n decimal places if n is a positive int; the returned value has the same type as x; see the text |
+
+Integer Conversion Functions
+
+| Syntax        | Description                                                                                                                                                                                    | 
+| :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| bin(i)        | Returns the binary representation of int i as a string, e.g., ```bin(1980) == '0b11110111100'```                                                                                               |
+| hex(i)        | Returns the hexadecimal representation of i as a string, e.g., ```hex(1980) == '0x7bc'```                                                                                                      |             
+| int(x)        | Converts object x to an integer; raises ```ValueError``` on failure—or ```TypeError``` if x’s data type does not support integer conversion. If x is a floating-point number it is truncated.  |
+| int(s, base)  | Converts ```str s``` to an integer; raises ```ValueError``` on failure. If the optional ```base``` argument is given it should be an integer between 2 and 36 inclusive.                       |
+| oct(i)        | Returns the octal representation of i as a string, e.g., ```oct(1980) == '0o3674'```                                                                                                           |
+
+Binary numbers are written with a leading 0b, octal numbers with a leading 0o, and hexadecimal numbers with a leading 0x. Uppercase letters can also be used.
+
+```py
+print(14600926) # decimal 14600926
+print(0b110111101100101011011110) # binary 14600926
+print(0o67545336) # octal 14600926
+print(0xDECADE) # hexadecimal 14600926
+```
+
+Objects can be created by assigning literals to variables, for example, x = 17, or by calling the relevant data type as a function, for example, x = int(17). Some objects (e.g., those of type decimal.Decimal) can be created only by using the data type since they have no literal representation. When an object is created using its data type there are three possible use cases.
+
+An object with a default value is created—for example, x = int() creates an integer of value 0. All the built-in types can be called with no arguments.
+
+Integer Bitwise Operators
+
+| Syntax      | Description                                                                                           | 
+| :---------- | :----------------------------------------------------------------------------------------------------:|
+| i | j       | Bitwise OR of int i and int j; negative numbers are assumed to b represented using 2’s complement     |
+| i ^ j       | Bitwise XOR (exclusive or) of i and j                                                                 |             
+| i & j       | Bitwise AND of i and j                                                                                |
+| i << j      | Shifts i left by j bits; like i * (2 ** j) without overflow checking                                  |
+| i >> j      | Shifts i right by j bits; like i // (2 ** j) without overflow checking                                |
+| ~i          | Inverts i’s bits                                                                                      |
+
 ###### <a name="chapter2part2.2"></a>Chapter 2 - Part 2.2: Booleans
+
+There are two built-in Boolean objects: True and False. Like all other Python data types (whether built-in, library, or custom), the bool data type can be called as a function. With no arguments it returns False, with a bool argument
+it returns a copy of the argument, and with any other argument it attempts to convert the given object to a bool.
+
+All the built-in and standard library data types can be converted to produce a Boolean value.
+
+Python provides three logical operators: ```and```, ```or```, and ```not```.
+
+```py
+t = True
+f = False
+print(t and f) # False
+print(t and True) # True
+```
 
 ###### <a name="chapter2part2.3"></a>Chapter 2 - Part 2.3: Integer Bitwise Operators
 
