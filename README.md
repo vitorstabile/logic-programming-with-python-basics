@@ -1002,7 +1002,74 @@ Integer Bitwise Operators
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
 
+Python provides three kinds of floating-point values: the built-in ```float``` and ```complex``` types,and the ```decimal.Decimal``` type from the standard library.
+
+All three are immutable.
+
+```py
+print(0.0) # 0.0
+print(5.4) # 5.4
+print(-2.5) # -2.5
+print(8.9e-4) # 0.00089
+```
+
 ###### <a name="chapter2part3.1"></a>Chapter 2 - Part 3.1: Floating-Point Numbers
+
+The float data type can be called as a function with no arguments it returns 0.0,
+
+```py
+x = float()
+print(x) # 0.0
+```
+
+With any other argument it attempts to convert the given object to a float
+
+```py
+x = float(1)
+print(x) # 1.0
+```
+
+We can convert strings to floats
+
+```py
+x = float('1')
+print(x) # 1.0
+```
+
+It is possible that NaN (“not a number”) or “infinity” may be produced by a calculation involving floats
+
+Here is a simple function for comparing floats for equality to the limit of the machine’s accuracy:
+
+```py
+import sys
+
+def equal_float(a, b):
+    return abs(a - b) <= sys.float_info.epsilon
+
+print(sys.float_info.epsilon) # 2.22044604925e-16
+
+print(equal_float(1.0, 0.9999999999999999999999999999999999999999999999)) # True
+
+print(equal_float(1.0, 0.99999999)) # False
+```
+
+```sys.float_info.epsilon``` is effectively the smallest difference that the machine can distinguish between two floating-point numbers.
+
+Floating-point numbers can be converted to integers using the ```int()``` function which returns the whole part and throws away the fractional part, or using ```round()``` which accounts for the fractional part, or using ```math.floor()``` or ```math.ceil()``` which convert down to or up to the nearest integer.
+
+```py
+import math
+
+y = 1.6
+
+print(int(y)) # 1
+print(round(y)) # 2.0
+print(math.ceil(y)) # 2.0
+```
+
+The Mathematical functions provided by Python, you can check her
+
+[math — Mathematical functions](https://docs.python.org/3/library/math.html)
 
 ###### <a name="chapter2part3.2"></a>Chapter 2 - Part 3.2: Complex Numbers
 
