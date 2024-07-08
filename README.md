@@ -1067,13 +1067,55 @@ print(round(y)) # 2.0
 print(math.ceil(y)) # 2.0
 ```
 
-The Mathematical functions provided by Python, you can check her
+For more Mathematical functions provided by Python, you can check her
 
 [math — Mathematical functions](https://docs.python.org/3/library/math.html)
 
 ###### <a name="chapter2part3.2"></a>Chapter 2 - Part 3.2: Complex Numbers
 
+The ```complex``` data type is an immutable type that holds a pair of ```floats```, one representing the real part and the other the imaginary part of a complex number.
+
+```py
+z = -89.5+2.125j
+
+print(z.real) # -89.5
+print(z.imag) #  2.125
+```
+
+Except for ```//, %, divmod()```, and the three-argument ```pow()```, all the numeric operators and functions in numeric operations table
+
+The functions in the ```math module``` do not work with complex numbers. Users of complex numbers can import the ```cmath``` module
+
 ###### <a name="chapter2part3.3"></a>Chapter 2 - Part 3.3: Decimal Numbers
+
+There are several different numeric data types in Python, including int, float, and complex numbers, but due to floating point numbers' machine-dependent nature, we need a more precise data type.
+
+With the Python decimal module, decimal floating point arithmetic is carried out at high speed. In Python, numbers that contain decimal points are always treated as double-precision floating-point numbers. Decimal points have a smaller range than floats, but more precision. For monetary and financial calculations, it is appropriate. Also, it is more similar to how humans handle numbers.
+
+Decimal modules have a precision that can be adjusted to any size necessary for a given problem, unlike hardware-based binary floating points.
+
+```py
+from decimal import Decimal
+i = 8
+j = 9
+k = i / j
+d = Decimal(i) / Decimal(j)
+print (k, type(k)) # 0.8888888888888888 <class 'float'>
+print (d, type(d)) # (Decimal('0.8888888888888888888888888889'), <class 'decimal.Decimal'>)
+```
+This output shows that float type objects have less precision than decimal type objects because their approximation method is much more aggressive. 
+
+Unlike hardware based binary floating point, the decimal module has a user alterable precision (defaulting to 28 places) which can be as large as needed for a given problem:
+
+```py
+from decimal import *
+
+getcontext().prec = 6
+print(Decimal(1) / Decimal(7)) # 0.142857
+
+getcontext().prec = 28
+print(Decimal(1) / Decimal(7)) # 0.1428571428571428571428571429
+```
 
 #### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
 
