@@ -1263,6 +1263,53 @@ print(str1<=str2) # True
 ###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
 ###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
+
+Since strings are immutable sequences, all the functionality that can be used with immutable sequences can be used with strings.
+
+As strings are sequences they are “sized” objects, and therefore we can call ```len()``` with a string as the argument.
+
+```py
+text = 'abcdf'
+
+print(len(text)) # 5
+```
+
+We have seen that the + operator is overloaded to provide string concatenation.
+
+In cases where we want to concatenate lots of strings the str.join() method offers a better solution.
+
+The method takes a sequence as an argument list or tuple of strings), and joins them together into a single string with the string the method was called on between each one.
+
+```py
+treatises = ["Arithmetica", "Conics", "Elements"]
+
+print(" ".join(treatises)) # Arithmetica Conics Elements
+
+print("".join(treatises)) # ArithmeticaConicsElements
+```
+
+The * operator provides string replication:
+
+```py
+s = "=" * 5
+
+print(s) # =====
+```
+
+When applied to strings, the in membership operator returns True if its lefthand string argument is a substring of, or equal to, its right-hand string argument.
+
+```py
+s = 'tatio'
+
+print('ta' in s) # True
+```
+
+In cases where we want to find the position of one string inside another, we can use 
+
+- ```str.index()``` method; this returns the index position of the substring, or raises a ValueError exception on failure.
+- ```str.find()``` method; this returns the index position of the substring, or -1 on failure.
+
+We can check all most of the operation in the table above
  
 | Escape                               | Description                                                                                                                                                                                                         | 
 | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -1301,7 +1348,6 @@ print(str1<=str2) # True
 |  s.translate()                       | Companion of str.maketrans();                                                                                                                                                                                       |
 |  s.upper()                           | Returns an uppercased copy of s; see also str.lower()                                                                                                                                                               |
 |  s.zfill(w)                          | Returns a copy of s, which if shorter than w is padded with leading zeros to make it w characters long                                                                                                              |
-
 
 
 ###### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
