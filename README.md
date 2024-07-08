@@ -971,17 +971,6 @@ Objects can be created by assigning literals to variables, for example, x = 17, 
 
 An object with a default value is created—for example, x = int() creates an integer of value 0. All the built-in types can be called with no arguments.
 
-Integer Bitwise Operators
-
-| Syntax      | Description                                                                                           | 
-| :---------- | :----------------------------------------------------------------------------------------------------:|
-| i &#166; j  | Bitwise OR of int i and int j; negative numbers are assumed to b represented using 2’s complement     |
-| i ^ j       | Bitwise XOR (exclusive or) of i and j                                                                 |             
-| i & j       | Bitwise AND of i and j                                                                                |
-| i << j      | Shifts i left by j bits; like i * (2 ** j) without overflow checking                                  |
-| i >> j      | Shifts i right by j bits; like i // (2 ** j) without overflow checking                                |
-| ~i          | Inverts i’s bits                                                                                      |
-
 ###### <a name="chapter2part2.2"></a>Chapter 2 - Part 2.2: Booleans
 
 There are two built-in Boolean objects: True and False. Like all other Python data types (whether built-in, library, or custom), the bool data type can be called as a function. With no arguments it returns False, with a bool argument
@@ -999,6 +988,17 @@ print(t and True) # True
 ```
 
 ###### <a name="chapter2part2.3"></a>Chapter 2 - Part 2.3: Integer Bitwise Operators
+
+Integer Bitwise Operators
+
+| Syntax      | Description                                                                                           | 
+| :---------- | :----------------------------------------------------------------------------------------------------:|
+| i &#166; j  | Bitwise OR of int i and int j; negative numbers are assumed to b represented using 2’s complement     |
+| i ^ j       | Bitwise XOR (exclusive or) of i and j                                                                 |             
+| i & j       | Bitwise AND of i and j                                                                                |
+| i << j      | Shifts i left by j bits; like i * (2 ** j) without overflow checking                                  |
+| i >> j      | Shifts i right by j bits; like i // (2 ** j) without overflow checking                                |
+| ~i          | Inverts i’s bits                                                                                      |
 
 #### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
 
