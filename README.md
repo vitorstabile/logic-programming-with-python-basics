@@ -116,6 +116,8 @@
       - [Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)](#chapter7part3.4)
     - [Chapter 7 - Part 4: Random Access Binary Files](#chapter7part4)
       - [Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class](#chapter7part4.1)
+8. [Chapter 8: Useful Python Code Snippet](#chapter8)
+    - [Chapter 8 - Part 1: Create a Log file](#chapter8part1)
       
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
@@ -1615,3 +1617,71 @@ print("The {0[animal]} weighs {0[weight]}kg".format(d)) # The elephant weighs 12
 #### <a name="chapter7part4"></a>Chapter 7 - Part 4: Random Access Binary Files
 
 ###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class
+
+## <a name="chapter8"></a>Chapter 8: Useful Python Code Snippet
+
+#### <a name="chapter8part1"></a>Chapter 8 - Part 1: Create a Log file
+
+```py
+import logging
+import os
+from datetime import datetime
+
+# CONST
+
+LOG_PREFIX_NAME_CONST = 'MYLOGGER_'
+LOG_FILE_NAME_CONST = 'myloggername_log_file'
+LOG_DIR_NAME_CONST = 'myloggerfolder-logs'
+LOG_DEFAULT_VALUE = logging.INFO
+
+logger = None  # Initialize the logger variable
+
+def main():
+    log_prefix_name = LOG_PREFIX_NAME_CONST
+    log_file_name = LOG_FILE_NAME_CONST
+    log_dir_name = LOG_DIR_NAME_CONST
+
+    global logger
+    logger = setup_logger(log_prefix_name, level=LOG_DEFAULT_VALUE, log_file_prefix=log_file_name, log_dir=log_dir_name)
+
+    logger_execute()
+
+def setup_logger(name, level, log_file_prefix, log_dir):
+    global logger
+
+    # Ensure the log directory exists
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    # Create a logger object
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+
+    # Get the current date to include in the log file name
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    log_file = os.path.join(log_dir, '{log_file_prefix}_{current_date}.log'.format(log_file_prefix=log_file_prefix,
+                                                                                   current_date=current_date))
+
+    # Create a file handler
+    file_handler = logging.FileHandler(log_file)
+    file_handler.setLevel(level)
+
+    # Create a log format
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+
+    # Add the file handler to the logger
+    if not logger.handlers:
+        logger.addHandler(file_handler)
+
+    return logger
+
+def logger_execute():
+    global logger
+    logger.info('------------ Executing MYLOGGER INFO ------------')
+    logger.error('------------ Executing MYLOGGER ERROR ------------')
+
+if __name__ == "__main__":
+    main()
+
+```
