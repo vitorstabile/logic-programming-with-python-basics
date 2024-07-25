@@ -121,7 +121,8 @@
     - [Chapter 8 - Part 2: List all files of a directory based in a extension](#chapter8part2)
     - [Chapter 8 - Part 3: List all files of a directory based in a regex](#chapter8part3)
     - [Chapter 8 - Part 4: Move file to a directory](#chapter8part4)
-    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)      
+    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)
+    - [Chapter 8 - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File](#chapter8part6)
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
@@ -1870,4 +1871,123 @@ def load_json_config(json_file):
 if __name__ == "__main__":
     main()
 
+```
+
+#### <a name="chapter8part6"></a>Chapter 8 - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File
+
+config_file.json
+
+```json
+
+{
+	"configOne": "example_1",
+	"configTwo": "example_2",
+	"dataConfig": {
+		"product": {
+			"fileName": "product_file",
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2",
+				"columnThree": "column3",
+				"columnFour": "column4"
+			}
+		},
+		"item": {
+			"fileName": "item_file",
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2"
+			}
+		}
+	}
+}
+
+```
+
+test.csv
+
+```csv
+"column1","column2","column3","column4"
+"1","","3","4"
+"5","","7","8"
+"a","","c","d"
+"e","","g","h"
+"i","","l","m"
+"n","","p","q"
+```
+
+```py
+import json
+import os
+from collections import OrderedDict
+
+import pandas as pd
+
+
+def main():
+    config_file = load_json_config('config_file.json')
+
+    data_config = config_file['dataConfig']
+
+    # Process each partner configuration
+    for key, value in data_config.items():
+        final_file_name = value['fileName']
+        columns_mapper = value['columnsMapper']
+
+        create_csv_with_clean_data('test.csv', columns_mapper, final_file_name, key)
+
+
+def load_json_config(json_file):
+    try:
+        json_file_path = os.path.abspath(json_file)
+        with open(json_file_path, 'r') as file:
+            return json.load(file, object_pairs_hook=OrderedDict)
+
+    except Exception as error:
+        print(error)
+
+
+def create_csv_with_clean_data(file_path, columns_mapper, final_file_name, key):
+    try:
+        df = pd.read_csv(file_path)
+
+        new_df = map_df_columns_to_file_config(df, columns_mapper)
+
+        if key == 'item':
+            new_df['columnTwo'] = new_df['columnTwo'].apply(fill_empty_field_with_value)
+
+        new_df.to_csv(final_file_name, sep='|', index=False)
+
+    except Exception as error:
+
+        print(error)
+
+        raise
+
+
+def fill_empty_field_with_value(column_two_value):
+    if pd.isna(column_two_value):
+        column_two_value = 'someValue'
+    return column_two_value
+
+
+def map_df_columns_to_file_config(df, columns_mapper):
+    new_columns = OrderedDict()
+
+    for output_col, input_col in columns_mapper.items():
+        if input_col:
+            # Check if input_col exist in the df
+            if input_col in df.columns:
+                new_columns[output_col] = df[input_col]
+            # If not, is a fixed value
+            else:
+                new_columns[output_col] = input_col
+        else:
+            new_columns[output_col] = ""
+
+    return pd.DataFrame(new_columns)
+
+
+if __name__ == "__main__":
+    main()
 ```
