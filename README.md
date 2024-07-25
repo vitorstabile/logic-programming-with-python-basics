@@ -118,6 +118,12 @@
       - [Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class](#chapter7part4.1)
 8. [Chapter 8: Useful Python Code Snippet](#chapter8)
     - [Chapter 8 - Part 1: Create a Log file](#chapter8part1)
+    - [Chapter 8 - Part 2: List all files of a directory based in a extension](#chapter8part2)
+    - [Chapter 8 - Part 3: List all files of a directory based in a regex](#chapter8part3)
+    - [Chapter 8 - Part 4: Move file to a directory](#chapter8part4)
+    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)
+  
+    - 
       
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
@@ -1680,6 +1686,189 @@ def logger_execute():
     global logger
     logger.info('------------ Executing MYLOGGER INFO ------------')
     logger.error('------------ Executing MYLOGGER ERROR ------------')
+
+if __name__ == "__main__":
+    main()
+
+```
+
+#### <a name="chapter8part2"></a>Chapter 8 - Part 2: List all files of a directory based in a extension
+
+```py
+import os
+
+
+def main():
+    directory_files = list_files_in_directory(os.getcwd(), 'json')
+    for file in directory_files:
+        print(file)
+
+
+def list_files_in_directory(directory, file_extension):
+    directory_files = []
+    if os.path.isdir(directory):
+        try:
+            items = os.listdir(directory)
+            for item in items:
+                item_path = os.path.join(directory, item)
+                if os.path.isfile(item_path) and item_path.endswith('.%s' % file_extension):
+                    directory_files.append(item)
+            return directory_files
+        except OSError as error:
+            print("Error accessing directory: %s" % error)
+    else:
+        print("%s is not a valid directory." % directory)
+    return directory_files
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+#### <a name="chapter8part3"></a>Chapter 8 - Part 3: List all files of a directory based in a regex
+
+```py
+import os
+import re
+
+
+def main():
+    directory_files = list_files_in_directory(os.getcwd(), r'.*\.csv$')
+    for file in directory_files:
+        print(file)
+
+
+def list_files_in_directory(directory, file_regex):
+    directory_files = []
+    if os.path.isdir(directory):
+        try:
+            items = os.listdir(directory)
+            regex = re.compile(file_regex)
+            for item in items:
+                item_path = os.path.join(directory, item)
+                if os.path.isfile(item_path) and regex.match(item):
+                    directory_files.append(item)
+            return directory_files
+        except OSError as error:
+            print("Error accessing directory: %s" % error)
+    else:
+        print("%s is not a valid directory." % directory)
+    return directory_files
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+#### <a name="chapter8part4"></a>Chapter 8 - Part 4: Move file to a directory
+
+```py
+import os
+import shutil
+
+
+def main():
+    move_file_to_dir('test.csv', 'abc', False)
+
+
+def move_file_to_dir(file, dir_name, overwrite=False):
+    # Ensure the directory exists
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    src_file_path = None
+    dst_folder = None
+    dst_file_path = None
+    try:
+        src_file_path = os.path.abspath(file)
+        dst_folder = os.path.abspath(dir_name)
+        dst_file_path = os.path.join(dst_folder, os.path.basename(src_file_path))
+
+        # Check if the destination file exists
+        if os.path.exists(dst_file_path):
+            if overwrite:
+                print('File {} already exist in the destination folder {}: '
+                      'Overwrite the file'.format(src_file_path, dst_folder))
+                os.remove(dst_file_path)
+            else:
+                raise Exception('File already exists at destination: {}'.format(dst_file_path))
+
+        shutil.move(src_file_path, dst_folder)
+
+    except Exception as error:
+        print('Error in move files from {} to {}: {}'.format(src_file_path, dst_folder, error))
+
+    return dst_file_path
+
+
+if __name__ == "__main__":
+    main()
+
+```
+
+#### <a name="chapter8part5"></a>Chapter 8 - Part 5: Read a Config Json File
+
+config_file.json
+
+```json
+{
+	"configOne": "example_1",
+	"configTwo": "example_2",
+	"dataConfig": {
+		"product": {
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2",
+				"columnThree": "column3",
+				"columnFour": "column4"
+			}
+		},
+		"item": {
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2"
+			}
+		}
+	}
+}
+```
+
+```py
+import json
+import os
+from collections import OrderedDict
+
+
+def main():
+    config_file = load_json_config('config_file.json')
+
+    config_one = config_file['configOne']
+    config_two = config_file['configTwo']
+
+    print(config_one)
+    print(config_two)
+
+    data_config = config_file['dataConfig']
+
+    # Process each partner configuration
+    for key, value in data_config.items():
+        columns_mapper = value['columnsMapper']
+
+        print(key)
+        print(columns_mapper)
+
+
+def load_json_config(json_file):
+    try:
+        json_file_path = os.path.abspath(json_file)
+        with open(json_file_path, 'r') as file:
+            return json.load(file, object_pairs_hook=OrderedDict)
+
+    except Exception as error:
+        print(error)
+
 
 if __name__ == "__main__":
     main()
