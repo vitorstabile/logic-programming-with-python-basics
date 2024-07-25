@@ -1852,7 +1852,7 @@ def main():
 
     data_config = config_file['dataConfig']
 
-    # Process each partner configuration
+    # Read each object of dataConfig node
     for key, value in data_config.items():
         columns_mapper = value['columnsMapper']
 
