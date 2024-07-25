@@ -121,10 +121,7 @@
     - [Chapter 8 - Part 2: List all files of a directory based in a extension](#chapter8part2)
     - [Chapter 8 - Part 3: List all files of a directory based in a regex](#chapter8part3)
     - [Chapter 8 - Part 4: Move file to a directory](#chapter8part4)
-    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)
-  
-    - 
-      
+    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)      
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
