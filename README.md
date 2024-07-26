@@ -1545,7 +1545,7 @@ print(3 not in tuple1) # Output: False
 print(6 not in tuple1) # Output: True
 ```
 
-The ```+=``` and ```*=v augmented assignment operators can be used even though tuples are
+The ```+=``` and ```*=``` augmented assignment operators can be used even though tuples are
 
 Like strings, tuples are immutable, so we cannot replace or delete any of their items.
 
