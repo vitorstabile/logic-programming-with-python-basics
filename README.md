@@ -1652,6 +1652,81 @@ z = point_3d[1][1][0]
 print(f"Coordinates: x={x}, y={y}, z={z}")  # Output: Coordinates: x=1, y=2, z=3
 ```
 
+**Iterating Over Items in a Tuple**
+
+- Simple Iteration To iterate over each item in a tuple, you use a for loop:
+
+```py
+my_tuple = (1, 2, 3, 4, 5)
+
+for item in my_tuple:
+    print(item)
+# Output:
+# 1
+# 2
+# 3
+# 4
+# 5
+```
+
+- Iteration with Index To access both the index and the item, use the enumerate() function:
+
+```py
+my_tuple = ('a', 'b', 'c', 'd')
+
+for index, item in enumerate(my_tuple):
+    print(f"Index: {index}, Item: {item}")
+# Output:
+# Index: 0, Item: a
+# Index: 1, Item: b
+# Index: 2, Item: c
+# Index: 3, Item: d
+```
+
+- Iterating Over Nested Tuples If you have a tuple of tuples, you can nest for loops to access the inner tuples:
+
+```py
+nested_tuple = ((1, 2), (3, 4), (5, 6))
+
+for subtuple in nested_tuple:
+    for item in subtuple:
+        print(item)
+# Output:
+# 1
+# 2
+# 3
+# 4
+# 5
+# 6
+```
+
+- Using List Comprehensions While not as common with tuples as with lists, you can use a list comprehension to transform a tuple into another tuple:
+
+```py
+my_tuple = (1, 2, 3, 4, 5)
+squared = tuple(x ** 2 for x in my_tuple)
+print(squared)
+# Output: (1, 4, 9, 16, 25)
+```
+
+- Using map() Function Similar to list comprehensions, you can use map() to apply a function to each item in the tuple:
+
+```py
+my_tuple = (1, 2, 3, 4, 5)
+squared = tuple(map(lambda x: x ** 2, my_tuple))
+print(squared)
+# Output: (1, 4, 9, 16, 25)
+```
+
+- Using filter() Function You can filter items based on a condition and convert the result back to a tuple:
+
+```py
+my_tuple = (1, 2, 3, 4, 5)
+even_numbers = tuple(filter(lambda x: x % 2 == 0, my_tuple))
+print(even_numbers)
+# Output: (2, 4)
+```
+
 ###### <a name="chapter3part1.2"></a>Chapter 3 - Part 1.2: Named Tuples
 
 A named tuple is a subclass of Python's built-in ```tuple``` data type, providing named fields that you can access like attributes. Named tuples make it easier to work with tuples by allowing you to access elements using named attributes rather than relying solely on positional indexing. This improves code readability and reduces the chance of errors.
