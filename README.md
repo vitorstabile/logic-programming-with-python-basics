@@ -1466,9 +1466,274 @@ print("The {0[animal]} weighs {0[weight]}kg".format(d)) # The elephant weighs 12
 
 #### <a name="chapter3part1"></a>Chapter 3 - Part 1: Sequence Types
 
+A ```sequence``` type is one that supports the membership operator ```(in)```, the size function ```(len())```, slices ```([])```, and is iterable.
+
+Python provides five built-in sequence types: ```bytearray```, ```bytes```, ```list```, ```str```, and ```tuple```
+
 ###### <a name="chapter3part1.1"></a>Chapter 3 - Part 1.1: Tuples
 
+A tuple is an ordered sequence of zero or more object references. Tuples support the same slicing and striding syntax as strings.
+
+Here are a few examples demonstrating different ways to create and use tuples
+
+```py
+# Creating tuples
+t1 = (1, 2, 3)
+t2 = 'a', 'b', 'c'
+t3 = (1, 'a', True)
+t4 = ()
+t5 = tuple('ABC')
+
+# Single element tuple
+t6 = (5,)
+t7 = 5,  # also a single-element tuple
+
+t8 = 'AA', 'BB', 'CC'
+
+print(t1)  # Output: (1, 2, 3)
+print(t2)  # Output: ('a', 'b', 'c')
+print(t3)  # Output: (1, 'a', True)
+print(t4)  # Output: ()
+print(t5)  # Output: ('A', 'B', 'C')
+print(t6)  # Output: (5,)
+print(t7)  # Output: (5,)
+print(t8)  # Output: ('AA', 'BB', 'CC')
+```
+
+Tuples have only two built-in methods:
+
+**count()**: Returns the number of times a specified value appears in the tuple.
+
+```py
+my_tuple = (1, 2, 2, 3)
+print(my_tuple.count(2))  # Output: 2
+```
+
+**index():** Returns the index of the first occurrence of a specified value.
+
+```py
+my_tuple = (1, 2, 3)
+print(my_tuple.index(2))  # Output: 1
+```
+
+Tuples can be used with the operators ```+ (concatenation)```, ```* (replication)```, and ```[] (slice)```, and with ```in``` and ```not in``` to test for membership.
+
+```py
+# Concatenation
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+concatenated = tuple1 + tuple2
+print("Concatenated:", concatenated)  # Output: (1, 2, 3, 4, 5, 6)
+
+# Replication
+replicated = tuple1 * 2
+print("Replicated:", replicated)  # Output: (1, 2, 3, 1, 2, 3)
+
+# Slicing
+tuple1 = (1, 2, 3, 4, 5)
+print(tuple1[1:3])  # Output: (2, 3)
+print(tuple1[:3])   # Output: (1, 2, 3)
+print(tuple1[2:])   # Output: (3, 4, 5)
+print(tuple1[:])    # Output: (1, 2, 3, 4, 5)
+
+# Membership
+tuple1 = (1, 2, 3, 4, 5)
+
+print(3 in tuple1)     # Output: True
+print(6 in tuple1)     # Output: False
+print(3 not in tuple1) # Output: False
+print(6 not in tuple1) # Output: True
+```
+
+The ```+=``` and ```*=v augmented assignment operators can be used even though tuples are
+
+Like strings, tuples are immutable, so we cannot replace or delete any of their items.
+
+```py
+my_tuple = (1, 2, 3)
+
+# This will raise a TypeError
+my_tuple[0] = 4  # TypeError: 'tuple' object does not support item assignment
+```
+
+If we want to be able to modify an ordered sequence, we simply use a list instead of a tuple; or if we already have a tuple but want to modify it, we can convert it to a list using the ```list()``` conversion function and then apply the changes to the resultant list.
+
+```py
+# Original tuple
+my_tuple = (1, 2, 3, 4, 5)
+
+# Convert tuple to list
+my_list = list(my_tuple)
+
+# Modify the list
+my_list[2] = 99  # Change the third element
+my_list.append(6)  # Add an element at the end
+
+# Convert list back to tuple
+my_tuple = tuple(my_list)
+
+print(my_tuple)  # Output: (1, 2, 99, 4, 5, 6)
+```
+
+Tuples can be compared using the standard comparison operators ```(<, <=, ==, !=, >=, >)```, with the comparisons being applied item by item (and recursively for nested items such as tuples inside tuples).
+
+```py
+tuple1 = (1, 2, 3)
+tuple2 = (1, 2, 4)
+tuple3 = (1, 2, 3)
+
+print(tuple1 < tuple2)   # Output: True (3 < 4)
+print(tuple1 <= tuple2)  # Output: True (3 < 4)
+print(tuple1 == tuple3)  # Output: True (all elements are equal)
+print(tuple1 != tuple2)  # Output: True (3 != 4)
+print(tuple1 >= tuple3)  # Output: True (all elements are equal)
+print(tuple1 > tuple2)   # Output: False (3 < 4)
+```
+
+Nested tuples are tuples that contain other tuples as elements
+
+```py
+nested_tuple = (1, (2, 3), (4, (5, 6)), 7)
+```
+
+You can access elements of nested tuples using multiple indices:
+
+```py
+nested_tuple = (1, (2, 3), (4, (5, 6)), 7)
+
+# Accessing the first element
+print(nested_tuple[0])  # Output: 1
+
+# Accessing the second element (which is a tuple)
+print(nested_tuple[1])  # Output: (2, 3)
+
+# Accessing the first element of the second tuple
+print(nested_tuple[1][0])  # Output: 2
+
+# Accessing the third element (which is a tuple)
+print(nested_tuple[2])  # Output: (4, (5, 6))
+
+# Accessing the second element of the third tuple (which is a nested tuple)
+print(nested_tuple[2][1])  # Output: (5, 6)
+
+# Accessing the first element of the nested tuple
+print(nested_tuple[2][1][0])  # Output: 5
+```
+
+Tuples can be compared lexicographically, including nested tuples. The comparison is done element by element recursively.
+
+```py
+tuple1 = (1, (2, 3), (4, (5, 6)))
+tuple2 = (1, (2, 3), (4, (5, 7)))
+
+print(tuple1 < tuple2)  # Output: True ((5, 6) < (5, 7))
+print(tuple1 == tuple2) # Output: False (because (5, 6) != (5, 7))
+```
+
+Nested tuples are useful in various scenarios, such as:
+
+**Representing Matrix or Grid Data**
+
+```py
+matrix = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+```
+
+**nested tuples to represent a 3D point**
+
+```py
+# Define a 3D point as a nested tuple
+point_3d = (1, (2, (3, 4)))
+
+# Accessing elements
+x = point_3d[0]
+y = point_3d[1][0]
+z = point_3d[1][1][0]
+
+print(f"Coordinates: x={x}, y={y}, z={z}")  # Output: Coordinates: x=1, y=2, z=3
+```
+
 ###### <a name="chapter3part1.2"></a>Chapter 3 - Part 1.2: Named Tuples
+
+A named tuple is a subclass of Python's built-in ```tuple``` data type, providing named fields that you can access like attributes. Named tuples make it easier to work with tuples by allowing you to access elements using named attributes rather than relying solely on positional indexing. This improves code readability and reduces the chance of errors.
+
+Named tuples are defined using the ```collections.namedtuple``` factory function. Here's a step-by-step guide on how to create and use named tuples
+
+```py
+from collections import namedtuple
+
+# Define a named tuple type
+Car = namedtuple('Car', ['make', 'model', 'year'])
+
+# Create instances of Car
+car1 = Car(make='Toyota', model='Corolla', year=2020)
+car2 = Car(make='Honda', model='Civic', year=2022)
+
+# Access fields
+print(car1.make)   # Output: Toyota
+print(car2.year)   # Output: 2022
+
+# Convert to dictionary
+car1_dict = car1._asdict()
+print(car1_dict)  # Output: {'make': 'Toyota', 'model': 'Corolla', 'year': 2020}
+
+# Replace a field value
+car3 = car1._replace(year=2021)
+print(car3)  # Output: Car(make='Toyota', model='Corolla', year=2021)
+
+# Access field names
+print(Car._fields)  # Output: ('make', 'model', 'year')
+```
+
+Advantages of Named Tuples can be
+
+- Readability: Named fields make the code more readable and self-documenting.
+- Immutability: Like regular tuples, named tuples are immutable.
+- Attribute Access: You can access elements using named attributes instead of numeric indices, which reduces the chance of errors.
+- Compatibility: Named tuples are compatible with other tuple operations and can be used in places where regular tuples are used.
+
+Named tuples in Python come with several private methods that are used internally to support their functionality.
+
+**_asdict()**
+
+Purpose: Converts the named tuple to an OrderedDict where the keys are the field names and the values are the corresponding field values.
+
+Usage: This method is useful when you need a dictionary representation of the named tuple, which can be handy for serialization or conversion to other formats.
+
+```py
+from collections import namedtuple
+
+Person = namedtuple('Person', ['name', 'age', 'city'])
+person = Person(name='Alice', age=30, city='New York')
+
+person_dict = person._asdict()
+print(person_dict)  # Output: {'name': 'Alice', 'age': 30, 'city': 'New York'}
+```
+
+**_replace(**kwargs)**
+
+Purpose: Returns a new named tuple instance with specified fields replaced by new values. The original named tuple remains unchanged.
+
+Usage: This method is useful when you want to create a modified copy of a named tuple without altering the original instance.
+
+```py
+Person = namedtuple('Person', ['name', 'age', 'city'])
+person = Person(name='Alice', age=30, city='New York')
+
+new_person = person._replace(age=31)
+print(new_person)  # Output: Person(name='Alice', age=31, city='New York')
+```
+
+**_fields**
+
+Purpose: A tuple of field names for the named tuple. It provides the names of the fields in the named tuple.
+
+Usage: This attribute is read-only and is useful for introspection, allowing you to programmatically access the field names.
+
+```py
+Person = namedtuple('Person', ['name', 'age', 'city'])
+print(Person._fields)  # Output: ('name', 'age', 'city')
+```
+
 
 ###### <a name="chapter3part1.3"></a>Chapter 3 - Part 1.3: Lists
 
