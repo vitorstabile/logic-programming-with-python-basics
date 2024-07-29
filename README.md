@@ -2179,11 +2179,579 @@ print(even_squared)
 
 #### <a name="chapter3part2"></a>Chapter 3 - Part 2: Set Types
 
+A ```set``` type is a collection data type that supports the membership operator ```(in)```, the size function ```(len())```, and is iterable. In addition, set types at least provide a ```set.isdisjoint()``` method.
+
+Python provides two built-in set types: the ```mutable set``` type and the ```immutable frozenset```. When iterated, set types provide their items in an arbitrary order.
+
+Only ```hashable``` objects may be added to a set. Hashable objects are objects which have a ```__hash__()``` special method whose return value is always the same throughout the object’s lifetime, and which can be compared for equality using the ```__eq__()``` special method.
+
+All the built-in immutable data types, such as ```float```, ```frozenset```, ```int```, ```str```, and ```tuple```, are hashable and can be added to sets. The built-in mutable data types, such as ```dict```, ```list```, and ```set```, are not hashable since their hash value changes depending on the items they contain, so they cannot be added to sets.
+
 ###### <a name="chapter3part2.1"></a>Chapter 3 - Part 2.1: Sets
+
+A set is an unordered collection of zero or more object references that refer to hashable objects. Sets are mutable, so we can easily add or remove items, but since they are unordered they have no notion of index position and so cannot be sliced or strided.
+
+Here are a few examples demonstrating different ways to create and use sets:
+
+```py
+# Creating sets
+s1 = {1, 2, 3}
+s2 = {'a', 'b', 'c'}
+s3 = {1, 'a', True}
+s4 = set()
+s5 = set('ABC')
+
+print(s1)  # Output: {1, 2, 3}
+print(s2)  # Output: {'a', 'b', 'c'}
+print(s3)  # Output: {1, 'a'} (True is considered as 1)
+print(s4)  # Output: set()
+print(s5)  # Output: {'A', 'B', 'C'}
+```
+
+Sets always contain unique items—adding duplicate items is safe but pointless. For example, these three sets are the same:```set("apple")```, ```set("aple")```, and ```{'e', 'p', 'a', 'l'}```. In view of this, sets are often used to eliminate duplicates. For example, if x is a list of strings, after executing x = list(set(x)), all of x’s strings will be unique—and in an arbitrary order.
+
+The standard set operators in Python (union, intersection, difference, and symmetric difference)
+
+**Union**
+
+The union operator ```|``` combines all unique elements from both sets.
+
+```py
+# Union
+set1 = {'apple', 'banana', 'cherry'}
+set2 = {'banana', 'date', 'fig'}
+set3 = set("pecan")
+set4 = set("pie")
+
+# Union of words
+union_set = set1 | set2
+print(union_set == {'apple', 'banana', 'cherry', 'date', 'fig'})  # Output: True
+print("Union of words:", union_set)  # Output: {'apple', 'banana', 'cherry', 'date', 'fig'}
+
+# Union of characters
+union_chars = set3 | set4
+print(union_chars == {'p', 'e', 'c', 'a', 'n', 'i'})  # Output: True
+print("Union of characters:", union_chars)  # Output: {'p', 'e', 'c', 'a', 'n', 'i'}
+```
+
+**Intersection**
+
+The intersection operator ```&``` returns the common elements present in both sets.
+
+```py
+# Intersection
+set1 = {'apple', 'banana', 'cherry'}
+set2 = {'banana', 'date', 'fig'}
+set3 = set("pecan")
+set4 = set("pie")
+
+# Intersection of words
+intersection_set = set1 & set2
+print(intersection_set == {'banana'})  # Output: True
+print("Intersection of words:", intersection_set)  # Output: {'banana'}
+
+# Intersection of characters
+intersection_chars = set3 & set4
+print(intersection_chars == {'p', 'e'})  # Output: True
+print("Intersection of characters:", intersection_chars)  # Output: {'p', 'e'}
+```
+
+**Difference**
+
+The difference operator ```-``` returns elements present in the first set but not in the second set.
+
+```py
+# Difference
+set1 = {'apple', 'banana', 'cherry'}
+set2 = {'banana', 'date', 'fig'}
+set3 = set("pecan")
+set4 = set("pie")
+
+# Difference of words
+difference_set = set1 - set2
+print(difference_set == {'apple', 'cherry'})  # Output: True
+print("Difference of words:", difference_set)  # Output: {'apple', 'cherry'}
+
+# Difference of characters
+difference_chars = set3 - set4
+print(difference_chars == {'c', 'a', 'n'})  # Output: True
+print("Difference of characters:", difference_chars)  # Output: {'c', 'a', 'n'}
+```
+
+**Symmetric Difference**
+
+The symmetric difference operator ```^``` returns elements present in either of the sets but not in both.
+
+```py
+# Symmetric Difference
+set1 = {'apple', 'banana', 'cherry'}
+set2 = {'banana', 'date', 'fig'}
+set3 = set("pecan")
+set4 = set("pie")
+
+# Symmetric Difference of words
+sym_diff_set = set1 ^ set2
+print(sym_diff_set == {'apple', 'cherry', 'date', 'fig'})  # Output: True
+print("Symmetric Difference of words:", sym_diff_set)  # Output: {'apple', 'cherry', 'date', 'fig'}
+
+# Symmetric Difference of characters
+sym_diff_chars = set3 ^ set4
+print(sym_diff_chars == {'c', 'a', 'n', 'i'})  # Output: True
+print("Symmetric Difference of characters:", sym_diff_chars)  # Output: {'c', 'a', 'n', 'i'}
+```
+
+**Set Methods and Operators**
+
+**s.add(x)**
+
+Adds an element x to the set s.
+
+```py
+# Using add() method
+s = {'apple', 'banana', 'cherry'}
+s.add('date')
+print(s)  # Output: {'apple', 'banana', 'cherry', 'date'}
+```
+
+**s.clear()**
+
+Removes all elements from the set s, making it an empty set.
+
+```py
+# Using clear() method
+s = {'apple', 'banana', 'cherry'}
+s.clear()
+print(s)  # Output: set()
+```
+
+**s.copy()**
+
+Returns a shallow copy of the set s.
+
+```py
+# Using copy() method
+s = {'apple', 'banana', 'cherry'}
+s_copy = s.copy()
+print(s_copy)  # Output: {'apple', 'banana', 'cherry'}
+```
+
+**s.difference(t) or s - t**
+
+Returns a new set with elements in s that are not in set t.
+
+```py
+# Using difference() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+difference = s.difference(t)
+print(difference)  # Output: {'apple', 'cherry'}
+
+# Using - operator
+difference = s - t
+print(difference)  # Output: {'apple', 'cherry'}
+```
+
+**s.difference_update(t) or s -= t**
+
+Removes all elements of t from s.
+
+```py
+# Using difference_update() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+s.difference_update(t)
+print(s)  # Output: {'apple', 'cherry'}
+
+# Using -= operator
+s = {'apple', 'banana', 'cherry'}
+s -= t
+print(s)  # Output: {'apple', 'cherry'}
+```
+
+**s.discard(x)**
+
+Removes element x from the set if it is a member. If x is not a member, do nothing.
+
+```py
+# Using discard() method
+s = {'apple', 'banana', 'cherry'}
+s.discard('banana')
+print(s)  # Output: {'apple', 'cherry'}
+s.discard('date')  # Does nothing since 'date' is not in the set
+print(s)  # Output: {'apple', 'cherry'}
+```
+
+**s.intersection(t) or s & t**
+
+Returns a new set with elements common to s and t.
+
+```py
+# Using intersection() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+intersection = s.intersection(t)
+print(intersection)  # Output: {'banana'}
+
+# Using & operator
+intersection = s & t
+print(intersection)  # Output: {'banana'}
+```
+
+**s.intersection_update(t) or s &= t**
+
+Updates the set s, keeping only elements found in it and t.
+
+```py
+# Using intersection_update() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+s.intersection_update(t)
+print(s)  # Output: {'banana'}
+
+# Using &= operator
+s = {'apple', 'banana', 'cherry'}
+s &= t
+print(s)  # Output: {'banana'}
+```
+
+**s.isdisjoint(t)**
+
+Returns True if s has no elements in common with t.
+
+```py
+# Using isdisjoint() method
+s = {'apple', 'banana', 'cherry'}
+t = {'date', 'fig'}
+print(s.isdisjoint(t))  # Output: True
+
+t = {'banana', 'date'}
+print(s.isdisjoint(t))  # Output: False
+```
+
+**s.issubset(t) or s <= t**
+
+Returns True if all elements of s are in t.
+
+```py
+# Using issubset() method
+s = {'apple', 'banana'}
+t = {'apple', 'banana', 'cherry'}
+print(s.issubset(t))  # Output: True
+
+# Using <= operator
+print(s <= t)  # Output: True
+```
+
+**s.issuperset(t) or s >= t**
+
+Returns True if all elements of t are in s.
+
+```py
+# Using issuperset() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'cherry'}
+print(s.issuperset(t))  # Output: True
+
+# Using >= operator
+print(s >= t)  # Output: True
+```
+
+**s.pop()**
+
+Removes and returns an arbitrary element from the set s. Raises KeyError if the set is empty.
+
+```py
+# Using pop() method
+s = {'apple', 'banana', 'cherry'}
+element = s.pop()
+print(element)  # Output: 'apple' (or another element, since sets are unordered)
+print(s)  # Output: {'banana', 'cherry'} (or the remaining elements)
+```
+
+**s.remove(x)**
+
+Removes element x from the set s. Raises KeyError if x is not a member.
+
+```py
+# Using remove() method
+s = {'apple', 'banana', 'cherry'}
+s.remove('banana')
+print(s)  # Output: {'apple', 'cherry'}
+# s.remove('date')  # Raises KeyError
+```
+
+**s.symmetric_difference(t) or s ^ t**
+
+Returns a new set with elements in either s or t but not in both.
+
+```py
+# Using symmetric_difference() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+sym_diff = s.symmetric_difference(t)
+print(sym_diff)  # Output: {'apple', 'cherry', 'date'}
+
+# Using ^ operator
+sym_diff = s ^ t
+print(sym_diff)  # Output: {'apple', 'cherry', 'date'}
+```
+
+**s.symmetric_difference_update(t) or s ^= t**
+
+Updates the set s to the symmetric difference of itself and t
+
+```py
+# Using symmetric_difference_update() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+s.symmetric_difference_update(t)
+print(s)  # Output: {'apple', 'cherry', 'date'}
+
+# Using ^= operator
+s = {'apple', 'banana', 'cherry'}
+s ^= t
+print(s)  # Output: {'apple', 'cherry', 'date'}
+```
+
+**s.union(t) or s | t**
+
+Returns a new set with elements from both s and t.
+
+```py
+# Using union() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+union_set = s.union(t)
+print(union_set)  # Output: {'apple', 'banana', 'cherry', 'date'}
+
+# Using | operator
+union_set = s | t
+print(union_set)  # Output: {'apple', 'banana', 'cherry', 'date'}
+```
+
+**s.update(t) or s |= t**
+
+Updates the set s with elements from t.
+
+```py
+# Using update() method
+s = {'apple', 'banana', 'cherry'}
+t = {'banana', 'date'}
+s.update(t)
+print(s)  # Output: {'apple', 'banana', 'cherry', 'date'}
+
+# Using |= operator
+s = {'apple', 'banana', 'cherry'}
+s |= t
+print(s)  # Output: {'apple', 'banana', 'cherry', 'date'}
+```
+
+Sets are compared using the standard comparison operators (<, <=, ==, !=, >=, >), which compare based on subset and superset relationships.
+
+```py
+set1 = {1, 2, 3}
+set2 = {1, 2, 3, 4}
+
+print(set1 < set2)   # Output: True (set1 is a proper subset of set2)
+print(set1 <= set2)  # Output: True (set1 is a subset of set2)
+print(set1 == set2)  # Output: False (set1 is not equal to set2)
+print(set1 != set2)  # Output: True (set1 is not equal to set2)
+print(set1 >= set2)  # Output: False (set1 is not a superset of set2)
+print(set1 > set2)   # Output: False (set1 is not a proper superset of set2)
+```
+
+**Iterating Over Items in a Set**
+
+Basic Iteration: To iterate over each element in a set, we use a for loop:
+
+```py
+# Basic Iteration
+my_set = {1, 2, 3, 4, 5}
+
+for item in my_set:
+    print(item)
+# Output:
+# 1
+# 2
+# 3
+# 4
+# 5
+```
+
+Using Set Comprehensions: Set comprehensions provide a concise way to iterate over sets and perform operations on their elements:
+
+```py
+# Using Set Comprehensions
+my_set = {1, 2, 3, 4, 5}
+squared_set = {item ** 2 for item in my_set}
+print(squared_set)
+# Output: {1, 4, 9, 16, 25}
+```
+
+Using the map Function: The map function applies a specified function to each item in the set (though it returns a map object, not a set):
+
+```py
+# Using the map Function
+my_set = {1, 2, 3, 4, 5}
+squared_set = set(map(lambda x: x ** 2, my_set))
+print(squared_set)
+# Output: {1, 4, 9, 16, 25}
+```
+
+Using the filter Function: The filter function creates a set of elements for which a specified function returns True:
+
+```py
+# Using the filter Function
+my_set = {1, 2, 3, 4, 5}
+even_set = set(filter(lambda x: x % 2 == 0, my_set))
+print(even_set)
+# Output: {2, 4}
+```
+
+**Some practical use cases of sets**
+
+  - **Removing Duplicates from a List**
+
+```py
+# Removing duplicates from a list using a set
+numbers = [1, 2, 2, 3, 4, 4, 5]
+unique_numbers = list(set(numbers))
+print(unique_numbers)  # Output: [1, 2, 3, 4, 5]
+```
+
+  - **Membership Testing**
+
+```py
+# Checking membership in a set
+fruits = {'apple', 'banana', 'cherry'}
+print('banana' in fruits)  # Output: True
+print('date' in fruits)    # Output: False
+```
+
+
 
 ###### <a name="chapter3part2.2"></a>Chapter 3 - Part 2.2: Set Comprehensions
 
+In addition to creating sets by calling set(), or by using a set literal,we can also create sets using set comprehensions.A set comprehension is an expression and a loop with an optional condition enclosed in braces. Like list comprehensions, two syntaxes are supported:
+
+```
+{expression for item in iterable}
+{expression for item in iterable if condition}
+```
+
+We can use these to achieve a filtering effect
+
+
+
+```py
+html = {x for x in files if x.lower().endswith((".htm", ".html"))}
+```
+
+Given a list of filenames in files, this set comprehension makes the set html hold only those filenames that end in .htm or .html, regardless of case.
+
 ###### <a name="chapter3part2.3"></a>Chapter 3 - Part 2.3: Frozen Sets
+
+A frozenset is an immutable version of a set in Python. Unlike sets, frozen sets cannot be modified after they are created. This immutability makes them hashable, meaning they can be used as keys in dictionaries or elements of other sets.
+
+- **Immutable**: Once created, elements cannot be added or removed.
+- **Hashable**: Can be used as keys in dictionaries.
+- **Supports Standard Set Operations**: Union, intersection, difference, and symmetric difference.
+
+**Creation**
+
+```py
+# Creating a frozenset
+frozen_set1 = frozenset([1, 2, 3, 4])
+print(frozen_set1)  # Output: frozenset({1, 2, 3, 4})
+
+# Creating from a set
+set1 = {5, 6, 7, 8}
+frozen_set2 = frozenset(set1)
+print(frozen_set2)  # Output: frozenset({8, 5, 6, 7})
+```
+
+**Using Frozen Sets in Dictionaries**
+
+```py
+# Using a frozenset as a dictionary key
+d = {}
+frozen_set_key = frozenset([1, 2, 3])
+d[frozen_set_key] = "value"
+print(d)  # Output: {frozenset({1, 2, 3}): 'value'}
+```
+
+**Set Operations**
+
+- **Union**
+
+```py
+# Union of frozensets
+frozen_set1 = frozenset([1, 2, 3])
+frozen_set2 = frozenset([3, 4, 5])
+result = frozen_set1 | frozen_set2
+print(result)  # Output: frozenset({1, 2, 3, 4, 5})
+```
+
+- **Intersection**
+
+```py
+# Intersection of frozensets
+result = frozen_set1 & frozen_set2
+print(result)  # Output: frozenset({3})
+```
+
+- **Difference**
+
+```py
+# Difference of frozensets
+result = frozen_set1 - frozen_set2
+print(result)  # Output: frozenset({1, 2})
+```
+
+- **Symmetric Difference**
+
+```py
+# Symmetric difference of frozensets
+result = frozen_set1 ^ frozen_set2
+print(result)  # Output: frozenset({1, 2, 4, 5})
+```
+
+**Practical Use Cases for Frozen Sets**
+
+- **Using as Dictionary Keys:**
+
+```py
+permissions = {
+    frozenset(["read", "write"]): "Admin",
+    frozenset(["read"]): "User"
+}
+
+user_permissions = frozenset(["read"])
+print(permissions[user_permissions])  # Output: User
+```
+
+- **Ensuring Unchangeable Groupings**
+
+```py
+valid_options = frozenset(["option1", "option2", "option3"])
+
+if user_choice in valid_options:
+    print("Valid choice")
+else:
+    print("Invalid choice")
+```
+
+- **Set Operations on Immutable Data**
+
+```py
+# Example with configuration settings
+default_settings = frozenset(["setting1", "setting2", "setting3"])
+user_settings = frozenset(["setting2", "setting4"])
+
+# Combining settings without modifying the originals
+combined_settings = default_settings | user_settings
+print(combined_settings)  # Output: frozenset({'setting1', 'setting2', 'setting3', 'setting4'})
+```
 
 #### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
 
