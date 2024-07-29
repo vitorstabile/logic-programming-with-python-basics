@@ -2755,13 +2755,676 @@ print(combined_settings)  # Output: frozenset({'setting1', 'setting2', 'setting3
 
 #### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
 
+A mapping type is one that supports the membership operator ```(in)``` and the size function ```(len())```, and is iterable.
+
+Mappings are collections of key–value items and provide methods for accessing items and their keys and values.
+
+When iterated, unordered mapping types provide their items in an arbitrary order.
+
+Python 3.0 provides two unordered mapping types, the built-in ```dict``` type and the standard library’s ```collections.defaultdict``` type.
+
+A new, ordered mapping type, ```collections.OrderedDict```, was introduced with Python 3.1; this is a dictionary that has the same methods and properties (i.e., the same API) as the built-in dict, but stores its items in insertion order.
+
+Only hashable objectsmay be used as dictionary keys, so immutable data types such as ```float```, ```frozenset```, ```int```, ```str```, and ```tuple``` can be used as dictionary keys, but mutable types such as ```dict```, ```list```, and ```set``` cannot. On the other hand, each key’s associated value can be an object reference referring to an object of any type, including numbers, strings, lists, sets, dictionaries, functions, and so on.
+
 ###### <a name="chapter3part3.1"></a>Chapter 3 - Part 3.1: Dictionaries
+
+A ```dict``` is an unordered collection of zero or more key–value pairs whose keys are object references that refer to hashable objects,and whose values are object references referring to objects of any type. Dictionaries are mutable, so we can easily add or remove items, but since they are unordered they have no notion of index position and so cannot be sliced or strided.
+
+**Key Properties**
+
+  - **Keys**: Must be immutable and unique within a dictionary. Common key types include strings, numbers, and tuples.
+    
+  - **Values**: Can be of any data type and are associated with a specific key.
+
+Here are a few examples demonstrating different ways to create and use dictionaries:
+
+```py
+# Creating dictionaries
+d1 = {'a': 1, 'b': 2, 'c': 3}
+d2 = dict(a=1, b=2, c=3)
+d3 = dict([('a', 1), ('b', 2), ('c', 3)])
+d4 = dict.fromkeys(['x', 'y', 'z'], 0)
+
+print(d1)  # Output: {'a': 1, 'b': 2, 'c': 3}
+print(d2)  # Output: {'a': 1, 'b': 2, 'c': 3}
+print(d3)  # Output: {'a': 1, 'b': 2, 'c': 3}
+print(d4)  # Output: {'x': 0, 'y': 0, 'z': 0}
+```
+
+```py
+# Different ways to create the same dictionary
+
+# Using a dictionary literal
+d1 = {"id": 1948, "name": "Washer", "size": 3}
+
+# Using the dict constructor with keyword arguments
+d2 = dict(id=1948, name="Washer", size=3)
+
+# Using the dict constructor with a list of tuples
+d3 = dict([("id", 1948), ("name", "Washer"), ("size", 3)])
+
+# Using the dict constructor with zip() to combine keys and values
+d4 = dict(zip(("id", "name", "size"), (1948, "Washer", 3)))
+
+# All methods produce the same dictionary
+print(d1)  # Output: {'id': 1948, 'name': 'Washer', 'size': 3}
+print(d2)  # Output: {'id': 1948, 'name': 'Washer', 'size': 3}
+print(d3)  # Output: {'id': 1948, 'name': 'Washer', 'size': 3}
+print(d4)  # Output: {'id': 1948, 'name': 'Washer', 'size': 3}
+```
+
+The built-in ```zip()``` function that is used to create dictionary d4 returns a list of tuples, the first of which has the first items of each of the ```zip()``` function’s iterable arguments,the second of which has the second items, and so on. The keyword argument syntax (used to create dictionary d2) is usually the most compact and convenient, providing the keys are valid identifiers.
+
+A dictionary in Python is an unordered collection of key-value pairs, where each key is unique. Keys must be immutable types (such as strings, numbers, or tuples), while values can be of any type.
+
+```py
+d = {"root": 18, "blue": [75, "R", 2], 21: "venus", -14: None, "mars": "rover", (4, 11): 18, 0: 45}
+```
+
+**Accessing Values**
+
+You can access values in a dictionary using square brackets [] with the key:
+
+```py
+# Access values
+print(d["root"])  # Output: 18
+print(d[21])      # Output: 'venus'
+```
+
+If you try to access a key that does not exist, Python raises a KeyError:
+
+```py
+# Accessing a non-existent key
+# print(d[91])  # Raises KeyError
+```
+
+**Adding or Updating Items**
+
+```py
+# Adding a new key-value pair
+d["X"] = 59
+print(d)  # Output: {'root': 18, 'blue': [75, 'R', 2], 21: 'venus', -14: None, 'mars': 'rover', (4, 11): 18, 0: 45, 'X': 59}
+
+# Updating an existing key’s value
+d["root"] = 20
+print(d)  # Output: {'root': 20, 'blue': [75, 'R', 2], 21: 'venus', -14: None, 'mars': 'rover', (4, 11): 18, 0: 45, 'X': 59}
+```
+
+**Deleting Items**
+
+To remove an item from a dictionary, use the del statement. If the key does not exist, Python raises a KeyError:
+
+```py
+# Deleting an item
+del d["mars"]
+print(d)  # Output: {'root': 20, 'blue': [75, 'R', 2], 21: 'venus', -14: None, (4, 11): 18, 0: 45, 'X': 59}
+
+# Attempting to delete a non-existent key
+# del d["nonexistent"]  # Raises KeyError
+```
+
+**Dictionary Methods**
+
+- **d.clear()**
+  
+Removes all items from the dictionary, making it an empty dictionary.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+d.clear()
+print(d)  # Output: {}
+```
+
+- **d.copy()**
+
+Returns a shallow copy of the dictionary. Changes to the copy do not affect the original dictionary, and vice versa.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+d_copy = d.copy()
+print(d_copy)  # Output: {'a': 1, 'b': 2, 'c': 3}
+```
+
+- **d.fromkeys(s, v)**
+
+Creates a new dictionary with keys from sequence s and values set to v. If v is not provided, the default value is None.
+
+```py
+keys = ['a', 'b', 'c']
+default_value = 0
+d = dict.fromkeys(keys, default_value)
+print(d)  # Output: {'a': 0, 'b': 0, 'c': 0}
+
+d_default = dict.fromkeys(keys)
+print(d_default)  # Output: {'a': None, 'b': None, 'c': None}
+```
+
+- **d.get(k)**
+
+Returns the value for the key k. If the key is not found, it returns None.
+
+```py
+d = {"a": 1, "b": 2}
+value = d.get("a")
+print(value)  # Output: 1
+
+value_not_found = d.get("c")
+print(value_not_found)  # Output: None
+```
+
+- **d.get(k, v)**
+
+Returns the value for the key k. If the key is not found, it returns the default value v.
+
+```py
+d = {"a": 1, "b": 2}
+value = d.get("a", 0)
+print(value)  # Output: 1
+
+value_default = d.get("c", 0)
+print(value_default)  # Output: 0
+```
+
+- **d.items()**
+
+Returns a view object that displays a list of a dictionary’s key-value tuple pairs
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+items = d.items()
+print(items)  # Output: dict_items([('a', 1), ('b', 2), ('c', 3)])
+```
+
+- **d.keys()**
+
+Returns a view object that displays a list of all the keys in the dictionary.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+keys = d.keys()
+print(keys)  # Output: dict_keys(['a', 'b', 'c'])
+```
+
+- **d.pop(k)**
+
+Removes the item with the key k and returns its value. Raises a KeyError if the key is not found.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+value = d.pop("b")
+print(value)  # Output: 2
+print(d)  # Output: {'a': 1, 'c': 3}
+
+# d.pop("x")  # Raises KeyError if key "x" is not in the dictionary
+```
+
+- **d.pop(k, v)**
+
+Removes the item with the key k and returns its value. If the key is not found, returns the default value v.
+
+```py
+d = {"a": 1, "b": 2}
+value = d.pop("b", 0)
+print(value)  # Output: 2
+
+value_default = d.pop("c", 0)
+print(value_default)  # Output: 0
+```
+
+- **d.popitem()**
+
+Removes and returns an arbitrary (key, value) pair from the dictionary. Raises a KeyError if the dictionary is empty.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+item = d.popitem()
+print(item)  # Output: ('c', 3) (or another item, since it's arbitrary)
+print(d)  # Output: {'a': 1, 'b': 2}
+```
+
+- **d.setdefault(k, v)**
+
+Returns the value for the key k. If the key is not found, inserts the key with the value v and returns v.
+
+```py
+d = {"a": 1, "b": 2}
+value = d.setdefault("b", 0)
+print(value)  # Output: 2
+
+new_value = d.setdefault("c", 3)
+print(new_value)  # Output: 3
+print(d)  # Output: {'a': 1, 'b': 2, 'c': 3}
+```
+
+- **d.update(a)**
+
+Updates the dictionary with elements from another dictionary or from an iterable of key-value pairs. If a key already exists, its value is updated with the new value.
+
+```py
+d = {"a": 1, "b": 2}
+d.update({"b": 3, "c": 4})
+print(d)  # Output: {'a': 1, 'b': 3, 'c': 4}
+
+d.update([("d", 5), ("e", 6)])
+print(d)  # Output: {'a': 1, 'b': 3, 'c': 4, 'd': 5, 'e': 6}
+```
+
+- **d.values()**
+
+Returns a view object that displays a list of all the values in the dictionary.
+
+```py
+d = {"a": 1, "b": 2, "c": 3}
+values = d.values()
+print(values)  # Output: dict_values([1, 2, 3])
+```
+
+In Python, dictionary view objects, such as those returned by methods like dict.keys(), dict.values(), and dict.items(), support some set-like operations. This allows for efficient operations on the keys, values, or key-value pairs of dictionaries. Here’s a detailed overview of these operations
+
+**Intersection (&)**
+
+Returns a new view with elements that are common to both views.
+
+```py
+d1 = {"a": 1, "b": 2, "c": 3}
+d2 = {"b": 4, "c": 5, "d": 6}
+
+keys1 = d1.keys()  # dict_keys(['a', 'b', 'c'])
+keys2 = d2.keys()  # dict_keys(['b', 'c', 'd'])
+common_keys = keys1 & keys2
+print(common_keys)  # Output: {'b', 'c'}
+
+values1 = d1.values()  # dict_values([1, 2, 3])
+values2 = d2.values()  # dict_values([4, 5, 6])
+common_values = set(values1) & set(values2)
+print(common_values)  # Output: set() (no common values)
+```
+
+**Union (|)**
+
+Returns a new view with all unique elements from both views.
+
+```py
+d1 = {"a": 1, "b": 2, "c": 3}
+d2 = {"b": 4, "c": 5, "d": 6}
+
+keys1 = d1.keys()  # dict_keys(['a', 'b', 'c'])
+keys2 = d2.keys()  # dict_keys(['b', 'c', 'd'])
+all_keys = keys1 | keys2
+print(all_keys)  # Output: {'a', 'b', 'c', 'd'}
+
+values1 = d1.values()  # dict_values([1, 2, 3])
+values2 = d2.values()  # dict_values([4, 5, 6])
+all_values = set(values1) | set(values2)
+print(all_values)  # Output: {1, 2, 3, 4, 5, 6}
+```
+
+**Difference (-)**
+
+Returns a new view with elements present in the first view but not in the second view.
+
+```py
+d1 = {"a": 1, "b": 2, "c": 3}
+d2 = {"b": 4, "c": 5, "d": 6}
+
+keys1 = d1.keys()  # dict_keys(['a', 'b', 'c'])
+keys2 = d2.keys()  # dict_keys(['b', 'c', 'd'])
+unique_keys = keys1 - keys2
+print(unique_keys)  # Output: {'a'}
+
+values1 = d1.values()  # dict_values([1, 2, 3])
+values2 = d2.values()  # dict_values([4, 5, 6])
+unique_values = set(values1) - set(values2)
+print(unique_values)  # Output: {1, 2, 3}
+```
+
+**Symmetric Difference**
+
+Returns a new view with elements in either the first or second view but not in both.
+
+```py
+d1 = {"a": 1, "b": 2, "c": 3}
+d2 = {"b": 4, "c": 5, "d": 6}
+
+keys1 = d1.keys()  # dict_keys(['a', 'b', 'c'])
+keys2 = d2.keys()  # dict_keys(['b', 'c', 'd'])
+sym_diff_keys = keys1 ^ keys2
+print(sym_diff_keys)  # Output: {'a', 'd'}
+
+values1 = d1.values()  # dict_values([1, 2, 3])
+values2 = d2.values()  # dict_values([4, 5, 6])
+sym_diff_values = set(values1) ^ set(values2)
+print(sym_diff_values)  # Output: {1, 2, 3, 4, 5, 6}
+```
+
+**Iterating Over Dictionary**
+
+Use loops to iterate over dictionary keys, values, or key-value pairs.
+
+**Basic Iteration**
+
+  - **Iterating over Keys**
+
+```py
+# Iterating over dictionary keys
+d = {"a": 1, "b": 2, "c": 3}
+
+for key in d:
+    print(key)
+# Output:
+# a
+# b
+# c
+```
+
+  - **Iterating over Values**
+
+```py
+# Iterating over dictionary values
+d = {"a": 1, "b": 2, "c": 3}
+
+for value in d.values():
+    print(value)
+# Output:
+# 1
+# 2
+# 3
+```
+
+  - **Iterating over Key-Value Pairs**
+
+```py
+# Iterating over dictionary key-value pairs
+d = {"a": 1, "b": 2, "c": 3}
+
+for key, value in d.items():
+    print(f"Key: {key}, Value: {value}")
+# Output:
+# Key: a, Value: 1
+# Key: b, Value: 2
+# Key: c, Value: 3
+```
+
+**Dictionary Comprehensions**
+
+Create new dictionaries or filter existing ones using concise syntax.
+
+  - **Creating a New Dictionary from an Existing One**
+
+```py
+# Dictionary comprehension to create a new dictionary with values doubled
+d = {"a": 1, "b": 2, "c": 3}
+new_d = {key: value * 2 for key, value in d.items()}
+print(new_d)
+# Output: {'a': 2, 'b': 4, 'c': 6}
+```
+
+  - **Filtering Dictionary Items**
+
+```py
+# Dictionary comprehension to filter out items with value less than 3
+d = {"a": 1, "b": 2, "c": 3}
+filtered_d = {key: value for key, value in d.items() if value >= 3}
+print(filtered_d)
+# Output: {'c': 3}
+```
+
+**Using the map Function**
+
+The map function applies a specified function to each item in an iterable and returns a map object.
+
+  - **Applying a Function to Values**
+
+```py
+# Using map to apply a function to dictionary values
+d = {"a": 1, "b": 2, "c": 3}
+
+def double(x):
+    return x * 2
+
+mapped_values = map(double, d.values())
+print(list(mapped_values))
+# Output: [2, 4, 6]
+```
+
+  - **Creating a New Dictionary Using map**
+
+```py
+# Creating a new dictionary with keys unchanged and values doubled using map
+d = {"a": 1, "b": 2, "c": 3}
+
+keys = d.keys()
+values = map(double, d.values())
+new_d = dict(zip(keys, values))
+print(new_d)
+# Output: {'a': 2, 'b': 4, 'c': 6}
+```
+
+**Using the filter Function**
+
+The filter function applies a specified function to each item in an iterable and returns only those items where the function returns True.
+
+  - **Filtering Keys or Values**
+
+```py
+# Filtering dictionary items based on a condition
+d = {"a": 1, "b": 2, "c": 3}
+
+def is_even(x):
+    return x % 2 == 0
+
+# Filter dictionary values that are even
+filtered_values = filter(is_even, d.values())
+print(list(filtered_values))
+# Output: [2]
+
+# Creating a new dictionary with only even values
+filtered_d = {key: value for key, value in d.items() if is_even(value)}
+print(filtered_d)
+# Output: {'b': 2}
+```
+
+  - **Filtering Items with Custom Condition**
+
+```py
+# Filtering items with custom condition on both keys and values
+d = {"apple": 1, "banana": 2, "cherry": 3}
+
+def key_starts_with_b(key):
+    return key.startswith('b')
+
+# Creating a new dictionary with keys that start with 'b'
+filtered_d = {key: value for key, value in d.items() if key_starts_with_b(key)}
+print(filtered_d)
+# Output: {'banana': 2}
+```
+
+**Common use cases of Dictionaries**
+
+  - **Counting Occurrences**
+
+Dictionaries are often used to count occurrences of items, such as counting the frequency of words in a text.
+
+```py
+# Counting word frequencies in a text
+text = "apple banana apple orange banana apple"
+word_counts = {}
+
+for word in text.split():
+    if word in word_counts:
+        word_counts[word] += 1
+    else:
+        word_counts[word] = 1
+
+print(word_counts)
+# Output: {'apple': 3, 'banana': 2, 'orange': 1}
+```
+
+  - **Storing Configuration Settings**
+
+Dictionaries can store configuration settings or parameters for applications, making it easy to access and update these settings.
+
+```py
+# Configuration settings for a web application
+config = {
+    "host": "localhost",
+    "port": 8080,
+    "debug": True,
+    "database": {
+        "name": "app_db",
+        "user": "admin",
+        "password": "secure_password"
+    }
+}
+
+print(config["host"])  # Output: localhost
+print(config["database"]["name"])  # Output: app_db
+```
+
+  - **Caching Results**
+
+Dictionaries can be used to implement caching mechanisms to store and retrieve previously computed results efficiently.
+
+```py
+# Caching results of expensive computation
+cache = {}
+
+def expensive_computation(x):
+    if x in cache:
+        return cache[x]
+    
+    result = x * x  # Placeholder for an expensive computation
+    cache[x] = result
+    return result
+
+print(expensive_computation(10))  # Output: 100
+print(expensive_computation(10))  # Output: 100 (from cache)
+```
+
+  - **Grouping Data**
+
+Dictionaries can group related data together, such as organizing employee information by department.
+
+```py
+# Grouping employees by department
+employees = {
+    "HR": ["Alice", "Bob"],
+    "Engineering": ["Charlie", "Diana"],
+    "Sales": ["Eve", "Frank"]
+}
+
+print(employees["Engineering"])  # Output: ['Charlie', 'Diana']
+```
+
+  - **Handling JSON Data**
+
+Dictionaries are often used to handle JSON data, as JSON objects map directly to Python dictionaries.
+
+```py
+import json
+
+# JSON data as a string
+json_data = '{"name": "Alice", "age": 30, "city": "New York"}'
+
+# Convert JSON string to dictionary
+data = json.loads(json_data)
+
+print(data["name"])  # Output: Alice
+```
+
+
 
 ###### <a name="chapter3part3.2"></a>Chapter 3 - Part 3.2: Dictionary Comprehensions
 
+A dictionary comprehension is an expression and a loop with an optional condition enclosed in braces, very similar to a set comprehension. Like list and set comprehensions, two syntaxes are supported:
+
+```
+{keyexpression: valueexpression for key, value in iterable}
+{keyexpression: valueexpression for key, value in iterable if condition}
+```
+
+Here is how we could use a dictionary comprehension to create a dictionary where each key is the name of a file in the current directory and each value is the size of the file in bytes
+
+```py
+file_sizes = {name: os.path.getsize(name) for name in os.listdir(".")}
+```
+
+A dictionary comprehension can also be used to create an inverted dictionary. For example, given dictionary d, we can produce a new dictionary whose keys are d’s values and whose values are d’s keys:
+
+```py
+inverted_d = {v: k for k, v in d.items()}
+```
+
 ###### <a name="chapter3part3.3"></a>Chapter 3 - Part 3.3: Default Dictionaries
 
+In Python, the collections module provides a defaultdict class which extends the built-in dict class by allowing you to set default values for missing keys. This can simplify many common dictionary operations where you need to handle missing keys gracefully.
+
+**Overview of defaultdict**
+
+Purpose: defaultdict helps avoid key errors and simplifies code by providing a default value for missing keys.
+
+Initialization: You initialize a defaultdict with a factory function that defines the default value for new keys.
+
+**Key Features**
+
+Automatic Default Values: When you access or modify a key that does not exist, defaultdict automatically creates a new entry with a default value specified by the factory function.
+
+Factory Functions: The factory function can be any callable object, such as list, int, or set, which determines the default value type.
+
+Here's a general example using defaultdict:
+
+```py
+from collections import defaultdict
+
+# Using int as the default factory, which initializes missing keys with 0
+dd = defaultdict(int)
+
+dd['a'] += 1
+dd['b'] += 2
+
+print(dd['a'])  # Output: 1
+print(dd['b'])  # Output: 2
+print(dd['c'])  # Output: 0 (default value for missing keys)
+```
+
 ###### <a name="chapter3part3.4"></a>Chapter 3 - Part 3.4: Ordered Dictionaries
+
+In Python, dictionaries from version 3.7 onwards maintain insertion order as part of the language specification. However, before Python 3.7, this was not guaranteed, and collections.OrderedDict was used to explicitly maintain the order of items in a dictionary.
+
+**Overview of OrderedDict**
+
+- **Purpose**: OrderedDict is a dictionary subclass that maintains the order of keys as they are added. It was primarily useful in Python versions prior to 3.7, but remains useful for additional methods and functionalities it provides.
+
+- **Initialization**: You initialize OrderedDict just like a regular dictionary, but it preserves the order of key-value pairs.
+
+**Key Features**
+
+- Order Preservation: OrderedDict keeps track of the order in which items are inserted. This makes it easy to iterate over the dictionary in the same order.
+
+- Reordering: OrderedDict provides additional methods to rearrange the order of keys.
+
+- Move Operations: Methods to move keys around within the dictionary.
+
+```py
+from collections import OrderedDict
+
+# Create an OrderedDict
+od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+
+# Print the OrderedDict
+print(od)
+# Output: OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+
+# Iterate over OrderedDict
+for key, value in od.items():
+    print(f"{key}: {value}")
+
+# Output:
+# a: 1
+# b: 2
+# c: 3
+```
 
 #### <a name="chapter3part4"></a>Chapter 3 - Part 4: Iterating and Copying Collections
 
