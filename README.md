@@ -4272,13 +4272,406 @@ except AuthenticationError as e:
 
 #### <a name="chapter4part3"></a>Chapter 4 - Part 3: Custom Functions
 
+Functions are a means by whichwe can package up and parameterize functionality. Four kinds of functions can be created in Python: global functions, local functions, lambda functions, and methods.
+
+- Global objects (including functions) are accessible to any code in the same module (i.e., the same .py file) in which the object is created. Global objects can also be accessed from other modules, as we will see in the next chapter.
+
+- Local functions (also called nested functions) are functions that are defined inside other functions. These functions are visible only to the function where they are defined; they are especially useful for creating small helper functions that have no use elsewhere.
+
+- Lambda functions are expressions, so they can be created at their point of use; however, they are much more limited than normal functions.
+
+- Methods are functions that are associated with a particular data type and can be used only in conjunction with the data type
+
+The general syntax for creating a (global or local) function is:
+
+```
+def functionName(parameters):
+  suite
+```
+
+The parametersare optional,and if there is more than one they are written as a sequence of comma-separated identifiers, or as a sequence of identifier=value
+
+```py
+def heron(a, b, c):
+  s = (a + b + c) / 2
+    return math.sqrt(s * (s - a) * (s - b) * (s - c))
+```
+
+Inside the function, each parameter, a, b, and c, is initialized with the corresponding value that was passed as an argument. When the function is called, we must supply all of the arguments, for example, heron(3, 4, 5). If we give too
+few or too many arguments, a TypeError exception will be raised. When we do a call like this we are said to be using positional arguments, because each argument passed is set as the value of the parameter in the corresponding position. So in this case, a is set to 3, b to 4, and c to 5, when the function is called.
+
+Every function in Python returns a value, although it is perfectly acceptable (and common) to ignore the return value. The return value is either a single value or a tuple of values, and the values returned can be collections, so there are no practical limitations on what we can return. We can leave a function at any point by using the return statement. If we use return with no arguments, or if we don’t have a return statement at all, the function will return None.
+
+Some functions have parameters for which there can be a sensible default.
+
+```py
+def letter_count(text, letters=string.ascii_letters):
+  letters = frozenset(letters)
+  count = 0
+  for char in text:
+    if char in letters:
+      count += 1
+  return count
+```
+
+We have specified a default value for the letters parameter by using the parameter=default syntax. This allows us to call letter_count() with just one argument, for example, letter_count("Maggie and Hopey"). Here, inside the function, letters will be the string that was given as the default value. But we can still change the default, for example, using an extra positional argument, letter_count("Maggie and Hopey", "aeiouAEIOU"), or using a keyword argument (covered next), letter_count("Maggie and Hopey", letters="aeiouAEIOU").
+
+we are not forced to pass our arguments in the order they appear in the function’s definition—instead, we can use keyword arguments, passing each argument in the form name=value.
+
+```py
+def shorten(text, length=25, indicator="..."):
+  if len(text) > length:
+    text = text[:length - len(indicator)] + indicator
+  return text
+```
+
+```py
+shorten("The Silkie") # returns: 'The Silkie'
+shorten(length=7, text="The Silkie") # returns: 'The ...'
+shorten("The Silkie", indicator="&", length=7) # returns: 'The Si&'
+shorten("The Silkie", 7, "&") # returns: 'The Si&'
+```
+
+Because both length and indicator have default values, either or both can be omitted entirely, in which case the default is used—this is what happens in the first call. In the second call we use keyword arguments for both of the specified parameters, so we can order them as we like. The third call mixes both positional and keyword arguments. We used a positional first argument (positional argumentsmust always precede keyword arguments),and then two keyword arguments. The fourth call simply uses positional arguments.
+
 ###### <a name="chapter4part3.1"></a>Chapter 4 - Part 3.1: Names and Docstrings
+
+Using good names for a function and its parameters goes a long way toward making the purpose and use of the function clear to other programmers
+
+- Use a naming scheme, and use it consistently. Use UPPERCASE for constants, TitleCase for classes (including exceptions), camel- Case for GUI (Graphical User Interface) functions and methods.
+  
+- For all names, avoid abbreviations, unless they are both standardized and widely used.
+
+- Be proportional with variable and parameter names: x is a perfectly good name for an x-coordinate and i is fine for a loop counter, but in general the name should be long enough to be descriptive. The name should describe the data’s meaning rather than its type (e.g., amount_due rather than money), unless the use is generic to a particular type
+
+- Functions and methods should have names that say what they do or what they return (depending on their emphasis), but never how they do it
+
+```
+def find(l, s, i=0): # BAD
+def linear_search(l, s, i=0): # BAD
+def first_index_of(sorted_name_list, name, start=0): # GOOD
+```
+
+We can add documentation to any function by using a docstring—this is simply a string that comes immediately after the def line, and before the function’s code proper begins.
+
+```py
+def calculate_area(radius):
+    """
+    Calculate the area of a circle given its radius.
+
+    Parameters:
+    radius (float): The radius of the circle. Must be a non-negative number.
+
+    Returns:
+    float: The area of the circle.
+
+    Raises:
+    ValueError: If the radius is negative.
+
+    Example:
+    >>> calculate_area(5)
+    78.53981633974483
+
+    Notes:
+    The formula for the area of a circle is π * radius^2.
+    """
+    if radius < 0:
+        raise ValueError("Radius cannot be negative")
+    import math
+    return math.pi * radius ** 2
+```
 
 ###### <a name="chapter4part3.2"></a>Chapter 4 - Part 3.2: Argument and Parameter Unpacking
 
+In Python, the sequence unpacking operator * can be used to supply positional arguments to functions. This feature is handy when you have a sequence (like a list or tuple) and you want to pass its elements as separate positional arguments to a function.
+
+The tuple values is unpacked into the print_values function, which takes three arguments.
+
+```py
+def function_name(arg1, arg2, arg3):
+    pass
+
+sequence = (1, 2, 3)
+function_name(*sequence)
+```
+
+You can also combine unpacked arguments with additional arguments or keyword arguments.
+
+```py
+def display_info(name, age, city, country="USA"):
+    print(f"{name}, {age} years old, lives in {city}, {country}.")
+
+person_info = ("Bob", 25, "Los Angeles")
+display_info(*person_info, country="Canada")
+
+# Output: Bob, 25 years old, lives in Los Angeles, Canada.
+```
+
+you can use * before a parameter name to collect any additional positional arguments into a tuple. This is often referred to as "variable-length arguments" or "varargs."
+
+```py
+def function_name(param1, param2, *args):
+    pass
+```
+
+- param1 and param2 are regular positional parameters.
+- *args collects any additional positional arguments into a tuple named args.
+
+```py
+def product(*args):
+  result = 1
+  for arg in args:
+    result *= arg
+  return result
+```
+
+This function has one parameter called args. Having the * in front means that inside the function the args parameter will be a tuple with its items set to however many positional arguments are given.
+
+```py
+product(1, 2, 3, 4) # args == (1, 2, 3, 4); returns: 24
+product(5, 3, 8) # args == (5, 3, 8); returns: 120
+product(11) # args == (11,); returns: 11
+```
+
+We can have keyword arguments following positional arguments
+
+```py
+def describe_person(name, age, *hobbies):
+    print(f"{name} is {age} years old and enjoys:")
+    for hobby in hobbies:
+        print(f"- {hobby}")
+
+describe_person("Alice", 30, "reading", "cycling", "hiking")
+
+# Output:
+# Alice is 30 years old and enjoys:
+# - reading
+# - cycling
+# - hiking
+```
+
+is also possible to use * as a “parameter” in its own right.
+
+```
+def function_name(positional_arg1, positional_arg2, *, keyword_only_arg1, keyword_only_arg2):
+    pass
+```
+
+- positional_arg1 and positional_arg2 are positional parameters.
+- * signifies that the following parameters must be provided as keyword arguments.
+- keyword_only_arg1 and keyword_only_arg2 must be specified using their names when calling the function.
+
+```py
+def heron2(a, b, c, *, units="square meters"):
+  s = (a + b + c) / 2
+  area = math.sqrt(s * (s - a) * (s - b) * (s - c))
+  return "{0} {1}".format(area, units)
+```
+
+```py
+heron2(25, 24, 7) # returns: '84.0 square meters'
+heron2(41, 9, 40, units="sq. inches") # returns: '180.0 sq. inches'
+heron2(25, 24, 7, "sq. inches") # WRONG! raises TypeError
+```
+
+```py
+def register_user(username, email, *, age=None, country='USA'):
+    print(f"Username: {username}")
+    print(f"Email: {email}")
+    print(f"Age: {age}")
+    print(f"Country: {country}")
+
+# Valid call:
+register_user("john_doe", "john@example.com", age=30, country="Canada")
+
+# Invalid call (will raise a TypeError):
+# register_user("john_doe", "john@example.com", 30, "Canada")
+```
+
+Mixing Positional and Keyword-Only Parameters
+
+```py
+def create_order(item, quantity, *, discount=None, gift_wrap=False):
+    print(f"Item: {item}")
+    print(f"Quantity: {quantity}")
+    print(f"Discount: {discount}")
+    print(f"Gift Wrap: {gift_wrap}")
+
+# Valid call:
+create_order("Laptop", 1, discount=10, gift_wrap=True)
+
+# Invalid call (will raise a TypeError):
+# create_order("Laptop", 1, 10, True)
+```
+
+you can use the ** operator to unpack a dictionary (or any mapping) into keyword arguments when calling a function. This is known as "dictionary unpacking" or "mapping unpacking." It allows you to pass the contents of a dictionary as keyword arguments to a function.
+
+```py
+options = dict(paper="A4", color=True)
+print_setup(**options)
+```
+
+```py
+def display_info(name, age, country):
+    print(f"Name: {name}")
+    print(f"Age: {age}")
+    print(f"Country: {country}")
+
+info = {"name": "Alice", "age": 30, "country": "Canada"}
+display_info(**info)
+
+# Output:
+# Name: Alice
+# Age: 30
+# Country: Canada
+```
+
+```py
+def create_profile(username, email, *, age=None, country='USA'):
+    print(f"Username: {username}")
+    print(f"Email: {email}")
+    print(f"Age: {age}")
+    print(f"Country: {country}")
+
+profile_info = {"age": 25, "country": "UK"}
+create_profile("john_doe", "john@example.com", **profile_info)
+
+# Output:
+# Username: john_doe
+# Email: john@example.com
+# Age: 25
+# Country: UK
+```
+
+```py
+def print_args(*args, **kwargs):
+  for i, arg in enumerate(args):
+    print("positional argument {0} = {1}".format(i, arg))
+  for key in kwargs:
+    print("keyword argument {0} = {1}".format(key, kwargs[key]))
+```
+
 ###### <a name="chapter4part3.3"></a>Chapter 4 - Part 3.3: Accessing Variables in the Global Scope
 
+It is sometimes convenient to have a few global variables that are accessed by various functions in the program. This is usually okay for “constants”
+
+The ```global``` statement in Python is used to declare that a variable inside a function refers to a variable defined at the global scope, rather than a local variable. 
+
+```py
+global variable_name
+```
+
+**Modifying a Global Variable**
+
+```py
+# Global variable
+counter = 0
+
+def increment():
+    global counter
+    counter += 1
+
+print(counter)  # Output: 0
+increment()
+print(counter)  # Output: 1
+```
+
+**Global Variable in Multiple Functions**
+
+```py
+# Global variable
+total = 100
+
+def add(amount):
+    global total
+    total += amount
+
+def subtract(amount):
+    global total
+    total -= amount
+
+print(total)  # Output: 100
+add(50)
+print(total)  # Output: 150
+subtract(20)
+print(total)  # Output: 130
+```
+
+**Using Global Variables with Functions**
+
+```py
+# Global variable
+settings = {
+    "theme": "light",
+    "font_size": 12
+}
+
+def update_settings(theme=None, font_size=None):
+    global settings
+    if theme:
+        settings["theme"] = theme
+    if font_size:
+        settings["font_size"] = font_size
+
+print(settings)  # Output: {'theme': 'light', 'font_size': 12}
+update_settings(theme="dark", font_size=14)
+print(settings)  # Output: {'theme': 'dark', 'font_size': 14}
+```
+
 ###### <a name="chapter4part3.4"></a>Chapter 4 - Part 3.4: Lambda Functions
+
+Lambda functions are functions created using the following syntax:
+
+```
+lambda parameters: expression
+```
+
+The parameters are optional, and if supplied they are normally just commaseparated variable names, that is, positional arguments,although the complete argument syntax supported by def statementscan be used. The expression cannot contain branches or loops (although conditional expressions are allowed), and cannot have a return (or yield) statement. The result of a lambda expression is an anonymous function. When a lambda function is called it returns the result of computing the expression as its result. If the expression is a tuple it should be enclosed in parentheses.
+
+```py
+# Lambda function to add two numbers
+add = lambda x, y: x + y
+
+print(add(5, 3))  # Output: 8
+```
+
+**Lambda Function as an Argument**
+
+Lambda functions are often used as arguments to higher-order functions like map(), filter(), and sorted().
+
+```py
+# Using lambda with map() to square numbers
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x ** 2, numbers))
+
+print(squared_numbers)  # Output: [1, 4, 9, 16, 25]
+```
+
+map() applies the lambda function lambda x: x ** 2 to each element of the list numbers, producing a new list with squared values.
+
+**Lambda Function with filter()**
+
+filter() applies the lambda function lambda x: x % 2 == 0 to filter out only even numbers from the list numbers.
+
+```py
+# Using lambda with filter() to find even numbers
+numbers = [1, 2, 3, 4, 5]
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+
+print(even_numbers)  # Output: [2, 4]
+```
+
+**Lambda Function with sorted()**
+
+sorted() uses the lambda function lambda x: x[1] to sort the list of tuples based on the second element of each tuple.
+
+```py
+# Using lambda with sorted() to sort by the second element in tuples
+data = [(1, 'apple'), (2, 'banana'), (3, 'cherry')]
+sorted_data = sorted(data, key=lambda x: x[1])
+
+print(sorted_data)  # Output: [(1, 'apple'), (2, 'banana'), (3, 'cherry')]
+```
 
 ###### <a name="chapter4part3.5"></a>Chapter 4 - Part 3.5: Assertions
 
