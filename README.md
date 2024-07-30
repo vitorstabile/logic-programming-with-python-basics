@@ -3745,17 +3745,281 @@ print(deep_copied_list)  # Output: [1, [77, 3]]
 
 #### <a name="chapter4part1"></a>Chapter 4 - Part 1: Control Structures
 
+Python provides conditional branching with ```if``` statements and looping with ```while``` and ```for …in``` statements. Python also has a ```conditional expression```—this is a kind of ```if``` statement that is Python’s answer to the ternary operator ```(?:)``` used in C-style languages.
+
 ###### <a name="chapter4part1.1"></a>Chapter 4 - Part 1.1: Conditional Branching
+
+the general syntax for Python’s conditional branch statement:
+
+```
+if boolean_expression1:
+  suite1
+elif boolean_expression2:
+  suite2
+...
+elif boolean_expressionN:
+  suiteN
+else:
+  else_suite
+```
+
+The final ```else``` clause is optional.
+
+If we want to account for a particular case, but want to do nothing if it occurs, we can use ```pass``` (which serves as a “do nothing” place holder) as that branch’s suite.
+
+```py
+x = 10
+
+if x > 5:
+    pass  # Do nothing if x is greater than 5
+else:
+    print("x is 5 or less")
+```
+
+Python also supports a shorthand for if-else statements called the ternary conditional operator, which is used for simple conditions.
+
+```
+expression1 if boolean_expression else expression2
+```
+
+```py
+x = 10
+result = "greater than 5" if x > 5 else "5 or less"
+print(result) # Output: greater than 5
+```
+
+Ternary conditional operator (or inline if-else) can be use to set the value of a variable based on a condition
+
+```py
+# Define membership status
+is_member = True
+
+# Set discount based on membership status
+discount = 20 if is_member else 5
+
+print(discount)  # Output: 20
+```
+
+Conditional expressions can be used to improve messages printed for users.
+
+```py
+print("{0} file{1}".format((count if count != 0 else "no"), ("s" if count != 1 else "")))
+```
 
 ###### <a name="chapter4part1.2"></a>Chapter 4 - Part 1.2: Looping
 
+Python provides a ```while``` loop and a ```for …in``` loop
+
 ###### <a name="chapter4part1.3"></a>Chapter 4 - Part 1.3: While Loops
 
+General syntax of the ```while``` loop
+
+```
+while boolean_expression:
+  while_suite
+else:
+  else_suite
+```
+
+The ```else``` clause is optional. As long as the ```boolean_expression``` is ```True```, the ```while``` block’s suite is executed. If the ```boolean_expression``` is or becomes ```False```, the loop terminates, and if the optional ```else``` clause is present, its suite is executed.
+
+```py
+count = 0
+
+while count < 5:
+    print("Inside loop:", count)
+    count += 1
+else:
+    print("Loop terminated normally.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+# Inside loop: 3
+# Inside loop: 4
+# Loop terminated normally.
+```
+
+If the loop is terminated by a ```break``` statement, or a ```return``` statement (if the while is in a function or method) or an exception, the else clause is skipped.
+
+```py
+count = 0
+
+while count < 5:
+    if count == 3:
+        break
+    print("Inside loop:", count)
+    count += 1
+else:
+    print("Loop terminated normally.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+```
+
+The ```continue``` immediately jumps back to the condition check.
+
+```py
+count = 0
+
+while count < 5:
+    count += 1
+    if count == 3:
+        continue
+    print("Inside loop:", count)
+else:
+    print("Loop terminated normally.")
+
+# Output:
+# Inside loop: 1
+# Inside loop: 2
+# Inside loop: 4
+# Inside loop: 5
+# Loop terminated normally.
+```
+
+ If an exception occurs, the ```else``` clause is skipped.
+
+ ```py
+count = 0
+
+try:
+    while count < 5:
+        if count == 3:
+            raise ValueError("An error occurred")
+        print("Inside loop:", count)
+        count += 1
+except ValueError as e:
+    print("Exception:", e)
+else:
+    print("Loop terminated normally.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+# Exception: An error occurred
+```
+
 ###### <a name="chapter4part1.4"></a>Chapter 4 - Part 1.4: For Loops
+
+Like a ```while``` loop, the full syntax of the ```for …in``` loop also includes an optional else clause:
+
+```
+for expression in iterable:
+  for_suite
+else:
+  else_suite
+```
+
+The ```expression``` is normally either a single variable or a sequence of variables, usually in the form of a tuple. If a tuple or list is used for the ```expression```, each item is unpacked into the expression’s items.
+
+is used to iterate over a sequence (such as a list, tuple, string, or range).
+
+```py
+for i in range(5):
+    print("Inside loop:", i)
+else:
+    print("Loop completed all iterations.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+# Inside loop: 3
+# Inside loop: 4
+# Loop completed all iterations.
+```
+
+If the loop is broken out of due to a ```break``` statement, or a ```return``` statement (if the loop is in a function or method), or if an exception is raised, the else clause’s suite is not executed.
+
+```py
+for i in range(5):
+    if i == 3:
+        break
+    print("Inside loop:", i)
+else:
+    print("Loop completed all iterations.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+```
+
+If a ```continue``` statement is executed inside the ```for …in``` loop’s suite, control is immediately passed to the top of the loop and the next iteration begins.
+
+```py
+for i in range(5):
+    if i == 3:
+        continue
+    print("Inside loop:", i)
+else:
+    print("Loop completed all iterations.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+# Inside loop: 4
+# Loop completed all iterations.
+```
+
+ If an exception occurs, the ```else``` clause is skipped.
+
+ ```py
+try:
+    for i in range(5):
+        if i == 3:
+            raise ValueError("An error occurred")
+        print("Inside loop:", i)
+except ValueError as e:
+    print("Exception:", e)
+else:
+    print("Loop completed all iterations.")
+
+# Output:
+# Inside loop: 0
+# Inside loop: 1
+# Inside loop: 2
+# Exception: An error occurred
+```
+
 
 #### <a name="chapter4part2"></a>Chapter 4 - Part 2: Exception Handling
 
 ###### <a name="chapter4part2.1"></a>Chapter 4 - Part 2.1: Catching and Raising Exceptions
+
+Exceptions are caught using try …except blocks, whose general syntax is:
+
+```
+try:
+  try_suite
+except exception_group1 as variable1:
+  except_suite1
+...
+except exception_groupN as variableN:
+  except_suiteN
+else:
+  else_suite
+finally:
+  finally_suite
+```
+
+There must be at least one ```except``` block, but both the ```else``` and the ```finally``` blocks are optional. The ```else``` block’s suite is executed when the ```try``` block’s suite has finished normally—but it is not executed if an exception occurs. If there is a ```finally``` block, it is always executed at the end.
+
+Each ```except``` clause’s exception group can be a single exception or a parenthesized tuple of exceptions. For each group, the ```as variable``` part is optional; if used, the variable contains the exception that occurred, and can be accessed in the exception block’s suite.
+
+If an exception occurs in the ```try``` block’s suite, each ```except``` clause is tried in turn. If the exception matches an exception group, the corresponding suite is executed.
+
+<br>
+
+<div align="center"><img src="img/exceptionhierarchy-w700-h382.png" width=700 height=382><br><sub>Python’s exception hierarchy - (<a href='https://w3.cs.jmu.edu/lam2mo/cs240_2014_08/lab05-exceptions.html'>Work by w3.cs.jmu.edu</a>) </sub></div>
+
+<br>
 
 ###### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Raising Exceptions
 
