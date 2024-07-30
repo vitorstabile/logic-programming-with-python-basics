@@ -4675,6 +4675,66 @@ print(sorted_data)  # Output: [(1, 'apple'), (2, 'banana'), (3, 'cherry')]
 
 ###### <a name="chapter4part3.5"></a>Chapter 4 - Part 3.5: Assertions
 
+Preconditions and postconditions can be specified using assert statements, which have the syntax:
+
+```
+assert boolean_expression, optional_expression
+```
+
+If the ```boolean_expression``` evaluates to ```False``` an ```AssertionError``` exception is raised. If the optional ```optional_expression``` is given, it is used as the argument to the ```AssertionError``` exception
+
+```py
+def divide(a, b):
+    assert b != 0, "Division by zero is not allowed"
+    return a / b
+
+print(divide(10, 2))  # Output: 5.0
+
+# This will raise an AssertionError
+print(divide(10, 0))  # Raises: AssertionError: Division by zero is not allowed
+```
+
+The assert statement checks if b is not zero before performing the division. If b is zero, an AssertionError is raised with the message "Division by zero is not allowed".
+
+**Preconditions**
+
+Preconditions are conditions that must be true before executing a function or a piece of code.
+
+```py
+def withdraw(amount, balance):
+    assert amount > 0, "Withdrawal amount must be positive"
+    assert amount <= balance, "Insufficient funds"
+    balance -= amount
+    return balance
+
+print(withdraw(50, 100))  # Output: 50
+
+# These will raise AssertionErrors
+print(withdraw(-10, 100))  # Raises: AssertionError: Withdrawal amount must be positive
+print(withdraw(150, 100))  # Raises: AssertionError: Insufficient funds
+```
+
+The assert statements check preconditions: that the withdrawal amount is positive and that it does not exceed the balance.
+
+**Postconditions**
+
+Postconditions are conditions that should be true after executing a function or a piece of code.
+
+```py
+def add_numbers(a, b):
+    result = a + b
+    assert result >= a, "Result should be greater than or equal to the first operand"
+    assert result >= b, "Result should be greater than or equal to the second operand"
+    return result
+
+print(add_numbers(3, 5))  # Output: 8
+
+# This will raise an AssertionError if the condition fails
+print(add_numbers(-3, -5))  # Output: -8, but no assertion error is raised here
+```
+
+The assert statements ensure that the result of the addition meets expected postconditions.
+
 ## <a name="chapter5"></a>Chapter 5: Modules
 
 #### <a name="chapter5part1"></a>Chapter 5 - Part 1: Modules and Packages
