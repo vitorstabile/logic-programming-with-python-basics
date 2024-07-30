@@ -4011,6 +4011,15 @@ finally:
 
 There must be at least one ```except``` block, but both the ```else``` and the ```finally``` blocks are optional. The ```else``` block’s suite is executed when the ```try``` block’s suite has finished normally—but it is not executed if an exception occurs. If there is a ```finally``` block, it is always executed at the end.
 
+```py
+try:
+    # Code that might raise an exception
+    result = 10 / 0
+except ZeroDivisionError as e:
+    # Code that runs if a ZeroDivisionError occurs
+    print("Error: Cannot divide by zero. Details:", e)
+```
+
 Each ```except``` clause’s exception group can be a single exception or a parenthesized tuple of exceptions. For each group, the ```as variable``` part is optional; if used, the variable contains the exception that occurred, and can be accessed in the exception block’s suite.
 
 If an exception occurs in the ```try``` block’s suite, each ```except``` clause is tried in turn. If the exception matches an exception group, the corresponding suite is executed.
@@ -4021,9 +4030,245 @@ If an exception occurs in the ```try``` block’s suite, each ```except``` claus
 
 <br>
 
+**Using else Block**
+
+```py
+try:
+    result = 10 / 2
+except ZeroDivisionError as e:
+    print("Error:", e)
+else:
+    # Code that runs if no exceptions occur
+    print("Division successful. Result:", result)
+```
+
+**Using finally Block**
+
+```py
+try:
+    file = open("sample.txt", "r")
+    content = file.read()
+except FileNotFoundError as e:
+    print("Error: File not found.", e)
+finally:
+    # This block always executes
+    file.close()
+    print("File closed.")
+```
+
+**Handling Multiple Exceptions**
+
+```py
+try:
+    value = int("abc")  # This will raise a ValueError
+except (ValueError, TypeError) as e:
+    # This block handles both ValueError and TypeError
+    print("ValueError or TypeError occurred. Details:", e)
+```
+
+If none of the ```except``` blocks matches the exception, Python will work itsway up the call stack looking for a suitable exception handler. If none is found the program will terminate and print the exception and a traceback on the console.
+
+If no exceptions occur, any optional ```else``` block is executed. And in all cases—that is, if no exceptions occur, if an exception occurs and is handled, or if an exception occurs that is passed up the call stack—any ```finally``` block’s suite is always executed. If no exception occurs, or if an exception occurs and is handled by one of the ```except``` blocks, the ```finally``` block’s suite is executed at the end; but if an exception occurs that doesn’t match, first the ```finally``` block’s suite is executed, and then the exception is passed up the call stack. This guarantee of execution can be very useful when we want to ensure that resources are properly released.
+
+**Normal Flow**
+
+```
+try:
+  # process
+except exception:
+  # Not pass here, because no exception raise
+finally:
+  # cleanup
+# continue here
+```
+
+**Handled Exception**
+
+```
+try:
+  # process
+except exception:
+  # handle
+finally:
+  # cleanup
+# continue here
+```
+
+**Unhandled Exception**
+
+```
+try:
+  # process
+except exception:
+  # Not pass here, because exception raised not match
+finally:
+  # cleanup
+# go up call stack
+```
+
+
 ###### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Raising Exceptions
 
+There are three syntaxes for raising exceptions:
+
+```
+raise exception(args)
+raise exception(args) from original_exception
+raise
+```
+
+**Basic Exception Raising**
+
+```
+raise exception(args)
+```
+
+This is the most common way to raise an exception.
+
+```py
+def divide(a, b):
+    if b == 0:
+        raise ZeroDivisionError("You cannot divide by zero.")
+    return a / b
+
+try:
+    result = divide(10, 0)
+except ZeroDivisionError as e:
+    print("Caught exception:", e)
+
+# Output: Caught exception: You cannot divide by zero.
+```
+
+**Exception Chaining**
+
+```py
+raise exception(args) from original_exception
+```
+
+This syntax is used to raise a new exception while preserving the context of the original exception.
+
+```py
+def process_data(data):
+    if not data:
+        raise ValueError("Data cannot be empty.")
+    try:
+        # Simulate an error during processing
+        result = int(data)
+    except ValueError as e:
+        # Raise a new exception while preserving the original exception
+        raise RuntimeError("Failed to process data.") from e
+
+try:
+    process_data("")
+except RuntimeError as e:
+    print("Caught exception:", e)
+    print("Original exception:", e.__cause__)
+
+# Output:
+# Caught exception: Failed to process data.
+# Original exception: Data cannot be empty.
+```
+
+**Re-Raising the Current Exception**
+
+```
+raise
+```
+
+This syntax is used to re-raise the current exception inside an except block.
+
+```py
+def divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        print("Handling ZeroDivisionError, re-raising it...")
+        raise  # Re-raise the current exception
+
+try:
+    result = divide(10, 0)
+except ZeroDivisionError as e:
+    print("Caught re-raised exception:", e)
+
+# Output:
+# Handling ZeroDivisionError, re-raising it...
+# Caught re-raised exception: division by zero
+```
+
 ###### <a name="chapter4part2.3"></a>Chapter 4 - Part 2.3: Custom Exceptions
+
+Custom exceptions are custom data types (classes).
+
+The base class should be ```Exception``` or a class that inherits from ```Exception```.
+
+```
+class ExceptionName(BaseException):
+    pass
+```
+
+- ExceptionName: The name of your custom exception class. By convention, custom exception names end with Error (e.g., MyCustomError).
+
+- BaseException: This is the base class from which your custom exception inherits. Typically, you inherit from Exception, which is a subclass of BaseException.
+
+**Define a Custom Exception**
+
+```py
+class NegativeValueError(Exception):
+    """Exception raised for errors in the input if it's negative."""
+    def __init__(self, value, message="Value cannot be negative"):
+        self.value = value
+        self.message = message
+        super().__init__(self.message)
+```
+
+- NegativeValueError inherits from Exception.
+
+- __init__ method allows you to pass additional arguments (e.g., the value that caused the exception and a custom error message).
+
+- The super().__init__(self.message) call ensures that the base class Exception is properly initialized with the message.
+
+```py
+def process_value(value):
+    if value < 0:
+        raise NegativeValueError(value)
+    return value * 2
+
+try:
+    result = process_value(-5)
+except NegativeValueError as e:
+    print(f"Caught an exception: {e}")
+    print(f"Value that caused the error: {e.value}")
+
+# Output:
+# Caught an exception: Value cannot be negative
+# Value that caused the error: -5
+```
+
+**Custom Exception with Additional Attributes**
+
+```py
+class AuthenticationError(Exception):
+    """Exception raised for authentication errors."""
+    def __init__(self, user_id, message="Authentication failed"):
+        self.user_id = user_id
+        self.message = message
+        super().__init__(self.message)
+
+def authenticate_user(user_id, password):
+    # Simulate authentication failure
+    if password != "correct_password":
+        raise AuthenticationError(user_id)
+
+try:
+    authenticate_user(123, "wrong_password")
+except AuthenticationError as e:
+    print(f"Error: {e}")
+    print(f"User ID: {e.user_id}")
+
+# Output:
+# Error: Authentication failed
+# User ID: 123
+```
 
 #### <a name="chapter4part3"></a>Chapter 4 - Part 3: Custom Functions
 
