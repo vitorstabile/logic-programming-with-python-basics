@@ -116,13 +116,13 @@
       - [Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)](#chapter7part3.4)
     - [Chapter 7 - Part 4: Random Access Binary Files](#chapter7part4)
       - [Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class](#chapter7part4.1)
-8. [Chapter 8: Useful Python Code Snippet](#chapter8)
-    - [Chapter 8 - Part 1: Create a Log file](#chapter8part1)
-    - [Chapter 8 - Part 2: List all files of a directory based in a extension](#chapter8part2)
-    - [Chapter 8 - Part 3: List all files of a directory based in a regex](#chapter8part3)
-    - [Chapter 8 - Part 4: Move file to a directory](#chapter8part4)
-    - [Chapter 8 - Part 5: Read a Config Json File](#chapter8part5)
-    - [Chapter 8 - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File](#chapter8part6)
+8. [Appendix A: Useful Python Code Snippet](#appendixa)
+    - [Appendix A - Part 1: Create a Log file](#appendixapart1)
+    - [Appendix A - Part 2: List all files of a directory based in a extension](#appendixapart2)
+    - [Appendix A - Part 3: List all files of a directory based in a regex](#appendixapart3)
+    - [Appendix A - Part 4: Move file to a directory](#appendixapart4)
+    - [Appendix A - Part 5: Read a Config Json File](#appendixapart5)
+    - [Appendix A - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart6)
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
@@ -3865,9 +3865,9 @@ print(deep_copied_list)  # Output: [1, [77, 3]]
 
 ###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class
 
-## <a name="chapter8"></a>Chapter 8: Useful Python Code Snippet
+## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
-#### <a name="chapter8part1"></a>Chapter 8 - Part 1: Create a Log file
+#### <a name="appendixapart1"></a>Appendix A - Part 1: Create a Log file
 
 ```py
 import logging
@@ -3933,7 +3933,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter8part2"></a>Chapter 8 - Part 2: List all files of a directory based in a extension
+#### <a name="appendixapart2"></a>Appendix A - Part 2: List all files of a directory based in a extension
 
 ```py
 import os
@@ -3967,7 +3967,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter8part3"></a>Chapter 8 - Part 3: List all files of a directory based in a regex
+#### <a name="appendixapart3"></a>Appendix A - Part 3: List all files of a directory based in a regex
 
 ```py
 import os
@@ -4003,7 +4003,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter8part4"></a>Chapter 8 - Part 4: Move file to a directory
+#### <a name="appendixapart4"></a>Appendix A - Part 4: Move file to a directory
 
 ```py
 import os
@@ -4049,7 +4049,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter8part5"></a>Chapter 8 - Part 5: Read a Config Json File
+#### <a name="appendixapart5"></a>Appendix A - Part 5: Read a Config Json File
 
 config_file.json
 
@@ -4116,7 +4116,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter8part6"></a>Chapter 8 - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File
+#### <a name="appendixapart6"></a>Appendix A - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File
 
 config_file.json
 
