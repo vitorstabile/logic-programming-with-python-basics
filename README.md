@@ -123,6 +123,7 @@
     - [Appendix A - Part 4: Move file to a directory](#appendixapart4)
     - [Appendix A - Part 5: Read a Config Json File](#appendixapart5)
     - [Appendix A - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart6)
+    - [Appendix A - Part 7: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()](#appendixapart7)
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
@@ -5174,6 +5175,141 @@ def fill_empty_field_with_value(column_two_value):
     if pd.isna(column_two_value):
         column_two_value = 'someValue'
     return column_two_value
+
+
+def map_df_columns_to_file_config(df, columns_mapper):
+    new_columns = OrderedDict()
+
+    for output_col, input_col in columns_mapper.items():
+        if input_col:
+            # Check if input_col exist in the df
+            if input_col in df.columns:
+                new_columns[output_col] = df[input_col]
+            # If not, is a fixed value
+            else:
+                new_columns[output_col] = input_col
+        else:
+            new_columns[output_col] = ""
+
+    return pd.DataFrame(new_columns)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+#### <a name="appendixapart7"></a>Appendix A - Part 7: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()
+
+config_file.json
+
+```json
+{
+	"configOne": "example_1",
+	"configTwo": "example_2",
+	"dataConfig": {
+		"product": {
+			"fileName": "product_file",
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2",
+				"columnThree": "column3",
+				"columnFour": ""
+			}
+		},
+		"item": {
+			"fileName": "item_file",
+			"columnsMapper": {
+				"columnOne": "column1",
+				"columnTwo": "column2"
+			}
+		}
+	}
+}
+```
+
+test.csv
+
+```csv
+"column1","column2","column3","column4"
+"1","2 v","3","4"
+"5","6 x ","7","8"
+"9","10","11","12"
+"13","","15","16"
+"17","","19","20"
+"21","","23","24"
+```
+
+```py
+import json
+import os
+from collections import OrderedDict
+
+import pandas as pd
+
+
+def main():
+    config_file = load_json_config('config_file.json')
+
+    data_config = config_file['dataConfig']
+
+    # Read each object of dataConfig node
+    for key, value in data_config.items():
+        final_file_name = value['fileName']
+        columns_mapper = value['columnsMapper']
+
+        create_csv_with_clean_data('test.csv', columns_mapper, final_file_name, key)
+
+
+def load_json_config(json_file):
+    try:
+        json_file_path = os.path.abspath(json_file)
+        with open(json_file_path, 'r') as file:
+            return json.load(file, object_pairs_hook=OrderedDict)
+
+    except Exception as error:
+        print(error)
+
+
+def create_csv_with_clean_data(file_path, columns_mapper, final_file_name, key):
+    try:
+        df = pd.read_csv(file_path)
+
+        new_df = map_df_columns_to_file_config(df, columns_mapper)
+
+        if key == 'product':
+            new_df = new_df.apply(split_and_fill_columns_with_split_result, axis=1, column_to_split='columnTwo', columns_to_fill=['columnTwo', 'columnFour'])
+        if key == 'item':
+            new_df = new_df.apply(split_and_fill_columns_with_split_result, axis=1, column_to_split='columnTwo', columns_to_fill=['columnTwo'])
+
+
+        new_df.to_csv(final_file_name, sep='|', index=False)
+
+    except Exception as error:
+
+        print(error)
+
+        raise
+
+
+def fill_empty_field_with_value(column_two_value):
+    if pd.isna(column_two_value):
+        column_two_value = 'someValue'
+    return column_two_value
+
+
+def split_and_fill_columns_with_split_result(row, column_to_split=None, columns_to_fill=None, split_pattern=None):
+    if isinstance(row[column_to_split], str) and row[column_to_split]:
+        parts = row[column_to_split].split(split_pattern)
+    else:
+        parts = []
+
+    for i, column in enumerate(columns_to_fill):
+        if i < len(parts):
+            row[column] = parts[i]
+        else:
+            row[column] = ''
+
+    return row
 
 
 def map_df_columns_to_file_config(df, columns_mapper):
