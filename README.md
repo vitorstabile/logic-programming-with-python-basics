@@ -106,9 +106,6 @@
       - [Chapter 6 - Part 2.5: Creating Data Types from Scratch](#chapter6part2.5)
       - [Chapter 6 - Part 2.6: Creating Data Types from Other Data Types](#chapter6part2.6)
     - [Chapter 6 - Part 3: Custom Collection Classes](#chapter6part3)
-      - [Chapter 6 - Part 3.1: Creating Classes That Aggregate Collections](#chapter6part3.1)
-      - [Chapter 6 - Part 3.2: Creating Collection Classes Using Aggregation](#chapter6part3.2)
-      - [Chapter 6 - Part 3.3: Creating Collection Classes Using Inheritance](#chapter6part3.3)
 7. [Chapter 7: File Handling](#chapter7)
     - [Chapter 7 - Part 1: Writing and Reading Binary Data](#chapter7part1)
       - [Chapter 7 - Part 1.1: Pickles with Optional Compression](#chapter7part1.1)
@@ -6198,15 +6195,338 @@ normalized: Returns a unit vector in the same direction.
 
 ###### <a name="chapter6part2.5"></a>Chapter 6 - Part 2.5: Creating Data Types from Scratch
 
+Creating data types from scratch in Python involves defining a class that encapsulates data and behavior. This process allows you to create custom data structures that can be as complex as needed, tailored to specific requirements.
+
+- Define the Class: Start by creating a class to represent your data type.
+
+- Implement the Constructor: Use the __init__ method to initialize the instance attributes.
+
+- Define Special Methods: Implement special methods to handle built-in operations, comparisons, and string representations.
+
+- Add Properties: Use properties to manage attribute access and validation.
+
+- Add Methods: Include methods that provide functionality specific to your data type.
+
+- Provide String Representations: Implement __repr__ and __str__ methods for different levels of string representation.
+
+**Define the Class and Constructor**
+
+```py
+from math import gcd
+
+class Fraction:
+    def __init__(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError("Denominator cannot be zero")
+        common_divisor = gcd(numerator, denominator)
+        self.numerator = numerator // common_divisor
+        self.denominator = denominator // common_divisor
+        if self.denominator < 0:
+            self.numerator = -self.numerator
+            self.denominator = -self.denominator
+```
+
+Constructor (__init__): Initializes the fraction and simplifies it using the greatest common divisor (GCD). It also ensures the denominator is positive
+
+**Implement Special Methods**
+
+```py
+    def __add__(self, other):
+        if isinstance(other, Fraction):
+            new_numerator = (self.numerator * other.denominator +
+                             other.numerator * self.denominator)
+            new_denominator = self.denominator * other.denominator
+            return Fraction(new_numerator, new_denominator)
+        return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, Fraction):
+            new_numerator = (self.numerator * other.denominator -
+                             other.numerator * self.denominator)
+            new_denominator = self.denominator * other.denominator
+            return Fraction(new_numerator, new_denominator)
+        return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, Fraction):
+            new_numerator = self.numerator * other.numerator
+            new_denominator = self.denominator * other.denominator
+            return Fraction(new_numerator, new_denominator)
+        return NotImplemented
+
+    def __truediv__(self, other):
+        if isinstance(other, Fraction):
+            if other.numerator == 0:
+                raise ZeroDivisionError("Division by zero")
+            new_numerator = self.numerator * other.denominator
+            new_denominator = self.denominator * other.numerator
+            return Fraction(new_numerator, new_denominator)
+        return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, Fraction):
+            return (self.numerator == other.numerator and
+                    self.denominator == other.denominator)
+        return NotImplemented
+
+    def __repr__(self):
+        return f"Fraction({self.numerator}, {self.denominator})"
+
+    def __str__(self):
+        return f"{self.numerator}/{self.denominator}"
+```
+
+Arithmetic Operations: __add__, __sub__, __mul__, and __truediv__ methods allow basic arithmetic operations with fractions.
+
+Equality: __eq__ compares two fractions for equality.
+
+String Representations: __repr__ provides a detailed string representation, while __str__ provides a user-friendly format.
+
+**Add Properties**
+
+```py
+@property
+    def as_float(self):
+        return self.numerator / self.denominator
+```
+
+example of usage
+
+```py
+f1 = Fraction(1, 2)
+f2 = Fraction(2, 3)
+
+print(f1 + f2)  # Output: 7/6
+print(f1 - f2)  # Output: -1/6
+print(f1 * f2)  # Output: 2/6 (or simplified as 1/3)
+print(f1 / f2)  # Output: 3/4
+print(f1 == f2)  # Output: False
+print(f1)  # Output: 1/2
+print(f1.as_float)  # Output: 0.5
+```
+
 ###### <a name="chapter6part2.6"></a>Chapter 6 - Part 2.6: Creating Data Types from Other Data Types
+
+Creating data types from other data types in Python often involves designing classes that wrap or extend the functionality of built-in or existing data types. This can be useful for creating more complex structures or providing additional functionality while leveraging the existing types' behavior.
+
+- Define the Class: Create a class that will act as your new data type.
+
+- Initialize with Existing Data Types: Use existing data types (like int, str, list, etc.) as attributes or components of your new class.
+
+- Implement Special Methods: Override special methods to customize interactions with your new data type, such as arithmetic operations or comparisons.
+
+- Provide Additional Functionality: Add methods or properties to extend the capabilities of your new data type.
+
+- Ensure Compatibility: Implement methods and properties to ensure compatibility with the underlying data types and Python’s built-in operations.
+
+**Define the Class and Initialize with Existing Data Types**
+
+```py
+class Currency:
+    def __init__(self, amount, code):
+        if not isinstance(amount, (int, float)):
+            raise TypeError("Amount must be an int or float")
+        if not isinstance(code, str):
+            raise TypeError("Currency code must be a string")
+        
+        self.amount = float(amount)
+        self.code = code.upper()
+
+    def __repr__(self):
+        return f"Currency(amount={self.amount}, code='{self.code}')"
+
+    def __str__(self):
+        return f"{self.amount:.2f} {self.code}"
+```
+
+Constructor (__init__): Initializes amount as a float and code as an uppercase str.
+
+String Representations: __repr__ provides a debug-friendly string representation, while __str__ provides a user-friendly format.
+
+**Implement Special Methods**
+
+```py
+    def __add__(self, other):
+        if isinstance(other, Currency) and self.code == other.code:
+            return Currency(self.amount + other.amount, self.code)
+        return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, Currency) and self.code == other.code:
+            return Currency(self.amount - other.amount, self.code)
+        return NotImplemented
+
+    def __eq__(self, other):
+        return isinstance(other, Currency) and self.amount == other.amount and self.code == other.code
+
+    def __lt__(self, other):
+        if isinstance(other, Currency) and self.code == other.code:
+            return self.amount < other.amount
+        return NotImplemented
+```
+
+Arithmetic Operations: Implement __add__ and __sub__ for adding and subtracting Currency objects with the same currency code.
+
+Comparisons: Implement __eq__ and __lt__ for equality and less-than comparisons.
+
+**Add Additional Functionality**
+
+```py
+    def convert_to(self, other_code, rate):
+        if not isinstance(other_code, str):
+            raise TypeError("Target currency code must be a string")
+        if not isinstance(rate, (int, float)):
+            raise TypeError("Conversion rate must be a number")
+        return Currency(self.amount * rate, other_code)
+```
+
+Example of usage
+
+```py
+usd = Currency(100, 'USD')
+eur = Currency(85, 'EUR')
+
+print(usd)  # Output: 100.00 USD
+print(usd + Currency(50, 'USD'))  # Output: 150.00 USD
+print(usd - Currency(25, 'USD'))  # Output: 75.00 USD
+
+# Conversion example (assuming 1 USD = 0.85 EUR)
+converted = usd.convert_to('EUR', 0.85)
+print(converted)  # Output: 85.00 EUR
+
+print(usd == Currency(100, 'USD'))  # Output: True
+print(usd < Currency(150, 'USD'))  # Output: True
+```
 
 #### <a name="chapter6part3"></a>Chapter 6 - Part 3: Custom Collection Classes
 
-###### <a name="chapter6part3.1"></a>Chapter 6 - Part 3.1: Creating Classes That Aggregate Collections
+Creating custom collection classes in Python involves defining a class that manages and manipulates a collection of items, such as lists, sets, or dictionaries. These custom collections can provide additional functionality beyond the built-in collections or enforce specific behaviors and constraints.
 
-###### <a name="chapter6part3.2"></a>Chapter 6 - Part 3.2: Creating Collection Classes Using Aggregation
+- Define the Class: Start by defining a class that will act as your custom collection.
 
-###### <a name="chapter6part3.3"></a>Chapter 6 - Part 3.3: Creating Collection Classes Using Inheritance
+- Initialize the Collection: Implement the __init__ method to initialize the internal storage of items.
+
+- Implement Special Methods: Override special methods to integrate with Python’s built-in operations and provide a natural interface for the collection.
+
+- Add Custom Methods: Implement methods that provide specific functionality unique to your collection.
+
+- Support Iteration: Implement the iterator protocol if you want your collection to be iterable.
+
+- Handle Containment and Length: Implement methods to check if items are in the collection and to get its size.
+
+**Define the Class and Initialize the Collection**
+
+```py
+class Bag:
+    def __init__(self):
+        self._items = {}
+
+    def add(self, item):
+        if item in self._items:
+            self._items[item] += 1
+        else:
+            self._items[item] = 1
+
+    def remove(self, item):
+        if item in self._items:
+            if self._items[item] > 1:
+                self._items[item] -= 1
+            else:
+                del self._items[item]
+        else:
+            raise KeyError(f"Item '{item}' not found in bag")
+
+    def __contains__(self, item):
+        return item in self._items
+
+    def __len__(self):
+        return sum(self._items.values())
+
+    def __repr__(self):
+        return f"Bag({self._items})"
+```
+
+Initialization (__init__): Uses a dictionary to store items and their counts.
+
+Add Method: Adds items to the bag and increments their count.
+
+Remove Method: Removes items or decrements their count.
+
+Containment (__contains__): Checks if an item is in the bag.
+
+Length (__len__): Returns the total number of items in the bag.
+
+String Representation (__repr__): Provides a debug-friendly representation of the bag’s contents.
+
+**Implement Iteration**
+
+To make your Bag class iterable, implement the __iter__ method
+
+```py
+    def __iter__(self):
+        for item, count in self._items.items():
+            for _ in range(count):
+                yield item
+```
+
+Iterator Protocol: Allows the Bag class to be used in loops and other iterable contexts.
+
+```py
+bag = Bag()
+bag.add('apple')
+bag.add('banana')
+bag.add('apple')
+
+print(bag)             # Output: Bag({'apple': 2, 'banana': 1})
+print(len(bag))        # Output: 3
+print('apple' in bag) # Output: True
+
+for item in bag:
+    print(item)
+# Output:
+# apple
+# apple
+# banana
+
+bag.remove('apple')
+print(bag)             # Output: Bag({'apple': 1, 'banana': 1})
+
+try:
+    bag.remove('orange')
+except KeyError as e:
+    print(e)  # Output: Item 'orange' not found in bag
+```
+
+**Custom Collection with Constraints**
+
+You can also create custom collections with specific constraints or behaviors. For instance, let's create a UniqueBag where each item can only be added once.
+
+```py
+class UniqueBag:
+    def __init__(self):
+        self._items = set()
+
+    def add(self, item):
+        self._items.add(item)
+
+    def remove(self, item):
+        try:
+            self._items.remove(item)
+        except KeyError:
+            raise KeyError(f"Item '{item}' not found in unique bag")
+
+    def __contains__(self, item):
+        return item in self._items
+
+    def __len__(self):
+        return len(self._items)
+
+    def __repr__(self):
+        return f"UniqueBag({self._items})"
+
+    def __iter__(self):
+        return iter(self._items)
+```
 
 ## <a name="chapter7"></a>Chapter 7: File Handling
 
