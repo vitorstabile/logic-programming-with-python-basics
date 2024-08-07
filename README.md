@@ -5643,19 +5643,558 @@ logging.info('This is an informational message')
 
 ## <a name="chapter6"></a>Chapter 6: Object-Oriented Programming
 
+The Object-Oriented Approach (OOA) and Procedural Programming (PP) are two distinct paradigms used for structuring code and solving problems in programming.
+
+It is perfectly possible to write any program in procedural style, and for very small programs (up to, say,500 lines), doing so is rarely a problem. But for most programs, and especially for medium-size and large programs, object-oriented programming offers many advantages
+
 #### <a name="chapter6part1"></a>Chapter 6 - Part 1: The Object-Oriented Approach
+
+ Object-Oriented Approach provides a more structured and modular way to manage complex programs by modeling real-world entities as objects, while Procedural Programming focuses on the sequence of procedures to manipulate data.
+
+ A example of a script using procedural programming approach
+
+```py
+# Define functions to operate on dog data
+def create_dog(name, age):
+    return {'name': name, 'age': age}
+
+def bark(dog):
+    return f"{dog['name']} says woof!"
+
+def get_age(dog):
+    return f"{dog['name']} is {dog['age']} years old."
+
+# Create a dog and operate on it
+my_dog = create_dog("Buddy", 4)
+print(bark(my_dog))         # Output: Buddy says woof!
+print(get_age(my_dog))      # Output: Buddy is 4 years old.
+```
+
+In this example, create_dog, bark, and get_age are functions that operate on a dictionary representing a dog. The data is passed as arguments to these functions, and there is no encapsulation or inherent structure.
 
 ###### <a name="chapter6part1.1"></a>Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology
 
+Object-Oriented Programming (OOP) is based on the concept of "objects," which are instances of "classes." Classes are blueprints for creating objects and can contain data (attributes) and methods (functions) that operate on the data. The main principles of OOP are encapsulation, inheritance, polymorphism, and abstraction.
+
+**Key Concepts**
+
+- **Encapsulation**: Bundling data and methods that operate on the data into a single unit, or class. It hides the internal state and requires all interactions to be performed through an object's methods.
+
+- **Inheritance**: A way to form new classes using classes that have already been defined. It helps to reuse code and create a hierarchical relationship between classes.
+
+- **Polymorphism**: Allows methods to do different things based on the object it is acting upon. It often involves method overriding and method overloading.
+
+- **Abstraction**: Hiding complex implementation details and showing only the essential features of the object.
+
+```py
+# Define a class called Dog
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name} says woof!"
+
+    def get_age(self):
+        return f"{self.name} is {self.age} years old."
+
+# Create an instance of Dog
+my_dog = Dog("Buddy", 4)
+print(my_dog.bark())         # Output: Buddy says woof!
+print(my_dog.get_age())      # Output: Buddy is 4 years old.
+```
+
+In this example, Dog is a class with attributes name and age and methods bark and get_age. The object my_dog is an instance of the Dog class.
+
 #### <a name="chapter6part2"></a>Chapter 6 - Part 2: Custom Classes
+
+A class in Python is a blueprint for creating objects. It defines attributes and methods that the objects created from the class will have.
+
+```
+class className:
+  suite
+class className(base_classes):
+  suite
+```
+
+Since the exception subclasses we created did not add any new attributes (no instance data or methods) we used a suite of pass (i.e., nothing added), and since the suite was just one statement we put it on the same line as the class statement itself. Note that just like def statements, class is a statement, so we can create classes dynamically if we want to. A class’s methods are created using def statements in the class’s suite. Class instances are created by calling the class with any necessary arguments; for example, x = complex(4, 8) creates a complex number and sets x to be an object reference to it.
+
+```py
+class ClassName:
+    def __init__(self, parameters):
+        # Initialization method
+        self.attribute = value
+
+    def method(self, parameters):
+        # Method definition
+        pass
+```
+
+Example
+
+```py
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name} says woof!"
+```
 
 ###### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
 
+- Attributes: Variables that belong to the class and are used to store data about the objects.
+- Methods: Functions defined within a class that operate on the attributes or perform other operations related to the class.
+
+```py
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name} says woof!"
+
+    def get_age(self):
+        return f"{self.name} is {self.age} years old."
+```
+
+Let’s start with a very simple class, Point, that holds an (x, y) coordinate.
+
+```py
+class Point:
+  def __init__(self, x=0, y=0):
+    self.x = x
+    self.y = y
+
+  def distance_from_origin(self):
+    return math.hypot(self.x, self.y)
+
+  def __eq__(self, other):
+    return self.x == other.x and self.y == other.y
+
+  def __repr__(self):
+    return "Point({0.x!r}, {0.y!r})".format(self)
+
+  def __str__(self):
+    return "({0.x!r}, {0.y!r})".format(self)
+```py
+
+Since no base classes are specified, Point is a direct subclass of object, just as though we had written class Point(object).
+
+Let´s make some operations
+
+```py
+import Shape
+a = Shape.Point()
+repr(a) # returns: 'Point(0, 0)'
+b = Shape.Point(3, 4)
+str(b) # returns: '(3, 4)'
+b.distance_from_origin() # returns: 5.0
+b.x = -19
+str(b) # returns: '(-19, 4)'
+a == b, a != b # returns: (False, True)
+```
+
+The Point class has two data attributes, self.x and self.y, and five methods (not counting inherited methods), four of which are special methods.
+
+```
+__new__() -> inherited from Object
+__init__() -> reimplemented from Object
+distance_from_origin() -> implemented
+__eq__() -> reimplemented from object
+__repr__() -> reimplemented from object
+__repr__() -> reimplemented from object
+```
+
+Once the Shape module is imported, the Point class can be used like any other.
+
+```py
+import Shape
+a = Shape.Point()
+```
+
+The data attributes can be accessed directly (e.g., y = a.y), and the class integrates nicely with all of Python’s other classes by providing support for the equality operator (==) and for producing strings in representational and string forms.
+
+And Python is smart enough to supply the inequality operator (!=) based on the equality operator. (It is also possible to specify each operator individually if we want total control, for example, if they are not exact opposites of each other.)
+
+Python automatically supplies the first argument in method calls- We must include this argument in the parameter list, and by convention the parameter is called self. All object attributes (data and method attributes) must be qualified
+by self. This requires a little bit more typing compared with some other languages, but has the advantage of providing absolute clarity: we always know that we are accessing an object attribute if we qualify with self.
+
+When an object is created (e.g., p = Shape.Point()), first the special method __new__() is called to create the object, and then the special method __init__() is called to initialize it.
+
+For example, if we execute p = Shape.Point(), Python begins by looking for the method Point.__new__(). Since we have not reimplemented this method, Python looks for the method in Point’s base classes. In this case there is only one base class, object, and this has the required method, so Python calls object.__ new__() and creates a raw uninitialized object. Then Python looks for the initializer, __init__(), and since we have reimplemented it, Python doesn’t need to look further and calls Point.__init__(). Finally, Python sets p to be an object reference to the newly created and initialized object of type Point.
+
+```py
+def __init__(self, x=0, y=0):
+  self.x = x
+  self.y = y
+```
+
+The two instance variables, self.x and self.y, are created in the initializer, and assigned the values of the x and y parameters. Since Python will find this initializer when we create a new Point object, the object.__init__() method will not be called. This is because as soon as Python has found the required method it calls it and doesn’t look further.
+
+```py
+def distance_from_origin(self):
+  return math.hypot(self.x, self.y)
+```
+
+This is a conventional method that performs a computation based on the object’s instance variables. It is quite common for methods to be fairly short and to have only the object they are called on as an argument, since often all the data the method needs is available inside the object.ç
+
+```py
+def __eq__(self, other):
+  return self.x == other.x and self.y == other.y
+```
+
+Methods should not have names that begin and end with two underscores— unless they are one of the predefined special methods. All instances of custom classes support == by default, and the comparison returns False—unless we compare a custom object with itself. We can override this behavior by reimplementing the __eq__() special method as we have done here.
+
+```
+__lt__(self, other) x < y Returns True if x is less than y
+__le__(self, other) x <= y Returns True if x is less than or equal to y
+__eq__(self, other) x == y Returns True if x is equal to y
+__ne__(self, other) x != y Returns True if x is not equal to y
+__ge__(self, other) x >= y Returns True if x is greater than or equal to y
+__gt__(self, other) x > y Returns True if x is greater than y
+```
+
+By default, all instances of custom classes are hashable, so hash() can be called on them and they can be used as dictionary keys and stored in sets. But if we reimplement __eq__(), instances are no longer hashable.
+
+The built-in isinstance() function takes an object and a class (or a tuple of classes),and returns True if the object is of the given class (or of one of the tuple of classes), or of one of the class’s (or one of the tuple of classes’) base classes.
+
+```py
+def __repr__(self):
+  return "Point({0.x!r}, {0.y!r})".format(self)
+```
+
+The built-in repr() function calls the __repr__() special method for the object it is given and returns the result. The string returned is one of two kinds. One kind is where the string returned can be evaluated using the built-in eval() function to produce an object equivalent to the one repr() was called on.
+
+```py
+p = Shape.Point(3, 9)
+repr(p) # returns: 'Point(3, 9)'
+q = eval(p.__module__ + "." + repr(p))
+repr(q) # returns: 'Point(3, 9)'
+```
+
+We must give the module name when eval()-ing if we used import Shape. We must give the module name when eval()-ing if we used import Shape. (This would not be necessary if we had done the import differently, for example, from Shape import Point.) Python provides every object with a few private attributes, one of which is __module__, a string that holds the object’s module name, which in this example is "Shape".
+
+At the end of this snippet we have two Point objects, p and q, both with the same attribute values, so they compare as equal. The eval() function returns the result of executing the string it is given—which must contain a valid Python statement.
+
+```py
+def __str__(self):
+  return "({0.x!r}, {0.y!r})".format(self)
+```
+
+The built-in str() function works like the repr() function, except that it calls the object’s __str__() special method. The result is intended to be understandable to human readers and is not expected to be suitable for passing to the eval() function. Continuing the previous example, str(p) (or str(q)) would return the string '(3, 9)'.
+
 ###### <a name="chapter6part2.2"></a>Chapter 6 - Part 2.2: Inheritance and Polymorphism
+
+Inheritance allows one class (child class) to inherit attributes and methods from another class (parent class). This promotes code reuse and creates a hierarchical relationship between classes.
+
+```py
+class ParentClass:
+    # Parent class definition
+
+class ChildClass(ParentClass):
+    # Child class definition
+```
+
+```py
+class Animal:
+    def speak(self):
+        return "Animal sound"
+
+class Dog(Animal):
+    def bark(self):
+        return "Woof!"
+
+my_dog = Dog()
+print(my_dog.speak())  # Output: Animal sound
+print(my_dog.bark())   # Output: Woof!
+```
+
+Polymorphism allows methods to have the same name but different implementations based on the class that invokes them. It enables a unified interface for different types of objects.
+
+```py
+class Animal:
+    def speak(self):
+        return "Animal sound"
+
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
+
+def make_animal_speak(animal):
+    print(animal.speak())
+
+my_dog = Dog()
+my_cat = Cat()
+make_animal_speak(my_dog)  # Output: Woof!
+make_animal_speak(my_cat)  # Output: Meow!
+```
+
+The Circle class builds on the Point class using inheritance. The Circle class adds one additional data attribute (radius), and three new methods. It also reimplements a few of Point’s methods. Here is the complete class definition:
+
+```py
+class Circle(Point):
+  def __init__(self, radius, x=0, y=0):
+    super().__init__(x, y)
+    self.radius = radius
+
+  def edge_distance_from_origin(self):
+    return abs(self.distance_from_origin() - self.radius)
+
+  def area(self):
+    return math.pi * (self.radius ** 2)
+
+  def circumference(self):
+    return 2 * math.pi * self.radius
+
+  def __eq__(self, other):
+    return self.radius == other.radius and super().__eq__(other)
+
+  def __repr__(self):
+    return "Circle({0.radius!r}, {0.x!r}, {0.y!r})".format(self)
+
+  def __str__(self):
+    return repr(self)
+```
+
+Inheritance is achieved simply by listing the class (or classes) that wewant our class to inherit in the class line.★ Here we have inherited the Point class—the inheritance hierarchy for Circle
+
+```
+__new__() -> inherited from Object
+__init__() -> reimplemented from Object
+distance_from_origin() -> inherited from Point
+edge_distance_from_origin() -> implemented
+area() -> implemented
+circumference() -> implemented
+__eq__() -> reimplemented from object
+__repr__() -> reimplemented from object
+__repr__() -> reimplemented from object
+```
+
+Inside the __init__() method we use super() to call the base class’s __init__() method—this creates and initializes the self.x and self.y attributes. Users of the class could supply an invalid radius, such as -2.
+
+Since the Circle class does not provide an implementation of the distance_from_origin() method, the one provided by the Point base class will be found and used. Contrast this with the reimplementation of the __eq__() method. This method compares this circle’s radius with the other circle’s radius,and if they are equal it then explicitly calls the base class’s __eq__() method using super().
+
+Polymorphism means that any object of a given class can be used as though it were an object of any of its class’s base classes. This is why when we create a subclass we need to implement only the additional methods we require and have to reimplement only those existing methods we want to replace. And when reimplementing methods, we can use the base class’s implementation if necessary by using super() inside the reimplementation.
+
+In the Circle’s case we have implemented additional methods, such as area() and circumference(), and reimplemented methods we needed to change. The reimplementations of __repr__() and __str__() are necessary because without them the base class methods will be used and the strings returned will be of Points instead of Circles.
 
 ###### <a name="chapter6part2.3"></a>Chapter 6 - Part 2.3: Using Properties to Control Attribute Access
 
+Properties in Python allow you to define methods that can be accessed like attributes. They provide a way to control access to attributes and enforce encapsulation.
+
+```py
+class MyClass:
+    def __init__(self):
+        self._attribute = None
+
+    @property
+    def attribute(self):
+        return self._attribute
+
+    @attribute.setter
+    def attribute(self, value):
+        if value < 0:
+            raise ValueError("Attribute must be non-negative")
+        self._attribute = value
+```
+
+```py
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("Radius cannot be negative")
+        self._radius = value
+
+    @property
+    def area(self):
+        import math
+        return math.pi * (self._radius ** 2)
+```
+
+In the previous subsection the Point class included a distance_from_origin() method, and the Circle class had the area(), circumference(), and edge_distance_ from_origin() methods. All these methods return a single float value, so from the point of view of a user of these classes they could just as well be data attributes, but read-only, of course. In the ShapeAlt.py file alternative implementations of Point and Circle are provided, and all the methods mentioned here are provided as properties. This allows us to write code like this:
+
+```py
+circle = Shape.Circle(5, 28, 45) # assumes: import ShapeAlt as Shape
+circle.radius # returns: 5
+circle.edge_distance_from_origin # returns: 48.0
+```
+
+Here are the implementations of the getter methods for the ShapeAlt.Circle class’s area and edge_distance_from_origin properties:
+
+```py
+@property
+def area(self):
+  return math.pi * (self.radius ** 2)
+
+@property
+def edge_distance_from_origin(self):
+  return abs(self.distance_from_origin - self.radius)
+```
+
+If we provide only getters as we have done here, the properties are read-only. The code for the area property is the same as for the previous area() method. The edge_distance_from_origin’s code is slightly different from before because it now accesses the base class’s distance_from_origin property instead of calling a distance_from_origin() method. The most notable difference to both is the property decorator. A decorator is a function that takes a function or method as its argument and returns a “decorated” version, that is, a version of the function or method that is modified in some way. A decorator is indicated by preceding its name with an at symbol (@).
+
+The property() decorator function is built-in and takes up to four arguments: a getter function, a setter function, a deleter function, and a docstring. The effect of using @property is the same as calling the property() function with just one argument, the getter function. We could have created the area property like this:
+
+```py
+def area(self):
+  return math.pi * (self.radius ** 2)
+area = property(area)
+```
+
+Python programmers normally use properties rather than the explicit getters and setters (e.g., getRadius() and setRadius()) that are so commonly used in other object-oriented languages. This is because it is so easy to change a data attribute into a property without affecting the use of the class.
+
+To turn an attribute into a readable/writable property we must create a private attribute where the data is actually held and supply getter and setter methods.
+
+Here is the radius’s getter, setter, and docstring in full:
+
+```py
+@property
+def radius(self):
+  """The circle's radius
+
+  >>> circle = Circle(-2)
+  Traceback (most recent call last):
+  ...
+  AssertionError: radius must be nonzero and non-negative
+  >>> circle = Circle(4)
+  >>> circle.radius = -1
+  Traceback (most recent call last):
+  ...
+  AssertionError: radius must be nonzero and non-negative
+  >>> circle.radius = 6
+  """
+  return self.__radius
+
+@radius.setter
+def radius(self, radius):
+  assert radius > 0, "radius must be nonzero and non-negative"
+  self.__radius = radius
+```
+
+The decorator for the setter may look strange at first sight. Every property that is created has a getter, setter, and deleter attribute, so once the radius property is created using @property, the radius.getter, radius.setter, and radius.deleter attributes become available. The radius.getter is set to the getter method by the @property decorator. The other two are set up by Python so that they do nothing (so the attribute cannot be written to or deleted), unless they are used as decorators, in which case they in effect replace themselves with the method they are used to decorate.
+
 ###### <a name="chapter6part2.4"></a>Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types
+
+Creating fully integrated data types in Python involves defining classes that encapsulate both data and functionality. This means not only defining attributes and methods but also implementing special methods to interact seamlessly with Python's built-in operations and data structures. Here’s a step-by-step guide to creating such a data type:
+
+- Define the Class
+  - Start by defining a class with attributes and methods. Make sure to include a constructor (__init__) to initialize your attributes.
+ 
+- Implement Special Methods
+  - To make your data type fully integrated with Python, implement special methods that allow your objects to interact with built-in functions and operators. These methods handle operations such as arithmetic, comparisons, and conversions.
+ 
+- Use Properties
+  - Use properties to control attribute access and validation, ensuring encapsulation and data integrity.
+
+```py
+import math
+
+class Vector:
+    def __init__(self, x=0, y=0, z=0):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    # Vector addition
+    def __add__(self, other):
+        if isinstance(other, Vector):
+            return Vector(self.x + other.x, self.y + other.y, self.z + other.z)
+        return NotImplemented
+
+    # Vector subtraction
+    def __sub__(self, other):
+        if isinstance(other, Vector):
+            return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
+        return NotImplemented
+
+    # Vector dot product
+    def __mul__(self, other):
+        if isinstance(other, Vector):
+            return self.x * other.x + self.y * other.y + self.z * other.z
+        return NotImplemented
+
+    # Scalar multiplication
+    def __rmul__(self, scalar):
+        if isinstance(scalar, (int, float)):
+            return Vector(self.x * scalar, self.y * scalar, self.z * scalar)
+        return NotImplemented
+
+    # Vector equality
+    def __eq__(self, other):
+        if isinstance(other, Vector):
+            return self.x == other.x and self.y == other.y and self.z == other.z
+        return NotImplemented
+
+    # String representation
+    def __repr__(self):
+        return f"Vector({self.x!r}, {self.y!r}, {self.z!r})"
+
+    # User-friendly string representation
+    def __str__(self):
+        return f"({self.x}, {self.y}, {self.z})"
+
+    # Calculate magnitude
+    @property
+    def magnitude(self):
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
+    # Normalize vector
+    @property
+    def normalized(self):
+        mag = self.magnitude
+        if mag == 0:
+            return Vector(0, 0, 0)
+        return self * (1 / mag)
+
+# Example usage
+v1 = Vector(1, 2, 3)
+v2 = Vector(4, 5, 6)
+
+print(v1 + v2)           # Output: Vector(5, 7, 9)
+print(v1 - v2)           # Output: Vector(-3, -3, -3)
+print(v1 * v2)           # Output: 32 (dot product)
+print(3 * v1)            # Output: Vector(3, 6, 9)
+print(v1 == v2)         # Output: False
+print(v1.magnitude)     # Output: 3.7416573867739413
+print(v1.normalized)   # Output: (0.2672612419124244, 0.5345224838248488, 0.8017837257372732)
+```
+
+__init__(): Initializes the vector's coordinates.
+
+__add__(): Implements vector addition. Allows the use of + with Vector objects.
+
+__sub__(): Implements vector subtraction. Allows the use of - with Vector objects.
+
+__mul__(): Implements the dot product operation. Allows the use of * for dot product with Vector objects.
+
+__rmul__(): Implements scalar multiplication. Allows the use of * with a scalar and Vector.
+
+__eq__(): Implements equality comparison. Allows the use of == to compare Vector objects.
+
+__repr__(): Provides an unambiguous string representation suitable for debugging and recreation of the object.
+
+__str__(): Provides a user-friendly string representation for display purposes.
+
+Properties:
+
+magnitude: Calculates the length of the vector.
+normalized: Returns a unit vector in the same direction.
 
 ###### <a name="chapter6part2.5"></a>Chapter 6 - Part 2.5: Creating Data Types from Scratch
 
