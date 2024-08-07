@@ -4740,6 +4740,20 @@ The assert statements ensure that the result of the addition meets expected post
 
 #### <a name="chapter5part1"></a>Chapter 5 - Part 1: Modules and Packages
 
+A Python module, simply put, is a ```.py``` file and a module can contain any Python code we like.
+
+Modules are designed to be imported and used by programs.
+
+Not all modules have associated ```.py``` files—for example, the ```sys``` module is built into Python, and some modules are written in other languages (most commonly, C). However, much of Python’s library is written in Python, so, for example, if we write ```import collections``` we can create named tuples by calling ```collections.namedtuple()```, and the functionality we are accessing is in the ```collections.py``` module file. It makes no difference to our programs what language a module is written in, since all modules are imported and used in the same way.
+
+Several syntaxes can be used when importing
+
+```
+import importable
+import importable1, importable2, ..., importableN
+import importable as preferred_name
+```
+
 ###### <a name="chapter5part1.1"></a>Chapter 5 - Part 1.1: Packages
 
 ###### <a name="chapter5part1.2"></a>Chapter 5 - Part 1.2: Custom Modules
