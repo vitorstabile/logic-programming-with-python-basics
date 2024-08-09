@@ -114,13 +114,19 @@
       - [Chapter 7 - Part 2.1: Writing Text](#chapter7part2.1)
       - [Chapter 7 - Part 2.2: Parsing Text](#chapter7part2.2)
       - [Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions](#chapter7part2.3)
-    - [Chapter 7 - Part 3: Writing and Parsing XML Files](#chapter7part3)
-      - [Chapter 7 - Part 3.1: Element Trees](#chapter7part3.1)
-      - [Chapter 7 - Part 3.2: DOM (Document Object Model)](#chapter7part3.2)
-      - [Chapter 7 - Part 3.3: Manually Writing XML](#chapter7part3.3)
-      - [Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)](#chapter7part3.4)
-    - [Chapter 7 - Part 4: Random Access Binary Files](#chapter7part4)
-      - [Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class](#chapter7part4.1)
+    - [Chapter 7 - Part 3: Writing and Parsing CSV Files](#chapter7part3)
+      - [Chapter 7 - Part 3.1: Writing a CSV File](#chapter7part3.1)
+      - [Chapter 7 - Part 3.2: Parsing CSV Files](#chapter7part3.2)
+    - [Chapter 7 - Part 4: Writing and Parsing JSON Files](#chapter7part4)
+      - [Chapter 7 - Part 4.1: Writing a JSON File](#chapter7part4.1)
+      - [Chapter 7 - Part 4.2: Parsing JSON Files](#chapter7part4.2)
+    - [Chapter 7 - Part 5: Writing and Parsing XML Files](#chapter7part5)
+      - [Chapter 7 - Part 5.1: Writing a XML File](#chapter7part5.1)
+      - [Chapter 7 - Part 5.2: Parsing XML Files](#chapter7part5.2)
+    - [Chapter 7 - Part 6: Writing and Parsing Compressed Files](#chapter7part6)
+      - [Chapter 7 - Part 6.1: Working with ZIP Files](#chapter7part6.1)
+      - [Chapter 7 - Part 6.2: Working with TAR Files](#chapter7part6.2)
+      - [Chapter 7 - Part 6.3: Working with GZIP Files](#chapter7part6.3)
 8. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Create a Log file](#appendixapart1)
     - [Appendix A - Part 2: List all files of a directory based in a extension](#appendixapart2)
@@ -6532,31 +6538,403 @@ class UniqueBag:
 
 #### <a name="chapter7part1"></a>Chapter 7 - Part 1: Writing and Reading Binary Data
 
+Binary formats, even without compression, usually take up the least amount of disk space and are usually the fastest to save and load. Easiest of all is to use pickles, although handling binary data manually should produce the smallest file sizes.
+
 ###### <a name="chapter7part1.1"></a>Chapter 7 - Part 1.1: Pickles with Optional Compression
 
+Pickle is a Python module that serializes and deserializes Python objects, making it easy to save and load complex data structures like lists, dictionaries, or custom objects. The serialized data is stored in binary format.
+
+**Pickling (Writing)**
+
+```py
+import pickle
+
+data = {'name': 'Alice', 'age': 30, 'is_active': True}
+with open('data.pkl', 'wb') as file:
+    pickle.dump(data, file)
+```
+
+**Unpickling (Reading)**
+
+```py
+with open('data.pkl', 'rb') as file:
+    data = pickle.load(file)
+```
+
+To reduce file size, you can compress the pickled data using modules like gzip or bz2.
+
+**With gzip**
+
+```py
+import pickle
+import gzip
+
+with gzip.open('data.pkl.gz', 'wb') as file:
+    pickle.dump(data, file)
+
+with gzip.open('data.pkl.gz', 'rb') as file:
+    data = pickle.load(file)
+```
+
+**With bz2**
+
+```py
+import bz2
+
+with bz2.open('data.pkl.bz2', 'wb') as file:
+    pickle.dump(data, file)
+
+with bz2.open('data.pkl.bz2', 'rb') as file:
+    data = pickle.load(file)
+```
+
 ###### <a name="chapter7part1.2"></a>Chapter 7 - Part 1.2: Raw Binary Data with Optional Compression
+
+Working with raw binary data involves reading and writing bytes directly, which is useful for non-text files like images, videos, or binary logs.
+
+**Writing Binary Data**
+
+```py
+data = b'\x00\xFF\x00\xFF'  # Some binary data
+with open('data.bin', 'wb') as file:
+    file.write(data)
+```
+
+**Reading Binary Data**
+
+```py
+with open('data.bin', 'rb') as file:
+    data = file.read()
+```
+
+Similar to pickling, raw binary data can be compressed using modules like gzip or bz2.
+
+**With gzip**
+
+```py
+import gzip
+
+data = b'\x00\xFF\x00\xFF'
+with gzip.open('data.bin.gz', 'wb') as file:
+    file.write(data)
+
+with gzip.open('data.bin.gz', 'rb') as file:
+    data = file.read()
+```
+
+**With bz2**
+
+```py
+import bz2
+
+with bz2.open('data.bin.bz2', 'wb') as file:
+    file.write(data)
+
+with bz2.open('data.bin.bz2', 'rb') as file:
+    data = file.read()
+```
 
 #### <a name="chapter7part2"></a>Chapter 7 - Part 2: Writing and Parsing Text Files
 
 ###### <a name="chapter7part2.1"></a>Chapter 7 - Part 2.1: Writing Text
 
+Text files are common for storing data in a human-readable format. Python makes it simple to write and read text files.
+
+**Writing Text to a File**
+
+```py
+text = "Hello, World!"
+with open('example.txt', 'w') as file:
+    file.write(text)
+```
+
+**Appending Text**
+
+```py
+with open('example.txt', 'a') as file:
+    file.write("\nAdditional text.")
+```
+
+**Handling Encodings**
+
+Python supports various encodings like UTF-8, ASCII, etc. Specifying the encoding is essential when working with non-ASCII characters.
+
+```py
+with open('example.txt', 'w', encoding='utf-8') as file:
+    file.write("こんにちは世界")  # "Hello, World!" in Japanese
+```
+
 ###### <a name="chapter7part2.2"></a>Chapter 7 - Part 2.2: Parsing Text
+
+Parsing text files involves reading and extracting specific data. Python provides multiple ways to parse text, depending on the format and complexity.
+
+**Reading the Entire File**
+
+```py
+with open('example.txt', 'r') as file:
+    content = file.read()
+```
+
+**Reading Line by Line**
+
+```py
+with open('example.txt', 'r') as file:
+    for line in file:
+        print(line.strip())  # strip() removes newline characters
+```
 
 ###### <a name="chapter7part2.3"></a>Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions
 
-#### <a name="chapter7part3"></a>Chapter 7 - Part 3: Writing and Parsing XML Files
+Regular expressions (regex) are powerful tools for parsing and extracting data from text files, especially when the structure is not fixed.
 
-###### <a name="chapter7part3.1"></a>Chapter 7 - Part 3.1: Element Trees
+**Finding Patterns**
 
-###### <a name="chapter7part3.2"></a>Chapter 7 - Part 3.2: DOM (Document Object Model
+```py
+import re
 
-###### <a name="chapter7part3.3"></a>Chapter 7 - Part 3.3: Manually Writing XML
+text = "The price is $100. The discount is 20%."
+pattern = r'\$\d+'  # Matches dollar amounts
 
-###### <a name="chapter7part3.4"></a>Chapter 7 - Part 3.4: Parsing XML with SAX (Simple API for XML)
+matches = re.findall(pattern, text)
+print(matches)  # Output: ['$100']
+```
 
-#### <a name="chapter7part4"></a>Chapter 7 - Part 4: Random Access Binary Files
+**Extracting Data**
 
-###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: A Generic BinaryRecordFile Class
+```py
+text = "Name: Alice, Age: 30, Email: alice@example.com"
+pattern = r'Name: (\w+), Age: (\d+), Email: (\S+)'
+
+match = re.search(pattern, text)
+if match:
+    name, age, email = match.groups()
+    print(f"Name: {name}, Age: {age}, Email: {email}")
+```
+
+**Advanced Parsing**
+
+```py
+log_line = 'ERROR 2024-08-09 12:45:32,123 [main] Error occurred in module X'
+pattern = r'(\w+)\s(\d{4}-\d{2}-\d{2})\s(\d{2}:\d{2}:\d{2},\d{3})\s\[(\w+)\]\s(.+)'
+
+match = re.match(pattern, log_line)
+if match:
+    level, date, time, module, message = match.groups()
+    print(f"Level: {level}, Date: {date}, Time: {time}, Module: {module}, Message: {message}")
+```
+
+#### <a name="chapter7part3"></a>Chapter 7 - Part 3: Writing and Parsing CSV Files
+
+###### <a name="chapter7part3.1"></a>Chapter 7 - Part 3.1: Writing a CSV File
+
+To work with CSV files in Python, you can use the csv module. This module provides functionality to both read and write data in a CSV format.
+
+```py
+import csv
+
+# Data to be written to the CSV file
+data = [
+    ['Name', 'Age', 'City'],
+    ['Alice', '30', 'New York'],
+    ['Bob', '25', 'Los Angeles'],
+    ['Charlie', '35', 'Chicago']
+]
+
+# Writing to a CSV file
+with open('people.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
+```
+
+###### <a name="chapter7part3.2"></a>Chapter 7 - Part 3.2: Parsing CSV Files
+
+Reading data from a CSV file is straightforward using the csv.reader() function.
+
+**Parsing CSV Files**
+
+```py
+import csv
+
+# Reading from a CSV file
+with open('people.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+```
+
+**Reading CSV into a Dictionary**
+
+```py
+import csv
+
+# Reading CSV as a dictionary
+with open('people.csv', 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(row)  # Each row is an OrderedDict
+```
+
+#### <a name="chapter7part4"></a>Chapter 7 - Part 4: Writing and Parsing JSON Files
+
+###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: Writing a JSON File
+
+The json module makes it easy to work with JSON data. You can convert Python dictionaries (or other serializable objects) to JSON format and write them to a file.
+
+```py
+import json
+
+# Data to be written to the JSON file
+data = {
+    'name': 'Alice',
+    'age': 30,
+    'city': 'New York',
+    'skills': ['Python', 'Machine Learning', 'Data Science']
+}
+
+# Writing to a JSON file
+with open('data.json', 'w') as file:
+    json.dump(data, file, indent=4)  # indent=4 for pretty-printing
+```
+
+###### <a name="chapter7part4.2"></a>Chapter 7 - Part 4.2: Parsing JSON Files
+
+You can read JSON data from a file and convert it into a Python object using json.load().
+
+```py
+import json
+
+# Reading from a JSON file
+with open('data.json', 'r') as file:
+    data = json.load(file)
+    print(data)
+```
+
+#### <a name="chapter7part5"></a>Chapter 7 - Part 5: Writing and Parsing XML Files
+
+###### <a name="chapter7part5.1"></a>Chapter 7 - Part 5.1: Writing a XML File
+
+Python’s xml.etree.ElementTree module allows you to create and write XML files.
+
+```py
+import xml.etree.ElementTree as ET
+
+# Creating the root element
+root = ET.Element("people")
+
+# Adding child elements
+person1 = ET.SubElement(root, "person")
+person1.set("name", "Alice")
+person1.set("age", "30")
+person1.set("city", "New York")
+
+person2 = ET.SubElement(root, "person")
+person2.set("name", "Bob")
+person2.set("age", "25")
+person2.set("city", "Los Angeles")
+
+# Creating an ElementTree object
+tree = ET.ElementTree(root)
+
+# Writing to an XML file
+tree.write("people.xml")
+```
+
+###### <a name="chapter7part5.2"></a>Chapter 7 - Part 5.2: Parsing XML Files
+
+You can parse XML files to extract data using xml.etree.ElementTree module.
+
+```py
+import xml.etree.ElementTree as ET
+
+# Parsing the XML file
+tree = ET.parse('people.xml')
+root = tree.getroot()
+
+# Iterating through the XML data
+for person in root.findall('person'):
+    name = person.get('name')
+    age = person.get('age')
+    city = person.get('city')
+    print(f"Name: {name}, Age: {age}, City: {city}")
+```
+
+#### <a name="chapter7part6"></a>Chapter 7 - Part 6: Writing and Parsing Compressed Files
+
+###### <a name="chapter7part6.1"></a>Chapter 7 - Part 6.1: Working with ZIP Files
+
+Python's zipfile module allows you to create, read, write, and extract ZIP files.
+
+**Creating a ZIP File**
+
+```py
+import zipfile
+
+# Creating a ZIP file
+with zipfile.ZipFile('files.zip', 'w') as zipf:
+    zipf.write('data.json')
+    zipf.write('people.xml')
+```
+
+**Extracting a ZIP File**
+
+```py
+import zipfile
+
+# Extracting a ZIP file
+with zipfile.ZipFile('files.zip', 'r') as zipf:
+    zipf.extractall('extracted_files')
+```
+
+###### <a name="chapter7part6.2"></a>Chapter 7 - Part 6.2: Working with TAR Files
+
+The tarfile module provides functionality to work with TAR archives.
+
+**Creating a TAR File**
+
+```py
+import tarfile
+
+# Creating a TAR file
+with tarfile.open('files.tar', 'w') as tarf:
+    tarf.add('data.json')
+    tarf.add('people.xml')
+```
+
+**Extracting a TAR File**
+
+```py
+import tarfile
+
+# Extracting a TAR file
+with tarfile.open('files.tar', 'r') as tarf:
+    tarf.extractall('extracted_files')
+```
+
+###### <a name="chapter7part6.3"></a>Chapter 7 - Part 6.3: Working with GZIP Files
+
+The gzip module allows you to compress files using the GZIP format.
+
+**Compressing a File with GZIP**
+
+```py
+import gzip
+
+# Compressing a file using GZIP
+with open('data.json', 'rb') as f_in:
+    with gzip.open('data.json.gz', 'wb') as f_out:
+        f_out.writelines(f_in)
+```
+
+**Decompressing a GZIP File**
+
+```py
+import gzip
+
+# Decompressing a GZIP file
+with gzip.open('data.json.gz', 'rb') as f_in:
+    with open('data_decompressed.json', 'wb') as f_out:
+        f_out.write(f_in.read())
+```
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
