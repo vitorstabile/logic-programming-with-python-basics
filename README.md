@@ -129,13 +129,14 @@
       - [Chapter 7 - Part 6.2: Working with TAR Files](#chapter7part6.2)
       - [Chapter 7 - Part 6.3: Working with GZIP Files](#chapter7part6.3)
 8. [Appendix A: Useful Python Code Snippet](#appendixa)
-    - [Appendix A - Part 1: Create a Log file](#appendixapart1)
-    - [Appendix A - Part 2: List all files of a directory based in a extension](#appendixapart2)
-    - [Appendix A - Part 3: List all files of a directory based in a regex](#appendixapart3)
-    - [Appendix A - Part 4: Move file to a directory](#appendixapart4)
-    - [Appendix A - Part 5: Read a Config Json File](#appendixapart5)
-    - [Appendix A - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart6)
-    - [Appendix A - Part 7: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()](#appendixapart7)
+    - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
+    - [Appendix A - Part 2: Create a Log file](#appendixapart2)
+    - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
+    - [Appendix A - Part 4: List all files of a directory based in a regex](#appendixapart4)
+    - [Appendix A - Part 5: Move file to a directory](#appendixapart5)
+    - [Appendix A - Part 6: Read a Config Json File](#appendixapart6)
+    - [Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart7)
+    - [Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()](#appendixapart8)
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
@@ -7097,7 +7098,115 @@ with gzip.open('data.json.gz', 'rb') as f_in:
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
-#### <a name="appendixapart1"></a>Appendix A - Part 1: Create a Log file
+#### <a name="appendixapart1"></a>Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line
+
+Base in this project structure
+
+```
+\root_project
+|   .dockerignore
+|   .gitignore
+|   docker-compose.yml
+|   Makefile
+|   poetry.lock
+|   pyproject.toml
+|   README.md
+|   LICENSE
+|
++---.pipeline
+|   \---ci
+|           Jenkinsfile
+|
++---conf
+|   |   log_config.yaml
+|   +---env
+|   |       dev_config.yaml
+|   |       prod_config.yaml
+|
++---deploy
+|   +---docker
+|   |       Dockerfile
+|   +---k8s
+|           deployment.yaml
+|           service.yaml
+|
++---src
+|   |   main.py
+|   |   __init__.py
+|   |
+|   +---constants
+|   |       app_constants.py
+|   |       __init__.py
+|   |
+|   +---exceptions
+|   |       custom_exceptions.py
+|   |       __init__.py
+|   |
+|   +---module_1
+|   |       module1.py
+|   |       __init__.py
+|   |
+|   +---module_2
+|   |       module2.py
+|   |       __init__.py
+|   |
+|   +---utils
+|   |       files.py
+|   |       logger.py
+|   |       __init__.py
+|
++---tests
+|   |   test_module1.py
+|   |   test_module2.py
+|   |   __init__.py
+|   |
+|   +---resources
+|           test_data.txt
+|           test_config.yaml
+|
+\---.venv (excluded from Git via .gitignore)
+```
+
+Create a main.py like this for this project
+
+```
+import argparse
+from src.utils.logger import setup_logger
+
+def main():
+    parser = argparse.ArgumentParser(description="Description of your Python project.")
+    parser.add_argument("--config", type=str, help="Path to the configuration file.")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose logging.")
+    
+    args = parser.parse_args()
+    
+    # Your logic here
+    if args.verbose:
+        print("Verbose mode enabled.")
+    print(f"Using configuration: {args.config}")
+
+if __name__ == "__main__":
+    main()
+```
+
+Go to the root_project folder
+
+Make
+
+```python -m src.main --config conf/dev_config.yaml --verbose```
+
+Ensure you’re running the command from the project root directory. Running python -m src.main requires the src directory to be directly under the current working directory.
+
+- Why Use -m?
+  - For the `-m` option to work, the src folder must be treated as a package. This means it needs an __init__.py file (which can be empty).
+  - Ensures that Python treats the script as a module.
+  - Handles relative imports properly.
+  - Avoids issues with sys.path when running scripts directly.
+ 
+- Ensure Proper Imports
+  - All internal imports in your project should use relative paths (e.g., ```from .utils import files```) or absolute paths starting from the package root (e.g., ```from src.utils import files```).
+
+#### <a name="appendixapart2"></a>Appendix A - Part 2: Create a Log file
 
 ```py
 import logging
@@ -7163,7 +7272,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart2"></a>Appendix A - Part 2: List all files of a directory based in a extension
+#### <a name="appendixapart3"></a>Appendix A - Part 3: List all files of a directory based in a extension
 
 ```py
 import os
@@ -7197,7 +7306,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart3"></a>Appendix A - Part 3: List all files of a directory based in a regex
+#### <a name="appendixapart4"></a>Appendix A - Part 4: List all files of a directory based in a regex
 
 ```py
 import os
@@ -7233,7 +7342,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart4"></a>Appendix A - Part 4: Move file to a directory
+#### <a name="appendixapart5"></a>Appendix A - Part 5: Move file to a directory
 
 ```py
 import os
@@ -7279,7 +7388,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart5"></a>Appendix A - Part 5: Read a Config Json File
+#### <a name="appendixapart6"></a>Appendix A - Part 6: Read a Config Json File
 
 config_file.json
 
@@ -7346,7 +7455,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart6"></a>Appendix A - Part 6: Read and Parse a CSV file with Pandas based in a Config Json File
+#### <a name="appendixapart7"></a>Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File
 
 config_file.json
 
@@ -7465,7 +7574,7 @@ if __name__ == "__main__":
     main()
 ```
 
-#### <a name="appendixapart7"></a>Appendix A - Part 7: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()
+#### <a name="appendixapart8"></a>Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()
 
 config_file.json
 
