@@ -74,6 +74,7 @@
     - [Chapter 5 - Part 1: Modules and Packages](#chapter5part1)
       - [Chapter 5 - Part 1.1: Packages](#chapter5part1.1)
       - [Chapter 5 - Part 1.2: Custom Modules](#chapter5part1.2)
+      - [Chapter 5 - Part 1.3: Good Practice to Create Python Projects](#chapter5part1.3)
     - [Chapter 5 - Part 2: Overview of Python’s Standard Library](#chapter5part2)
       - [Chapter 5 - Part 2.1: String Handling](#chapter5part2.1)
       - [Chapter 5 - Part 2.2: Command-Line Programming](#chapter5part2.2)
@@ -5033,6 +5034,164 @@ print(mymodule.greet("Charlie"))
 ```
 
 The if __name__ == "__main__" block will not run, ensuring that only the imported functions are executed.
+
+###### <a name="chapter5part1.3"></a>Chapter 5 - Part 1.3:  Good Practice to Create Python Projects
+
+```
+\root_project
+|   .dockerignore
+|   .gitignore
+|   docker-compose.yml
+|   Makefile
+|   poetry.lock
+|   pyproject.toml
+|   README.md
+|   LICENSE
+|
++---.pipeline
+|   \---ci
+|           Jenkinsfile
+|
++---conf
+|   |   log_config.yaml
+|   +---env
+|   |       dev_config.yaml
+|   |       prod_config.yaml
+|
++---deploy
+|   +---docker
+|   |       Dockerfile
+|   +---k8s
+|           deployment.yaml
+|           service.yaml
+|
++---src
+|   |   main.py
+|   |   __init__.py
+|   |
+|   +---constants
+|   |       app_constants.py
+|   |       __init__.py
+|   |
+|   +---exceptions
+|   |       custom_exceptions.py
+|   |       __init__.py
+|   |
+|   +---module_1
+|   |       module1.py
+|   |       __init__.py
+|   |
+|   +---module_2
+|   |       module2.py
+|   |       __init__.py
+|   |
+|   +---utils
+|   |       files.py
+|   |       logger.py
+|   |       __init__.py
+|
++---tests
+|   |   test_module1.py
+|   |   test_module2.py
+|   |   __init__.py
+|   |
+|   +---resources
+|           test_data.txt
+|           test_config.yaml
+|
+\---.venv (excluded from Git via .gitignore)
+```
+
+**Explanation of the Structure**
+
+**Project Structure**
+
+**Root-Level Files**
+
+- `.dockerignore` and `.gitignore`:
+  - Exclude files and directories from Docker images and version control.
+- `docker-compose.yml`:
+  - Simplifies running multi-container applications during development or testing.
+- `Makefile`:
+  - Defines reusable commands (`make build`, `make test`, etc.).
+- `poetry.lock` and `pyproject.toml`:
+  - Manage dependencies with Poetry, ensuring version compatibility and reproducibility.
+- `README.md`:
+  - Documents project goals, setup, and usage for developers or collaborators.
+- `LICENSE`:
+  - Specifies the terms of use for the project.
+
+---
+
+**`.pipeline`**
+
+- **Purpose**: Organizes continuous integration (CI) or pipeline-related files.
+- **Files**:
+  - `Jenkinsfile`: Defines the CI/CD pipeline configuration for automated builds and deployments.
+
+---
+
+**`conf`**
+
+- **Purpose**: Stores configuration files for logging and environment-specific settings.
+- **Structure**:
+  - `log_config.yaml`: Configures logging (formatters, handlers, loggers).
+  - `env/`: Contains environment-specific configurations:
+    - `dev_config.yaml`: Development environment settings.
+    - `prod_config.yaml`: Production environment settings.
+
+---
+
+**`deploy`**
+
+- **Purpose**: Contains deployment-related configurations and scripts.
+- **Structure**:
+  - `docker/`:
+    - `Dockerfile`: Defines the image build instructions for containerization.
+  - `k8s/`:
+    - `deployment.yaml`: Kubernetes deployment configuration.
+    - `service.yaml`: Kubernetes service configuration.
+
+---
+
+**`src`**
+
+- **Purpose**: Houses the main source code for the project.
+- **Structure**:
+  - `main.py`: Entry point for the application.
+  - `constants/`:
+    - `app_constants.py`: Stores application-wide constants.
+  - `exceptions/`:
+    - `custom_exceptions.py`: Centralizes and defines custom exceptions.
+  - `module_1/`:
+    - `module1.py`: Contains functionality related to the first module.
+  - `module_2/`:
+    - `module2.py`: Contains functionality related to the second module.
+  - `utils/`:
+    - `files.py`: Provides file handling utility functions.
+    - `logger.py`: Sets up and manages application logging.
+
+---
+
+**`tests`**
+
+- **Purpose**: Contains all test-related files for the project.
+- **Structure**:
+  - `test_module1.py`: Unit tests for `module_1`.
+  - `test_module2.py`: Unit tests for `module_2`.
+  - `resources/`:
+    - `test_data.txt`: Sample data for tests.
+    - `test_config.yaml`: Test-specific configuration file.
+
+---
+
+**`.venv`**
+
+- **Purpose**: Manages the virtual environment for dependencies.
+- **Note**: This directory is excluded from version control using `.gitignore`.
+
+
+
 
 #### <a name="chapter5part2"></a>Chapter 5 - Part 2: Overview of Python’s Standard Library
 
