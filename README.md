@@ -130,6 +130,11 @@
       - [Chapter 7 - Part 6.3: Working with GZIP Files](#chapter7part6.3)
 8. [Chapter 8: Threads](#chapter8)
     - [Chapter 8 - Part 1: Using Threads in Python](#chapter8part1)
+    - [Chapter 8 - Part 2: Preventing Race Conditions with threading.Lock](#chapter8part2)
+    - [Chapter 8 - Part 3: Limiting the Number of Threads with ThreadPoolExecutor](#chapter8part3)
+    - [Chapter 8 - Part 4: Passing Additional Arguments to Threads](#chapter8part4)
+    - [Chapter 8 - Part 5: Creating Background Threads with daemon=True](#chapter8part5)
+    - [Chapter 8 - Part 6: Handling Exceptions Globally in Threads](#chapter8part6)
 9. [Chapter 9: Subprocess](#chapter9)
     - [Chapter 9 - Part 1: Using Subprocess in Python](#chapter9part1)
 11. [Appendix A: Useful Python Code Snippet](#appendixa)
@@ -7225,6 +7230,224 @@ Thread D success
 Thread A success  
 Number of failed process: 1
 ```
+
+#### <a name="chapter8part2"></a>Chapter 8 - Part 2: Preventing Race Conditions with threading.Lock
+
+If multiple threads try to modify failed_array at the same time, a race condition can occur. We can prevent this using a Lock.
+
+```py
+import threading
+import time
+
+lock = threading.Lock()  # Creating a Lock to prevent race conditions
+
+def main(array_of_threads):
+    failed_array = []
+    threads = []
+    
+    for thread in array_of_threads:
+        t = threading.Thread(target=process_thread, args=(thread, failed_array, lock))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    print(f"Number of failed processes: {len(failed_array)}")
+
+def process_thread(thread, failed_array, lock):
+    try:
+        print(f"Processing Thread: {thread}")
+        time.sleep(1)
+
+        if thread == 'C':
+            raise Exception(f"Thread {thread} failed")
+
+        print(f"Thread {thread} success")
+
+    except Exception as error:
+        print(f"Moving thread {thread} because of: {error}")
+        
+        with lock:  # Prevents race conditions when modifying the list
+            failed_array.append(thread)
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+
+```
+
+Added threading.Lock() to prevent issues when modifying failed_array across multiple threads.
+
+Used with lock: to ensure only one thread at a time modifies failed_array.
+
+#### <a name="chapter8part3"></a>Chapter 8 - Part 3: Limiting the Number of Threads with ThreadPoolExecutor
+
+Creating too many threads can consume too much memory. We can limit the number of threads using concurrent.futures.ThreadPoolExecutor.
+
+```py
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+def main(array_of_threads):
+    failed_array = []
+    
+    with ThreadPoolExecutor(max_workers=2) as executor:  # Maximum 2 threads at a time
+        futures = {executor.submit(process_thread, thread, failed_array): thread for thread in array_of_threads}
+
+    print(f"Number of failed processes: {len(failed_array)}")
+
+def process_thread(thread, failed_array):
+    try:
+        print(f"Processing Thread: {thread}")
+        time.sleep(1)
+
+        if thread == 'C':
+            raise Exception(f"Thread {thread} failed")
+
+        print(f"Thread {thread} success")
+
+    except Exception as error:
+        print(f"Moving thread {thread} because of: {error}")
+        failed_array.append(thread)
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+
+```
+
+Used ThreadPoolExecutor(max_workers=2) to limit execution to at most 2 threads simultaneously.
+
+Used executor.submit() to execute threads and manage them efficiently.
+
+#### <a name="chapter8part4"></a>Chapter 8 - Part 4: Passing Additional Arguments to Threads
+
+We can pass extra parameters to the thread function, such as an index or a log ID.
+
+```py
+import threading
+import time
+
+def main(array_of_threads):
+    failed_array = []
+    threads = []
+
+    for index, thread in enumerate(array_of_threads):
+        t = threading.Thread(target=process_thread, args=(thread, failed_array, index))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    print(f"Number of failed processes: {len(failed_array)}")
+
+def process_thread(thread, failed_array, index):
+    try:
+        print(f"Processing Thread {index}: {thread}")
+        time.sleep(1)
+
+        if thread == 'C':
+            raise Exception(f"Thread {thread} failed")
+
+        print(f"Thread {index} success")
+
+    except Exception as error:
+        print(f"Moving thread {index} ({thread}) because of: {error}")
+        failed_array.append(thread)
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+
+```
+
+Passed an index to each thread, which is useful for logging and debugging.
+
+Improved logging messages, such as "Processing Thread 2: C".
+
+#### <a name="chapter8part5"></a>Chapter 8 - Part 5: Creating Background Threads with daemon=True
+
+If we want threads to automatically terminate when the main program ends, we can set them as "daemon threads".
+
+```py
+import threading
+import time
+
+def main(array_of_threads):
+    failed_array = []
+    threads = []
+
+    for thread in array_of_threads:
+        t = threading.Thread(target=process_thread, args=(thread, failed_array), daemon=True)
+        threads.append(t)
+        t.start()
+
+    time.sleep(2)  # The main program finishes, stopping daemon threads
+
+    print("Main thread is done!")
+
+def process_thread(thread, failed_array):
+    print(f"Processing Thread: {thread}")
+    time.sleep(5)  # Simulating a long-running task
+    print(f"Thread {thread} success")
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+```
+
+Added daemon=True to the threads, so they automatically terminate when the main program finishes.
+
+The program doesn’t wait for the threads to complete, as time.sleep(2) makes the main script exit before threads finish.
+
+#### <a name="chapter8part6"></a>Chapter 8 - Part 6: Handling Exceptions Globally in Threads
+
+Instead of handling exceptions inside each thread, we can catch them globally using sys.excepthook.
+
+```py
+import threading
+import time
+import sys
+
+def exception_handler(exc_type, exc_value, exc_traceback):
+    print(f"Global Exception Caught: {exc_value}")
+
+sys.excepthook = exception_handler  # Captures exceptions globally
+
+def main(array_of_threads):
+    failed_array = []
+    threads = []
+
+    for thread in array_of_threads:
+        t = threading.Thread(target=process_thread, args=(thread, failed_array))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
+
+    print(f"Number of failed processes: {len(failed_array)}")
+
+def process_thread(thread, failed_array):
+    print(f"Processing Thread: {thread}")
+    time.sleep(1)
+
+    if thread == 'C':
+        raise Exception(f"Thread {thread} failed")  # Now caught globally
+
+    print(f"Thread {thread} success")
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+
+```
+
+Created exception_handler() to catch exceptions globally.
+
+Set sys.excepthook = exception_handler to handle errors from any thread.
 
 ## <a name="chapter9"></a>Chapter 9: Subprocess
 
