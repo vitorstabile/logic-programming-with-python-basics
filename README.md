@@ -7226,7 +7226,7 @@ Thread A success
 Number of failed process: 1
 ```
 
-## <a name="chapter9"></a>Chapter 9: Threads
+## <a name="chapter9"></a>Chapter 9: Subprocess
 
 #### <a name="chapter9part1"></a>Chapter 9 - Part 1: Using Subprocess in Python
 
