@@ -137,6 +137,13 @@
     - [Chapter 8 - Part 6: Handling Exceptions Globally in Threads](#chapter8part6)
 9. [Chapter 9: Subprocess](#chapter9)
     - [Chapter 9 - Part 1: Using Subprocess in Python](#chapter9part1)
+    - [Chapter 9 - Part 2:Capturing and Handling Errors](#chapter9part2)
+    - [Chapter 9 - Part 3: Redirecting Output to a File](#chapter9part3)
+    - [Chapter 9 - Part 4: Running Commands with User Input (subprocess.Popen)](#chapter9part4)
+    - [Chapter 9 - Part 5: Running a Background Process](#chapter9part5)
+    - [Chapter 9 - Part 6: Running a Python Script as a Subprocess](#chapter9part6)
+    - [Chapter 9 - Part 7: Using Shell Commands (shell=True)](#chapter9part7)
+    - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
 11. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
@@ -7452,6 +7459,145 @@ Set sys.excepthook = exception_handler to handle errors from any thread.
 ## <a name="chapter9"></a>Chapter 9: Subprocess
 
 #### <a name="chapter9part1"></a>Chapter 9 - Part 1: Using Subprocess in Python
+
+The subprocess module in Python allows us to run external programs and execute system commands from within a Python script. It is useful when we need to interact with the operating system, run shell commands, or execute other scripts.
+
+Let's start with a simple example where we execute the ls (Linux/macOS) or dir (Windows) command to list files in the current directory.
+
+```py
+import subprocess
+
+def list_files():
+    result = subprocess.run(["ls"], capture_output=True, text=True)  # Use "dir" for Windows
+    print(result.stdout)  # Prints the output of the command
+
+if __name__ == "__main__":
+    list_files()
+```
+
+What Happens?
+
+- subprocess.run(["ls"]) executes the ls command.
+- capture_output=True captures the command's output.
+- text=True ensures the output is in a readable string format.
+
+#### <a name="chapter9part2"></a>Chapter 9 - Part 2: Capturing and Handling Errors
+
+If the command fails, we should capture and handle errors properly.
+
+```py
+import subprocess
+
+def list_files():
+    try:
+        result = subprocess.run(["ls", "non_existing_folder"], capture_output=True, text=True, check=True)
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred: {e}")
+
+if __name__ == "__main__":
+    list_files()
+```
+
+#### <a name="chapter9part3"></a>Chapter 9 - Part 3: Redirecting Output to a File
+
+We can redirect the command's output to a file instead of printing it.
+
+```py
+import subprocess
+
+def list_files():
+    with open("output.txt", "w") as file:
+        subprocess.run(["ls"], stdout=file, text=True)
+
+if __name__ == "__main__":
+    list_files()
+    print("Output saved to output.txt")
+```
+
+#### <a name="chapter9part4"></a>Chapter 9 - Part 4: Running Commands with User Input (subprocess.Popen)
+
+If we need more control, like interacting with the process while it's running, we use subprocess.Popen.
+
+```py
+import subprocess
+
+def run_interactive():
+    process = subprocess.Popen(["python", "-c", "input('Enter something: ')"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    process.communicate(input="Hello\n")
+
+if __name__ == "__main__":
+    run_interactive()
+```
+
+#### <a name="chapter9part5"></a>Chapter 9 - Part 5: Running a Background Process
+
+We can run a command in the background using Popen().
+
+```py
+import subprocess
+import time
+
+def run_background():
+    process = subprocess.Popen(["ping", "-c", "4", "google.com"], stdout=subprocess.DEVNULL)  # Run in background
+    print("Ping command started...")
+    time.sleep(2)  # Do other things while the process runs
+    print("Main program continues...")
+
+if __name__ == "__main__":
+    run_background()
+```
+
+#### <a name="chapter9part6"></a>Chapter 9 - Part 6: Running a Python Script as a Subprocess
+
+We can use subprocess.run() to execute another Python script.
+
+```py
+import subprocess
+
+def run_script():
+    result = subprocess.run(["python", "example_script.py"], capture_output=True, text=True)
+    print(result.stdout)
+
+if __name__ == "__main__":
+    run_script()
+```
+
+#### <a name="chapter9part7"></a>Chapter 9 - Part 7: Using Shell Commands (shell=True)
+
+Sometimes, we want to run commands as if we were typing them in the terminal.
+
+```py
+import subprocess
+
+def check_python_version():
+    result = subprocess.run("python --version", shell=True, capture_output=True, text=True)
+    print(result.stdout)
+
+if __name__ == "__main__":
+    check_python_version()
+
+```
+
+#### <a name="chapter9part8"></a>Chapter 9 - Part 8: Killing a Running Subprocess
+
+If a process runs indefinitely, we can terminate it.
+
+```py
+import subprocess
+import time
+
+def run_and_kill():
+    process = subprocess.Popen(["ping", "google.com"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    time.sleep(5)  # Let it run for 5 seconds
+    process.terminate()  # Kill the process
+    print("Process terminated.")
+
+if __name__ == "__main__":
+    run_and_kill()
+
+
+```
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
