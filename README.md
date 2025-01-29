@@ -128,7 +128,11 @@
       - [Chapter 7 - Part 6.1: Working with ZIP Files](#chapter7part6.1)
       - [Chapter 7 - Part 6.2: Working with TAR Files](#chapter7part6.2)
       - [Chapter 7 - Part 6.3: Working with GZIP Files](#chapter7part6.3)
-8. [Appendix A: Useful Python Code Snippet](#appendixa)
+8. [Chapter 8: Threads](#chapter8)
+    - [Chapter 8 - Part 1: Using Threads in Python](#chapter8part1)
+9. [Chapter 9: Subprocess](#chapter9)
+    - [Chapter 9 - Part 1: Using Subprocess in Python](#chapter9part1)
+11. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
     - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
@@ -7095,6 +7099,136 @@ with gzip.open('data.json.gz', 'rb') as f_in:
     with open('data_decompressed.json', 'wb') as f_out:
         f_out.write(f_in.read())
 ```
+
+## <a name="chapter8"></a>Chapter 8: Threads
+
+#### <a name="chapter8part1"></a>Chapter 8 - Part 1: Using Threads in Python
+
+**What Are Threads**
+
+Threads are small units of execution within a program. They allow multiple tasks to run at the same time, making the program more efficient.
+
+For example, imagine you have different tasks:
+
+- Cooking
+- Watching TV
+- Reading an email
+
+If you do these tasks one by one, it takes longer. But with threads, you can do them simultaneously, saving time.
+
+The given code uses threads to process different values (A, B, C, D) in parallel. Let’s break it down step by step.
+
+```py
+import threading
+import time
+
+
+def main(array_of_threads):
+    failed_array = []
+    threads = []
+    for thread in array_of_threads:
+        t = threading.Thread(target=process_thread, args=(thread,failed_array))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(f"Number of failed process: {len(failed_array)}")
+
+
+def process_thread(thread, failed_array):
+    try:
+        print(f"Processing Thread: {thread}")
+        if thread == 'A':
+            time.sleep(3)
+        if thread == 'B':
+            time.sleep(1)
+        if thread == 'C':
+            raise Exception(f"Thread {thread} failed")
+        if thread == 'D':
+            time.sleep(2)
+        print(f"Thread {thread} success")
+    except Exception as error:
+        print(f"Moving thread {thread} because of: {error}")
+        failed_array.append(thread)
+
+
+if __name__ == "__main__":
+    array_of_values = ['A', 'B', 'C', 'D']
+    main(array_of_values)
+```
+
+1 - Creating and Starting Threads
+
+In the main() function, a new thread is created for each element in array_of_threads (A, B, C, D):
+
+```py
+t = threading.Thread(target=process_thread, args=(thread, failed_array))
+t.start()
+```
+
+Here, we create a thread that runs the function process_thread(thread, failed_array).
+
+Instead of running one function at a time, each function runs in its own thread, allowing multiple functions to execute simultaneously.
+
+2 - Executing Threads in Parallel
+
+Each thread runs the process_thread() function, which:
+
+- Prints "Processing Thread: X"
+- Simulates processing time using time.sleep()
+- If the thread is 'C', it raises an exception to simulate a failure
+
+```py
+if thread == 'A':
+    time.sleep(3)  # Simulates a long process
+if thread == 'B':
+    time.sleep(1)  # A faster process
+if thread == 'C':
+    raise Exception(f"Thread {thread} failed")  # Simulates a failure
+if thread == 'D':
+    time.sleep(2)  # A medium process
+```
+
+3 - Handling Failures
+
+If a thread fails ('C'), the exception is caught:
+
+```py
+except Exception as error:
+    print(f"Moving thread {thread} because of: {error}")
+    failed_array.append(thread)
+```
+
+This stores the failed thread in failed_array for tracking.
+
+4 - Ensuring All Threads Finish
+
+After starting all threads, the program waits for them to complete using .join():
+
+```py
+for t in threads:
+    t.join()
+```
+
+Without .join(), the program might finish before all threads complete.
+
+If you run the program, the output may look like:
+
+```
+Processing Thread: A  
+Processing Thread: B  
+Processing Thread: C  
+Processing Thread: D  
+Moving thread C because of: Thread C failed  
+Thread B success  
+Thread D success  
+Thread A success  
+Number of failed process: 1
+```
+
+## <a name="chapter9"></a>Chapter 9: Threads
+
+#### <a name="chapter9part1"></a>Chapter 9 - Part 1: Using Subprocess in Python
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
