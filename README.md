@@ -144,7 +144,10 @@
     - [Chapter 9 - Part 6: Running a Python Script as a Subprocess](#chapter9part6)
     - [Chapter 9 - Part 7: Using Shell Commands (shell=True)](#chapter9part7)
     - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
-11. [Appendix A: Useful Python Code Snippet](#appendixa)
+10. [Chapter 10: Design Patterns](#chapter10)
+    - [Chapter 10 - Part 1: Creational Design Patterns](#chapter10part1)
+      - [Chapter 10 - Part 1.1: Factory Method](#chapter10part1.1)
+12. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
     - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
@@ -7598,6 +7601,81 @@ if __name__ == "__main__":
 
 
 ```
+
+## <a name="chapter10"></a>Chapter 10: Design Patterns
+
+#### <a name="chapter10part1"></a>Chapter 10 - Part 1: Creational Design Patterns
+
+Creational design patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
+
+[Creational Design Patterns List]([https://github.com/vitorstabile/airflow-basics/tree/main/docker-image](https://refactoring.guru/design-patterns/creational-patterns))
+
+###### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Method
+
+[Factory Method](https://refactoring.guru/design-patterns/factory-method)
+
+
+```py
+# route_factory.py
+
+import importlib
+import inspect
+
+
+class RouteFactory:
+
+    def __init__(self, route_name):
+        self.route_name = route_name
+
+    def create_route(self):
+        try:
+            route_path = "src.routes.{route_name}"
+            route = route_path.format(route_name=self.route_name)
+            application_module = importlib.import_module(route)
+            route_classes = [
+                obj for name, obj in inspect.getmembers(application_module, inspect.isclass)
+                if obj.__module__ == route
+            ]
+            return route_classes[0]()
+        except Exception as e:
+            print("Error trying to import route {route_name}. Error: {e}"
+                  .format(route_name=self.route_name, e=e))
+```
+
+```py
+# route_example.py
+
+class RouteExample:
+
+    def __init__(self):
+        print("RouteExample Class Instance")
+
+    def common_function(self):
+        print("RouteExample Class Executing a Function")
+
+```
+
+```py
+# main.py
+
+from src.routes.route_factory import RouteFactory
+
+
+def main():
+    class_instance = RouteFactory("route_example").create_route()
+    class_instance.common_function()
+
+
+if __name__ == "__main__":
+    main()
+```
+
+
+```
+RouteExample Class Instance
+RouteExample Class Executing a Function
+```
+
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
