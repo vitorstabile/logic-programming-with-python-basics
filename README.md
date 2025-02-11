@@ -7704,7 +7704,20 @@ RouteExample Class Instance Created
 RouteExample Class Executing a Function
 ```
 
-In this code, we can see
+In this code, we can see this
+
+| Category                 | Concept                               | Application in Code                                                                                                                      |
+| :-----------------------:| :------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------: |
+| Design Patterns          | Factory Pattern                       | RouteFactory is a Factory that dynamically loads and returns a route instance based on the input name.                                   |
+|                          | Dependency Injection                  | The create_route method returns an instance that adheres to the IRoute interface, allowing flexibility in adding new routes.             |
+| SOLID Principles         | Single Responsibility Principle (SRP) | RouteFactory is only responsible for creating route instances. RouteExample only implements business logic. IRoute defines the contract. |
+|                          | Open/Closed Principle (OCP)           | New route classes can be added without modifying existing code, as long as they implement IRoute.                                        |
+|                          | Liskov Substitution Principle (LSP)   | RouteExample correctly implements IRoute, ensuring it can be used interchangeably with any other IRoute implementation.                  |
+|                          | Interface Segregation Principle (ISP) | IRoute defines a minimal, specific contract (only common_function), preventing unnecessary method implementation in subclasses.          |
+|                          | Dependency Inversion Principle (DIP)  | RouteFactory depends on IRoute (abstraction) rather than concrete classes (RouteExample).                                                |
+| Architectural Principles | Modular Design                        | Each component (interface, factory, concrete class) is in its own module for separation of concerns.                                     |
+|                          | Plug-and-Play Architecture            | New routes can be added without changing the existing factory mechanism.                                                                 |
+|                          | Reflection & Dynamic Import           | Uses importlib and inspect to dynamically load route classes at runtime.                                                                 |
 
 
 
