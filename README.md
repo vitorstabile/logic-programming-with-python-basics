@@ -7608,7 +7608,7 @@ if __name__ == "__main__":
 
 Creational design patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
 
-[Creational Design Patterns List]([https://github.com/vitorstabile/airflow-basics/tree/main/docker-image](https://refactoring.guru/design-patterns/creational-patterns))
+[Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
 
 ###### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Method
 
