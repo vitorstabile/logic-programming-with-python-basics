@@ -7616,39 +7616,31 @@ Creational design patterns provide various object creation mechanisms, which inc
 
 
 ```py
-# route_factory.py
+# src/routes/interfaces.py
 
-import importlib
-import inspect
+from abc import ABC, abstractmethod
 
 
-class RouteFactory:
+class IRoute(ABC):
+    """Interface for route classes, enforcing method contracts."""
 
-    def __init__(self, route_name):
-        self.route_name = route_name
-
-    def create_route(self):
-        try:
-            route_path = "src.routes.{route_name}"
-            route = route_path.format(route_name=self.route_name)
-            application_module = importlib.import_module(route)
-            route_classes = [
-                obj for name, obj in inspect.getmembers(application_module, inspect.isclass)
-                if obj.__module__ == route
-            ]
-            return route_classes[0]()
-        except Exception as e:
-            print("Error trying to import route {route_name}. Error: {e}"
-                  .format(route_name=self.route_name, e=e))
+    @abstractmethod
+    def common_function(self):
+        """A method that every route must implement."""
+        pass
 ```
 
 ```py
-# route_example.py
+# src/routes/route_example.py
 
-class RouteExample:
+from src.routes.interfaces import IRoute
+
+
+class RouteExample(IRoute):
+    """Example implementation of a route following IRoute contract."""
 
     def __init__(self):
-        print("RouteExample Class Instance")
+        print("RouteExample Class Instance Created")
 
     def common_function(self):
         print("RouteExample Class Executing a Function")
@@ -7656,25 +7648,65 @@ class RouteExample:
 ```
 
 ```py
+# src/routes/route_factory.py
+
+import importlib
+import inspect
+from src.routes.interfaces import IRoute
+
+class RouteFactory:
+    """Factory class for creating route instances dynamically."""
+
+    def __init__(self, route_name: str):
+        self.route_name = route_name
+
+    def create_route(self) -> IRoute:
+        """Dynamically imports and instantiates a route class."""
+        try:
+            route_path = "src.routes.{route_name}".format(route_name=self.route_name)
+            application_module = importlib.import_module(route_path)
+
+            route_classes = [
+                obj for name, obj in inspect.getmembers(application_module, inspect.isclass)
+                if issubclass(obj, IRoute) and obj.__module__ == route_path
+            ]
+
+            if not route_classes:
+                raise ImportError("No valid route class found in {route}".format(route=route_path))
+
+            return route_classes[0]()  # Instantiate the class
+
+        except Exception as e:
+            raise ImportError("Error trying to import route {route_name}. Error: {e}"
+                              .format(route_name=self.route_name, e=e))
+```
+
+
+```py
 # main.py
 
 from src.routes.route_factory import RouteFactory
+from src.routes.interfaces import IRoute
 
-
-def main():
-    class_instance = RouteFactory("route_example").create_route()
+def main(factory: RouteFactory):
+    """Main function that runs the application."""
+    class_instance: IRoute = factory.create_route()
     class_instance.common_function()
 
-
 if __name__ == "__main__":
-    main()
+    route_factory = RouteFactory("route_example")  # Dependency Injection
+    main(route_factory)
 ```
 
 
 ```
-RouteExample Class Instance
+RouteExample Class Instance Created
 RouteExample Class Executing a Function
 ```
+
+In this code, we can see
+
+
 
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
