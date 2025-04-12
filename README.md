@@ -159,7 +159,7 @@
     
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
-#### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
+### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
 
 Python code can be written using any plain text editor that can load and save text using either the ASCII or the UTF-8 Unicode character encoding.
 
@@ -213,7 +213,7 @@ Hello World!
 
 Although the program has just one executable statement, by running it we can infer some information about the print() function. For one thing, print() is a built-in part of the Python language—we didn’t need to “import” or “include” it from a library to make use of it. Also, it separates each item it prints with a single space, and prints a newline after the last item is printed.
 
-#### <a name="chapter1part2"></a>Chapter 1 - Part 2: Data Types in Python
+### <a name="chapter1part2"></a>Chapter 1 - Part 2: Data Types in Python
 
 In programming, data type is an important concept.
 
@@ -288,7 +288,7 @@ The int() conversion is tolerant of leading and trailing whitespace, so int(" 45
 applied to almost any data item. We can easily make our own custom data types support str() conversion, and also int() or other conversions if they make sense.
 If a conversion fails, an exception is raised
 
-#### <a name="chapter1part3"></a>Chapter 1 - Part 3: Object References in Python
+### <a name="chapter1part3"></a>Chapter 1 - Part 3: Object References in Python
 
 Python doesn’t have variables as such, but instead has object references.
 
@@ -346,7 +346,7 @@ Here we create a new object reference called route and set it to refer to a new 
 
 The type() function returns the data type (also known as the "class”) of the data item it is given—this function can be very useful for testing and debugging.
 
-#### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
+### <a name="chapter1part4"></a>Chapter 1 - Part 4: Collection Data Types in Python
 
 There are four collection data types in the Python programming language:
 
@@ -425,9 +425,9 @@ x[1] = "forty nine"
 print(x) # print: ['zebra', 'forty nine', -879, 'aardvark', 200, 'more', 'extra']
 ```
 
-#### <a name="chapter1part5"></a>Chapter 1 - Part 5: Logical Operations in Python
+### <a name="chapter1part5"></a>Chapter 1 - Part 5: Logical Operations in Python
 
-###### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
+#### <a name="chapter1part5.1"></a>Chapter 1 - Part 5.1: The Identity Operator
 
 The is operator is a binary operator that returns True if its left-hand object reference is referring to the same object as its right-hand object reference.
 
@@ -451,7 +451,7 @@ print(a is not None, b is None) # print: (True, True)
 
 To invert the identity test we use ```is not```.
 
-###### <a name="chapter1part5.2"></a>Chapter 1 - Part 5.2: Comparison Operators
+#### <a name="chapter1part5.2"></a>Chapter 1 - Part 5.2: Comparison Operators
 
 - ```<``` less than
 - ```<=``` less than or equal to,
@@ -477,7 +477,7 @@ print(a == b) # print: True
 
 The moral of this is to use == and != when comparing values, and to use ```is``` and ```is not``` only when comparing with ```None``` or when we really do want to see if two object references, rather than their values, are the same.
 
-###### <a name="chapter1part5.3"></a>Chapter 1 - Part 5.3: The Membership Operator
+#### <a name="chapter1part5.3"></a>Chapter 1 - Part 5.3: The Membership Operator
 
 For data types that are sequences or collections such as strings, lists, and tuples, we can test for membership using the ```in``` operator,and for nonmembership using the ```not in``` operator.
 
@@ -493,7 +493,7 @@ print("J" in phrase) # print: True
 print("han" in phrase) # print: True
 ```
 
-###### <a name="chapter1part5.4"></a>Chapter 1 - Part 5.4: Logical Operators
+#### <a name="chapter1part5.4"></a>Chapter 1 - Part 5.4: Logical Operators
 
 Python provides three logical operators: ```and```, ```or```, and ```not```. Both ```and``` and ```or``` use short-circuit logic and return the operand that determined the result—they do not return a Boolean (unless they actually have Boolean operands).
 
@@ -523,9 +523,9 @@ The ```or``` operator is similar; here the results in a Boolean context would be
 
 The ```not``` unary operator evaluates its argument in a Boolean context and always returns a Boolean result, so to continue the earlier example, ```not (zero or nought)``` would produce ```True```, and ```not two``` would produce ```False```.
 
-#### <a name="chapter1part6"></a>Chapter 1 - Part 6: Control Flow Statements in Python
+### <a name="chapter1part6"></a>Chapter 1 - Part 6: Control Flow Statements in Python
 
-###### <a name="chapter1part6.1"></a>Chapter 1 - Part 6.1: The if Statement
+#### <a name="chapter1part6.1"></a>Chapter 1 - Part 6.1: The if Statement
 
 The general syntax for Python’s if statement is this:
 
@@ -559,7 +559,7 @@ else:
     print("large")
 ```
 
-###### <a name="chapter1part6.2"></a>Chapter 1 - Part 6.2: The while Statement
+#### <a name="chapter1part6.2"></a>Chapter 1 - Part 6.2: The while Statement
 
 The ```while``` statement is used to execute a suite zero or more times, the number of times depending on the state of the ```while``` loop’s Boolean expression.
 
@@ -578,7 +578,7 @@ while True:
     process_item(item)
 ```
 
-###### <a name="chapter1part6.3"></a>Chapter 1 - Part 6.3: The for …in Statement
+#### <a name="chapter1part6.3"></a>Chapter 1 - Part 6.3: The for …in Statement
 
 Python’s ```for``` loop reuses the ```in``` keyword (which in other contexts is the membership operator), and has the following syntax:
 
@@ -635,7 +635,7 @@ In this snippet the first use of the ```in``` keyword is part of a ```for``` sta
 ('Z', 'is a consonant')
 ```
 
-###### <a name="chapter1part6.4"></a>Chapter 1 - Part 6.4: Basic Exception Handling
+#### <a name="chapter1part6.4"></a>Chapter 1 - Part 6.4: Basic Exception Handling
 
 Many of Python’s functions and methods indicate errors or other important events by raising an exception. An exception is an object like any other Python object, and when converted to a string (e.g., when printed), the exception produces a message text.
 
@@ -676,7 +676,7 @@ But if they were to enter “13”, the output will be:
 valid integer entered: 13
 ```
 
-#### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
+### <a name="chapter1part7"></a>Chapter 1 - Part 7: Arithmetic Operators in Python
 
 Python provides a full set of arithmetic operators, including binary operators for the four basic mathematical operations:```+ addition```, ```- subtraction```,```* multiplication```, and ```/ division```. In addition, many Python data types can be used with augmented assignment operators such as ```+=``` and ```*=```. The ```+```, ```-```, and ```*``` operators all behave as expected when both of their operands are integers:
 
@@ -767,7 +767,7 @@ print(seeds) # print: ['sesame', 'sunflower', 'pumpkin', 'd', 'u', 'r', 'i', 'a'
 
 The list += operator extends the list by appending each item of the iterable it is provided with; and since a string is an iterable, this leads to each character in the string being appended individually. If we use the list append() method, the argument is always added as a single item.
 
-#### <a name="chapter1part8"></a>Chapter 1 - Part 8: Input/Output in Python
+### <a name="chapter1part8"></a>Chapter 1 - Part 8: Input/Output in Python
 
 Python provides the built-in ```input()``` function to accept input from the user. This function takes an optional string argument (which it prints on the console); it then waits for the user to type in a response and to finish by pressing ```Enter (or Return)```. If the user does not type any text but just presses Enter, the ```input()``` function returns an empty string; otherwise, it returns a string containing what the user typed, without any line terminator.
 
@@ -801,7 +801,7 @@ integer:
 ('count =', 3, 'total =', 6, 'mean =', 2)
 ```
 
-#### <a name="chapter1part9"></a>Chapter 1 - Part 9: Creating and Calling Functions in Python
+### <a name="chapter1part9"></a>Chapter 1 - Part 9: Creating and Calling Functions in Python
 
 Python provides a means of encapsulating suites as functions which can be parameterized by the arguments they
 are passed. Here is the general syntax for creating a function:
@@ -887,7 +887,7 @@ route = "North"
 print(route, type(route)) # prints: North <class 'str'>
 ```
 
-#### <a name="chapter2part1"></a>Chapter 2 - Part 1: Identifiers and Keywords
+### <a name="chapter2part1"></a>Chapter 2 - Part 1: Identifiers and Keywords
 
 The names we give to our object references are called ```identifiers``` or just ```plain names```.
 
@@ -955,13 +955,13 @@ print(dir(__builtins__))
 
 The second convention concerns the use of underscores (_). Names that begin and end with two underscores (such as ```__lt__```) should not be used. Python defines various special methods and variables that use such names
 
-#### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
+### <a name="chapter2part2"></a>Chapter 2 - Part 2: Integral Types
 
 Python provides two built-in integral types, ```int``` and ```bool```. Both integers and Booleans are immutable.
 
 When used in Boolean expressions, ```0``` and ```False``` are ```False```, and any other ```integer``` and ```True``` are ```True```. When used in numerical expressions ```True``` evaluates to ```1``` and ```False``` to ```0```.
 
-###### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
+#### <a name="chapter2part2.1"></a>Chapter 2 - Part 2.1: Integers
 
 The size of an integer is limited only by the machine’s memory.
 
@@ -1007,7 +1007,7 @@ Objects can be created by assigning literals to variables, for example, x = 17, 
 
 An object with a default value is created—for example, x = int() creates an integer of value 0. All the built-in types can be called with no arguments.
 
-###### <a name="chapter2part2.2"></a>Chapter 2 - Part 2.2: Booleans
+#### <a name="chapter2part2.2"></a>Chapter 2 - Part 2.2: Booleans
 
 There are two built-in Boolean objects: True and False. Like all other Python data types (whether built-in, library, or custom), the bool data type can be called as a function. With no arguments it returns False, with a bool argument
 it returns a copy of the argument, and with any other argument it attempts to convert the given object to a bool.
@@ -1023,7 +1023,7 @@ print(t and f) # False
 print(t and True) # True
 ```
 
-###### <a name="chapter2part2.3"></a>Chapter 2 - Part 2.3: Integer Bitwise Operators
+#### <a name="chapter2part2.3"></a>Chapter 2 - Part 2.3: Integer Bitwise Operators
 
 Integer Bitwise Operators
 
@@ -1036,7 +1036,7 @@ Integer Bitwise Operators
 | i >> j      | Shifts i right by j bits; like i // (2 ** j) without overflow checking                                |
 | ~i          | Inverts i’s bits                                                                                      |
 
-#### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
+### <a name="chapter2part3"></a>Chapter 2 - Part 3: Floating-Point Types
 
 Python provides three kinds of floating-point values: the built-in ```float``` and ```complex``` types,and the ```decimal.Decimal``` type from the standard library.
 
@@ -1049,7 +1049,7 @@ print(-2.5) # -2.5
 print(8.9e-4) # 0.00089
 ```
 
-###### <a name="chapter2part3.1"></a>Chapter 2 - Part 3.1: Floating-Point Numbers
+#### <a name="chapter2part3.1"></a>Chapter 2 - Part 3.1: Floating-Point Numbers
 
 The float data type can be called as a function with no arguments it returns 0.0,
 
@@ -1107,7 +1107,7 @@ For more Mathematical functions provided by Python, you can check her
 
 [math — Mathematical functions](https://docs.python.org/3/library/math.html)
 
-###### <a name="chapter2part3.2"></a>Chapter 2 - Part 3.2: Complex Numbers
+#### <a name="chapter2part3.2"></a>Chapter 2 - Part 3.2: Complex Numbers
 
 The ```complex``` data type is an immutable type that holds a pair of ```floats```, one representing the real part and the other the imaginary part of a complex number.
 
@@ -1122,7 +1122,7 @@ Except for ```//, %, divmod()```, and the three-argument ```pow()```, all the nu
 
 The functions in the ```math module``` do not work with complex numbers. Users of complex numbers can import the ```cmath``` module
 
-###### <a name="chapter2part3.3"></a>Chapter 2 - Part 3.3: Decimal Numbers
+#### <a name="chapter2part3.3"></a>Chapter 2 - Part 3.3: Decimal Numbers
 
 There are several different numeric data types in Python, including int, float, and complex numbers, but due to floating point numbers' machine-dependent nature, we need a more precise data type.
 
@@ -1153,7 +1153,7 @@ getcontext().prec = 28
 print(Decimal(1) / Decimal(7)) # 0.1428571428571428571428571429
 ```
 
-#### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
+### <a name="chapter2part4"></a>Chapter 2 - Part 4: Strings
 
 Strings are represented by the immutable ```str``` data type which holds a sequence of Unicode characters.
 
@@ -1244,7 +1244,7 @@ Python’s String Escapes
 | \v          | ASCII vertical tab (VT)                                              |
 | \xhh        | Character with the given 8-bit hexadecimal value                     |
 
-###### <a name="chapter2part4.1"></a>Chapter 2 - Part 4.1: Comparing Strings
+#### <a name="chapter2part4.1"></a>Chapter 2 - Part 4.1: Comparing Strings
 
 There is six ways to comparing strings in Python (```<, <=, ==, !=, >, and >=.```)
 
@@ -1296,7 +1296,7 @@ print(str1>=str2) # False
 print(str1<=str2) # True
 ```
 
-###### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
+#### <a name="chapter2part4.2"></a>Chapter 2 - Part 4.2: Slicing and Striding Strings
 
 Index positions into a string begin at 0 and go up to the length of the string minus 1.
 
@@ -1359,7 +1359,7 @@ s = s[:12] + "wo" + s[12:]
 print(s) # 'The waxwork woman'
 ```
 
-###### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
+#### <a name="chapter2part4.3"></a>Chapter 2 - Part 4.3: String Operators and Methods
 
 Since strings are immutable sequences, all the functionality that can be used with immutable sequences can be used with strings.
 
@@ -1459,7 +1459,7 @@ We can check all most of the operation in the table above
 |  s.zfill(w)                          | Returns a copy of s, which if shorter than w is padded with leading zeros to make it w characters long                                                                                                              |
 
 
-###### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
+#### <a name="chapter2part4.4"></a>Chapter 2 - Part 4.4: String Formatting with the str.format() Method
 
 The ```str.format()``` method provides a very flexible and powerful way of creating strings.
 
@@ -1470,7 +1470,7 @@ print("{{{0}}} {1} ;-}}".format("I'm in braces", "I'm not")) # {I'm in braces} I
 
 ```
 
-###### <a name="chapter2part4.5"></a>Chapter 2 - Part 4.5: Field Names
+#### <a name="chapter2part4.5"></a>Chapter 2 - Part 4.5: Field Names
 
 A field name can be either an integer corresponding to one of the str.format() method’s arguments, or the name of one of the method’s keyword arguments.
 
@@ -1497,13 +1497,13 @@ print("The {0[animal]} weighs {0[weight]}kg".format(d)) # The elephant weighs 12
 
 ## <a name="chapter3"></a>Chapter 3: Collection Data Types
 
-#### <a name="chapter3part1"></a>Chapter 3 - Part 1: Sequence Types
+### <a name="chapter3part1"></a>Chapter 3 - Part 1: Sequence Types
 
 A ```sequence``` type is one that supports the membership operator ```(in)```, the size function ```(len())```, slices ```([])```, and is iterable.
 
 Python provides five built-in sequence types: ```bytearray```, ```bytes```, ```list```, ```str```, and ```tuple```
 
-###### <a name="chapter3part1.1"></a>Chapter 3 - Part 1.1: Tuples
+#### <a name="chapter3part1.1"></a>Chapter 3 - Part 1.1: Tuples
 
 A tuple is an ordered sequence of zero or more object references. Tuples support the same slicing and striding syntax as strings.
 
@@ -1760,7 +1760,7 @@ print(even_numbers)
 # Output: (2, 4)
 ```
 
-###### <a name="chapter3part1.2"></a>Chapter 3 - Part 1.2: Named Tuples
+#### <a name="chapter3part1.2"></a>Chapter 3 - Part 1.2: Named Tuples
 
 A named tuple is a subclass of Python's built-in ```tuple``` data type, providing named fields that you can access like attributes. Named tuples make it easier to work with tuples by allowing you to access elements using named attributes rather than relying solely on positional indexing. This improves code readability and reduces the chance of errors.
 
@@ -1843,7 +1843,7 @@ print(Person._fields)  # Output: ('name', 'age', 'city')
 ```
 
 
-###### <a name="chapter3part1.3"></a>Chapter 3 - Part 1.3: Lists
+#### <a name="chapter3part1.3"></a>Chapter 3 - Part 1.3: Lists
 
 A list in Python is an ordered sequence of zero or more object references. Unlike tuples, lists are mutable, which means their elements can be changed after they are created. Lists support the same slicing and striding syntax as strings and tuples.
 
@@ -2161,7 +2161,7 @@ for student in students:
 # Name: Charlie, Age: 23
 ```
 
-###### <a name="chapter3part1.4"></a>Chapter 3 - Part 1.4: List Comprehensions
+#### <a name="chapter3part1.4"></a>Chapter 3 - Part 1.4: List Comprehensions
 
 A list comprehension is an expression and a loop with an optional condition enclosed in brackets where the loop is used to generate items for the list, and where the condition can filter out unwanted items. The simplest form of a list comprehension is this:
 
@@ -2210,7 +2210,7 @@ print(even_squared)
 ```
 
 
-#### <a name="chapter3part2"></a>Chapter 3 - Part 2: Set Types
+### <a name="chapter3part2"></a>Chapter 3 - Part 2: Set Types
 
 A ```set``` type is a collection data type that supports the membership operator ```(in)```, the size function ```(len())```, and is iterable. In addition, set types at least provide a ```set.isdisjoint()``` method.
 
@@ -2220,7 +2220,7 @@ Only ```hashable``` objects may be added to a set. Hashable objects are objects 
 
 All the built-in immutable data types, such as ```float```, ```frozenset```, ```int```, ```str```, and ```tuple```, are hashable and can be added to sets. The built-in mutable data types, such as ```dict```, ```list```, and ```set```, are not hashable since their hash value changes depending on the items they contain, so they cannot be added to sets.
 
-###### <a name="chapter3part2.1"></a>Chapter 3 - Part 2.1: Sets
+#### <a name="chapter3part2.1"></a>Chapter 3 - Part 2.1: Sets
 
 A set is an unordered collection of zero or more object references that refer to hashable objects. Sets are mutable, so we can easily add or remove items, but since they are unordered they have no notion of index position and so cannot be sliced or strided.
 
@@ -2663,7 +2663,7 @@ print('date' in fruits)    # Output: False
 
 
 
-###### <a name="chapter3part2.2"></a>Chapter 3 - Part 2.2: Set Comprehensions
+#### <a name="chapter3part2.2"></a>Chapter 3 - Part 2.2: Set Comprehensions
 
 In addition to creating sets by calling set(), or by using a set literal,we can also create sets using set comprehensions.A set comprehension is an expression and a loop with an optional condition enclosed in braces. Like list comprehensions, two syntaxes are supported:
 
@@ -2682,7 +2682,7 @@ html = {x for x in files if x.lower().endswith((".htm", ".html"))}
 
 Given a list of filenames in files, this set comprehension makes the set html hold only those filenames that end in .htm or .html, regardless of case.
 
-###### <a name="chapter3part2.3"></a>Chapter 3 - Part 2.3: Frozen Sets
+#### <a name="chapter3part2.3"></a>Chapter 3 - Part 2.3: Frozen Sets
 
 A frozenset is an immutable version of a set in Python. Unlike sets, frozen sets cannot be modified after they are created. This immutability makes them hashable, meaning they can be used as keys in dictionaries or elements of other sets.
 
@@ -2786,7 +2786,7 @@ combined_settings = default_settings | user_settings
 print(combined_settings)  # Output: frozenset({'setting1', 'setting2', 'setting3', 'setting4'})
 ```
 
-#### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
+### <a name="chapter3part3"></a>Chapter 3 - Part 3: Mapping Types
 
 A mapping type is one that supports the membership operator ```(in)``` and the size function ```(len())```, and is iterable.
 
@@ -2800,7 +2800,7 @@ A new, ordered mapping type, ```collections.OrderedDict```, was introduced with 
 
 Only hashable objectsmay be used as dictionary keys, so immutable data types such as ```float```, ```frozenset```, ```int```, ```str```, and ```tuple``` can be used as dictionary keys, but mutable types such as ```dict```, ```list```, and ```set``` cannot. On the other hand, each key’s associated value can be an object reference referring to an object of any type, including numbers, strings, lists, sets, dictionaries, functions, and so on.
 
-###### <a name="chapter3part3.1"></a>Chapter 3 - Part 3.1: Dictionaries
+#### <a name="chapter3part3.1"></a>Chapter 3 - Part 3.1: Dictionaries
 
 A ```dict``` is an unordered collection of zero or more key–value pairs whose keys are object references that refer to hashable objects,and whose values are object references referring to objects of any type. Dictionaries are mutable, so we can easily add or remove items, but since they are unordered they have no notion of index position and so cannot be sliced or strided.
 
@@ -3368,7 +3368,7 @@ print(data["name"])  # Output: Alice
 
 
 
-###### <a name="chapter3part3.2"></a>Chapter 3 - Part 3.2: Dictionary Comprehensions
+#### <a name="chapter3part3.2"></a>Chapter 3 - Part 3.2: Dictionary Comprehensions
 
 A dictionary comprehension is an expression and a loop with an optional condition enclosed in braces, very similar to a set comprehension. Like list and set comprehensions, two syntaxes are supported:
 
@@ -3389,7 +3389,7 @@ A dictionary comprehension can also be used to create an inverted dictionary. Fo
 inverted_d = {v: k for k, v in d.items()}
 ```
 
-###### <a name="chapter3part3.3"></a>Chapter 3 - Part 3.3: Default Dictionaries
+#### <a name="chapter3part3.3"></a>Chapter 3 - Part 3.3: Default Dictionaries
 
 In Python, the collections module provides a defaultdict class which extends the built-in dict class by allowing you to set default values for missing keys. This can simplify many common dictionary operations where you need to handle missing keys gracefully.
 
@@ -3421,7 +3421,7 @@ print(dd['b'])  # Output: 2
 print(dd['c'])  # Output: 0 (default value for missing keys)
 ```
 
-###### <a name="chapter3part3.4"></a>Chapter 3 - Part 3.4: Ordered Dictionaries
+#### <a name="chapter3part3.4"></a>Chapter 3 - Part 3.4: Ordered Dictionaries
 
 In Python, dictionaries from version 3.7 onwards maintain insertion order as part of the language specification. However, before Python 3.7, this was not guaranteed, and collections.OrderedDict was used to explicitly maintain the order of items in a dictionary.
 
@@ -3459,9 +3459,9 @@ for key, value in od.items():
 # c: 3
 ```
 
-#### <a name="chapter3part4"></a>Chapter 3 - Part 4: Iterating and Copying Collections
+### <a name="chapter3part4"></a>Chapter 3 - Part 4: Iterating and Copying Collections
 
-###### <a name="chapter3part4.1"></a>Chapter 3 - Part 4.1: Iterators and Iterable Operations and Functions
+#### <a name="chapter3part4.1"></a>Chapter 3 - Part 4.1: Iterators and Iterable Operations and Functions
 
 An iterable data type is one that can return each of its items one at a time.
 
@@ -3630,7 +3630,7 @@ scores = [85, 90, 88]
 print(list(zip(names, scores)))  # Output: [('Alice', 85), ('Bob', 90), ('Charlie', 88)]   
 ```
 
-###### <a name="chapter3part4.2"></a>Chapter 3 - Part 4.2: Copying Collections
+#### <a name="chapter3part4.2"></a>Chapter 3 - Part 4.2: Copying Collections
 
 Since Python uses object references, when we use the assignment operator (=), Object no copying takes place. If the right-hand operand is a literal such as a string or a number, the left-hand operand is set to be an object reference that refers to the in-memory object that holds the literal’s value. If the right-hand operand is an object reference, the left-hand operand is set to be an object reference that refers to the same object as the right-hand operand.
 
@@ -3776,11 +3776,11 @@ print(deep_copied_list)  # Output: [1, [77, 3]]
 
 ## <a name="chapter4"></a>Chapter 4: Control Structures and Functions
 
-#### <a name="chapter4part1"></a>Chapter 4 - Part 1: Control Structures
+### <a name="chapter4part1"></a>Chapter 4 - Part 1: Control Structures
 
 Python provides conditional branching with ```if``` statements and looping with ```while``` and ```for …in``` statements. Python also has a ```conditional expression```—this is a kind of ```if``` statement that is Python’s answer to the ternary operator ```(?:)``` used in C-style languages.
 
-###### <a name="chapter4part1.1"></a>Chapter 4 - Part 1.1: Conditional Branching
+#### <a name="chapter4part1.1"></a>Chapter 4 - Part 1.1: Conditional Branching
 
 the general syntax for Python’s conditional branch statement:
 
@@ -3839,11 +3839,11 @@ Conditional expressions can be used to improve messages printed for users.
 print("{0} file{1}".format((count if count != 0 else "no"), ("s" if count != 1 else "")))
 ```
 
-###### <a name="chapter4part1.2"></a>Chapter 4 - Part 1.2: Looping
+#### <a name="chapter4part1.2"></a>Chapter 4 - Part 1.2: Looping
 
 Python provides a ```while``` loop and a ```for …in``` loop
 
-###### <a name="chapter4part1.3"></a>Chapter 4 - Part 1.3: While Loops
+#### <a name="chapter4part1.3"></a>Chapter 4 - Part 1.3: While Loops
 
 General syntax of the ```while``` loop
 
@@ -3937,7 +3937,7 @@ else:
 # Exception: An error occurred
 ```
 
-###### <a name="chapter4part1.4"></a>Chapter 4 - Part 1.4: For Loops
+#### <a name="chapter4part1.4"></a>Chapter 4 - Part 1.4: For Loops
 
 Like a ```while``` loop, the full syntax of the ```for …in``` loop also includes an optional else clause:
 
@@ -4022,9 +4022,9 @@ else:
 ```
 
 
-#### <a name="chapter4part2"></a>Chapter 4 - Part 2: Exception Handling
+### <a name="chapter4part2"></a>Chapter 4 - Part 2: Exception Handling
 
-###### <a name="chapter4part2.1"></a>Chapter 4 - Part 2.1: Catching and Raising Exceptions
+#### <a name="chapter4part2.1"></a>Chapter 4 - Part 2.1: Catching and Raising Exceptions
 
 Exceptions are caught using try …except blocks, whose general syntax is:
 
@@ -4140,7 +4140,7 @@ finally:
 ```
 
 
-###### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Raising Exceptions
+#### <a name="chapter4part2.2"></a>Chapter 4 - Part 2.2: Raising Exceptions
 
 There are three syntaxes for raising exceptions:
 
@@ -4228,7 +4228,7 @@ except ZeroDivisionError as e:
 # Caught re-raised exception: division by zero
 ```
 
-###### <a name="chapter4part2.3"></a>Chapter 4 - Part 2.3: Custom Exceptions
+#### <a name="chapter4part2.3"></a>Chapter 4 - Part 2.3: Custom Exceptions
 
 Custom exceptions are custom data types (classes).
 
@@ -4303,7 +4303,7 @@ except AuthenticationError as e:
 # User ID: 123
 ```
 
-#### <a name="chapter4part3"></a>Chapter 4 - Part 3: Custom Functions
+### <a name="chapter4part3"></a>Chapter 4 - Part 3: Custom Functions
 
 Functions are a means by whichwe can package up and parameterize functionality. Four kinds of functions can be created in Python: global functions, local functions, lambda functions, and methods.
 
@@ -4367,7 +4367,7 @@ shorten("The Silkie", 7, "&") # returns: 'The Si&'
 
 Because both length and indicator have default values, either or both can be omitted entirely, in which case the default is used—this is what happens in the first call. In the second call we use keyword arguments for both of the specified parameters, so we can order them as we like. The third call mixes both positional and keyword arguments. We used a positional first argument (positional argumentsmust always precede keyword arguments),and then two keyword arguments. The fourth call simply uses positional arguments.
 
-###### <a name="chapter4part3.1"></a>Chapter 4 - Part 3.1: Names and Docstrings
+#### <a name="chapter4part3.1"></a>Chapter 4 - Part 3.1: Names and Docstrings
 
 Using good names for a function and its parameters goes a long way toward making the purpose and use of the function clear to other programmers
 
@@ -4414,7 +4414,7 @@ def calculate_area(radius):
     return math.pi * radius ** 2
 ```
 
-###### <a name="chapter4part3.2"></a>Chapter 4 - Part 3.2: Argument and Parameter Unpacking
+#### <a name="chapter4part3.2"></a>Chapter 4 - Part 3.2: Argument and Parameter Unpacking
 
 In Python, the sequence unpacking operator * can be used to supply positional arguments to functions. This feature is handy when you have a sequence (like a list or tuple) and you want to pass its elements as separate positional arguments to a function.
 
@@ -4584,7 +4584,7 @@ def print_args(*args, **kwargs):
     print("keyword argument {0} = {1}".format(key, kwargs[key]))
 ```
 
-###### <a name="chapter4part3.3"></a>Chapter 4 - Part 3.3: Accessing Variables in the Global Scope
+#### <a name="chapter4part3.3"></a>Chapter 4 - Part 3.3: Accessing Variables in the Global Scope
 
 It is sometimes convenient to have a few global variables that are accessed by various functions in the program. This is usually okay for “constants”
 
@@ -4651,7 +4651,7 @@ update_settings(theme="dark", font_size=14)
 print(settings)  # Output: {'theme': 'dark', 'font_size': 14}
 ```
 
-###### <a name="chapter4part3.4"></a>Chapter 4 - Part 3.4: Lambda Functions
+#### <a name="chapter4part3.4"></a>Chapter 4 - Part 3.4: Lambda Functions
 
 Lambda functions are functions created using the following syntax:
 
@@ -4706,7 +4706,7 @@ sorted_data = sorted(data, key=lambda x: x[1])
 print(sorted_data)  # Output: [(1, 'apple'), (2, 'banana'), (3, 'cherry')]
 ```
 
-###### <a name="chapter4part3.5"></a>Chapter 4 - Part 3.5: Assertions
+#### <a name="chapter4part3.5"></a>Chapter 4 - Part 3.5: Assertions
 
 Preconditions and postconditions can be specified using assert statements, which have the syntax:
 
@@ -4770,7 +4770,7 @@ The assert statements ensure that the result of the addition meets expected post
 
 ## <a name="chapter5"></a>Chapter 5: Modules
 
-#### <a name="chapter5part1"></a>Chapter 5 - Part 1: Modules and Packages
+### <a name="chapter5part1"></a>Chapter 5 - Part 1: Modules and Packages
 
 A Python module, simply put, is a ```.py``` file and a module can contain any Python code we like.
 
@@ -4865,7 +4865,7 @@ A module can contain various Python constructs, such as:
 - Variables: Constants or configuration settings.
 - Executable Code: Code that runs when the module is imported.
 
-###### <a name="chapter5part1.1"></a>Chapter 5 - Part 1.1: Packages
+#### <a name="chapter5part1.1"></a>Chapter 5 - Part 1.1: Packages
 
 A package in Python is a way to organize related modules into a directory structure, allowing for better code organization and modularity, especially in large projects. Here's an overview of Python packages:
 
@@ -4932,7 +4932,7 @@ mypackage/
 └── setup.py
 ```
 
-###### <a name="chapter5part1.2"></a>Chapter 5 - Part 1.2: Custom Modules
+#### <a name="chapter5part1.2"></a>Chapter 5 - Part 1.2: Custom Modules
 
 - A custom module is simply a Python file (with a .py extension) that you create to hold code you want to reuse across multiple programs or scripts.
 - You can define functions, classes, variables, and even include executable code in a custom module.
@@ -5055,7 +5055,7 @@ print(mymodule.greet("Charlie"))
 
 The if __name__ == "__main__" block will not run, ensuring that only the imported functions are executed.
 
-###### <a name="chapter5part1.3"></a>Chapter 5 - Part 1.3:  Good Practice to Create Python Projects
+#### <a name="chapter5part1.3"></a>Chapter 5 - Part 1.3:  Good Practice to Create Python Projects
 
 ```
 \root_project
@@ -5213,11 +5213,11 @@ The if __name__ == "__main__" block will not run, ensuring that only the importe
 
 
 
-#### <a name="chapter5part2"></a>Chapter 5 - Part 2: Overview of Python’s Standard Library
+### <a name="chapter5part2"></a>Chapter 5 - Part 2: Overview of Python’s Standard Library
 
 Python’s Standard Library is a vast collection of modules and packages that come pre-installed with Python, providing tools and functions for various programming tasks. These modules cover a wide range of functionalities, from string handling to networking, making Python versatile and powerful for different applications.
 
-###### <a name="chapter5part2.1"></a>Chapter 5 - Part 2.1: String Handling
+#### <a name="chapter5part2.1"></a>Chapter 5 - Part 2.1: String Handling
 
 - string: Contains constants and functions for common string operations, like formatting, manipulation, and searching.
 
@@ -5246,7 +5246,7 @@ print(matches)  # Output: ['rain', 'Spain', 'plain']
 ```
 
 
-###### <a name="chapter5part2.2"></a>Chapter 5 - Part 2.2: Command-Line Programming
+#### <a name="chapter5part2.2"></a>Chapter 5 - Part 2.2: Command-Line Programming
 
 - argparse: Facilitates the parsing of command-line arguments, making it easy to create user-friendly command-line interfaces.
 
@@ -5274,7 +5274,7 @@ else:
     print("No arguments provided")
 ```
 
-###### <a name="chapter5part2.3"></a>Chapter 5 - Part 2.3: Mathematics and Numbers
+#### <a name="chapter5part2.3"></a>Chapter 5 - Part 2.3: Mathematics and Numbers
 
 - math: Offers basic mathematical functions like trigonometry, logarithms, and constants such as pi.
 
@@ -5320,7 +5320,7 @@ f2 = Fraction(2, 3)
 print(f1 + f2)  # Output: 1
 ```
 
-###### <a name="chapter5part2.4"></a>Chapter 5 - Part 2.4: Times and Dates
+#### <a name="chapter5part2.4"></a>Chapter 5 - Part 2.4: Times and Dates
 
 - datetime: Provides classes for manipulating dates and times, including support for time zones.
 
@@ -5350,7 +5350,7 @@ time.sleep(2)
 print("This message is displayed after a 2-second delay")
 ```
 
-###### <a name="chapter5part2.5"></a>Chapter 5 - Part 2.5: Algorithms and Collection Data Types
+#### <a name="chapter5part2.5"></a>Chapter 5 - Part 2.5: Algorithms and Collection Data Types
 
 - collections: Introduces specialized data types like Counter, deque, OrderedDict, and defaultdict for enhanced data handling.
 
@@ -5397,7 +5397,7 @@ combinations = itertools.combinations([1, 2, 3], 2)
 print(list(combinations))  # Output: [(1, 2), (1, 3), (2, 3)]
 ```
 
-###### <a name="chapter5part2.6"></a>Chapter 5 - Part 2.6: File Formats, Encodings, and Data Persistence
+#### <a name="chapter5part2.6"></a>Chapter 5 - Part 2.6: File Formats, Encodings, and Data Persistence
 
 - json: Enables reading and writing JSON (JavaScript Object Notation) data, a popular data interchange format.
 
@@ -5463,7 +5463,7 @@ with codecs.open('example.txt', 'r', 'utf-8') as file:
     print(file.read())  # Output: Hello, world!
 ```
 
-###### <a name="chapter5part2.7"></a>Chapter 5 - Part 2.7: File, Directory, and Process Handling
+#### <a name="chapter5part2.7"></a>Chapter 5 - Part 2.7: File, Directory, and Process Handling
 
 - os: Provides a way to interact with the operating system, including file and directory manipulation, environment variables, and process management.
 
@@ -5505,7 +5505,7 @@ result = subprocess.run(['echo', 'Hello, world!'], capture_output=True, text=Tru
 print(result.stdout)  # Output: Hello, world!
 ```
 
-###### <a name="chapter5part2.8"></a>Chapter 5 - Part 2.8: Networking and Internet Programming
+#### <a name="chapter5part2.8"></a>Chapter 5 - Part 2.8: Networking and Internet Programming
 
 - socket: Provides low-level networking interfaces, allowing for the creation of both client and server network applications.
 
@@ -5547,7 +5547,7 @@ with urllib.request.urlopen('http://example.com/') as response:
     print(html)
 ```
 
-###### <a name="chapter5part2.9"></a>Chapter 5 - Part 2.9: XML
+#### <a name="chapter5part2.9"></a>Chapter 5 - Part 2.9: XML
 
 - xml.etree.ElementTree: A lightweight XML parser that allows for creating and parsing XML data.
 
@@ -5577,7 +5577,7 @@ from xml.dom.minidom import parseString
 xml_data = '<root><child name="Alice">Data1</
 ```
 
-###### <a name="chapter5part2.10"></a>Chapter 5 - Part 2.10: Data Handling and Persistence
+#### <a name="chapter5part2.10"></a>Chapter 5 - Part 2.10: Data Handling and Persistence
 
 - sqlite3: Provides a lightweight disk-based database that doesn’t require a separate server process. It allows you to use SQL to manage data.
 
@@ -5601,7 +5601,7 @@ print(cursor.fetchall())  # Output: [(1, 'Alice')]
 conn.close()
 ```
 
-###### <a name="chapter5part2.11"></a>Chapter 5 - Part 2.11: Debugging and Profiling
+#### <a name="chapter5part2.11"></a>Chapter 5 - Part 2.11: Debugging and Profiling
 
 - pdb: The Python debugger, which allows you to set breakpoints, step through code, and inspect variables.
 
@@ -5627,7 +5627,7 @@ def slow_function():
 cProfile.run('slow_function()')
 ```
 
-###### <a name="chapter5part2.12"></a>Chapter 5 - Part 2.12: Unit Testing
+#### <a name="chapter5part2.12"></a>Chapter 5 - Part 2.12: Unit Testing
 
 - unittest: A built-in module for writing and running tests, following the xUnit style
 
@@ -5645,7 +5645,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-###### <a name="chapter5part2.13"></a>Chapter 5 - Part 2.13: Web Programming
+#### <a name="chapter5part2.13"></a>Chapter 5 - Part 2.13: Web Programming
 
 - http.server: Provides a simple HTTP server, which can be used to serve files and handle basic HTTP requests.
 
@@ -5658,7 +5658,7 @@ print("Serving on port 8000...")
 httpd.serve_forever()
 ```
 
-###### <a name="chapter5part2.14"></a>Chapter 5 - Part 2.14: Data Compression and Archiving
+#### <a name="chapter5part2.14"></a>Chapter 5 - Part 2.14: Data Compression and Archiving
 
 - zipfile: Allows you to work with ZIP archives, compressing and extracting files.
 
@@ -5704,7 +5704,7 @@ with gzip.open('example.txt.gz', 'rb') as f_in:
         f_out.write(f_in.read())
 ```
 
-###### <a name="chapter5part2.15"></a>Chapter 5 - Part 2.15: Cryptography
+#### <a name="chapter5part2.15"></a>Chapter 5 - Part 2.15: Cryptography
 
 - hashlib: Provides secure hash functions, like SHA-256, useful for data integrity checks and cryptography.
 
@@ -5729,7 +5729,7 @@ hmac_obj = hmac.new(key, message, hashlib.sha256)
 print(hmac_obj.hexdigest())
 ```
 
-###### <a name="chapter5part2.16"></a>Chapter 5 - Part 2.16: Parsing and Formatting
+#### <a name="chapter5part2.16"></a>Chapter 5 - Part 2.16: Parsing and Formatting
 
 - configparser: Helps in working with configuration files similar to INI format.
 
@@ -5746,7 +5746,7 @@ config.read('example.ini')
 print(config['DEFAULT']['Server'])  # Output: localhost
 ```
 
-###### <a name="chapter5part2.17"></a>Chapter 5 - Part 2.17: Random Number Generation
+#### <a name="chapter5part2.17"></a>Chapter 5 - Part 2.17: Random Number Generation
 
 - random: Generates random numbers and selections, useful for simulations, games, and testing.
 
@@ -5760,7 +5760,7 @@ print(random.randint(1, 10))
 print(random.choice(['apple', 'banana', 'cherry']))
 ```
 
-###### <a name="chapter5part2.18"></a>Chapter 5 - Part 2.18: Operating System and System Information
+#### <a name="chapter5part2.18"></a>Chapter 5 - Part 2.18: Operating System and System Information
 
 - platform: Provides access to underlying platform data, such as the operating system, Python version, and hardware architecture.
 
@@ -5781,7 +5781,7 @@ password = getpass.getpass('Enter your password: ')
 print(f'Your password is: {password}')
 ```
 
-###### <a name="chapter5part2.19"></a>Chapter 5 - Part 2.19: Concurrent Programming
+#### <a name="chapter5part2.19"></a>Chapter 5 - Part 2.19: Concurrent Programming
 
 - threading: Provides high-level threading APIs for running tasks concurrently.
 
@@ -5812,7 +5812,7 @@ for p in processes:
     p.join()
 ```
 
-###### <a name="chapter5part2.20"></a>Chapter 5 - Part 2.20: Logging
+#### <a name="chapter5part2.20"></a>Chapter 5 - Part 2.20: Logging
 
 - logging: A robust module for logging messages from your applications.
 
@@ -5829,7 +5829,7 @@ The Object-Oriented Approach (OOA) and Procedural Programming (PP) are two disti
 
 It is perfectly possible to write any program in procedural style, and for very small programs (up to, say,500 lines), doing so is rarely a problem. But for most programs, and especially for medium-size and large programs, object-oriented programming offers many advantages
 
-#### <a name="chapter6part1"></a>Chapter 6 - Part 1: The Object-Oriented Approach
+### <a name="chapter6part1"></a>Chapter 6 - Part 1: The Object-Oriented Approach
 
  Object-Oriented Approach provides a more structured and modular way to manage complex programs by modeling real-world entities as objects, while Procedural Programming focuses on the sequence of procedures to manipulate data.
 
@@ -5854,7 +5854,7 @@ print(get_age(my_dog))      # Output: Buddy is 4 years old.
 
 In this example, create_dog, bark, and get_age are functions that operate on a dictionary representing a dog. The data is passed as arguments to these functions, and there is no encapsulation or inherent structure.
 
-###### <a name="chapter6part1.1"></a>Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology
+#### <a name="chapter6part1.1"></a>Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology
 
 Object-Oriented Programming (OOP) is based on the concept of "objects," which are instances of "classes." Classes are blueprints for creating objects and can contain data (attributes) and methods (functions) that operate on the data. The main principles of OOP are encapsulation, inheritance, polymorphism, and abstraction.
 
@@ -5889,7 +5889,7 @@ print(my_dog.get_age())      # Output: Buddy is 4 years old.
 
 In this example, Dog is a class with attributes name and age and methods bark and get_age. The object my_dog is an instance of the Dog class.
 
-#### <a name="chapter6part2"></a>Chapter 6 - Part 2: Custom Classes
+### <a name="chapter6part2"></a>Chapter 6 - Part 2: Custom Classes
 
 A class in Python is a blueprint for creating objects. It defines attributes and methods that the objects created from the class will have.
 
@@ -5925,7 +5925,7 @@ class Dog:
         return f"{self.name} says woof!"
 ```
 
-###### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
+#### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
 
 - Attributes: Variables that belong to the class and are used to store data about the objects.
 - Methods: Functions defined within a class that operate on the attributes or perform other operations related to the class.
@@ -6069,7 +6069,7 @@ def __str__(self):
 
 The built-in str() function works like the repr() function, except that it calls the object’s __str__() special method. The result is intended to be understandable to human readers and is not expected to be suitable for passing to the eval() function. Continuing the previous example, str(p) (or str(q)) would return the string '(3, 9)'.
 
-###### <a name="chapter6part2.2"></a>Chapter 6 - Part 2.2: Inheritance and Polymorphism
+#### <a name="chapter6part2.2"></a>Chapter 6 - Part 2.2: Inheritance and Polymorphism
 
 Inheritance allows one class (child class) to inherit attributes and methods from another class (parent class). This promotes code reuse and creates a hierarchical relationship between classes.
 
@@ -6168,7 +6168,7 @@ Polymorphism means that any object of a given class can be used as though it wer
 
 In the Circle’s case we have implemented additional methods, such as area() and circumference(), and reimplemented methods we needed to change. The reimplementations of __repr__() and __str__() are necessary because without them the base class methods will be used and the strings returned will be of Points instead of Circles.
 
-###### <a name="chapter6part2.3"></a>Chapter 6 - Part 2.3: Using Properties to Control Attribute Access
+#### <a name="chapter6part2.3"></a>Chapter 6 - Part 2.3: Using Properties to Control Attribute Access
 
 Properties in Python allow you to define methods that can be accessed like attributes. They provide a way to control access to attributes and enforce encapsulation.
 
@@ -6271,7 +6271,7 @@ def radius(self, radius):
 
 The decorator for the setter may look strange at first sight. Every property that is created has a getter, setter, and deleter attribute, so once the radius property is created using @property, the radius.getter, radius.setter, and radius.deleter attributes become available. The radius.getter is set to the getter method by the @property decorator. The other two are set up by Python so that they do nothing (so the attribute cannot be written to or deleted), unless they are used as decorators, in which case they in effect replace themselves with the method they are used to decorate.
 
-###### <a name="chapter6part2.4"></a>Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types
+#### <a name="chapter6part2.4"></a>Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types
 
 Creating fully integrated data types in Python involves defining classes that encapsulate both data and functionality. This means not only defining attributes and methods but also implementing special methods to interact seamlessly with Python's built-in operations and data structures. Here’s a step-by-step guide to creating such a data type:
 
@@ -6378,7 +6378,7 @@ Properties:
 magnitude: Calculates the length of the vector.
 normalized: Returns a unit vector in the same direction.
 
-###### <a name="chapter6part2.5"></a>Chapter 6 - Part 2.5: Creating Data Types from Scratch
+#### <a name="chapter6part2.5"></a>Chapter 6 - Part 2.5: Creating Data Types from Scratch
 
 Creating data types from scratch in Python involves defining a class that encapsulates data and behavior. This process allows you to create custom data structures that can be as complex as needed, tailored to specific requirements.
 
@@ -6490,7 +6490,7 @@ print(f1)  # Output: 1/2
 print(f1.as_float)  # Output: 0.5
 ```
 
-###### <a name="chapter6part2.6"></a>Chapter 6 - Part 2.6: Creating Data Types from Other Data Types
+#### <a name="chapter6part2.6"></a>Chapter 6 - Part 2.6: Creating Data Types from Other Data Types
 
 Creating data types from other data types in Python often involves designing classes that wrap or extend the functionality of built-in or existing data types. This can be useful for creating more complex structures or providing additional functionality while leveraging the existing types' behavior.
 
@@ -6583,7 +6583,7 @@ print(usd == Currency(100, 'USD'))  # Output: True
 print(usd < Currency(150, 'USD'))  # Output: True
 ```
 
-#### <a name="chapter6part3"></a>Chapter 6 - Part 3: Custom Collection Classes
+### <a name="chapter6part3"></a>Chapter 6 - Part 3: Custom Collection Classes
 
 Creating custom collection classes in Python involves defining a class that manages and manipulates a collection of items, such as lists, sets, or dictionaries. These custom collections can provide additional functionality beyond the built-in collections or enforce specific behaviors and constraints.
 
@@ -6715,11 +6715,11 @@ class UniqueBag:
 
 ## <a name="chapter7"></a>Chapter 7: File Handling
 
-#### <a name="chapter7part1"></a>Chapter 7 - Part 1: Writing and Reading Binary Data
+### <a name="chapter7part1"></a>Chapter 7 - Part 1: Writing and Reading Binary Data
 
 Binary formats, even without compression, usually take up the least amount of disk space and are usually the fastest to save and load. Easiest of all is to use pickles, although handling binary data manually should produce the smallest file sizes.
 
-###### <a name="chapter7part1.1"></a>Chapter 7 - Part 1.1: Pickles with Optional Compression
+#### <a name="chapter7part1.1"></a>Chapter 7 - Part 1.1: Pickles with Optional Compression
 
 Pickle is a Python module that serializes and deserializes Python objects, making it easy to save and load complex data structures like lists, dictionaries, or custom objects. The serialized data is stored in binary format.
 
@@ -6767,7 +6767,7 @@ with bz2.open('data.pkl.bz2', 'rb') as file:
     data = pickle.load(file)
 ```
 
-###### <a name="chapter7part1.2"></a>Chapter 7 - Part 1.2: Raw Binary Data with Optional Compression
+#### <a name="chapter7part1.2"></a>Chapter 7 - Part 1.2: Raw Binary Data with Optional Compression
 
 Working with raw binary data involves reading and writing bytes directly, which is useful for non-text files like images, videos, or binary logs.
 
@@ -6813,9 +6813,9 @@ with bz2.open('data.bin.bz2', 'rb') as file:
     data = file.read()
 ```
 
-#### <a name="chapter7part2"></a>Chapter 7 - Part 2: Writing and Parsing Text Files
+### <a name="chapter7part2"></a>Chapter 7 - Part 2: Writing and Parsing Text Files
 
-###### <a name="chapter7part2.1"></a>Chapter 7 - Part 2.1: Writing Text
+#### <a name="chapter7part2.1"></a>Chapter 7 - Part 2.1: Writing Text
 
 Text files are common for storing data in a human-readable format. Python makes it simple to write and read text files.
 
@@ -6843,7 +6843,7 @@ with open('example.txt', 'w', encoding='utf-8') as file:
     file.write("こんにちは世界")  # "Hello, World!" in Japanese
 ```
 
-###### <a name="chapter7part2.2"></a>Chapter 7 - Part 2.2: Parsing Text
+#### <a name="chapter7part2.2"></a>Chapter 7 - Part 2.2: Parsing Text
 
 Parsing text files involves reading and extracting specific data. Python provides multiple ways to parse text, depending on the format and complexity.
 
@@ -6862,7 +6862,7 @@ with open('example.txt', 'r') as file:
         print(line.strip())  # strip() removes newline characters
 ```
 
-###### <a name="chapter7part2.3"></a>Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions
+#### <a name="chapter7part2.3"></a>Chapter 7 - Part 2.3: Parsing Text Using Regular Expressions
 
 Regular expressions (regex) are powerful tools for parsing and extracting data from text files, especially when the structure is not fixed.
 
@@ -6902,9 +6902,9 @@ if match:
     print(f"Level: {level}, Date: {date}, Time: {time}, Module: {module}, Message: {message}")
 ```
 
-#### <a name="chapter7part3"></a>Chapter 7 - Part 3: Writing and Parsing CSV Files
+### <a name="chapter7part3"></a>Chapter 7 - Part 3: Writing and Parsing CSV Files
 
-###### <a name="chapter7part3.1"></a>Chapter 7 - Part 3.1: Writing a CSV File
+#### <a name="chapter7part3.1"></a>Chapter 7 - Part 3.1: Writing a CSV File
 
 To work with CSV files in Python, you can use the csv module. This module provides functionality to both read and write data in a CSV format.
 
@@ -6925,7 +6925,7 @@ with open('people.csv', 'w', newline='') as file:
     writer.writerows(data)
 ```
 
-###### <a name="chapter7part3.2"></a>Chapter 7 - Part 3.2: Parsing CSV Files
+#### <a name="chapter7part3.2"></a>Chapter 7 - Part 3.2: Parsing CSV Files
 
 Reading data from a CSV file is straightforward using the csv.reader() function.
 
@@ -6953,9 +6953,9 @@ with open('people.csv', 'r') as file:
         print(row)  # Each row is an OrderedDict
 ```
 
-#### <a name="chapter7part4"></a>Chapter 7 - Part 4: Writing and Parsing JSON Files
+### <a name="chapter7part4"></a>Chapter 7 - Part 4: Writing and Parsing JSON Files
 
-###### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: Writing a JSON File
+#### <a name="chapter7part4.1"></a>Chapter 7 - Part 4.1: Writing a JSON File
 
 The json module makes it easy to work with JSON data. You can convert Python dictionaries (or other serializable objects) to JSON format and write them to a file.
 
@@ -6975,7 +6975,7 @@ with open('data.json', 'w') as file:
     json.dump(data, file, indent=4)  # indent=4 for pretty-printing
 ```
 
-###### <a name="chapter7part4.2"></a>Chapter 7 - Part 4.2: Parsing JSON Files
+#### <a name="chapter7part4.2"></a>Chapter 7 - Part 4.2: Parsing JSON Files
 
 You can read JSON data from a file and convert it into a Python object using json.load().
 
@@ -6988,9 +6988,9 @@ with open('data.json', 'r') as file:
     print(data)
 ```
 
-#### <a name="chapter7part5"></a>Chapter 7 - Part 5: Writing and Parsing XML Files
+### <a name="chapter7part5"></a>Chapter 7 - Part 5: Writing and Parsing XML Files
 
-###### <a name="chapter7part5.1"></a>Chapter 7 - Part 5.1: Writing a XML File
+#### <a name="chapter7part5.1"></a>Chapter 7 - Part 5.1: Writing a XML File
 
 Python’s xml.etree.ElementTree module allows you to create and write XML files.
 
@@ -7018,7 +7018,7 @@ tree = ET.ElementTree(root)
 tree.write("people.xml")
 ```
 
-###### <a name="chapter7part5.2"></a>Chapter 7 - Part 5.2: Parsing XML Files
+#### <a name="chapter7part5.2"></a>Chapter 7 - Part 5.2: Parsing XML Files
 
 You can parse XML files to extract data using xml.etree.ElementTree module.
 
@@ -7037,9 +7037,9 @@ for person in root.findall('person'):
     print(f"Name: {name}, Age: {age}, City: {city}")
 ```
 
-#### <a name="chapter7part6"></a>Chapter 7 - Part 6: Writing and Parsing Compressed Files
+### <a name="chapter7part6"></a>Chapter 7 - Part 6: Writing and Parsing Compressed Files
 
-###### <a name="chapter7part6.1"></a>Chapter 7 - Part 6.1: Working with ZIP Files
+#### <a name="chapter7part6.1"></a>Chapter 7 - Part 6.1: Working with ZIP Files
 
 Python's zipfile module allows you to create, read, write, and extract ZIP files.
 
@@ -7064,7 +7064,7 @@ with zipfile.ZipFile('files.zip', 'r') as zipf:
     zipf.extractall('extracted_files')
 ```
 
-###### <a name="chapter7part6.2"></a>Chapter 7 - Part 6.2: Working with TAR Files
+#### <a name="chapter7part6.2"></a>Chapter 7 - Part 6.2: Working with TAR Files
 
 The tarfile module provides functionality to work with TAR archives.
 
@@ -7089,7 +7089,7 @@ with tarfile.open('files.tar', 'r') as tarf:
     tarf.extractall('extracted_files')
 ```
 
-###### <a name="chapter7part6.3"></a>Chapter 7 - Part 6.3: Working with GZIP Files
+#### <a name="chapter7part6.3"></a>Chapter 7 - Part 6.3: Working with GZIP Files
 
 The gzip module allows you to compress files using the GZIP format.
 
@@ -7117,7 +7117,7 @@ with gzip.open('data.json.gz', 'rb') as f_in:
 
 ## <a name="chapter8"></a>Chapter 8: Threads
 
-#### <a name="chapter8part1"></a>Chapter 8 - Part 1: Using Threads in Python
+### <a name="chapter8part1"></a>Chapter 8 - Part 1: Using Threads in Python
 
 **What Are Threads**
 
@@ -7241,7 +7241,7 @@ Thread A success
 Number of failed process: 1
 ```
 
-#### <a name="chapter8part2"></a>Chapter 8 - Part 2: Preventing Race Conditions with threading.Lock
+### <a name="chapter8part2"></a>Chapter 8 - Part 2: Preventing Race Conditions with threading.Lock
 
 If multiple threads try to modify failed_array at the same time, a race condition can occur. We can prevent this using a Lock.
 
@@ -7291,7 +7291,7 @@ Added threading.Lock() to prevent issues when modifying failed_array across mult
 
 Used with lock: to ensure only one thread at a time modifies failed_array.
 
-#### <a name="chapter8part3"></a>Chapter 8 - Part 3: Limiting the Number of Threads with ThreadPoolExecutor
+### <a name="chapter8part3"></a>Chapter 8 - Part 3: Limiting the Number of Threads with ThreadPoolExecutor
 
 Creating too many threads can consume too much memory. We can limit the number of threads using concurrent.futures.ThreadPoolExecutor.
 
@@ -7331,7 +7331,7 @@ Used ThreadPoolExecutor(max_workers=2) to limit execution to at most 2 threads s
 
 Used executor.submit() to execute threads and manage them efficiently.
 
-#### <a name="chapter8part4"></a>Chapter 8 - Part 4: Passing Additional Arguments to Threads
+### <a name="chapter8part4"></a>Chapter 8 - Part 4: Passing Additional Arguments to Threads
 
 We can pass extra parameters to the thread function, such as an index or a log ID.
 
@@ -7377,7 +7377,7 @@ Passed an index to each thread, which is useful for logging and debugging.
 
 Improved logging messages, such as "Processing Thread 2: C".
 
-#### <a name="chapter8part5"></a>Chapter 8 - Part 5: Creating Background Threads with daemon=True
+### <a name="chapter8part5"></a>Chapter 8 - Part 5: Creating Background Threads with daemon=True
 
 If we want threads to automatically terminate when the main program ends, we can set them as "daemon threads".
 
@@ -7412,7 +7412,7 @@ Added daemon=True to the threads, so they automatically terminate when the main 
 
 The program doesn’t wait for the threads to complete, as time.sleep(2) makes the main script exit before threads finish.
 
-#### <a name="chapter8part6"></a>Chapter 8 - Part 6: Handling Exceptions Globally in Threads
+### <a name="chapter8part6"></a>Chapter 8 - Part 6: Handling Exceptions Globally in Threads
 
 Instead of handling exceptions inside each thread, we can catch them globally using sys.excepthook.
 
@@ -7461,7 +7461,7 @@ Set sys.excepthook = exception_handler to handle errors from any thread.
 
 ## <a name="chapter9"></a>Chapter 9: Subprocess
 
-#### <a name="chapter9part1"></a>Chapter 9 - Part 1: Using Subprocess in Python
+### <a name="chapter9part1"></a>Chapter 9 - Part 1: Using Subprocess in Python
 
 The subprocess module in Python allows us to run external programs and execute system commands from within a Python script. It is useful when we need to interact with the operating system, run shell commands, or execute other scripts.
 
@@ -7484,7 +7484,7 @@ What Happens?
 - capture_output=True captures the command's output.
 - text=True ensures the output is in a readable string format.
 
-#### <a name="chapter9part2"></a>Chapter 9 - Part 2: Capturing and Handling Errors
+### <a name="chapter9part2"></a>Chapter 9 - Part 2: Capturing and Handling Errors
 
 If the command fails, we should capture and handle errors properly.
 
@@ -7502,7 +7502,7 @@ if __name__ == "__main__":
     list_files()
 ```
 
-#### <a name="chapter9part3"></a>Chapter 9 - Part 3: Redirecting Output to a File
+### <a name="chapter9part3"></a>Chapter 9 - Part 3: Redirecting Output to a File
 
 We can redirect the command's output to a file instead of printing it.
 
@@ -7518,7 +7518,7 @@ if __name__ == "__main__":
     print("Output saved to output.txt")
 ```
 
-#### <a name="chapter9part4"></a>Chapter 9 - Part 4: Running Commands with User Input (subprocess.Popen)
+### <a name="chapter9part4"></a>Chapter 9 - Part 4: Running Commands with User Input (subprocess.Popen)
 
 If we need more control, like interacting with the process while it's running, we use subprocess.Popen.
 
@@ -7533,7 +7533,7 @@ if __name__ == "__main__":
     run_interactive()
 ```
 
-#### <a name="chapter9part5"></a>Chapter 9 - Part 5: Running a Background Process
+### <a name="chapter9part5"></a>Chapter 9 - Part 5: Running a Background Process
 
 We can run a command in the background using Popen().
 
@@ -7551,7 +7551,7 @@ if __name__ == "__main__":
     run_background()
 ```
 
-#### <a name="chapter9part6"></a>Chapter 9 - Part 6: Running a Python Script as a Subprocess
+### <a name="chapter9part6"></a>Chapter 9 - Part 6: Running a Python Script as a Subprocess
 
 We can use subprocess.run() to execute another Python script.
 
@@ -7566,7 +7566,7 @@ if __name__ == "__main__":
     run_script()
 ```
 
-#### <a name="chapter9part7"></a>Chapter 9 - Part 7: Using Shell Commands (shell=True)
+### <a name="chapter9part7"></a>Chapter 9 - Part 7: Using Shell Commands (shell=True)
 
 Sometimes, we want to run commands as if we were typing them in the terminal.
 
@@ -7582,7 +7582,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="chapter9part8"></a>Chapter 9 - Part 8: Killing a Running Subprocess
+### <a name="chapter9part8"></a>Chapter 9 - Part 8: Killing a Running Subprocess
 
 If a process runs indefinitely, we can terminate it.
 
@@ -7604,13 +7604,13 @@ if __name__ == "__main__":
 
 ## <a name="chapter10"></a>Chapter 10: Design Patterns
 
-#### <a name="chapter10part1"></a>Chapter 10 - Part 1: Creational Design Patterns
+### <a name="chapter10part1"></a>Chapter 10 - Part 1: Creational Design Patterns
 
 Creational design patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
 
 [Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
 
-###### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Method
+#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Method
 
 [Factory Method](https://refactoring.guru/design-patterns/factory-method)
 
@@ -7724,7 +7724,7 @@ In this code, we can see this
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
-#### <a name="appendixapart1"></a>Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line
+### <a name="appendixapart1"></a>Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line
 
 Base in this project structure
 
@@ -7832,7 +7832,7 @@ Ensure you’re running the command from the project root directory. Running pyt
 - Ensure Proper Imports
   - All internal imports in your project should use relative paths (e.g., ```from .utils import files```) or absolute paths starting from the package root (e.g., ```from src.utils import files```).
 
-#### <a name="appendixapart2"></a>Appendix A - Part 2: Create a Log file
+### <a name="appendixapart2"></a>Appendix A - Part 2: Create a Log file
 
 ```py
 import logging
@@ -7898,7 +7898,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart3"></a>Appendix A - Part 3: List all files of a directory based in a extension
+### <a name="appendixapart3"></a>Appendix A - Part 3: List all files of a directory based in a extension
 
 ```py
 import os
@@ -7932,7 +7932,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart4"></a>Appendix A - Part 4: List all files of a directory based in a regex
+### <a name="appendixapart4"></a>Appendix A - Part 4: List all files of a directory based in a regex
 
 ```py
 import os
@@ -7968,7 +7968,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart5"></a>Appendix A - Part 5: Move file to a directory
+### <a name="appendixapart5"></a>Appendix A - Part 5: Move file to a directory
 
 ```py
 import os
@@ -8014,7 +8014,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart6"></a>Appendix A - Part 6: Read a Config Json File
+### <a name="appendixapart6"></a>Appendix A - Part 6: Read a Config Json File
 
 config_file.json
 
@@ -8081,7 +8081,7 @@ if __name__ == "__main__":
 
 ```
 
-#### <a name="appendixapart7"></a>Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File
+### <a name="appendixapart7"></a>Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File
 
 config_file.json
 
@@ -8200,7 +8200,7 @@ if __name__ == "__main__":
     main()
 ```
 
-#### <a name="appendixapart8"></a>Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()
+### <a name="appendixapart8"></a>Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()
 
 config_file.json
 
