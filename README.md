@@ -8,6 +8,10 @@
       - [Chapter 0 - Part 1.1: What is Python?](#chapter0part1.1)
       - [Chapter 0 - Part 1.2: Applications of Python](#chapter0part1.2)
       - [Chapter 0 - Part 1.3: Setting Up Your Python Environment (Brief Overview)](#chapter0part1.3)
+    - [Chapter 0 - Part 2: Installing Python and Setting up Your Development Environment](#chapter0part2)
+      - [Chapter 0 - Part 2.1: Installing Python](#chapter0part2.1)
+      - [Chapter 0 - Part 2.2: Setting up a Development Environment](#chapter0part2.2)
+      - [Chapter 0 - Part 2.3: Using Virtual Environments](#chapter0part2.3)
 1. [Chapter 1: Rapid Introduction to Procedural Programming](#chapter1)
     - [Chapter 1 - Part 1: Creating and Running Python Programs](#chapter1part1)
     - [Chapter 1 - Part 2: Data Types in Python](#chapter1part2)
@@ -278,6 +282,211 @@ While the next lesson will cover installation in detail, it's helpful to briefly
 - **Install a Text Editor or IDE:** Choose a text editor or integrated development environment (IDE) for writing your Python code. Popular options include VS Code, Sublime Text, and PyCharm.
 
 - **Verify Installation:** Open a terminal or command prompt and type ```python --version``` to verify that Python is installed correctly.
+
+### <a name="chapter0part2"></a>Chapter 0 - Part 2: Installing Python and Setting up Your Development Environment
+
+Installing Python and setting up your development environment are the crucial first steps in your Python programming journey. A properly configured environment ensures a smooth and efficient coding experience. This lesson will guide you through the process of installing Python, choosing a suitable code editor, and configuring your environment for optimal productivity. We'll cover different installation methods, explore popular code editors, and provide tips for troubleshooting common issues.
+
+#### <a name="chapter0part2.1"></a>Chapter 0 - Part 2.1: Installing Python
+
+Python is available for various operating systems, including Windows, macOS, and Linux. The installation process differs slightly depending on your OS. We'll cover the most common methods for each.
+
+**Windows Installation**
+
+- **Download the Installer:** Go to the official Python website (https://www.python.org/downloads/windows/) and download the latest stable version of Python for Windows. Choose the appropriate installer (32-bit or 64-bit) based on your system architecture. If you are unsure, choose the 64-bit version.
+
+- **Run the Installer:** Double-click the downloaded ```.exe``` file to start the installation process.
+
+- **Important:** Add Python to PATH: During the installation, make sure to check the box that says "Add Python to PATH" This is crucial because it allows you to run Python from the command line without specifying the full path to the Python executable.
+
+- **Choose Installation Type:** You can choose between "Install Now" (which installs Python with default settings) or "Customize installation" (which allows you to choose the installation location and optional features). For beginners, "Install Now" is usually sufficient. If you choose "Customize installation", ensure that "pip" is selected to be installed. ```pip``` is the package installer for Python, which you'll use to install external libraries.
+
+- **Complete the Installation:** Follow the on-screen instructions to complete the installation.
+
+- **Verify the Installation:** Open a command prompt (search for "cmd" in the Start menu) and type ```python --version``` or ```python3 --version``` and press Enter. If Python is installed correctly, it will display the Python version number. You can also type ```pip --version``` to verify that ```pip``` is installed.
+
+**macOS Installation**
+
+macOS often comes with a pre-installed version of Python 2. However, it's highly recommended to install the latest version of Python 3, as Python 2 is no longer supported.
+
+- **Download the Installer:** Go to the official Python website (https://www.python.org/downloads/macos/) and download the latest stable version of Python for macOS.
+
+- **Run the Installer:** Double-click the downloaded ```.pkg``` file to start the installation process.
+
+- **Follow the Instructions:** Follow the on-screen instructions to complete the installation. The installer will guide you through the process.
+
+- Verify the Installation: Open a terminal (search for "Terminal" in Spotlight) and type ```python3 --version``` and press Enter. This should display the Python 3 version number. Also, type ```pip3 --version``` to verify that ```pip``` is installed. Note that on macOS, you typically use ```python3``` and ```pip3``` to refer to Python 3 and its package manager, respectively, to avoid conflicts with the older Python 2 version.
+
+**Linux Installation**
+
+On most Linux distributions, Python is either pre-installed or can be easily installed using the distribution's package manager.
+
+- **Using the Package Manager:** Open a terminal and use the appropriate command for your distribution:
+  - **Debian/Ubuntu:** ```sudo apt update && sudo apt install python3 python3-pip```
+  - **Fedora/CentOS/RHEL:** ```sudo dnf install python3 python3-pip```
+  - **Arch Linux:** ```sudo pacman -S python python-pip```
+
+- **Verify the Installation:** After the installation is complete, type ```python3 --version``` and ```pip3 --version``` in the terminal to verify that Python 3 and ```pip``` are installed correctly.
+
+**Installing Python using Anaconda**
+
+Anaconda is a popular Python distribution that includes Python, pip, and a collection of pre-installed packages commonly used in data science and machine learning. It also provides a convenient environment management system.
+
+- **Download Anaconda:** Go to the Anaconda website (https://www.anaconda.com/products/distribution) and download the installer for your operating system.
+
+- **Run the Installer:** Double-click the downloaded file and follow the on-screen instructions.
+
+- **Verify the Installation:** Open the Anaconda Navigator (a graphical user interface) or the Anaconda Prompt (a command-line interface) and type ```python --version``` or ```conda --version``` to verify the installation.
+
+**Common Installation Issues and Troubleshooting**
+
+- **"python" is not recognized as an internal or external command:** This usually happens when Python is not added to the PATH environment variable during installation. Re-run the installer and make sure to check the "Add Python to PATH" box. If you already installed Python without adding it to PATH, you can manually add it by following these steps:
+  - Open System Properties (search for "environment variables" in the Start menu).
+  - Click "Environment Variables".
+  - In the "System variables" section, find the "Path" variable and click "Edit".
+  - Add the paths to your Python installation directory (e.g., C:\Python39) and the Scripts directory (e.g., C:\Python39\Scripts).
+  - Restart your command prompt.
+ 
+- **Permission errors during package installation:** This can happen when you don't have the necessary permissions to install packages globally. Try using a virtual environment (explained later) or running the installation command with administrator privileges (e.g., sudo pip install <package> on Linux/macOS).
+
+- **Conflicting Python versions:** If you have multiple Python versions installed, make sure the correct version is being used. You can use the python --version command to check the version. You can also use virtual environments to isolate different projects with different Python versions.
+
+#### <a name="chapter0part2.2"></a>Chapter 0 - Part 2.2: Setting up a Development Environment
+
+A development environment is the set of tools and configurations you use to write, test, and debug your code. A well-configured environment can significantly improve your productivity and reduce errors.
+
+**Choosing a Code Editor or IDE**
+
+A code editor is a software application that allows you to write and edit code. An Integrated Development Environment (IDE) is a more comprehensive tool that includes a code editor, debugger, compiler, and other features.
+
+Here are some popular code editors and IDEs for Python:
+
+- **VS Code (Code Editor):** A free, open-source code editor with excellent Python support through extensions. It's lightweight, customizable, and has a large community.
+
+- **PyCharm (IDE):** A powerful IDE specifically designed for Python development. It offers advanced features like code completion, debugging, testing, and version control integration. PyCharm comes in two editions: a free Community Edition and a paid Professional Edition.
+
+- **Sublime Text (Code Editor):** A popular code editor known for its speed, flexibility, and extensive plugin ecosystem. It's not free, but it offers a free trial.
+
+- **Atom (Code Editor):** A free, open-source code editor developed by GitHub. It's highly customizable and has a large community.
+
+- **Jupyter Notebook (Web-Based IDE):** An interactive web-based environment that allows you to write and execute code in cells. It's particularly popular for data science and machine learning.
+
+For beginners, VS Code or PyCharm Community Edition are excellent choices. VS Code is lightweight and easy to set up, while PyCharm offers more advanced features out of the box.
+
+**Configuring VS Code for Python Development**
+
+- **Install VS Code:** Download and install VS Code from the official website (https://code.visualstudio.com/).
+
+- **Install the Python Extension:** Open VS Code and go to the Extensions view (click the square icon on the left sidebar or press Ctrl+Shift+X). Search for "Python" and install the official Microsoft Python extension.
+
+- **Select a Python Interpreter:** VS Code needs to know which Python interpreter to use. Click on the Python version in the bottom-right corner of the VS Code window. A list of available Python interpreters will appear. Select the Python interpreter you want to use for your project. If you have multiple Python versions installed, make sure to select the correct one.
+
+- **Install Linters and Formatters (Optional):** Linters and formatters help you write clean and consistent code. Popular linters for Python include pylint and flake8. A popular formatter is black. You can install them using pip:
+
+```
+pip install pylint flake8 black
+```
+
+To configure VS Code to use these tools, go to File > Preferences > Settings and search for "python.linting.pylintEnabled", "python.linting.flake8Enabled", and "python.formatting.provider". Set them to true and black, respectively.
+
+**Configuring PyCharm for Python Development**
+
+- **Install PyCharm:** Download and install PyCharm from the JetBrains website (https://www.jetbrains.com/pycharm/download/). Choose the Community Edition for a free, open-source version.
+
+- **Create a New Project:** Open PyCharm and click "Create New Project".
+
+- **Select a Python Interpreter:** PyCharm will automatically detect the Python interpreters installed on your system. You can choose an existing interpreter or create a new virtual environment (explained later).
+
+- **Configure Code Style (Optional):** PyCharm has built-in code style settings that help you write consistent code. Go to File > Settings > Editor > Code Style > Python to configure the code style settings.
+
+#### <a name="chapter0part2.3"></a>Chapter 0 - Part 2.3: Using Virtual Environments
+
+A virtual environment is a self-contained directory that contains a specific Python interpreter and its associated packages. This allows you to isolate different projects with different dependencies, preventing conflicts between packages.
+
+It's highly recommended to use virtual environments for all your Python projects.
+
+**Virtual environment with Venv**
+
+- **Create a Virtual Environment:** Open a terminal or command prompt and navigate to your project directory. Then, use the venv module to create a virtual environment:
+
+```
+python3 -m venv .venv  # Creates a virtual environment named ".venv"
+```
+
+- **Activate the Virtual Environment:** Before you can use the virtual environment, you need to activate it. The activation command depends on your operating system:
+  - **Windows:**
+ 
+  ```
+  .venv\Scripts\activate
+  ```
+
+  - **macOS/Linux:**
+ 
+  ```
+  source .venv/bin/activate
+  ```
+
+When the virtual environment is activated, you'll see its name in parentheses at the beginning of your command prompt (e.g., (.venv) C:\myproject>).
+
+- **Install Packages:** With the virtual environment activated, you can install packages using pip. The packages will be installed in the virtual environment, isolated from the global Python installation.
+
+  ```
+  pip install requests
+  ```
+
+- **Deactivate the Virtual Environment:** When you're finished working on the project, you can deactivate the virtual environment:
+
+  ```
+  deactivate
+  ```
+
+**Package Management with pip**
+
+```pip``` is the package installer for Python. It allows you to easily install, upgrade, and uninstall Python packages.
+
+- **Installing Packages:**
+
+Installs the latest version of the package
+```
+pip install <package_name>
+```
+
+Installs a specific version of the package
+```
+pip install <package_name>==<version>
+```
+
+Installs packages from a requirements file
+```
+pip install -r requirements.txt
+```
+
+- **Upgrading Packages:**
+
+Upgrades the package to the latest version
+```
+pip install --upgrade <package_name>
+```
+
+- **Uninstalling Packages:**
+
+```
+pip uninstall <package_name>
+```
+
+- Listing Installed Packages:
+
+Lists all installed packages
+```
+pip list
+```
+
+Creates a requirements file containing the list of installed packages
+```
+pip freeze > requirements.txt
+```
+
+The ```requirements.txt``` file is a text file that lists all the packages required for a project. It's commonly used to share the project's dependencies with others or to recreate the environment on a different machine.
 
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
