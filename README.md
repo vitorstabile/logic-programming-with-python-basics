@@ -2,6 +2,12 @@
 
 # Content
 
+
+0. [Chapter 0: Getting Started with Python](#chapter0)
+    - [Chapter 0 - Part 1: Introduction to Python and its Applications](#chapter0part1)
+      - [Chapter 0 - Part 1.1: What is Python?](#chapter0part1.1)
+      - [Chapter 0 - Part 1.2: Applications of Python](#chapter0part1.2)
+      - [Chapter 0 - Part 1.3: Setting Up Your Python Environment (Brief Overview)](#chapter0part1.3)
 1. [Chapter 1: Rapid Introduction to Procedural Programming](#chapter1)
     - [Chapter 1 - Part 1: Creating and Running Python Programs](#chapter1part1)
     - [Chapter 1 - Part 2: Data Types in Python](#chapter1part2)
@@ -147,7 +153,7 @@
 10. [Chapter 10: Design Patterns](#chapter10)
     - [Chapter 10 - Part 1: Creational Design Patterns](#chapter10part1)
       - [Chapter 10 - Part 1.1: Factory Method](#chapter10part1.1)
-12. [Appendix A: Useful Python Code Snippet](#appendixa)
+11. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
     - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
@@ -156,7 +162,123 @@
     - [Appendix A - Part 6: Read a Config Json File](#appendixapart6)
     - [Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart7)
     - [Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()](#appendixapart8)
-    
+
+## <a name="chapter0"></a>Chapter 0: Getting Started with Python
+
+### <a name="chapter0part1"></a>Chapter 0 - Part 1: Introduction to Python and its Applications
+
+Python is a versatile and powerful programming language that has gained immense popularity in recent years. Its simple syntax and extensive libraries make it an excellent choice for beginners and experienced developers alike. This lesson will introduce you to Python, its core principles, and the diverse range of applications it supports. Understanding these fundamentals will provide a solid foundation for your journey into the world of Python programming.
+
+#### <a name="chapter0part1.1"></a>Chapter 1 - Part 1.1: What is Python?
+
+Python is a high-level, interpreted, general-purpose programming language. Let's break down what each of these terms means:
+
+- **High-level:** Python abstracts away many of the complexities of lower-level languages like C or Assembly. This means you don't have to worry about memory management or other low-level details, allowing you to focus on the logic of your program.
+
+- **Interpreted:** Python code is executed line by line by an interpreter, rather than being compiled into machine code beforehand. This makes Python development faster and more flexible, as you can easily test and modify your code without recompilation.
+
+- **General-purpose:** Python can be used for a wide variety of tasks, from web development and data science to scripting and automation. This versatility is one of the key reasons for Python's popularity.
+
+**Key Features of Python**
+
+Python boasts several features that contribute to its widespread adoption:
+
+- **Readability:** Python's syntax is designed to be clear and easy to understand, resembling plain English. This makes Python code more readable and maintainable.
+
+- **Dynamic Typing:** Python is dynamically typed, meaning you don't have to explicitly declare the data type of a variable. The interpreter infers the type at runtime. This simplifies coding and reduces boilerplate.
+
+- **Extensive Libraries:** Python has a vast collection of libraries and modules that provide pre-built functionality for a wide range of tasks. These libraries save you time and effort by providing ready-to-use solutions for common problems.
+
+- **Cross-Platform Compatibility:** Python runs on various operating systems, including Windows, macOS, and Linux. This allows you to write code once and run it on different platforms without modification.
+
+- **Large Community:** Python has a large and active community of developers who contribute to its development and provide support to users. This means you can easily find help and resources when you need them.
+
+**The Zen of Python**
+
+The guiding principles of Python's design are encapsulated in "The Zen of Python," a set of aphorisms written by Tim Peters. You can access these principles by typing ```import this``` in a Python interpreter. Some key principles include:
+
+- Beautiful is better than ugly.
+
+- Explicit is better than implicit.
+
+- Simple is better than complex.
+
+- Complex is better than complicated.
+
+- Readability counts.
+
+These principles emphasize the importance of writing clear, concise, and maintainable code.
+
+#### <a name="chapter0part1.2"></a>Chapter 1 - Part 1.2: Applications of Python
+
+Python's versatility makes it suitable for a wide range of applications. Here are some of the most common:
+
+**Web Development**
+
+Python is a popular choice for web development, thanks to frameworks like Django and Flask. These frameworks provide tools and libraries that simplify the process of building web applications.
+
+- **Django:** A high-level framework that follows the "batteries-included" philosophy, providing a comprehensive set of features for building complex web applications. It's often used for large-scale projects requiring security and scalability.
+
+- **Flask:** A lightweight and flexible framework that gives you more control over the structure of your application. It's suitable for smaller projects and APIs.
+
+Example: Building a simple blog using Flask. You can define routes, create templates, and interact with a database to manage blog posts.
+
+**Data Science and Machine Learning**
+
+Python has become the dominant language in data science and machine learning, thanks to libraries like NumPy, pandas, scikit-learn, and TensorFlow.
+
+- **NumPy:** Provides support for numerical computations and arrays, essential for data manipulation.
+
+- **pandas:** Offers data structures and tools for data analysis and manipulation, making it easy to clean, transform, and analyze data.
+
+- **scikit-learn:** A comprehensive library for machine learning algorithms, including classification, regression, clustering, and dimensionality reduction.
+
+- **TensorFlow:** A powerful framework for building and training machine learning models, particularly deep learning models.
+
+Example: Using pandas to analyze a dataset of customer transactions, identifying patterns and trends in customer behavior.
+
+**Scripting and Automation**
+
+Python is an excellent choice for scripting and automation tasks, such as automating repetitive tasks, system administration, and network management.
+
+- **Automating file management:** Writing a script to automatically rename, move, or delete files based on certain criteria.
+
+- **System administration:** Creating scripts to monitor system performance, manage user accounts, and automate backups.
+
+- **Network management:** Using libraries like netmiko to automate network device configuration and monitoring.
+
+Example: Writing a Python script to automatically back up important files to an external hard drive on a regular schedule.
+
+**Game Development**
+
+While not as common as C++ or C#, Python can be used for game development, particularly for prototyping and smaller games. Libraries like Pygame provide tools for creating 2D games.
+
+- **Pygame:** A library that provides functions for handling graphics, sound, and input, making it easier to create 2D games.
+
+Example: Creating a simple platformer game using Pygame, with features like character movement, collision detection, and basic enemy AI.
+
+**Desktop Applications**
+
+Python can be used to create desktop applications with graphical user interfaces (GUIs) using libraries like Tkinter, PyQt, and Kivy.
+
+- **Tkinter:** Python's standard GUI library, providing a simple and easy-to-use interface for creating basic desktop applications.
+
+- **PyQt:** A more powerful and feature-rich GUI library that provides a wide range of widgets and tools for creating complex desktop applications.
+
+- **Kivy:** A library for creating cross-platform applications with a focus on touch-based interfaces.
+
+Example: Building a simple calculator application using Tkinter, with buttons for numbers, operators, and a display for the result.
+
+#### <a name="chapter0part1.3"></a>Chapter 1 - Part 1.3: Setting Up Your Python Environment (Brief Overview)
+
+While the next lesson will cover installation in detail, it's helpful to briefly touch on setting up your environment. You'll need to:
+
+- **Install Python:** Download the latest version of Python from the official website (https://www.python.org/downloads/) and follow the installation instructions.
+
+- **Install a Text Editor or IDE:** Choose a text editor or integrated development environment (IDE) for writing your Python code. Popular options include VS Code, Sublime Text, and PyCharm.
+
+- **Verify Installation:** Open a terminal or command prompt and type ```python --version``` to verify that Python is installed correctly.
+
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
 ### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
