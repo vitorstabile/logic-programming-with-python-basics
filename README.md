@@ -4747,6 +4747,92 @@ def calculate_area(radius):
 
 #### <a name="chapter4part3.2"></a>Chapter 4 - Part 3.2: Argument and Parameter Unpacking
 
+Function arguments are values passed into a function when it is called. They allow you to customize the function's behavior based on different inputs.
+
+**Positional Arguments**
+
+Positional arguments are the most common type of argument. Their order matters, as the function assigns values to parameters based on the order in which they are passed.
+
+```py
+def describe_pet(animal_type, pet_name):
+  """Display information about a pet."""
+  print(f"\nI have a {animal_type}.")
+  print(f"My {animal_type}'s name is {pet_name}.")
+
+describe_pet('hamster', 'Harry') # animal_type = 'hamster', pet_name = 'Harry'
+describe_pet('dog', 'Spot') # animal_type = 'dog', pet_name = 'Spot'
+```
+
+In this example, 'hamster' is assigned to the animal_type parameter and 'Harry' to the pet_name parameter because of their position in the function call. If you reverse the order, the output would be incorrect.
+
+**Keyword Arguments**
+
+Keyword arguments allow you to pass arguments by explicitly naming the parameter to which the value should be assigned. This eliminates the need to remember the order of arguments.
+
+```py
+def describe_pet(animal_type, pet_name):
+  """Display information about a pet."""
+  print(f"\nI have a {animal_type}.")
+  print(f"My {animal_type}'s name is {pet_name}.")
+
+describe_pet(animal_type='hamster', pet_name='Harry')
+describe_pet(pet_name='Spot', animal_type='dog') # Order doesn't matter with keyword arguments
+```
+
+Using keyword arguments makes your code more readable, especially when a function has many parameters.
+
+**Default Argument Values**
+
+You can specify default values for parameters in a function definition. If an argument is not provided when the function is called, the default value is used.
+
+```py
+def describe_pet(pet_name, animal_type='dog'):
+  """Display information about a pet."""
+  print(f"\nI have a {animal_type}.")
+  print(f"My {animal_type}'s name is {pet_name}.")
+
+describe_pet('Willie') # Uses the default value 'dog' for animal_type
+describe_pet('Snowball', animal_type='cat') # Overrides the default value
+```
+
+Default values should be assigned to parameters from right to left. In other words, if you have a parameter with a default value, all parameters to its right must also have default values.
+
+**Variable-Length Arguments: ```*args```**
+
+Sometimes, you might not know in advance how many arguments a function will need to receive. Python provides a way to handle this using *args. This allows a function to accept an arbitrary number of positional arguments. These arguments are collected into a tuple.
+
+```py
+def make_pizza(*toppings):
+  """Print the list of toppings that have been requested."""
+  print("\nMaking a pizza with the following toppings:")
+  for topping in toppings:
+    print(f"- {topping}")
+
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+```
+
+Inside the function, toppings is treated as a tuple containing all the arguments passed in the function call.
+
+**Variable-Length Keyword Arguments: ```**kwargs```**
+
+Similar to *args, **kwargs allows a function to accept an arbitrary number of keyword arguments. These arguments are collected into a dictionary.
+
+```py
+def build_profile(first, last, **user_info):
+  """Build a dictionary containing everything we know about a user."""
+  user_info['first_name'] = first
+  user_info['last_name'] = last
+  return user_info
+
+user_profile = build_profile('albert', 'einstein',
+                             location='princeton',
+                             field='physics')
+print(user_profile)
+```
+
+In this example, user_info is a dictionary containing the keyword arguments location and field. This is useful for passing optional information to a function.
+
 In Python, the sequence unpacking operator * can be used to supply positional arguments to functions. This feature is handy when you have a sequence (like a list or tuple) and you want to pass its elements as separate positional arguments to a function.
 
 The tuple values is unpacked into the print_values function, which takes three arguments.
@@ -4916,6 +5002,137 @@ def print_args(*args, **kwargs):
 ```
 
 #### <a name="chapter4part3.3"></a>Chapter 4 - Part 3.3: Accessing Variables in the Global Scope
+
+**Understanding Variable Scope**
+
+Variable scope refers to the region of a program where a particular variable can be accessed. In simpler terms, it defines the visibility of a variable. Python has two primary types of variable scope: local and global. Understanding the difference between these scopes is essential to avoid naming conflicts, unexpected behavior, and to write cleaner, more organized code.
+
+**Local Scope**
+
+A variable defined inside a function has a local scope. This means it can only be accessed from within that function. Once the function finishes executing, the local variables are destroyed, and their values are no longer accessible.
+
+```py
+def my_function():
+  x = 10  # x is a local variable
+  print("Value inside function:", x)
+
+my_function()
+# print(x)  # This would cause an error because x is not defined outside the function
+```
+
+In this example, x is a local variable within my_function. Attempting to access x outside the function will result in a NameError because it's out of scope.
+
+Key Characteristics of Local Scope:
+
+- Variables are only accessible within the function where they are defined.
+- Local variables are created when the function is called and destroyed when the function returns.
+- Local variables can have the same name as variables in other scopes (including global scope) without causing conflicts.
+
+**Global Scope**
+
+A variable defined outside of any function or block has a global scope. This means it can be accessed from anywhere in the program, including inside functions.
+
+```py
+y = 20  # y is a global variable
+
+def another_function():
+  print("Value inside function:", y)
+
+another_function()
+print("Value outside function:", y)
+```
+
+In this example, y is a global variable. It can be accessed both inside another_function and outside of it.
+
+Key Characteristics of Global Scope:
+
+- Variables are accessible from anywhere in the program.
+- Global variables are created when the program starts and exist until the program terminates.
+- Modifying a global variable inside a function requires the global keyword (explained in the next section).
+
+**The global Keyword**
+
+When you want to modify a global variable from within a function, you need to use the global keyword. Without it, Python will treat the variable inside the function as a local variable, even if a global variable with the same name exists.
+
+Example without global:
+
+```py
+z = 30
+
+def yet_another_function():
+  z = 40  # This creates a local variable z
+  print("Value inside function:", z)
+
+yet_another_function()
+print("Value outside function:", z)
+
+#output
+#Value inside function: 40
+#Value outside function: 30
+```
+
+In this case, z = 40 inside yet_another_function creates a new local variable named z. The global variable z remains unchanged.
+
+Example with global:
+
+```py
+z = 30
+
+def yet_another_function():
+  global z  # This tells Python to use the global variable z
+  z = 40
+  print("Value inside function:", z)
+
+yet_another_function()
+print("Value outside function:", z)
+
+#output
+Value inside function: 40
+Value outside function: 40
+```
+
+Here, global z tells Python that we want to use the global variable z inside the function. Therefore, z = 40 modifies the global variable z.
+
+Important Considerations when using global:
+
+- Overuse of global variables can make code harder to understand and maintain. It can lead to unexpected side effects and make it difficult to track where variables are being modified.
+- It's generally better to pass variables as arguments to functions and return values from functions to minimize the use of global variables.
+
+**Scope Resolution: LEGB Rule**
+
+When a variable is referenced in Python, the interpreter searches for it in a specific order, following the LEGB rule:
+
+- Local: The scope of the current function.
+- Enclosing function locals: The scope of any enclosing functions (if the current function is nested inside another function).
+- Global: The module-level scope.
+- Built-in: The scope of built-in names (e.g., print, len, range).
+
+Python searches for the variable in each of these scopes in order. If it finds the variable in one of the scopes, it stops searching. If it doesn't find the variable in any of the scopes, it raises a NameError.
+
+Example demonstrating LEGB rule:
+
+```py
+x = 10  # Global
+
+def outer_function():
+  x = 20  # Enclosing function local
+
+  def inner_function():
+    x = 30  # Local
+    print("Inner:", x)  # Prints 30
+
+  inner_function()
+  print("Outer:", x)  # Prints 20
+
+outer_function()
+print("Global:", x)  # Prints 10
+```
+
+In this example:
+
+- inner_function first looks for x in its local scope and finds it assigned to 30.
+- outer_function then prints x, which is in its enclosing function local scope and is assigned to 20.
+- Finally, the global x is printed, which is assigned to 10.
 
 It is sometimes convenient to have a few global variables that are accessed by various functions in the program. This is usually okay for “constants”
 
