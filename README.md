@@ -488,6 +488,190 @@ pip freeze > requirements.txt
 
 The ```requirements.txt``` file is a text file that lists all the packages required for a project. It's commonly used to share the project's dependencies with others or to recreate the environment on a different machine.
 
+**Virtual environment with Poetry**
+
+- **Installing Poetry:** Poetry can be installed using a custom installer, which is the recommended method.
+  - **Windows:**
+    - Open PowerShell and run the following command:
+ 
+  ```
+  (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+  ```
+
+  - **macOS/Linux:**
+    - Open your terminal and run the following command:
+ 
+  ```
+  curl -sSL https://install.python-poetry.org | python3 -
+  ```
+
+  After the installation is complete, you might need to add Poetry's executable to your system's PATH environment variable. The installer usually provides instructions on how to do this.
+
+- **add Poetry's executable to your system's PATH:**
+  - **Windows:**
+    - The installer usually adds Poetry to your PATH, but if not, you'll need to add it manually.  Search for "Edit the system environment variables" in Windows, and add  ```%APPDATA%\Python\Scripts``` to your Path.
+
+  - **macOS/Linux:**
+    - The installer usually adds Poetry to your PATH, but if not, you'll need to add it manually.  Add this line to your shell's configuration file (```~/.bashrc```, ```~/.zshrc```, or ```~/.profile```):
+ 
+  ```
+  export PATH="$HOME/.local/bin:$PATH"
+  ```
+- **Verifying the Installation**
+To verify that Poetry is installed correctly, open a new terminal or command prompt window and run:
+ 
+   ```
+  poetry --version
+  ```
+
+This should display the installed Poetry version.
+
+- **Creating a New Project with Poetry**
+  - Create a Project Directory:
+
+   ```
+  mkdir my-project
+  ```
+
+  ```
+  cd my-project
+  ```
+
+  - Initialize Poetry:
+
+   ```
+  poetry init
+  ```
+This command will guide you through the process of creating a pyproject.toml file, which is the configuration file for your project. You'll be prompted to enter information such as the project name, version, description, and dependencies. You can accept the defaults or customize the values as needed.
+
+Here's an example of what ```pyproject.toml``` might look like:
+
+```
+[tool.poetry]
+name = "my-project"
+version = "0.1.0"
+description = "My new Python project"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"  # Minimum Python version
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
+
+- **Adding Dependencies**
+
+To add a new dependency to your project, use the ```poetry add``` command:
+
+```
+poetry add requests
+```
+
+This will install the ```requests``` library and add it to the ```pyproject.toml``` file. Poetry automatically resolves the correct version of the package and any other dependencies it may have.  Poetry also creates a ```poetry.lock``` file, which ensures that the exact versions of the dependencies are used in your project. This lock file is crucial for ensuring consistent environments across different machines.
+
+You can specify version constraints when adding dependencies. For example:
+
+- ```poetry add requests``` - Installs the latest version.
+
+- ```poetry add requests@^2.20.0``` - Installs a version compatible with >=2.20.0 and <3.0.0
+
+- ```poetry add "requests>=2.20.0,<3.0.0"``` -  Installs a version compatible with >=2.20.0 and <3.0.0
+
+- **Updating Dependencies**
+
+To update dependencies to their latest compatible versions, use the ```poetry update``` command:
+
+```
+poetry update
+```
+
+To update a specific dependency:
+
+```
+poetry update requests
+```
+
+This will update the specified packages and update the ```poetry.lock``` file.
+
+- **Removing Dependencies**
+
+To remove a dependency, use the ```poetry remove``` command:
+
+```
+poetry remove requests
+```
+
+This will uninstall the ```requests``` library and remove it from the ```pyproject.toml``` file.  Poetry will also update the ```poetry.lock``` file.
+
+- **Using the Virtual Environment: Activating the Environment**
+
+Although Poetry manages the virtual environment, you don't always need to explicitly activate it. You can run commands directly within the Poetry environment using ```poetry run```.
+
+To run a Python script:
+
+```
+poetry run python your_script.py
+```
+
+To run a command like ```pytest```:
+
+```
+poetry run pytest
+```
+
+If you need a shell inside the virtual environment, you can use:
+
+```
+poetry shell
+```
+
+This command activates the virtual environment, and you'll see its name in your terminal prompt.  When you're finished, you can deactivate it by typing ```exit```.
+
+- **Using the Virtual Environment: Installing Project Dependencies**
+
+If you have an existing ```pyproject.toml``` file (e.g., when you clone a project from a repository), you can create and install the virtual environment and its dependencies by running:
+
+```
+poetry install
+```
+
+This command reads the ```pyproject.toml``` and ```poetry.lock``` files (if it exists) to create a consistent environment. If ```poetry.lock``` exists, Poetry will install the exact versions specified in the lock file. If it doesn't exist, Poetry will resolve the dependencies and create the lock file.
+
+Step 5: Managing Environments
+You can list the environments associated with your project:
+
+```
+poetry env list
+```
+
+You can also get information about the current environment:
+
+```
+poetry env info
+```
+
+To deactivate an environment (when you have used ```poetry shell```):
+
+```
+exit
+```
+
+To delete an environment:
+
+```
+poetry env remove python3.9 # specify the python version
+```
+
+- **Using Poetry with an Existing Project**
+
+If you want to start using Poetry with an existing project that already has a ```requirements.txt``` file, you can do the following:
+
+- Initialize Poetry: Run ```poetry init``` in the project root.  Poetry will create a ```pyproject.toml``` file.
+- Import Dependencies (Optional): You can manually copy the dependencies from your ```requirements.txt``` file into the ```pyproject.toml``` file under the ```[tool.poetry.dependencies]``` section, or use a tool to convert the ```requirements.txt``` to toml.
+- Install Dependencies: Run ```poetry install```.  Poetry will create a virtual environment and install the dependencies listed in ```pyproject.toml```.  It will also create a ```poetry.lock``` file.
+
 ## <a name="chapter1"></a>Chapter 1: Rapid Introduction to Procedural Programming
 
 ### <a name="chapter1part1"></a>Chapter 1 - Part 1: Creating and Running Python Programs
