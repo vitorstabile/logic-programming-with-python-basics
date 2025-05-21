@@ -156,7 +156,8 @@
     - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
 10. [Chapter 10: Design Patterns](#chapter10)
     - [Chapter 10 - Part 1: Creational Design Patterns](#chapter10part1)
-      - [Chapter 10 - Part 1.1: Factory Method](#chapter10part1.1)
+      - [Chapter 10 - Part 1.1: Factory Pattern](#chapter10part1.1)
+      - [Chapter 10 - Part 1.2: Singleton Pattern](#chapter10part1.2)
 11. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
@@ -8342,9 +8343,9 @@ Creational design patterns provide various object creation mechanisms, which inc
 
 [Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
 
-#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Method
+#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Pattern
 
-[Factory Method](https://refactoring.guru/design-patterns/factory-method)
+[Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
 
 
 ```py
@@ -8451,6 +8452,63 @@ In this code, we can see this
 |                          | Plug-and-Play Architecture            | New routes can be added without changing the existing factory mechanism.                                                                 |
 |                          | Reflection & Dynamic Import           | Uses importlib and inspect to dynamically load route classes at runtime.                                                                 |
 
+
+#### <a name="chapter10part1.2"></a>Chapter 10 - Part 1.2: Singleton Pattern
+
+[Singleton Pattern](https://refactoring.guru/design-patterns/singleton)
+
+```py
+class Singleton:
+    _instance = None  # Private class variable to hold the instance
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
+            # Perform any initialization here
+        return cls._instance
+
+# Example usage
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # Output: True (both variables point to the same instance)
+```
+
+Create a Configuration Class
+
+```py
+class ConfigurationManager:
+    _shared_state = {}  # This dictionary will hold the shared state
+
+    def __new__(cls, *args, **kwargs):
+        obj = super().__new__(cls)
+        obj.__dict__ = cls._shared_state  # Make the instance's __dict__ reference the shared state
+        return obj
+
+    def __init__(self, config_name="default"):
+        if not hasattr(self, '_initialized'):  # Initialize only once
+            print(f"Initializing ConfigurationManager with config: {config_name}")
+            self.settings = {
+                "log_level": "INFO",
+                "database_url": "sqlite:///app.db",
+                "api_key": "your_default_api_key"
+            }
+            self.current_config_name = config_name
+            self._initialized = True
+        else:
+            print(f"ConfigurationManager already initialized. Current config: {self.current_config_name}")
+
+    def get_setting(self, key):
+        return self.settings.get(key)
+
+    def set_setting(self, key, value):
+        self.settings[key] = value
+        print(f"Setting '{key}' updated to '{value}'")
+
+
+config1 = ConfigurationManager('Developer')  # Output: Initializing ConfigurationManager with config: Developer
+config2 = ConfigurationManager('Production')  # Output: ConfigurationManager already initialized. Current config: Developer
+```
 
 
 
