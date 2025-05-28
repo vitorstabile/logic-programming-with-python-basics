@@ -8806,7 +8806,83 @@ There are several well-established creational patterns, each addressing differen
 
 #### <a name="chapter10part2.1"></a>Chapter 10 - Part 2.1: Factory Pattern
 
+The Factory Method pattern is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. This pattern promotes loose coupling by decoupling the object creation logic from the client code. Instead of directly instantiating objects, the client code relies on a factory method to create objects. This allows for greater flexibility and maintainability, as the object creation logic can be easily changed or extended without modifying the client code.
+
 [Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
+
+The Factory Method pattern revolves around defining an interface (or abstract class) for creating objects, but letting subclasses decide which class to instantiate. This means the superclass delegates the responsibility of object creation to its subclasses.
+
+**Key Components**
+
+- **Product**: The interface or abstract class that defines the type of object the factory method creates.
+- **Concrete Product**: Concrete classes that implement the Product interface. These are the actual objects that will be created.
+- **Creator**: The abstract class which declares the factory method. This method returns an object of type Product. The Creator also contains the core business logic that relies on Product objects.
+- **Concrete Creator**: Subclasses of the Creator which override the factory method to return an instance of a Concrete Product.
+
+**How it Works**
+
+- The client code interacts with the Creator class.
+- The Creator class defines a factory method, which is responsible for creating Product objects.
+- Concrete Creator subclasses override the factory method to return specific Concrete Product objects.
+- The client code calls the factory method to obtain a Product object, without needing to know the specific Concrete Product class being instantiated.
+
+**Benefits of Using the Factory Method Pattern**
+
+- **Decoupling**: Decouples the client code from the concrete classes of the objects it needs to create. The client only depends on the abstract Product interface and the Creator class.
+- **Flexibility**: Allows you to easily add new types of products without modifying existing client code. You simply create a new Concrete Product class and a corresponding Concrete Creator class.
+- **Single Responsibility Principle**: The responsibility of object creation is delegated to specialized factory classes, adhering to the Single Responsibility Principle.
+- **Open/Closed Principle**: You can extend the object creation logic without modifying the existing Creator class, adhering to the Open/Closed Principle.
+
+**Configuration-Based Factory**
+
+```py
+from abc import ABC, abstractmethod
+
+
+class Vehicle(ABC):
+
+    @abstractmethod
+    def drive(self):
+        pass
+
+
+class Car(Vehicle):
+    def drive(self):
+        print("Driving a Car")
+
+
+class Bike(Vehicle):
+    def drive(self):
+        print("Driving a Bike")
+
+
+class VehicleFactory(ABC):  # Abstract Factory
+
+    @abstractmethod
+    def create_vehicle(self, vehicle_type: str) -> Vehicle:
+        pass
+
+
+class ConcreteVehicleFactory(VehicleFactory):
+
+    def create_vehicle(self, vehicle_type: str) -> Vehicle:
+        if vehicle_type == "car":
+            return Car()
+        if vehicle_type == "bike":
+            return Bike()
+        else:
+            raise ValueError(f"Unknown vehicle type: {vehicle_type}")
+
+
+vehicle_factory = ConcreteVehicleFactory()
+vehicle_1 = vehicle_factory.create_vehicle("car")
+vehicle_2 = vehicle_factory.create_vehicle("bike")
+
+vehicle_1.drive() # Driving a Car
+vehicle_2.drive() # Driving a Bike
+```
+
+**Configuration-Based Factory Using Reflection (Obs: Based in the modules names and modules path)**
 
 
 ```py
