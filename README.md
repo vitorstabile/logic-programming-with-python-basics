@@ -8345,15 +8345,429 @@ if __name__ == "__main__":
 
 ### <a name="chapter10part1"></a>Chapter 10 - Part 1: SOLID Principles Overview
 
+The SOLID principles are a set of five design principles intended to make software designs more understandable, flexible, and maintainable. They are a subset of many principles promoted by Robert C. Martin. By adhering to these principles, you reduce the likelihood of creating fragile, rigid, and immobile designs, making your code more resilient to change and easier to extend. Understanding and applying SOLID principles is crucial for any developer aiming to write clean, maintainable, and scalable code.
+
+SOLID is an acronym representing five key principles of object-oriented design:
+
+- Single Responsibility Principle (SRP)
+- Open/Closed Principle (OCP)
+- Liskov Substitution Principle (LSP)
+- Interface Segregation Principle (ISP)
+- Dependency Inversion Principle (DIP)
+
 #### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Single Responsibility Principle (SRP)
+
+The Single Responsibility Principle states that a class should have only one reason to change. In other words, a class should have only one job. This doesn't mean a class should only have one method, but rather that all its methods should be related to a single, well-defined purpose.
+
+**Example:**
+
+Consider a class responsible for both user authentication and logging:
+
+```py
+class UserAuthenticator:
+    def authenticate_user(self, username, password):
+        # Authentication logic here
+        if self._is_valid_user(username, password):
+            self.log_authentication(username) # Logging responsibility
+            return True
+        else:
+            return False
+
+    def _is_valid_user(self, username, password):
+        # Check if user exists in database
+        return True
+
+    def log_authentication(self, username):
+        # Logging logic here
+        print(f"User {username} authenticated")
+```
+
+This class violates SRP because it has two responsibilities: authenticating users and logging authentication events. If the logging mechanism needs to change (e.g., switch to a different logging library or format), this class would need to be modified, even if the authentication logic remains the same.
+
+**Solution:**
+
+Separate the logging responsibility into a dedicated class:
+
+```py
+class UserAuthenticator:
+    def authenticate_user(self, username, password):
+        # Authentication logic here
+        if self._is_valid_user(username, password):
+            self.logger.log_authentication(username) # Delegate logging
+            return True
+        else:
+            return False
+
+    def _is_valid_user(self, username, password):
+        # Check if user exists in database
+        return True
+
+    def __init__(self, logger):
+        self.logger = logger
+
+
+class AuthenticationLogger:
+    def log_authentication(self, username):
+        # Logging logic here
+        print(f"User {username} authenticated")
+
+# Usage
+logger = AuthenticationLogger()
+authenticator = UserAuthenticator(logger)
+authenticator.authenticate_user("john_doe", "password123")
+```
+
+Now, ```UserAuthenticator``` is only responsible for authenticating users, and ```AuthenticationLogger``` is responsible for logging. Changes to the logging mechanism will only affect the ```AuthenticationLogger``` class, adhering to SRP.
+
+**Benefits:**
+
+- **Improved Cohesion**: Classes are more focused and easier to understand.
+- **Reduced Coupling**: Changes in one area are less likely to affect other areas.
+- **Increased Reusability**: Single-purpose classes are easier to reuse in different contexts.
 
 #### <a name="chapter10part1.2"></a>Chapter 10 - Part 1.2: Open/Closed Principle (OCP)
 
+The Open/Closed Principle states that software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. This means you should be able to add new functionality without modifying existing code.
+
+**Example:**
+
+Consider a class that calculates the area of different shapes:
+
+```py
+class AreaCalculator:
+    def calculate_area(self, shape, width, height):
+        if shape == "rectangle":
+            return width * height
+        elif shape == "circle":
+            return 3.14 * (width/2) * (width/2) # Assuming width is diameter
+        # ... more shapes
+```
+
+This class violates OCP because every time a new shape is added, the calculate_area method needs to be modified.
+
+**Solution:**
+
+Use inheritance and polymorphism to create an abstract Shape class with a calculate_area method. Each shape class then inherits from Shape and implements its own calculate_area method.
+
+```py
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return 3.14 * self.radius * self.radius
+
+class AreaCalculator:
+    def calculate_area(self, shape):
+        return shape.calculate_area()
+
+# Usage
+rectangle = Rectangle(5, 10)
+circle = Circle(7)
+calculator = AreaCalculator()
+print(f"Rectangle area: {calculator.calculate_area(rectangle)}")
+print(f"Circle area: {calculator.calculate_area(circle)}")
+```
+
+Now, to add a new shape, you simply create a new class that inherits from Shape and implements the calculate_area method, without modifying the existing AreaCalculator class.
+
+**Benefits:**
+
+- **Increased Stability**: Existing code remains unchanged, reducing the risk of introducing bugs.
+- **Improved Extensibility**: New functionality can be added easily without affecting existing code.
+- **Reduced Testing Effort**: Only the new code needs to be tested, not the existing code.
+
 #### <a name="chapter10part1.3"></a>Chapter 10 - Part 1.3: Liskov Substitution Principle (LSP)
+
+The Liskov Substitution Principle states that subtypes should be substitutable for their base types without altering the correctness of the program. In simpler terms, if you have a class ```A``` and a class ```B``` that inherits from ```A```, you should be able to use an object of class ```B``` anywhere an object of class ```A``` is expected, without causing unexpected behavior.
+
+**Example:**
+
+Consider a Rectangle class and a Square class that inherits from Rectangle:
+
+```py
+class Rectangle:
+    def __init__(self, width, height):
+        self._width = width
+        self._height = height
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, width):
+        self._width = width
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, height):
+        self._height = height
+
+    def calculate_area(self):
+        return self._width * self._height
+
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+        self._side = side
+
+    @property
+    def width(self):
+        return self._side
+
+    @width.setter
+    def width(self, width):
+        self._width = width
+        self._height = width # Ensure height is also updated
+
+    @property
+    def height(self):
+        return self._side
+
+    @height.setter
+    def height(self, height):
+        self._height = height
+        self._width = height # Ensure width is also updated
+```
+
+In this example, Square inherits from Rectangle. However, setting the width of a Square should also set its height, and vice versa. If you have a function that expects a Rectangle and sets its width and height independently, passing a Square to that function could lead to unexpected results, violating LSP.
+
+```py
+def process_rectangle(rectangle):
+    rectangle.width = 5
+    rectangle.height = 10
+    expected_area = 5 * 10
+    actual_area = rectangle.calculate_area()
+    print(f"Expected area: {expected_area}, Actual area: {actual_area}")
+    assert actual_area == expected_area, "LSP violation!"
+
+# Usage
+rectangle = Rectangle(2, 3)
+process_rectangle(rectangle) # Works fine
+
+square = Square(2)
+process_rectangle(square) # LSP violation!  The square's area will be 100, not 50
+```
+
+**Solution:**
+
+One way to solve this is to avoid inheritance in this case. Square and Rectangle are different concepts and should not be related through inheritance. Instead, they could both implement a common interface or abstract class, if needed.
+
+```py
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def calculate_area(self):
+        return self.side * self.side
+```
+
+**Benefits:**
+
+- **Improved Reliability**: Ensures that subtypes behave as expected, preventing unexpected errors.
+- **Increased Maintainability**: Makes it easier to reason about the behavior of code that uses inheritance.
+- **Enhanced Reusability**: Allows subtypes to be used interchangeably with their base types.
 
 #### <a name="chapter10part1.4"></a>Chapter 10 - Part 1.4: Interface Segregation Principle (ISP)
 
+The Interface Segregation Principle states that a client should not be forced to depend on methods it does not use. In other words, a class should not be forced to implement interfaces that are irrelevant to it.
+
+**Example:**
+
+Consider an Animal interface with methods for flying, swimming, and running:
+
+```py
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+
+    @abstractmethod
+    def swim(self):
+        pass
+
+    @abstractmethod
+    def run(self):
+        pass
+
+class Bird(Animal):
+    def fly(self):
+        print("Bird flying")
+
+    def swim(self):
+        pass # Not all birds swim
+
+    def run(self):
+        print("Bird running")
+
+class Fish(Animal):
+    def fly(self):
+        pass # Fish cannot fly
+
+    def swim(self):
+        print("Fish swimming")
+
+    def run(self):
+        pass # Fish cannot run
+```
+
+This violates ISP because Fish is forced to implement the fly and run methods, even though it cannot fly or run. Similarly, Bird is forced to implement the swim method, even though not all birds swim.
+
+**Solution:**
+
+Segregate the Animal interface into smaller, more specific interfaces:
+
+```py
+from abc import ABC, abstractmethod
+
+class FlyingAnimal(ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+
+class SwimmingAnimal(ABC):
+    @abstractmethod
+    def swim(self):
+        pass
+
+class RunningAnimal(ABC):
+    @abstractmethod
+    def run(self):
+        pass
+
+class Bird(FlyingAnimal, RunningAnimal):
+    def fly(self):
+        print("Bird flying")
+
+    def run(self):
+        print("Bird running")
+
+class Fish(SwimmingAnimal):
+    def swim(self):
+        print("Fish swimming")
+```
+
+Now, each class only implements the interfaces that are relevant to it, adhering to ISP.
+
+**Benefits:**
+
+- **Reduced Coupling**: Clients are not dependent on methods they do not use.
+- **Improved Cohesion**: Interfaces are more focused and easier to understand.
+- **Increased Flexibility**: Classes can implement only the interfaces that are relevant to them.
+
 #### <a name="chapter10part1.5"></a>Chapter 10 - Part 1.5: Dependency Inversion Principle (DIP)
+
+The Dependency Inversion Principle states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Secondly, abstractions should not depend on details. Details should depend on abstractions.
+
+**Example:**
+
+Consider a PasswordReminder class that depends directly on a MySQLConnection class:
+
+```py
+class MySQLConnection:
+    def connect(self):
+        print("Connecting to MySQL database")
+        return "MySQL Connection"
+
+class PasswordReminder:
+    def __init__(self, db_connection):
+        self.db_connection = db_connection
+
+    def remind_password(self, user_id):
+        connection = self.db_connection.connect()
+        print(f"Reminding password for user {user_id} using {connection}")
+
+# Usage
+db_connection = MySQLConnection()
+password_reminder = PasswordReminder(db_connection)
+password_reminder.remind_password(123)
+```
+
+This violates DIP because the PasswordReminder (high-level module) depends directly on the MySQLConnection (low-level module). If you want to switch to a different database (e.g., PostgreSQL), you would need to modify the PasswordReminder class.
+
+**Solution:**
+
+Introduce an abstraction (an interface or abstract class) between the high-level and low-level modules:
+
+```py
+from abc import ABC, abstractmethod
+
+class DBConnectionInterface(ABC):
+    @abstractmethod
+    def connect(self):
+        pass
+
+class MySQLConnection(DBConnectionInterface):
+    def connect(self):
+        print("Connecting to MySQL database")
+        return "MySQL Connection"
+
+class PostgreSQLConnection(DBConnectionInterface):
+    def connect(self):
+        print("Connecting to PostgreSQL database")
+        return "PostgreSQL Connection"
+
+class PasswordReminder:
+    def __init__(self, db_connection: DBConnectionInterface):
+        self.db_connection = db_connection
+
+    def remind_password(self, user_id):
+        connection = self.db_connection.connect()
+        print(f"Reminding password for user {user_id} using {connection}")
+
+# Usage
+mysql_connection = MySQLConnection()
+password_reminder = PasswordReminder(mysql_connection)
+password_reminder.remind_password(123)
+
+postgresql_connection = PostgreSQLConnection()
+password_reminder = PasswordReminder(postgresql_connection) # No changes needed in PasswordReminder
+password_reminder.remind_password(123)
+```
+
+Now, both PasswordReminder and MySQLConnection depend on the DBConnectionInterface abstraction. You can easily switch to a different database by creating a new class that implements the DBConnectionInterface without modifying the PasswordReminder class.
+
+**Benefits:**
+
+- **Reduced Coupling**: High-level modules are not dependent on low-level modules.
+- **Increased Reusability**: High-level modules can be reused with different low-level modules.
+- **Improved Testability**: It is easier to test high-level modules in isolation by using mock implementations of the abstractions.
 
 ### <a name="chapter10part2"></a>Chapter 10 - Part 2: Creational Design Patterns
 
