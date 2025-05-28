@@ -155,10 +155,16 @@
     - [Chapter 9 - Part 7: Using Shell Commands (shell=True)](#chapter9part7)
     - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
 10. [Chapter 10: Design Patterns](#chapter10)
-    - [Chapter 10 - Part 1: Creational Design Patterns](#chapter10part1)
-      - [Chapter 10 - Part 1.1: Factory Pattern](#chapter10part1.1)
-      - [Chapter 10 - Part 1.2: Singleton Pattern](#chapter10part1.2)
-11. [Appendix A: Useful Python Code Snippet](#appendixa)
+    - [Chapter 10 - Part 1: SOLID Principles Overview](#chapter10part1)
+      - [Chapter 10 - Part 1.1: Single Responsibility Principle (SRP)](#chapter10part1.1)
+      - [Chapter 10 - Part 1.2: Open/Closed Principle (OCP)](#chapter10part1.2)
+      - [Chapter 10 - Part 1.3: Liskov Substitution Principle (LSP)](#chapter10part1.3)
+      - [Chapter 10 - Part 1.4: Interface Segregation Principle (ISP)](#chapter10part1.4)
+      - [Chapter 10 - Part 1.5: Dependency Inversion Principle (DIP)](#chapter10part1.5)
+    - [Chapter 10 - Part 2: Creational Design Patterns](#chapter10part2)
+      - [Chapter 10 - Part 2.1: Factory Pattern](#chapter10part2.1)
+      - [Chapter 10 - Part 2.2: Singleton Pattern](#chapter10part2.2)
+12. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
     - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
@@ -8337,13 +8343,25 @@ if __name__ == "__main__":
 
 ## <a name="chapter10"></a>Chapter 10: Design Patterns
 
-### <a name="chapter10part1"></a>Chapter 10 - Part 1: Creational Design Patterns
+### <a name="chapter10part1"></a>Chapter 10 - Part 1: SOLID Principles Overview
+
+#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Single Responsibility Principle (SRP)
+
+#### <a name="chapter10part1.2"></a>Chapter 10 - Part 1.2: Open/Closed Principle (OCP)
+
+#### <a name="chapter10part1.3"></a>Chapter 10 - Part 1.3: Liskov Substitution Principle (LSP)
+
+#### <a name="chapter10part1.4"></a>Chapter 10 - Part 1.4: Interface Segregation Principle (ISP)
+
+#### <a name="chapter10part1.5"></a>Chapter 10 - Part 1.5: Dependency Inversion Principle (DIP)
+
+### <a name="chapter10part2"></a>Chapter 10 - Part 2: Creational Design Patterns
 
 Creational design patterns provide various object creation mechanisms, which increase flexibility and reuse of existing code.
 
 [Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
 
-#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Factory Pattern
+#### <a name="chapter10part2.1"></a>Chapter 10 - Part 2.1: Factory Pattern
 
 [Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
 
@@ -8453,7 +8471,7 @@ In this code, we can see this
 |                          | Reflection & Dynamic Import           | Uses importlib and inspect to dynamically load route classes at runtime.                                                                 |
 
 
-#### <a name="chapter10part1.2"></a>Chapter 10 - Part 1.2: Singleton Pattern
+#### <a name="chapter10part2.2"></a>Chapter 10 - Part 2.2: Singleton Pattern
 
 [Singleton Pattern](https://refactoring.guru/design-patterns/singleton)
 
