@@ -173,6 +173,7 @@
     - [Appendix A - Part 6: Read a Config Json File](#appendixapart6)
     - [Appendix A - Part 7: Read and Parse a CSV file with Pandas based in a Config Json File](#appendixapart7)
     - [Appendix A - Part 8: Read a CSV file with Pandas and iteract over the rows with custom functions using apply()](#appendixapart8)
+    - [Appendix A - Part 9: Bubble Sort Algorithm in Python](#appendixapart9)
 
 ## <a name="chapter0"></a>Chapter 0: Getting Started with Python
 
@@ -9828,4 +9829,32 @@ def map_df_columns_to_file_config(df, columns_mapper):
 
 if __name__ == "__main__":
     main()
+```
+
+### <a name="appendixapart9"></a>Appendix A - Part 9: Bubble Sort Algorithm in Python
+
+```py
+
+from typing import List
+
+class BubbleSorter:
+
+    @staticmethod
+    def bubble_sort(nums: List[int]) -> List[int]:
+        n = len(nums)
+        for _ in range(n):
+            for i in range(n - 1):
+                if nums[i] > nums[i + 1]:
+                    BubbleSorter.swap(nums, i, i + 1)
+        return nums
+
+    @staticmethod
+    def swap(nums: List[int], i: int, j: int) -> None:
+        temp = nums[i]
+        nums[i] = nums[j]
+        nums[j] = temp
+
+
+print(BubbleSorter.bubble_sort([20, 35, -15, 7, 55, 1, -22]))  #[-22, -15, 1, 7, 20, 35, 55]
+
 ```
