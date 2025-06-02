@@ -9437,7 +9437,509 @@ In essence, if you need to create different types of individual objects, use the
 
 #### <a name="chapter10part2.4"></a>Chapter 10 - Part 2.4: Builder Pattern
 
+The Builder pattern is a creational design pattern that separates the construction of a complex object from its representation. This allows the same construction process to create different representations. Unlike other creational patterns that focus on object creation in a single step, the Builder pattern constructs the object step-by-step, providing more control and flexibility. This is particularly useful when dealing with objects that have many optional attributes or require a specific construction order.
+
 [Builder](https://refactoring.guru/design-patterns/builder)
+
+The Builder pattern addresses the problem of constructing complex objects, especially when the construction process involves multiple steps or optional configurations. It decouples the object's construction from its representation, allowing you to create different variations of the object using the same construction code.
+
+**Key Components**
+
+The Builder pattern consists of the following key components:
+
+- **Builder Interface**: Defines an interface for creating parts of a Product object.
+- **Concrete Builder**: Implements the Builder interface to construct and assemble the parts of the Product. Each Concrete Builder is responsible for creating a specific representation of the Product.
+- **Product**: Represents the complex object being constructed.
+- **Director (Optional)**: Constructs the Product object using the Builder interface. The Director defines the order in which the construction steps are executed. Clients can also directly call the builder to construct the product.
+
+**How it Works**
+
+- The client creates a Director object (if used) and associates it with a Concrete Builder object. Alternatively, the client can directly interact with the Concrete Builder.
+- The Director (or client) calls the construction steps on the Concrete Builder in a specific order.
+- The Concrete Builder builds the parts of the Product and assembles them.
+- The client retrieves the final Product from the Concrete Builder.
+
+**Benefits of Using the Builder Pattern**
+
+- **Improved Code Readability**: The step-by-step construction process makes the code easier to understand and maintain.
+- **Flexibility**: Allows you to create different representations of the object using the same construction code.
+- **Encapsulation**: Encapsulates the construction logic within the Builder classes, hiding the complexity from the client.
+- **Control**: Provides fine-grained control over the construction process.
+- **Separation of Concerns**: Separates the construction of the object from its representation.
+
+**When to Use the Builder Pattern**
+
+- When the algorithm for creating a complex object should be independent of the parts that make up the object and how they're assembled.
+- When the construction process must allow different representations for the object that's constructed.
+- When you want to avoid a "telescoping constructor" anti-pattern (a constructor with many optional parameters).
+
+**Implementing the Builder Pattern in Python**
+
+Let's illustrate the Builder pattern with a practical example: building a computer. A computer consists of several components like CPU, RAM, storage, and graphics card. We can use the Builder pattern to construct different computer configurations.
+
+**Defining the Product: The Computer Class**
+
+First, we define the Computer class, which represents the complex object we want to build.
+
+```py
+class Computer:
+    def __init__(self, cpu, ram, storage, graphics_card=None):
+        self.cpu = cpu
+        self.ram = ram
+        self.storage = storage
+        self.graphics_card = graphics_card
+
+    def display_configuration(self):
+        print("Computer Configuration:")
+        print(f"CPU: {self.cpu}")
+        print(f"RAM: {self.ram}")
+        print(f"Storage: {self.storage}")
+        if self.graphics_card:
+            print(f"Graphics Card: {self.graphics_card}")
+```
+
+**Defining the Builder Interface: The ComputerBuilder Class**
+
+Next, we define the ComputerBuilder interface, which specifies the methods for building the different parts of the computer.
+
+```py
+from abc import ABC, abstractmethod
+
+class ComputerBuilder(ABC):
+    @abstractmethod
+    def reset(self):
+        pass
+
+    @abstractmethod
+    def set_cpu(self, cpu):
+        pass
+
+    @abstractmethod
+    def set_ram(self, ram):
+        pass
+
+    @abstractmethod
+    def set_storage(self, storage):
+        pass
+
+    @abstractmethod
+    def set_graphics_card(self, graphics_card):
+        pass
+
+    @abstractmethod
+    def get_computer(self):
+        pass
+```
+
+**Implementing Concrete Builders: GamingComputerBuilder and OfficeComputerBuilder**
+
+Now, we create concrete builder classes that implement the ComputerBuilder interface. These builders will construct specific types of computers, such as a gaming computer and an office computer.
+
+```py
+class GamingComputerBuilder(ComputerBuilder):
+    def __init__(self):
+        self.computer = None
+
+    def reset(self):
+        self.computer = Computer(cpu=None, ram=None, storage=None)
+
+    def set_cpu(self, cpu):
+        self.computer.cpu = cpu
+
+    def set_ram(self, ram):
+        self.computer.ram = ram
+
+    def set_storage(self, storage):
+        self.computer.storage = storage
+
+    def set_graphics_card(self, graphics_card):
+        self.computer.graphics_card = graphics_card
+
+    def get_computer(self):
+        return self.computer
+
+class OfficeComputerBuilder(ComputerBuilder):
+    def __init__(self):
+        self.computer = None
+
+    def reset(self):
+        self.computer = Computer(cpu=None, ram=None, storage=None)
+
+    def set_cpu(self, cpu):
+        self.computer.cpu = cpu
+
+    def set_ram(self, ram):
+        self.computer.ram = ram
+
+    def set_storage(self, storage):
+        self.computer.storage = storage
+
+    def set_graphics_card(self, graphics_card):
+        self.computer.graphics_card = graphics_card
+
+    def get_computer(self):
+        return self.computer
+```
+
+**Implementing the Director: The ComputerAssembler Class**
+
+The Director class is responsible for orchestrating the construction process. It takes a builder as input and calls the builder's methods in a specific order to construct the computer.
+
+```py
+class ComputerAssembler:
+    def __init__(self, builder):
+        self.builder = builder
+
+    def assemble_computer(self, cpu, ram, storage, graphics_card=None):
+        self.builder.reset()
+        self.builder.set_cpu(cpu)
+        self.builder.set_ram(ram)
+        self.builder.set_storage(storage)
+        if graphics_card:
+            self.builder.set_graphics_card(graphics_card)
+        return self.builder.get_computer()
+```
+
+**Client Code**
+
+Finally, let's see how the client code uses the Builder pattern to construct different computer configurations.
+
+```py
+# Using the GamingComputerBuilder
+gaming_builder = GamingComputerBuilder()
+assembler = ComputerAssembler(gaming_builder)
+gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD", graphics_card="Nvidia RTX 3080")
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder
+office_builder = OfficeComputerBuilder()
+assembler = ComputerAssembler(office_builder)
+office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
+office_computer.display_configuration()
+```
+
+This example demonstrates how the Builder pattern allows us to create different computer configurations using the same construction process. The client code doesn't need to know the details of how the computer is built; it only needs to specify the desired components.
+
+**Alternative Implementation: Without a Director**
+
+The Director is an optional component of the Builder pattern. You can also implement the pattern without a Director by having the client directly interact with the Concrete Builder.
+
+Here's how the client code would look without a Director:
+
+```py
+# Using the GamingComputerBuilder directly
+gaming_builder = GamingComputerBuilder()
+gaming_builder.reset()
+gaming_builder.set_cpu("Intel i9")
+gaming_builder.set_ram("32GB")
+gaming_builder.set_storage("1TB SSD")
+gaming_builder.set_graphics_card("Nvidia RTX 3080")
+gaming_computer = gaming_builder.get_computer()
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder directly
+office_builder = OfficeComputerBuilder()
+office_builder.reset()
+office_builder.set_cpu("Intel i5")
+office_builder.set_ram("8GB")
+office_builder.set_storage("512GB SSD")
+office_computer = office_builder.get_computer()
+office_computer.display_configuration()
+```
+
+In this case, the client is responsible for calling the builder's methods in the correct order. This approach can be simpler, but it also puts more responsibility on the client.
+
+**Create a Mapper Class**
+
+```py
+import json
+import copy
+from typing import Final
+
+# 1. Define the Immutable Classes
+class Order:
+    def __init__(self, order_id: str, customer_id: str, items: tuple, total_amount: float, shipping_address):
+        self.__order_id: Final[str] = order_id
+        self.__customer_id: Final[str] = customer_id
+        self.__items: Final[tuple] = tuple(items)  # Make it immutable
+        self.__total_amount: Final[float] = total_amount
+        self.__shipping_address: Final = shipping_address
+
+    @property
+    def order_id(self) -> str:
+        return self.__order_id
+
+    @property
+    def customer_id(self) -> str:
+        return self.__customer_id
+
+    @property
+    def items(self) -> tuple:
+        return self.__items
+
+    @property
+    def total_amount(self) -> float:
+        return self.__total_amount
+
+    @property
+    def shipping_address(self):
+        return self.__shipping_address
+
+    def __repr__(self):
+        return (f"Order(order_id={self.__order_id}, customer_id={self.__customer_id}, "
+                f"items={self.__items}, total_amount={self.__total_amount}, "
+                f"shipping_address={self.__shipping_address})")
+
+
+class OrderItem:
+    def __init__(self, product_id: str, quantity: int, price: float):
+        self.__product_id: Final[str] = product_id
+        self.__quantity: Final[int] = quantity
+        self.__price: Final[float] = price
+
+    @property
+    def product_id(self) -> str:
+        return self.__product_id
+
+    @property
+    def quantity(self) -> int:
+        return self.__quantity
+
+    @property
+    def price(self) -> float:
+        return self.__price
+
+    def __repr__(self):
+        return f"OrderItem(product_id={self.__product_id}, quantity={self.__quantity}, price={self.__price})"
+
+
+class Address:
+    def __init__(self, street: str, city: str, zip_code: str, country: str):
+        self.__street: Final[str] = street
+        self.__city: Final[str] = city
+        self.__zip_code: Final[str] = zip_code
+        self.__country: Final[str] = country
+
+    @property
+    def street(self) -> str:
+        return self.__street
+
+    @property
+    def city(self) -> str:
+        return self.__city
+
+    @property
+    def zip_code(self) -> str:
+        return self.__zip_code
+
+    @property
+    def country(self) -> str:
+        return self.__country
+
+    def __repr__(self):
+        return f"Address(street={self.__street}, city={self.__city}, zip_code={self.__zip_code}, country={self.__country})"
+
+
+# 2. Create a Builder Class
+class OrderBuilder:
+    def __init__(self):
+        self.order_id = None
+        self.customer_id = None
+        self.items = []
+        self.total_amount = None
+        self.shipping_address = None
+        self.errors = []
+
+    def from_json(self, json_data):
+        try:
+            data = json.loads(json_data)
+            self.with_order_id(data.get('order_id'))
+            self.with_customer_id(data.get('customer_id'))
+            self.with_total_amount(data.get('total_amount'))
+
+            for item in data.get('items', []):
+                self.with_item(item.get('product_id'), item.get('quantity'), item.get('price'))
+
+            shipping_address = data.get('shipping_address', {})
+            self.with_shipping_address(
+                shipping_address.get('street'),
+                shipping_address.get('city'),
+                shipping_address.get('zip_code'),
+                shipping_address.get('country')
+            )
+
+        except (json.JSONDecodeError, TypeError) as e:
+            self.errors.append(f"Error parsing JSON: {str(e)}")
+        return self
+
+    def with_order_id(self, order_id):
+        if not isinstance(order_id, str) or not order_id.strip():
+            self.errors.append("Order ID must be a non-empty string")
+        else:
+            self.order_id = order_id
+        return self
+
+    def with_customer_id(self, customer_id):
+        if not isinstance(customer_id, str) or not customer_id.strip():
+            self.errors.append("Customer ID must be a non-empty string")
+        else:
+            self.customer_id = customer_id
+        return self
+
+    def with_item(self, product_id, quantity, price):
+        if not all(isinstance(arg, (int, float)) and arg > 0 for arg in [quantity, price]):
+            self.errors.append("Quantity and price must be positive numbers")
+        else:
+            item = OrderItem(product_id=product_id, quantity=quantity, price=price)
+            self.items.append(item)
+        return self
+
+    def with_total_amount(self, total_amount):
+        if not isinstance(total_amount, (int, float)) or total_amount <= 0:
+            self.errors.append("Total amount must be a positive number")
+        else:
+            self.total_amount = total_amount
+        return self
+
+    def with_shipping_address(self, street, city, zip_code, country):
+        if not all(isinstance(arg, str) and arg.strip() for arg in [street, city, zip_code, country]):
+            self.errors.append("Shipping address fields must be non-empty strings")
+        else:
+            self.shipping_address = Address(street=street, city=city, zip_code=zip_code, country=country)
+        return self
+
+    def build(self):
+        if self.errors:
+            raise ValueError("Validation errors: " + ", ".join(self.errors))
+
+        if not all([self.order_id, self.customer_id, self.items, self.total_amount, self.shipping_address]):
+            raise ValueError("Order ID, customer ID, items, total amount, and shipping address must be set")
+
+        return Order(
+            order_id=self.order_id,
+            customer_id=self.customer_id,
+            items=tuple(self.items),  # Convert to tuple for immutability
+            total_amount=self.total_amount,
+            shipping_address=self.shipping_address
+        )
+
+
+# Usage
+json_data = """
+{
+    "order_id": "ORD-123",
+    "customer_id": "CUST-456",
+    "items": [
+        {"product_id": "PROD-001", "quantity": 2, "price": 25.0},
+        {"product_id": "PROD-002", "quantity": 1, "price": 50.0}
+    ],
+    "total_amount": 100.0,
+    "shipping_address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "zip_code": "12345",
+        "country": "USA"
+    }
+}
+"""
+
+try:
+    builder = OrderBuilder()
+    order = builder.from_json(json_data).build()
+    print(order)
+except ValueError as e:
+    print(f"Error creating order: {e}")
+```
+
+**When should I use the Builder pattern versus a simple constructor with optional arguments?**
+
+Use a simple constructor with optional arguments when:
+
+- The object has a small number of optional parameters.
+- The object creation process is straightforward.
+- Readability isn't significantly compromised.
+
+Use the Builder pattern when:
+
+- The object has many optional parameters.
+- You want to improve code readability and maintainability.
+- You need to create immutable objects.
+- The object creation process is complex, involving multiple steps or dependencies.
+- You want to centralize default value and validation logic.
+
+**How can I handle complex validation rules during the object construction process using the Builder pattern?**
+
+- **Validation Methods in the Builder**: Implement validation methods within the builder class. These methods check the state of the builder at various stages of construction.
+
+```py
+class Product:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+    def __str__(self):
+        return f"Product(name={self.name}, price={self.price}, quantity={self.quantity})"
+
+
+class ProductBuilder:
+    def __init__(self):
+        self.name = None
+        self.price = None
+        self.quantity = None
+        self.errors = []
+
+    def with_name(self, name):
+        if not isinstance(name, str) or not name.strip():
+            self.errors.append("Name must be a non-empty string")
+        else:
+            self.name = name
+        return self
+
+    def with_price(self, price):
+        if not isinstance(price, (int, float)) or price <= 0:
+            self.errors.append("Price must be a positive number")
+        else:
+            self.price = price
+        return self
+
+    def with_quantity(self, quantity):
+        if not isinstance(quantity, int) or quantity < 0:
+            self.errors.append("Quantity must be a non-negative integer")
+        else:
+            self.quantity = quantity
+        return self
+
+    def build(self):
+        if self.errors:
+            raise ValueError("Validation errors: " + ", ".join(self.errors))
+
+        if not all([self.name, self.price, self.quantity]):
+            raise ValueError("Name, price and quantity must be set")
+
+        return Product(name=self.name, price=self.price, quantity=self.quantity)
+
+
+# Usage
+try:
+    product = ProductBuilder() \
+        .with_name("Example Product") \
+        .with_price(10.0) \
+        .with_quantity(2) \
+        .build()
+    print(product)
+
+    invalid_product = ProductBuilder() \
+        .with_name("") \
+        .with_price(-5.0) \
+        .with_quantity(2) \
+        .build()
+    print(invalid_product)
+except ValueError as e:
+    print(f"Error creating product: {e}")
+```
+
+
 
 #### <a name="chapter10part2.5"></a>Chapter 10 - Part 2.5: Prototype Pattern
 
