@@ -10360,7 +10360,283 @@ Structural patterns address different problems related to object composition and
 
 #### <a name="chapter10part3.1"></a>Chapter 10 - Part 3.1: Adapter Pattern
 
+The Adapter Pattern is a structural design pattern that allows incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces, converting the interface of one class into an interface that another class expects. This pattern is particularly useful when you want to use an existing class, but its interface doesn't match the one you need.
 
+[Adapter Pattern](https://refactoring.guru/design-patterns/adapter)
+
+The Adapter Pattern revolves around the concept of adapting an existing class (the "Adaptee") to conform to a desired interface (the "Target"). The "Adapter" class is the key component, as it implements the Target interface and internally uses the Adaptee to fulfill the requests.
+
+**Key Components**
+
+- **Target**: This is the interface that the client expects to use. It defines the methods that the client will call.
+- **Adaptee**: This is the existing class with an incompatible interface. It contains the functionality that the client needs, but its interface doesn't match the Target interface.
+- **Adapter**: This class implements the Target interface and adapts the Adaptee's interface to the Target interface. It contains a reference to the Adaptee object and translates the client's requests into calls to the Adaptee's methods.
+
+**Types of Adapters**
+
+There are two main types of Adapters:
+
+- **Object Adapter**: This type of adapter uses composition. The Adapter class contains an instance of the Adaptee class. The Adapter then calls the Adaptee's methods to perform the required operations. This is generally preferred because it promotes loose coupling.
+- **Class Adapter**: This type of adapter uses inheritance. The Adapter class inherits from both the Target and the Adaptee classes. This approach is less flexible because it requires multiple inheritance, which is not supported in some languages or can lead to complexities.
+
+We will focus on the Object Adapter in this lesson due to its flexibility and wider applicability.
+
+**When to Use the Adapter Pattern**
+
+- You want to use an existing class, but its interface doesn't match the one you need.
+- You want to create a reusable class that can cooperate with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
+- You need to use several existing subclasses, but it's impractical to adapt their interface by subclassing every one. An object adapter can adapt the interface of its parent class.
+
+**Implementation in Python**
+
+Let's illustrate the Adapter Pattern with a practical example. Suppose we have an existing class called LegacyCalculator that performs calculations using a specific interface. However, our client code expects a different interface defined by CalculatorInterface. We can use the Adapter Pattern to bridge this gap.
+
+```py
+# Target Interface
+class CalculatorInterface:
+    def operate(self, num1, num2):
+        raise NotImplementedError
+
+# Adaptee (Existing Class with Incompatible Interface)
+class LegacyCalculator:
+    def calculate(self, num1, num2, operation):
+        if operation == 'add':
+            return num1 + num2
+        elif operation == 'subtract':
+            return num1 - num2
+        else:
+            return None
+
+# Adapter Class
+class CalculatorAdapter(CalculatorInterface):
+    def __init__(self, legacy_calculator):
+        self.legacy_calculator = legacy_calculator
+
+    def operate(self, num1, num2):
+        # Adapt the LegacyCalculator's interface to the CalculatorInterface
+        return self.legacy_calculator.calculate(num1, num2, 'add')
+
+# Client Code
+class Client:
+    def __init__(self, calculator):
+        self.calculator = calculator
+
+    def perform_operation(self, num1, num2):
+        result = self.calculator.operate(num1, num2)
+        print(f"Result: {result}")
+
+# Usage
+legacy_calculator = LegacyCalculator()
+adapter = CalculatorAdapter(legacy_calculator)
+client = Client(adapter)
+client.perform_operation(10, 5)  # Output: Result: 15
+```
+
+In this example:
+
+- CalculatorInterface is the Target interface that the client expects.
+- LegacyCalculator is the Adaptee class with an incompatible calculate method.
+- CalculatorAdapter is the Adapter class that implements CalculatorInterface and uses LegacyCalculator internally to perform the calculation. It adapts the calculate method to the operate method.
+- Client uses the CalculatorInterface to perform operations.
+
+**Detailed Explanation**
+
+- **Target Interface (CalculatorInterface)**: This defines the operate method, which takes two numbers as input and returns the result of an operation. This is the interface that our client code wants to use.
+- **Adaptee (LegacyCalculator)**: This class has a calculate method that takes two numbers and an operation type as input. Its interface is different from what the client expects.
+- **Adapter (CalculatorAdapter)**: This class implements the CalculatorInterface. Inside its operate method, it calls the calculate method of the LegacyCalculator, adapting the interface to match the - CalculatorInterface. The adapter holds a reference to an instance of the LegacyCalculator.
+- **Client (Client)**: The client code interacts with the CalculatorInterface through the adapter. It doesn't need to know about the LegacyCalculator or its incompatible interface.
+
+**Benefits of Using the Adapter Pattern**
+
+- **Improved Reusability**: Allows you to reuse existing classes that have incompatible interfaces.
+- **Increased Flexibility**: Decouples the client from the specific implementation of the Adaptee.
+- **Enhanced Maintainability**: Simplifies code by separating the adaptation logic from the core functionality.
+- **Single Responsibility Principle**: The adapter has a single responsibility: adapting one interface to another.
+
+**Advanced Example: Adapting Multiple Adaptees**
+
+```py
+# Target Interface
+class DataProcessorInterface:
+    def process_data(self, data):
+        raise NotImplementedError
+
+# Adaptee 1: Legacy XML Data Processor
+class LegacyXMLProcessor:
+    def parse_xml(self, xml_data):
+        # Simulate XML parsing logic
+        return {"xml_data": xml_data}
+
+# Adaptee 2: Legacy CSV Data Processor
+class LegacyCSVProcessor:
+    def read_csv(self, csv_data):
+        # Simulate CSV reading logic
+        return {"csv_data": csv_data}
+
+# Adapter 1: XML Adapter
+class XMLAdapter(DataProcessorInterface):
+    def __init__(self, xml_processor):
+        self.xml_processor = xml_processor
+
+    def process_data(self, data):
+        return self.xml_processor.parse_xml(data)
+
+# Adapter 2: CSV Adapter
+class CSVAdapter(DataProcessorInterface):
+    def __init__(self, csv_processor):
+        self.csv_processor = csv_processor
+
+    def process_data(self, data):
+        return self.csv_processor.read_csv(data)
+
+# Client Code
+class DataAnalyzer:
+    def __init__(self, processor):
+        self.processor = processor
+
+    def analyze_data(self, data):
+        processed_data = self.processor.process_data(data)
+        print(f"Analyzing data: {processed_data}")
+
+# Usage
+xml_processor = LegacyXMLProcessor()
+csv_processor = LegacyCSVProcessor()
+
+xml_adapter = XMLAdapter(xml_processor)
+csv_adapter = CSVAdapter(csv_processor)
+
+analyzer1 = DataAnalyzer(xml_adapter)
+analyzer2 = DataAnalyzer(csv_adapter)
+
+analyzer1.analyze_data("<xml><data>example</data></xml>")
+analyzer2.analyze_data("header1,header2\nvalue1,value2")
+```
+
+In this example, we have two legacy data processors: LegacyXMLProcessor and LegacyCSVProcessor. Each processor has its own way of handling data. We create two adapters, XMLAdapter and CSVAdapter, to adapt these processors to the DataProcessorInterface. The DataAnalyzer class can then use these adapters to analyze data from different sources without needing to know the specifics of each data processor.
+
+**Adapter with Factory Pattern**
+
+you receive different input formats (JSON and XML) but need to process them uniformly as an Order object in another class. How can I use Adapter with factory pattern in this case?
+
+```py
+# Target Interface 
+class Order:
+    def __init__(self, order_id, customer_name, items, total_amount):
+        self.order_id = order_id
+        self.customer_name = customer_name
+        self.items = items
+        self.total_amount = total_amount
+
+    def __str__(self):
+        return f"Order ID: {self.order_id}, Customer: {self.customer_name}, Total: {self.total_amount}"
+```
+
+```py
+# Adaptee Interfaces (JSON and XML Parser)
+import json
+import xml.etree.ElementTree as ET
+
+class JsonOrderParser:
+    def parse_json(self, json_data):
+        data = json.loads(json_data)
+        return data  # Returns a Python dictionary
+
+class XmlOrderParser:
+    def parse_xml(self, xml_data):
+        root = ET.fromstring(xml_data)
+        return root  # Returns an ElementTree object
+```
+
+```py
+from abc import ABC, abstractmethod
+
+# Adapter Interface
+class OrderDataAdapter(ABC):
+    @abstractmethod
+    def to_order(self):
+        pass
+```
+
+**Implement the Adapters**
+
+```py
+class JsonOrderAdapter(OrderDataAdapter):
+    def __init__(self, json_parser, json_data):
+        self.json_parser = json_parser
+        self.json_data = json_data
+
+    def to_order(self):
+        data = self.json_parser.parse_json(self.json_data)
+        order_id = data.get("order_id")
+        customer_name = data.get("customer_name")
+        items = data.get("items")
+        total_amount = data.get("total_amount")
+        return Order(order_id, customer_name, items, total_amount)
+
+
+class XmlOrderAdapter(OrderDataAdapter):
+    def __init__(self, xml_parser, xml_data):
+        self.xml_parser = xml_parser
+        self.xml_data = xml_data
+
+    def to_order(self):
+        root = self.xml_parser.parse_xml(self.xml_data)
+        order_id = root.find("order_id").text
+        customer_name = root.find("customer_name").text
+        items = [item.text for item in root.findall("items/item")]
+        total_amount = float(root.find("total_amount").text)
+        return Order(order_id, customer_name, items, total_amount)
+```
+
+**Implement the Factory**
+
+```py
+class OrderAdapterFactory:
+    def create_adapter(self, data_format, data):
+        if data_format == "json":
+            return JsonOrderAdapter(JsonOrderParser(), data)
+        elif data_format == "xml":
+            return XmlOrderAdapter(XmlOrderParser(), data)
+        else:
+            raise ValueError("Unsupported data format")
+```
+
+```py
+# Sample data
+json_data = """
+{
+    "order_id": "123",
+    "customer_name": "Alice",
+    "items": ["Book", "Pen"],
+    "total_amount": 25.00
+}
+"""
+
+xml_data = """
+<order>
+    <order_id>456</order_id>
+    <customer_name>Bob</customer_name>
+    <items>
+        <item>Shirt</item>
+        <item>Pants</item>
+    </items>
+    <total_amount>50.00</total_amount>
+</order>
+"""
+
+# Create the factory
+factory = OrderAdapterFactory()
+
+# Process JSON data
+json_adapter = factory.create_adapter("json", json_data)
+json_order = json_adapter.to_order()
+print(json_order)
+
+# Process XML data
+xml_adapter = factory.create_adapter("xml", xml_data)
+xml_order = xml_adapter.to_order()
+print(xml_order)
+```
 
 ### <a name="chapter10part4"></a>Chapter 10 - Part 4: Behavioral Design Patterns
 
