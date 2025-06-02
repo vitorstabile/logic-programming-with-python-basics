@@ -10167,6 +10167,197 @@ Structural design patterns are concerned with how classes and objects are compos
 
 Structural patterns provide solutions for building complex systems by focusing on the relationships and compositions of classes and objects. They offer different ways to organize classes and objects to create larger structures that are flexible, efficient, and maintainable.
 
+**Abstraction**
+
+Abstraction involves simplifying complex reality by modeling classes appropriate to the problem. It focuses on hiding complex implementation details and exposing only essential information. In structural patterns, abstraction allows you to work with high-level interfaces without needing to know the underlying complexities of the composed objects.
+
+Example: Consider a car. You interact with it through the steering wheel, accelerator, and brakes. You don't need to know the intricate details of the engine, transmission, or exhaust system to drive the car. The car provides an abstraction layer that simplifies the interaction.
+
+Example: In software, an abstract class in Python defines a template for other classes. It can declare methods without implementing them, forcing subclasses to provide the specific implementation. This hides the implementation details and provides a common interface.
+
+```py
+from abc import ABC, abstractmethod
+
+class Shape(ABC): # Abstract class
+    @abstractmethod
+    def area(self):
+        pass
+
+class Circle(Shape): # Concrete class inheriting from Shape
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius * self.radius
+
+class Square(Shape): # Concrete class inheriting from Shape
+    def __init__(self, side):
+        self.side = side
+
+    def area(self):
+        return self.side * self.side
+
+# shape = Shape() # This will raise an error because you can't instantiate an abstract class
+circle = Circle(5)
+square = Square(4)
+
+print(f"Area of circle: {circle.area()}")
+print(f"Area of square: {square.area()}")
+```
+
+**Composition**
+
+Composition is a design technique where a class contains instances of other classes. It enables you to create complex objects by combining simpler ones. This is a "has-a" relationship, as opposed to inheritance's "is-a" relationship. Composition promotes code reuse and flexibility.
+
+Example: A computer is composed of a CPU, memory, storage, and peripherals. Each component is a separate object, but they work together to form a complete computer system.
+
+Example: In Python, you can create a Car class that is composed of an Engine class and a Wheel class.
+
+```py
+class Engine:
+    def start(self):
+        return "Engine started"
+
+class Wheel:
+    def rotate(self):
+        return "Wheel rotating"
+
+class Car:
+    def __init__(self):
+        self.engine = Engine() # Composition: Car has-a Engine
+        self.wheels = [Wheel() for _ in range(4)] # Car has-a Wheels
+
+    def drive(self):
+        return f"{self.engine.start()}, {self.wheels[0].rotate()}"
+
+my_car = Car()
+print(my_car.drive())
+```
+
+**Decoupling**
+
+Decoupling minimizes the dependencies between different parts of a system. Highly coupled systems are difficult to maintain and modify because changes in one part can have unintended consequences in other parts. Structural patterns often aim to reduce coupling by introducing interfaces or abstract classes that mediate interactions between objects.
+
+Example: Consider a light switch and a light bulb. If the switch is directly wired to the bulb, they are tightly coupled. If the switch controls a relay that then controls the bulb, they are decoupled. The relay acts as an intermediary, allowing you to change the bulb without affecting the switch, and vice versa.
+
+Example: Using interfaces in Python can decouple classes.
+
+```py
+class Switchable(ABC): # Abstract class
+    @abstractmethod
+    def turn_on(self):
+        pass
+
+    @abstractmethod
+    def turn_off(self):
+        pass
+
+class LightBulb(Switchable): # Concrete class inheriting from Switchable
+    def turn_on(self):
+        return "LightBulb: turned on..."
+
+    def turn_off(self):
+        return "LightBulb: turned off..."
+
+class Fan(Switchable): # Concrete class inheriting from Switchable
+    def turn_on(self):
+        return "Fan: turned on..."
+
+    def turn_off(self):
+        return "Fan: turned off..."
+
+class ElectricPowerSwitch:
+    def __init__(self, client: Switchable):
+        self.client = client
+        self.on = False
+
+    def press(self):
+        if self.on:
+            self.client.turn_off()
+            self.on = False
+        else:
+            self.client.turn_on()
+            self.on = True
+
+bulb = LightBulb()
+switch = ElectricPowerSwitch(bulb)
+switch.press()
+switch.press()
+
+fan = Fan()
+switch = ElectricPowerSwitch(fan)
+switch.press()
+switch.press()
+```
+
+**Interface Segregation**
+
+Interface Segregation Principle (ISP) states that clients should not be forced to depend on methods they do not use. Structural patterns often help in creating smaller, more cohesive interfaces, so that classes only need to implement the methods that are relevant to them.
+
+Example: Imagine a multi-function printer that can print, scan, and fax. If you have a class that represents this printer with a single interface containing all three functions, any class that uses only the printing function would still be forced to implement the scan and fax functions. ISP suggests breaking this into separate interfaces: Printable, Scannable, and Faxable.
+
+Example: In Python:
+
+```py
+from abc import ABC, abstractmethod
+
+class Printable(ABC): # Abstract class
+    @abstractmethod
+    def print_document(self, document):
+        pass
+
+class Scannable(ABC): # Abstract class
+    @abstractmethod
+    def scan_document(self, document):
+        pass
+
+class Faxable(ABC): # Abstract class
+    @abstractmethod
+    def fax_document(self, document):
+        pass
+
+class MultiFunctionPrinter(Printable, Scannable, Faxable): # Concrete class inheriting from multiple abstract classes
+    def print_document(self, document):
+        return f"Printing {document}"
+
+    def scan_document(self, document):
+        return f"Scanning {document}"
+
+    def fax_document(self, document):
+        return f"Faxing {document}"
+
+class SimplePrinter(Printable): # Concrete class inheriting from Printable
+    def print_document(self, document):
+        return f"Printing {document}"
+
+printer = MultiFunctionPrinter()
+print(printer.print_document("MyDocument.txt"))
+print(printer.scan_document("MyDocument.txt"))
+print(printer.fax_document("MyDocument.txt"))
+
+simple_printer = SimplePrinter()
+print(simple_printer.print_document("MyDocument.txt"))
+```
+
+**Types of Structural Patterns**
+
+Structural patterns address different problems related to object composition and relationships. Here's a brief overview of the structural patterns we'll be covering in this module:
+
+- **Adapter**: Converts the interface of a class into another interface clients expect.
+- **Bridge**: Decouples an abstraction from its implementation so that the two can vary independently.
+- **Composite**: Composes objects into tree structures to represent part-whole hierarchies.
+- **Decorator**: Dynamically adds responsibilities to an object.
+- **Facade**: Provides a unified interface to a set of interfaces in a subsystem.
+- **Flyweight**: Uses sharing to support large numbers of fine-grained objects efficiently.
+- **Proxy**: Provides a surrogate or placeholder for another object to control access to it.
+
+**Benefits of Using Structural Patterns**
+
+- **Improved Code Organization**: Structural patterns provide a clear and organized way to structure complex systems, making the code easier to understand and maintain.
+- **Increased Flexibility**: They allow you to create flexible systems that can adapt to changing requirements.
+- **Enhanced Reusability**: By promoting composition and decoupling, structural patterns encourage code reuse.
+- **Simplified Design**: They offer proven solutions to common design problems, simplifying the design process.
+
 #### <a name="chapter10part3.1"></a>Chapter 10 - Part 3.1: Adapter Pattern
 
 
