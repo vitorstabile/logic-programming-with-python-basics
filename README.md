@@ -167,6 +167,9 @@
       - [Chapter 10 - Part 2.3: Abstract Factory Pattern](#chapter10part2.3)
       - [Chapter 10 - Part 2.4: Builder Pattern](#chapter10part2.4)
       - [Chapter 10 - Part 2.5: Prototype Pattern](#chapter10part2.5)
+    - [Chapter 10 - Part 3: Structural Design Patterns](#chapter10part3)
+      - [Chapter 10 - Part 3.1: Adapter Pattern](#chapter10part3.1)
+    - [Chapter 10 - Part 4: Behavioral Design Patterns](#chapter10part4)
 12. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
@@ -9939,11 +9942,238 @@ except ValueError as e:
     print(f"Error creating product: {e}")
 ```
 
-
-
 #### <a name="chapter10part2.5"></a>Chapter 10 - Part 2.5: Prototype Pattern
 
+The Prototype pattern is a creational design pattern that allows you to create new objects by copying an existing object, known as the prototype. This is particularly useful when creating objects is expensive or complex, and you need to create many similar objects. Instead of creating each object from scratch, you can clone a prototype object and then modify the clone as needed. This pattern promotes code reuse and reduces the need for complex object creation logic.
+
 [Prototype](https://refactoring.guru/design-patterns/prototype)
+
+The Prototype pattern relies on the concept of cloning. Cloning involves creating a new object that is a copy of an existing object. There are two main types of cloning:
+
+- **Shallow Copy**: A shallow copy creates a new object, but the object's fields that are references to other objects are copied as references as well. This means that the new object and the original object share the same referenced objects. If you modify a referenced object in one object, the change will be reflected in the other object.
+
+- **Deep Copy**: A deep copy creates a new object, and it recursively copies all the objects referenced by the original object. This means that the new object and the original object have completely independent copies of all objects. Modifying an object in one object will not affect the other object.
+
+The Prototype pattern typically involves the following participants:
+
+- **Prototype Interface**: An interface or abstract class that declares the clone() method. This method is responsible for creating a copy of the object.
+- **Concrete Prototype**: Concrete classes that implement the Prototype interface and provide the implementation for the clone() method. Each concrete prototype class defines how to create a copy of itself.
+- **Client**: The client is responsible for requesting new objects by cloning the prototype objects. The client does not need to know the concrete classes of the objects it is creating.
+
+**Implementing the Prototype Pattern in Python**
+
+```py
+import copy
+
+class Prototype:
+    def __init__(self):
+        self._value = None
+
+    def clone(self):
+        return copy.copy(self) # Shallow copy
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        self._value = new_value
+
+# Client code
+prototype = Prototype()
+prototype.value = "Original Value"
+
+clone = prototype.clone()
+clone.value = "Cloned Value"
+
+print(f"Original: {prototype.value}") # Output: Original: Original Value
+print(f"Clone: {clone.value}") # Output: Clone: Cloned Value
+```
+
+In this example:
+
+- We define a Prototype class with a value attribute.
+- The clone() method uses copy.copy() to create a shallow copy of the object.
+- The client creates a prototype object, sets its value, and then clones it.
+- The clone's value is modified, and we can see that the original object's value remains unchanged because the value attribute is a simple string (immutable).
+
+**Deep Copy Example: Cloning Objects with References**
+
+Now, let's consider a more complex example where the object contains references to other objects. In this case, we'll need to use a deep copy to ensure that the cloned object has its own independent copies of the referenced objects.
+
+```py
+import copy
+
+class Address:
+    def __init__(self, street, city):
+        self.street = street
+        self.city = city
+
+    def __str__(self):
+        return f"{self.street}, {self.city}"
+
+
+class Person:
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+
+    def clone(self, deep_copy=True):
+        if deep_copy:
+            return copy.deepcopy(self) # Deep copy
+        else:
+            return copy.copy(self) # Shallow copy
+
+    def __str__(self):
+        return f"{self.name} lives at {self.address}"
+
+
+# Client code
+address = Address("123 Main St", "Anytown")
+person = Person("John Doe", address)
+
+person2 = person.clone()
+person2.name = "Jane Doe"
+person2.address.street = "456 Oak Ave" # Modifying the address of person2
+
+print(person) # Output: John Doe lives at 123 Main St, Anytown
+print(person2) # Output: Jane Doe lives at 456 Oak Ave, Anytown
+
+person3 = person.clone(deep_copy=False) # Shallow copy
+person3.name = "Peter Pan"
+person3.address.street = "789 Pine Ln"
+
+print(person) # Output: John Doe lives at 789 Pine Ln, Anytown (address changed!)
+print(person3) # Output: Peter Pan lives at 789 Pine Ln, Anytown
+```
+
+In this example:
+
+- We have two classes: Address and Person. The Person class has a reference to an Address object.
+- The clone() method in the Person class takes a deep_copy argument. If deep_copy is True, it creates a deep copy using copy.deepcopy(). Otherwise, it creates a shallow copy using copy.copy().
+- The client creates a Person object and then clones it using both deep and shallow copies.
+- When we use a deep copy, modifying the address of person2 does not affect the address of the original person.
+- However, when we use a shallow copy to create person3, modifying the address of person3 does affect the address of the original person because they share the same Address object.
+
+**Prototype Registry**
+
+A Prototype Registry is a useful addition to the Prototype pattern. It acts as a central repository for prototype objects. Clients can then request clones of these prototypes by specifying a key or identifier. This eliminates the need for the client to know the concrete classes of the prototype objects.
+
+```py
+import copy
+
+class Prototype:
+    def __init__(self):
+        pass
+
+    def clone(self):
+        return copy.deepcopy(self)
+
+class ConcretePrototype1(Prototype):
+    def __init__(self, value):
+        super().__init__()
+        self.value = value
+
+    def __str__(self):
+        return f"ConcretePrototype1 with value: {self.value}"
+
+class ConcretePrototype2(Prototype):
+    def __init__(self, data):
+        super().__init__()
+        self.data = data
+
+    def __str__(self):
+        return f"ConcretePrototype2 with data: {self.data}"
+
+class PrototypeRegistry:
+    def __init__(self):
+        self._prototypes = {}
+
+    def register(self, name, prototype):
+        self._prototypes[name] = prototype
+
+    def unregister(self, name):
+        del self._prototypes[name]
+
+    def get_prototype(self, name):
+        prototype = self._prototypes.get(name)
+        if prototype:
+            return prototype.clone()
+        else:
+            return None
+
+# Client Code
+registry = PrototypeRegistry()
+
+# Create and register prototypes
+proto1 = ConcretePrototype1("Initial Value")
+proto2 = ConcretePrototype2([1, 2, 3])
+
+registry.register("proto1", proto1)
+registry.register("proto2", proto2)
+
+# Get clones from the registry
+clone1 = registry.get_prototype("proto1")
+clone2 = registry.get_prototype("proto2")
+
+print(clone1)  # Output: ConcretePrototype1 with value: Initial Value
+print(clone2)  # Output: ConcretePrototype2 with data: [1, 2, 3]
+
+clone1.value = "Modified Value"
+print(clone1) # Output: ConcretePrototype1 with value: Modified Value
+print(proto1) # Output: ConcretePrototype1 with value: Initial Value
+```
+
+In this example:
+
+- We define a PrototypeRegistry class that stores prototype objects in a dictionary.
+- The register() method adds a prototype to the registry with a given name.
+- The get_prototype() method retrieves a prototype from the registry by name and returns a clone of it.
+- The client creates a registry, registers some prototype objects, and then retrieves clones of those objects from the registry.
+
+**Benefits of the Prototype Pattern**
+
+- **Reduced Object Creation Cost**: Cloning an existing object can be more efficient than creating a new object from scratch, especially when object creation is complex or resource-intensive.
+- **Improved Performance**: By avoiding complex object creation logic, the Prototype pattern can improve the performance of your application.
+- **Flexibility**: The Prototype pattern allows you to create new objects without knowing their concrete classes. This makes your code more flexible and easier to maintain.
+- **Dynamic Object Creation**: You can add or remove prototypes at runtime, allowing you to dynamically change the types of objects that can be created.
+- **Simplified Object Creation**: The client code doesn't need to know the details of object creation. It simply requests a clone of a prototype.
+
+**When to Use the Prototype Pattern**
+
+- When the cost of creating an object is high, and cloning is more efficient.
+- When you need to create many similar objects with only slight variations.
+- When you want to avoid creating a hierarchy of factory classes, as in the Factory Method or Abstract Factory patterns.
+- When the concrete classes of the objects to be created are not known at compile time.
+- When you want to add or remove objects dynamically at runtime.
+
+**real-world examples where the Prototype Pattern can be effectively applied**
+
+- Game Development: Creating Multiple Game Objects. Create a "prototype" object for each enemy type. This prototype holds the default configuration.
+When you need a new enemy instance, clone the appropriate prototype. This is much faster than creating a new enemy object from scratch each time, especially if the object creation is complex (e.g., loading textures, setting up animations).
+
+**key differences between shallow copy and deep copy**
+
+Shallow copy creates a new object, but it doesn't create new copies of the nested objects (references) within the original object. Instead, the new object contains references to the same nested objects as the original. Changes to mutable nested objects in the copied object will affect the original object, and vice versa.
+
+Deep copy creates a new object and recursively creates new copies of all the nested objects within the original object.Deep copying can be more time-consuming and memory-intensive, especially for complex objects with many levels of nesting.
+
+### <a name="chapter10part3"></a>Chapter 10 - Part 3: Structural Design Patterns
+
+Structural design patterns are concerned with how classes and objects are composed to form larger structures. They simplify the design by identifying a way to realize relationships between entities. These patterns focus on how to assemble objects and classes into larger structures while keeping the structures flexible and efficient. They deal with relationships between entities, providing different ways to create class structures.
+
+[Structural Design Patterns List](https://refactoring.guru/design-patterns/structural-patterns)
+
+Structural patterns provide solutions for building complex systems by focusing on the relationships and compositions of classes and objects. They offer different ways to organize classes and objects to create larger structures that are flexible, efficient, and maintainable.
+
+#### <a name="chapter10part3.1"></a>Chapter 10 - Part 3.1: Adapter Pattern
+
+
+
+### <a name="chapter10part4"></a>Chapter 10 - Part 4: Behavioral Design Patterns
+
+[Behavioral Design Patterns List](https://refactoring.guru/design-patterns/behavioral-patterns)
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
