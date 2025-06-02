@@ -164,6 +164,9 @@
     - [Chapter 10 - Part 2: Creational Design Patterns](#chapter10part2)
       - [Chapter 10 - Part 2.1: Factory Pattern](#chapter10part2.1)
       - [Chapter 10 - Part 2.2: Singleton Pattern](#chapter10part2.2)
+      - [Chapter 10 - Part 2.3: Abstract Factory Pattern](#chapter10part2.3)
+      - [Chapter 10 - Part 2.4: Builder Pattern](#chapter10part2.4)
+      - [Chapter 10 - Part 2.5: Prototype Pattern](#chapter10part2.5)
 12. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
@@ -9217,6 +9220,18 @@ for i in range(2):
 for thread in threads:
     thread.join()
 ```
+
+#### <a name="chapter10part2.3"></a>Chapter 10 - Part 2.3: Abstract Factory Pattern
+
+[Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
+
+#### <a name="chapter10part2.4"></a>Chapter 10 - Part 2.4: Builder Pattern
+
+[Builder](https://refactoring.guru/design-patterns/builder)
+
+#### <a name="chapter10part2.5"></a>Chapter 10 - Part 2.5: Prototype Pattern
+
+[Prototype](https://refactoring.guru/design-patterns/prototype)
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
