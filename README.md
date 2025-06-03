@@ -9353,65 +9353,77 @@ The Abstract Factory pattern revolves around the concept of creating families of
 
 ```py
 from abc import ABC, abstractmethod
+from typing import Protocol
+
 
 # Abstract Products
 class Button(ABC):
     @abstractmethod
-    def render(self):
+    def render(self) -> str:
         pass
+
 
 class TextField(ABC):
     @abstractmethod
-    def render(self):
+    def render(self) -> str:
         pass
+
 
 # Concrete Products
 class WindowsButton(Button):
-    def render(self):
+    def render(self) -> str:
         return "Rendering Windows Button"
 
+
 class MacOSButton(Button):
-    def render(self):
+    def render(self) -> str:
         return "Rendering MacOS Button"
 
+
 class WindowsTextField(TextField):
-    def render(self):
+    def render(self) -> str:
         return "Rendering Windows TextField"
 
+
 class MacOSTextField(TextField):
-    def render(self):
+    def render(self) -> str:
         return "Rendering MacOS TextField"
+
 
 # Abstract Factory
 class GUIFactory(ABC):
     @abstractmethod
-    def create_button(self):
+    def create_button(self) -> Button:
         pass
 
     @abstractmethod
-    def create_text_field(self):
+    def create_text_field(self) -> TextField:
         pass
+
 
 # Concrete Factories
 class WindowsFactory(GUIFactory):
-    def create_button(self):
+    def create_button(self) -> Button:
         return WindowsButton()
 
-    def create_text_field(self):
+    def create_text_field(self) -> TextField:
         return WindowsTextField()
 
+
 class MacOSFactory(GUIFactory):
-    def create_button(self):
+    def create_button(self) -> Button:
         return MacOSButton()
 
-    def create_text_field(self):
+    def create_text_field(self) -> TextField:
         return MacOSTextField()
 
+
 # Client code
-def create_ui(factory: GUIFactory):
+def create_ui(factory: GUIFactory) -> str:
     button = factory.create_button()
     text_field = factory.create_text_field()
     return button.render() + "\n" + text_field.render()
+
 
 # Usage
 windows_ui = create_ui(WindowsFactory())
@@ -9485,8 +9497,10 @@ Let's illustrate the Builder pattern with a practical example: building a comput
 First, we define the Computer class, which represents the complex object we want to build.
 
 ```py
+from typing import Optional
+
 class Computer:
-    def __init__(self, cpu, ram, storage, graphics_card=None):
+    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
         self.cpu = cpu
         self.ram = ram
         self.storage = storage
@@ -9507,30 +9521,31 @@ Next, we define the ComputerBuilder interface, which specifies the methods for b
 
 ```py
 from abc import ABC, abstractmethod
+from typing import Optional
 
 class ComputerBuilder(ABC):
     @abstractmethod
-    def reset(self):
+    def reset(self) -> None:
         pass
 
     @abstractmethod
-    def set_cpu(self, cpu):
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
         pass
 
     @abstractmethod
-    def set_ram(self, ram):
+    def set_ram(self, ram: int) -> "ComputerBuilder":
         pass
 
     @abstractmethod
-    def set_storage(self, storage):
+    def set_storage(self, storage: int) -> "ComputerBuilder":
         pass
 
     @abstractmethod
-    def set_graphics_card(self, graphics_card):
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
         pass
 
     @abstractmethod
-    def get_computer(self):
+    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
         pass
 ```
 
@@ -9539,48 +9554,78 @@ class ComputerBuilder(ABC):
 Now, we create concrete builder classes that implement the ComputerBuilder interface. These builders will construct specific types of computers, such as a gaming computer and an office computer.
 
 ```py
+from typing import Optional
+
 class GamingComputerBuilder(ComputerBuilder):
-    def __init__(self):
-        self.computer = None
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
 
-    def reset(self):
-        self.computer = Computer(cpu=None, ram=None, storage=None)
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
 
-    def set_cpu(self, cpu):
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.cpu = cpu
+        return self
 
-    def set_ram(self, ram):
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.ram = ram
+        return self
 
-    def set_storage(self, storage):
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.storage = storage
+        return self
 
-    def set_graphics_card(self, graphics_card):
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.graphics_card = graphics_card
+        return self
 
-    def get_computer(self):
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
         return self.computer
 
 class OfficeComputerBuilder(ComputerBuilder):
-    def __init__(self):
-        self.computer = None
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
 
-    def reset(self):
-        self.computer = Computer(cpu=None, ram=None, storage=None)
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
 
-    def set_cpu(self, cpu):
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.cpu = cpu
+        return self
 
-    def set_ram(self, ram):
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.ram = ram
+        return self
 
-    def set_storage(self, storage):
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.storage = storage
+        return self
 
-    def set_graphics_card(self, graphics_card):
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
         self.computer.graphics_card = graphics_card
+        return self
 
-    def get_computer(self):
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
         return self.computer
 ```
 
@@ -9589,11 +9634,13 @@ class OfficeComputerBuilder(ComputerBuilder):
 The Director class is responsible for orchestrating the construction process. It takes a builder as input and calls the builder's methods in a specific order to construct the computer.
 
 ```py
+from typing import Optional
+
 class ComputerAssembler:
-    def __init__(self, builder):
+    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
         self.builder = builder
 
-    def assemble_computer(self, cpu, ram, storage, graphics_card=None):
+    def assemble_computer(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None) -> "Computer":
         self.builder.reset()
         self.builder.set_cpu(cpu)
         self.builder.set_ram(ram)
@@ -9622,6 +9669,158 @@ office_computer.display_configuration()
 ```
 
 This example demonstrates how the Builder pattern allows us to create different computer configurations using the same construction process. The client code doesn't need to know the details of how the computer is built; it only needs to specify the desired components.
+
+**All Example**
+
+```py
+from abc import abstractmethod, ABC
+from typing import Optional
+
+
+class Computer:
+    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
+        self.cpu = cpu
+        self.ram = ram
+        self.storage = storage
+        self.graphics_card = graphics_card
+
+    def display_configuration(self):
+        print("Computer Configuration:")
+        print(f"CPU: {self.cpu}")
+        print(f"RAM: {self.ram}")
+        print(f"Storage: {self.storage}")
+        if self.graphics_card:
+            print(f"Graphics Card: {self.graphics_card}")
+
+
+class ComputerBuilder(ABC):
+    @abstractmethod
+    def reset(self) -> None:
+        pass
+
+    @abstractmethod
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
+        pass
+
+
+class GamingComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+
+
+class OfficeComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+
+
+class ComputerAssembler:
+    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
+        self.builder = builder
+
+    def assemble_computer(self, cpu: str, ram: int, storage: int,
+                          graphics_card: Optional[str] = None) -> "Computer":
+        self.builder.reset()
+        self.builder.set_cpu(cpu)
+        self.builder.set_ram(ram)
+        self.builder.set_storage(storage)
+        if graphics_card:
+            self.builder.set_graphics_card(graphics_card)
+        return self.builder.get_computer()
+
+
+# Using the GamingComputerBuilder
+gaming_builder = GamingComputerBuilder()
+assembler = ComputerAssembler(gaming_builder)
+gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD",
+                                              graphics_card="Nvidia RTX 3080")
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder
+office_builder = OfficeComputerBuilder()
+assembler = ComputerAssembler(office_builder)
+office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
+office_computer.display_configuration()
+```
 
 **Alternative Implementation: Without a Director**
 
@@ -9657,16 +9856,16 @@ In this case, the client is responsible for calling the builder's methods in the
 ```py
 import json
 import copy
-from typing import Final
+from typing import Final, List, Tuple, Any, Optional
 
 # 1. Define the Immutable Classes
 class Order:
-    def __init__(self, order_id: str, customer_id: str, items: tuple, total_amount: float, shipping_address):
+    def __init__(self, order_id: str, customer_id: str, items: Tuple["OrderItem", ...], total_amount: float, shipping_address: "Address"):
         self.__order_id: Final[str] = order_id
         self.__customer_id: Final[str] = customer_id
-        self.__items: Final[tuple] = tuple(items)  # Make it immutable
+        self.__items: Final[Tuple["OrderItem", ...]] = items  # Make it immutable
         self.__total_amount: Final[float] = total_amount
-        self.__shipping_address: Final = shipping_address
+        self.__shipping_address: Final["Address"] = shipping_address
 
     @property
     def order_id(self) -> str:
@@ -9677,7 +9876,7 @@ class Order:
         return self.__customer_id
 
     @property
-    def items(self) -> tuple:
+    def items(self) -> Tuple["OrderItem", ...]:
         return self.__items
 
     @property
@@ -9685,10 +9884,10 @@ class Order:
         return self.__total_amount
 
     @property
-    def shipping_address(self):
+    def shipping_address(self) -> "Address":
         return self.__shipping_address
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (f"Order(order_id={self.__order_id}, customer_id={self.__customer_id}, "
                 f"items={self.__items}, total_amount={self.__total_amount}, "
                 f"shipping_address={self.__shipping_address})")
@@ -9712,7 +9911,7 @@ class OrderItem:
     def price(self) -> float:
         return self.__price
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"OrderItem(product_id={self.__product_id}, quantity={self.__quantity}, price={self.__price})"
 
 
@@ -9739,23 +9938,23 @@ class Address:
     def country(self) -> str:
         return self.__country
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Address(street={self.__street}, city={self.__city}, zip_code={self.__zip_code}, country={self.__country})"
 
 
 # 2. Create a Builder Class
 class OrderBuilder:
-    def __init__(self):
-        self.order_id = None
-        self.customer_id = None
-        self.items = []
-        self.total_amount = None
-        self.shipping_address = None
-        self.errors = []
+    def __init__(self) -> None:
+        self.order_id: Optional[str] = None
+        self.customer_id: Optional[str] = None
+        self.items: List["OrderItem"] = []
+        self.total_amount: Optional[float] = None
+        self.shipping_address: Optional["Address"] = None
+        self.errors: List[str] = []
 
-    def from_json(self, json_data):
+    def from_json(self, json_data: str) -> "OrderBuilder":
         try:
-            data = json.loads(json_data)
+            data: dict = json.loads(json_data)
             self.with_order_id(data.get('order_id'))
             self.with_customer_id(data.get('customer_id'))
             self.with_total_amount(data.get('total_amount'))
@@ -9763,7 +9962,7 @@ class OrderBuilder:
             for item in data.get('items', []):
                 self.with_item(item.get('product_id'), item.get('quantity'), item.get('price'))
 
-            shipping_address = data.get('shipping_address', {})
+            shipping_address: dict = data.get('shipping_address', {})
             self.with_shipping_address(
                 shipping_address.get('street'),
                 shipping_address.get('city'),
@@ -9775,43 +9974,43 @@ class OrderBuilder:
             self.errors.append(f"Error parsing JSON: {str(e)}")
         return self
 
-    def with_order_id(self, order_id):
+    def with_order_id(self, order_id: Any) -> "OrderBuilder":
         if not isinstance(order_id, str) or not order_id.strip():
             self.errors.append("Order ID must be a non-empty string")
         else:
             self.order_id = order_id
         return self
 
-    def with_customer_id(self, customer_id):
+    def with_customer_id(self, customer_id: Any) -> "OrderBuilder":
         if not isinstance(customer_id, str) or not customer_id.strip():
             self.errors.append("Customer ID must be a non-empty string")
         else:
             self.customer_id = customer_id
         return self
 
-    def with_item(self, product_id, quantity, price):
+    def with_item(self, product_id: str, quantity: Any, price: Any) -> "OrderBuilder":
         if not all(isinstance(arg, (int, float)) and arg > 0 for arg in [quantity, price]):
             self.errors.append("Quantity and price must be positive numbers")
         else:
-            item = OrderItem(product_id=product_id, quantity=quantity, price=price)
+            item = OrderItem(product_id=product_id, quantity=int(quantity), price=float(price))
             self.items.append(item)
         return self
 
-    def with_total_amount(self, total_amount):
+    def with_total_amount(self, total_amount: Any) -> "OrderBuilder":
         if not isinstance(total_amount, (int, float)) or total_amount <= 0:
             self.errors.append("Total amount must be a positive number")
         else:
-            self.total_amount = total_amount
+            self.total_amount = float(total_amount)
         return self
 
-    def with_shipping_address(self, street, city, zip_code, country):
+    def with_shipping_address(self, street: Any, city: Any, zip_code: Any, country: Any) -> "OrderBuilder":
         if not all(isinstance(arg, str) and arg.strip() for arg in [street, city, zip_code, country]):
             self.errors.append("Shipping address fields must be non-empty strings")
         else:
             self.shipping_address = Address(street=street, city=city, zip_code=zip_code, country=country)
         return self
 
-    def build(self):
+    def build(self) -> "Order":
         if self.errors:
             raise ValueError("Validation errors: " + ", ".join(self.errors))
 
@@ -9875,45 +10074,47 @@ Use the Builder pattern when:
 - **Validation Methods in the Builder**: Implement validation methods within the builder class. These methods check the state of the builder at various stages of construction.
 
 ```py
-class Product:
-    def __init__(self, name, price, quantity):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
+from typing import Optional, List, Any
 
-    def __str__(self):
+class Product:
+    def __init__(self, name: str, price: float, quantity: int) -> None:
+        self.name: str = name
+        self.price: float = price
+        self.quantity: int = quantity
+
+    def __str__(self) -> str:
         return f"Product(name={self.name}, price={self.price}, quantity={self.quantity})"
 
 
 class ProductBuilder:
-    def __init__(self):
-        self.name = None
-        self.price = None
-        self.quantity = None
-        self.errors = []
+    def __init__(self) -> None:
+        self.name: Optional[str] = None
+        self.price: Optional[float] = None
+        self.quantity: Optional[int] = None
+        self.errors: List[str] = []
 
-    def with_name(self, name):
+    def with_name(self, name: Any) -> "ProductBuilder":
         if not isinstance(name, str) or not name.strip():
             self.errors.append("Name must be a non-empty string")
         else:
             self.name = name
         return self
 
-    def with_price(self, price):
+    def with_price(self, price: Any) -> "ProductBuilder":
         if not isinstance(price, (int, float)) or price <= 0:
             self.errors.append("Price must be a positive number")
         else:
-            self.price = price
+            self.price = float(price)
         return self
 
-    def with_quantity(self, quantity):
+    def with_quantity(self, quantity: Any) -> "ProductBuilder":
         if not isinstance(quantity, int) or quantity < 0:
             self.errors.append("Quantity must be a non-negative integer")
         else:
-            self.quantity = quantity
+            self.quantity = int(quantity)
         return self
 
-    def build(self):
+    def build(self) -> "Product":
         if self.errors:
             raise ValueError("Validation errors: " + ", ".join(self.errors))
 
@@ -9932,12 +10133,12 @@ try:
         .build()
     print(product)
 
-    invalid_product = ProductBuilder() \
-        .with_name("") \
-        .with_price(-5.0) \
-        .with_quantity(2) \
-        .build()
-    print(invalid_product)
+    invalid_product = ProductBuilder()
+    try:
+        invalid_product.with_name("").with_price(-5.0).with_quantity(2).build()
+    except ValueError as e:
+        print(f"Error creating invalid product: {e}")
+
 except ValueError as e:
     print(f"Error creating product: {e}")
 ```
@@ -9964,20 +10165,21 @@ The Prototype pattern typically involves the following participants:
 
 ```py
 import copy
+from typing import Any
 
 class Prototype:
-    def __init__(self):
-        self._value = None
+    def __init__(self) -> None:
+        self._value: Any = None
 
-    def clone(self):
-        return copy.copy(self) # Shallow copy
+    def clone(self) -> "Prototype":
+        return copy.copy(self)  # Shallow copy
 
     @property
-    def value(self):
+    def value(self) -> Any:
         return self._value
 
     @value.setter
-    def value(self, new_value):
+    def value(self, new_value: Any) -> None:
         self._value = new_value
 
 # Client code
@@ -9987,8 +10189,8 @@ prototype.value = "Original Value"
 clone = prototype.clone()
 clone.value = "Cloned Value"
 
-print(f"Original: {prototype.value}") # Output: Original: Original Value
-print(f"Clone: {clone.value}") # Output: Clone: Cloned Value
+print(f"Original: {prototype.value}")
+print(f"Clone: {clone.value}")
 ```
 
 In this example:
@@ -10004,28 +10206,29 @@ Now, let's consider a more complex example where the object contains references 
 
 ```py
 import copy
+from typing import Any
 
 class Address:
-    def __init__(self, street, city):
-        self.street = street
-        self.city = city
+    def __init__(self, street: str, city: str) -> None:
+        self.street: str = street
+        self.city: str = city
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.street}, {self.city}"
 
 
 class Person:
-    def __init__(self, name, address):
-        self.name = name
-        self.address = address
+    def __init__(self, name: str, address: Address) -> None:
+        self.name: str = name
+        self.address: Address = address
 
-    def clone(self, deep_copy=True):
+    def clone(self, deep_copy: bool = True) -> "Person":
         if deep_copy:
-            return copy.deepcopy(self) # Deep copy
+            return copy.deepcopy(self)
         else:
-            return copy.copy(self) # Shallow copy
+            return copy.copy(self)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} lives at {self.address}"
 
 
@@ -10035,17 +10238,17 @@ person = Person("John Doe", address)
 
 person2 = person.clone()
 person2.name = "Jane Doe"
-person2.address.street = "456 Oak Ave" # Modifying the address of person2
+person2.address.street = "456 Oak Ave"  # Modifying the address of person2
 
-print(person) # Output: John Doe lives at 123 Main St, Anytown
-print(person2) # Output: Jane Doe lives at 456 Oak Ave, Anytown
+print(person)
+print(person2)
 
-person3 = person.clone(deep_copy=False) # Shallow copy
+person3 = person.clone(deep_copy=False)  # Shallow copy
 person3.name = "Peter Pan"
 person3.address.street = "789 Pine Ln"
 
-print(person) # Output: John Doe lives at 789 Pine Ln, Anytown (address changed!)
-print(person3) # Output: Peter Pan lives at 789 Pine Ln, Anytown
+print(person)
+print(person3)
 ```
 
 In this example:
@@ -10062,41 +10265,42 @@ A Prototype Registry is a useful addition to the Prototype pattern. It acts as a
 
 ```py
 import copy
+from typing import Dict, Optional, Any
 
 class Prototype:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def clone(self):
+    def clone(self) -> "Prototype":
         return copy.deepcopy(self)
 
 class ConcretePrototype1(Prototype):
-    def __init__(self, value):
+    def __init__(self, value: str) -> None:
         super().__init__()
-        self.value = value
+        self.value: str = value
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"ConcretePrototype1 with value: {self.value}"
 
 class ConcretePrototype2(Prototype):
-    def __init__(self, data):
+    def __init__(self, data: list[int]) -> None:
         super().__init__()
-        self.data = data
+        self.data: list[int] = data
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"ConcretePrototype2 with data: {self.data}"
 
 class PrototypeRegistry:
-    def __init__(self):
-        self._prototypes = {}
+    def __init__(self) -> None:
+        self._prototypes: Dict[str, Prototype] = {}
 
-    def register(self, name, prototype):
+    def register(self, name: str, prototype: Prototype) -> None:
         self._prototypes[name] = prototype
 
-    def unregister(self, name):
+    def unregister(self, name: str) -> None:
         del self._prototypes[name]
 
-    def get_prototype(self, name):
+    def get_prototype(self, name: str) -> Optional[Prototype]:
         prototype = self._prototypes.get(name)
         if prototype:
             return prototype.clone()
@@ -10117,12 +10321,12 @@ registry.register("proto2", proto2)
 clone1 = registry.get_prototype("proto1")
 clone2 = registry.get_prototype("proto2")
 
-print(clone1)  # Output: ConcretePrototype1 with value: Initial Value
-print(clone2)  # Output: ConcretePrototype2 with data: [1, 2, 3]
+print(clone1)
+print(clone2)
 
-clone1.value = "Modified Value"
-print(clone1) # Output: ConcretePrototype1 with value: Modified Value
-print(proto1) # Output: ConcretePrototype1 with value: Initial Value
+clone1.value = "Modified Value"  # type: ignore # Safe because clone1 is ConcretePrototype1
+print(clone1)
+print(proto1)
 ```
 
 In this example:
@@ -10177,27 +10381,31 @@ Example: In software, an abstract class in Python defines a template for other c
 
 ```py
 from abc import ABC, abstractmethod
+from typing import Union
 
-class Shape(ABC): # Abstract class
+class Shape(ABC):
     @abstractmethod
-    def area(self):
+    def area(self) -> float:
         pass
 
-class Circle(Shape): # Concrete class inheriting from Shape
-    def __init__(self, radius):
+class Circle(Shape):
+    def __init__(self, radius: Union[int, float]):
+        if not isinstance(radius, (int, float)):
+            raise TypeError("Radius must be a number")
         self.radius = radius
 
-    def area(self):
+    def area(self) -> float:
         return 3.14 * self.radius * self.radius
 
-class Square(Shape): # Concrete class inheriting from Shape
-    def __init__(self, side):
+class Square(Shape):
+    def __init__(self, side: Union[int, float]):
+        if not isinstance(side, (int, float)):
+            raise TypeError("Side must be a number")
         self.side = side
 
-    def area(self):
+    def area(self) -> float:
         return self.side * self.side
 
-# shape = Shape() # This will raise an error because you can't instantiate an abstract class
 circle = Circle(5)
 square = Square(4)
 
@@ -10214,20 +10422,22 @@ Example: A computer is composed of a CPU, memory, storage, and peripherals. Each
 Example: In Python, you can create a Car class that is composed of an Engine class and a Wheel class.
 
 ```py
+from typing import List
+
 class Engine:
-    def start(self):
+    def start(self) -> str:
         return "Engine started"
 
 class Wheel:
-    def rotate(self):
+    def rotate(self) -> str:
         return "Wheel rotating"
 
 class Car:
     def __init__(self):
-        self.engine = Engine() # Composition: Car has-a Engine
-        self.wheels = [Wheel() for _ in range(4)] # Car has-a Wheels
+        self.engine: Engine = Engine()  # Composition: Car has-a Engine
+        self.wheels: List[Wheel] = [Wheel() for _ in range(4)]  # Car has-a Wheels
 
-    def drive(self):
+    def drive(self) -> str:
         return f"{self.engine.start()}, {self.wheels[0].rotate()}"
 
 my_car = Car()
@@ -10243,40 +10453,42 @@ Example: Consider a light switch and a light bulb. If the switch is directly wir
 Example: Using interfaces in Python can decouple classes.
 
 ```py
-class Switchable(ABC): # Abstract class
+from abc import ABC, abstractmethod
+
+class Switchable(ABC):  # Abstract class
     @abstractmethod
-    def turn_on(self):
+    def turn_on(self) -> str:
         pass
 
     @abstractmethod
-    def turn_off(self):
+    def turn_off(self) -> str:
         pass
 
-class LightBulb(Switchable): # Concrete class inheriting from Switchable
-    def turn_on(self):
+class LightBulb(Switchable):  # Concrete class inheriting from Switchable
+    def turn_on(self) -> str:
         return "LightBulb: turned on..."
 
-    def turn_off(self):
+    def turn_off(self) -> str:
         return "LightBulb: turned off..."
 
-class Fan(Switchable): # Concrete class inheriting from Switchable
-    def turn_on(self):
+class Fan(Switchable):  # Concrete class inheriting from Switchable
+    def turn_on(self) -> str:
         return "Fan: turned on..."
 
-    def turn_off(self):
+    def turn_off(self) -> str:
         return "Fan: turned off..."
 
 class ElectricPowerSwitch:
     def __init__(self, client: Switchable):
-        self.client = client
-        self.on = False
+        self.client: Switchable = client
+        self.on: bool = False
 
-    def press(self):
+    def press(self) -> None:
         if self.on:
-            self.client.turn_off()
+            print(self.client.turn_off())
             self.on = False
         else:
-            self.client.turn_on()
+            print(self.client.turn_on())
             self.on = True
 
 bulb = LightBulb()
@@ -10301,33 +10513,33 @@ Example: In Python:
 ```py
 from abc import ABC, abstractmethod
 
-class Printable(ABC): # Abstract class
+class Printable(ABC):  # Abstract class
     @abstractmethod
-    def print_document(self, document):
+    def print_document(self, document: str) -> str:
         pass
 
-class Scannable(ABC): # Abstract class
+class Scannable(ABC):  # Abstract class
     @abstractmethod
-    def scan_document(self, document):
+    def scan_document(self, document: str) -> str:
         pass
 
-class Faxable(ABC): # Abstract class
+class Faxable(ABC):  # Abstract class
     @abstractmethod
-    def fax_document(self, document):
+    def fax_document(self, document: str) -> str:
         pass
 
-class MultiFunctionPrinter(Printable, Scannable, Faxable): # Concrete class inheriting from multiple abstract classes
-    def print_document(self, document):
+class MultiFunctionPrinter(Printable, Scannable, Faxable):  # Concrete class inheriting from multiple abstract classes
+    def print_document(self, document: str) -> str:
         return f"Printing {document}"
 
-    def scan_document(self, document):
+    def scan_document(self, document: str) -> str:
         return f"Scanning {document}"
 
-    def fax_document(self, document):
+    def fax_document(self, document: str) -> str:
         return f"Faxing {document}"
 
-class SimplePrinter(Printable): # Concrete class inheriting from Printable
-    def print_document(self, document):
+class SimplePrinter(Printable):  # Concrete class inheriting from Printable
+    def print_document(self, document: str) -> str:
         return f"Printing {document}"
 
 printer = MultiFunctionPrinter()
@@ -10392,14 +10604,16 @@ We will focus on the Object Adapter in this lesson due to its flexibility and wi
 Let's illustrate the Adapter Pattern with a practical example. Suppose we have an existing class called LegacyCalculator that performs calculations using a specific interface. However, our client code expects a different interface defined by CalculatorInterface. We can use the Adapter Pattern to bridge this gap.
 
 ```py
+from typing import Protocol
+
 # Target Interface
-class CalculatorInterface:
-    def operate(self, num1, num2):
-        raise NotImplementedError
+class CalculatorInterface(Protocol):
+    def operate(self, num1: float, num2: float) -> float:
+        ...
 
 # Adaptee (Existing Class with Incompatible Interface)
 class LegacyCalculator:
-    def calculate(self, num1, num2, operation):
+    def calculate(self, num1: float, num2: float, operation: str) -> float | None:
         if operation == 'add':
             return num1 + num2
         elif operation == 'subtract':
@@ -10408,20 +10622,20 @@ class LegacyCalculator:
             return None
 
 # Adapter Class
-class CalculatorAdapter(CalculatorInterface):
-    def __init__(self, legacy_calculator):
+class CalculatorAdapter:
+    def __init__(self, legacy_calculator: LegacyCalculator):
         self.legacy_calculator = legacy_calculator
 
-    def operate(self, num1, num2):
+    def operate(self, num1: float, num2: float) -> float | None:
         # Adapt the LegacyCalculator's interface to the CalculatorInterface
         return self.legacy_calculator.calculate(num1, num2, 'add')
 
 # Client Code
 class Client:
-    def __init__(self, calculator):
+    def __init__(self, calculator: CalculatorInterface):
         self.calculator = calculator
 
-    def perform_operation(self, num1, num2):
+    def perform_operation(self, num1: float, num2: float) -> None:
         result = self.calculator.operate(num1, num2)
         print(f"Result: {result}")
 
@@ -10429,7 +10643,7 @@ class Client:
 legacy_calculator = LegacyCalculator()
 adapter = CalculatorAdapter(legacy_calculator)
 client = Client(adapter)
-client.perform_operation(10, 5)  # Output: Result: 15
+client.perform_operation(10.0, 5.0)
 ```
 
 In this example:
@@ -10456,45 +10670,47 @@ In this example:
 **Advanced Example: Adapting Multiple Adaptees**
 
 ```py
+from typing import Protocol, Any, Dict
+
 # Target Interface
-class DataProcessorInterface:
-    def process_data(self, data):
-        raise NotImplementedError
+class DataProcessorInterface(Protocol):
+    def process_data(self, data: str) -> Dict[str, str]:
+        ...
 
 # Adaptee 1: Legacy XML Data Processor
 class LegacyXMLProcessor:
-    def parse_xml(self, xml_data):
+    def parse_xml(self, xml_data: str) -> Dict[str, str]:
         # Simulate XML parsing logic
         return {"xml_data": xml_data}
 
 # Adaptee 2: Legacy CSV Data Processor
 class LegacyCSVProcessor:
-    def read_csv(self, csv_data):
+    def read_csv(self, csv_data: str) -> Dict[str, str]:
         # Simulate CSV reading logic
         return {"csv_data": csv_data}
 
 # Adapter 1: XML Adapter
-class XMLAdapter(DataProcessorInterface):
-    def __init__(self, xml_processor):
+class XMLAdapter:
+    def __init__(self, xml_processor: LegacyXMLProcessor):
         self.xml_processor = xml_processor
 
-    def process_data(self, data):
+    def process_data(self, data: str) -> Dict[str, str]:
         return self.xml_processor.parse_xml(data)
 
 # Adapter 2: CSV Adapter
-class CSVAdapter(DataProcessorInterface):
-    def __init__(self, csv_processor):
+class CSVAdapter:
+    def __init__(self, csv_processor: LegacyCSVProcessor):
         self.csv_processor = csv_processor
 
-    def process_data(self, data):
+    def process_data(self, data: str) -> Dict[str, str]:
         return self.csv_processor.read_csv(data)
 
 # Client Code
 class DataAnalyzer:
-    def __init__(self, processor):
+    def __init__(self, processor: DataProcessorInterface):
         self.processor = processor
 
-    def analyze_data(self, data):
+    def analyze_data(self, data: str) -> None:
         processed_data = self.processor.process_data(data)
         print(f"Analyzing data: {processed_data}")
 
@@ -10516,92 +10732,82 @@ In this example, we have two legacy data processors: LegacyXMLProcessor and Lega
 
 **Adapter with Factory Pattern**
 
-you receive different input formats (JSON and XML) but need to process them uniformly as an Order object in another class. How can I use Adapter with factory pattern in this case?
+You receive different input formats (JSON and XML) but need to process them uniformly as an Order object in another class. How can I use Adapter with factory pattern in this case? Use Type checking
 
 ```py
-# Target Interface 
+# Target Interface
+from typing import List, Dict, Any
+from abc import ABC, abstractmethod
+import json
+import xml.etree.ElementTree as ET
+
 class Order:
-    def __init__(self, order_id, customer_name, items, total_amount):
+    def __init__(self, order_id: str, customer_name: str, items: List[str], total_amount: float):
         self.order_id = order_id
         self.customer_name = customer_name
         self.items = items
         self.total_amount = total_amount
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Order ID: {self.order_id}, Customer: {self.customer_name}, Total: {self.total_amount}"
-```
 
-```py
 # Adaptee Interfaces (JSON and XML Parser)
-import json
-import xml.etree.ElementTree as ET
-
 class JsonOrderParser:
-    def parse_json(self, json_data):
+    def parse_json(self, json_data: str) -> Dict[str, Any]:
         data = json.loads(json_data)
         return data  # Returns a Python dictionary
 
 class XmlOrderParser:
-    def parse_xml(self, xml_data):
+    def parse_xml(self, xml_data: str) -> ET.Element:
         root = ET.fromstring(xml_data)
         return root  # Returns an ElementTree object
-```
-
-```py
-from abc import ABC, abstractmethod
 
 # Adapter Interface
 class OrderDataAdapter(ABC):
     @abstractmethod
-    def to_order(self):
+    def to_order(self) -> Order:
         pass
-```
 
-**Implement the Adapters**
-
-```py
+# Implement the Adapters
 class JsonOrderAdapter(OrderDataAdapter):
-    def __init__(self, json_parser, json_data):
+    def __init__(self, json_parser: JsonOrderParser, json_data: str):
         self.json_parser = json_parser
         self.json_data = json_data
 
-    def to_order(self):
+    def to_order(self) -> Order:
         data = self.json_parser.parse_json(self.json_data)
-        order_id = data.get("order_id")
-        customer_name = data.get("customer_name")
-        items = data.get("items")
-        total_amount = data.get("total_amount")
+        order_id = str(data.get("order_id", ""))  # Ensure it's a string
+        customer_name = str(data.get("customer_name", ""))  # Ensure it's a string
+        items = [str(item) for item in data.get("items", [])]  # Ensure items are strings
+        total_amount = float(data.get("total_amount", 0.0))  # Provide a default value
         return Order(order_id, customer_name, items, total_amount)
 
 
 class XmlOrderAdapter(OrderDataAdapter):
-    def __init__(self, xml_parser, xml_data):
+    def __init__(self, xml_parser: XmlOrderParser, xml_data: str):
         self.xml_parser = xml_parser
         self.xml_data = xml_data
 
-    def to_order(self):
+    def to_order(self) -> Order:
         root = self.xml_parser.parse_xml(self.xml_data)
-        order_id = root.find("order_id").text
-        customer_name = root.find("customer_name").text
+        order_id = str(root.find("order_id").text) if root.find("order_id") is not None else ""
+        customer_name = str(root.find("customer_name").text) if root.find("customer_name") is not None else ""
         items = [item.text for item in root.findall("items/item")]
-        total_amount = float(root.find("total_amount").text)
+        total_amount = float(root.find("total_amount").text) if root.find("total_amount") is not None else 0.0
         return Order(order_id, customer_name, items, total_amount)
-```
 
-**Implement the Factory**
+# Implement the Factory
+from typing import Literal, Union
 
-```py
 class OrderAdapterFactory:
-    def create_adapter(self, data_format, data):
+    def create_adapter(self, data_format: Literal["json", "xml"], data: str) -> OrderDataAdapter:
         if data_format == "json":
             return JsonOrderAdapter(JsonOrderParser(), data)
         elif data_format == "xml":
             return XmlOrderAdapter(XmlOrderParser(), data)
         else:
             raise ValueError("Unsupported data format")
-```
 
-```py
 # Sample data
 json_data = """
 {
