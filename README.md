@@ -170,7 +170,188 @@
     - [Chapter 10 - Part 3: Structural Design Patterns](#chapter10part3)
       - [Chapter 10 - Part 3.1: Adapter Pattern](#chapter10part3.1)
     - [Chapter 10 - Part 4: Behavioral Design Patterns](#chapter10part4)
-12. [Appendix A: Useful Python Code Snippet](#appendixa)
+11. [Chapter 11: Advanced Data Structures and Algorithms](#chapter11)
+    - [Chapter 11 - Part 1: Understanding Time and Space Complexity](#chapter11part1)
+      - [Chapter 11 - Part 1.1: Time Complexity](#chapter11part1.1)
+      - [Chapter 11 - Part 1.2: Space Complexity](#chapter11part1.2)
+      - [Chapter 11 - Part 1.3: Trade-offs Between Time and Space Complexity](#chapter11part1.3)
+      - [Chapter 11 - Part 1.4: Practical Examples](#chapter11part1.4)
+    - [Chapter 11 - Part 2: Implementing and Analyzing Sorting Algorithms: Merge Sort, Quick Sort, Heap Sort](#chapter11part2)
+      - [Chapter 11 - Part 2.1: Merge Sort](#chapter11part2.1)
+      - [Chapter 11 - Part 2.2: Quick Sort](#chapter11part2.2)
+      - [Chapter 11 - Part 2.3: Heap Sort](#chapter11part2.3)
+      - [Chapter 11 - Part 2.4: Comparison of Sorting Algorithms](#chapter11part2.4)
+    - [Chapter 11 - Part 3: Graph Data Structures: Representation and Traversal (BFS, DFS)](#chapter11part3)
+      - [Chapter 11 - Part 3.1: Graph Representations](#chapter11part3.1)
+      - [Chapter 11 - Part 3.2: Graph Traversal Algorithms](#chapter11part3.2)
+    - [Chapter 11 - Part 4: Tree Data Structures: Binary Search Trees, AVL Trees, and B-Trees](#chapter11part4)
+      - [Chapter 11 - Part 4.1: Binary Search Trees (BSTs)](#chapter11part4.1)
+      - [Chapter 11 - Part 4.2: AVL Trees](#chapter11part4.2)
+      - [Chapter 11 - Part 4.3: B-Trees](#chapter11part4.3)
+    - [Chapter 11 - Part 5: Hash Tables: Collision Resolution Techniques and Performance Analysis](#chapter11part5)
+      - [Chapter 11 - Part 5.1: Collision Resolution Techniques](#chapter11part5.1)
+      - [Chapter 11 - Part 5.2: Performance Analysis](#chapter11part5.2)
+    - [Chapter 11 - Part 6: Practical Exercise: Optimizing a Search Algorithm for a Large Dataset](#chapter11part6)
+      - [Chapter 11 - Part 6.1: Understanding the Problem: Search in Large Datasets](#chapter11part6.1)
+      - [Chapter 11 - Part 6.2: Optimization Techniques](#chapter11part6.2)
+      - [Chapter 11 - Part 6.3: Practical Examples and Demonstrations](#chapter11part6.3)
+12. [Chapter 12: Object-Oriented Programming (OOP) Deep Dive](#chapter12)
+    - [Chapter 12 - Part 1: Advanced Class Design: Abstract Classes and Interfaces](#chapter12part1)
+      - [Chapter 12 - Part 1.1: Abstract Classes](#chapter12part1.1)
+      - [Chapter 12 - Part 1.2: Interfaces](#chapter12part1.2)
+      - [Chapter 12 - Part 1.3: Abstract Classes vs. Interfaces: Key Differences](#chapter12part1.3)
+      - [Chapter 12 - Part 1.4: Practical Examples](#chapter12part1.4)
+    - [Chapter 12 - Part 2: Understanding and Implementing Design Patterns: Singleton, Factory, Observer](#chapter12part2)
+      - [Chapter 12 - Part 2.1: Singleton Pattern](#chapter12part2.1)
+      - [Chapter 12 - Part 2.2: Factory Pattern](#chapter12part2.2)
+      - [Chapter 12 - Part 2.3: Observer Pattern](#chapter12part2.3)
+    - [Chapter 12 - Part 3: Metaclasses: Customizing Class Creation](#chapter12part3)
+      - [Chapter 12 - Part 3.1: Understanding Metaclasses](#chapter12part3.1)
+      - [Chapter 12 - Part 3.2: Advanced Metaclass Usage](#chapter12part3.2)
+    - [Chapter 12 - Part 4: Working with Inheritance: Multiple Inheritance and Mixins](#chapter12part4)
+      - [Chapter 12 - Part 4.1: Understanding Multiple Inheritance](#chapter12part4.1)
+      - [Chapter 12 - Part 4.2: Mixins: A Powerful Alternative](#chapter12part4.2)
+    - [Chapter 12 - Part 5: Managing Object Lifecycles: Context Managers and Resource Management](#chapter12part5)
+      - [Chapter 12 - Part 5.1: Understanding Resource Management](#chapter12part5.1)
+      - [Chapter 12 - Part 5.2: Implementing Context Managers with Classes](#chapter12part5.2)
+      - [Chapter 12 - Part 5.3: Using contextlib for Simpler Context Managers](#chapter12part5.3)
+      - [Chapter 12 - Part 5.4: Nesting Context Managers](#chapter12part5.4)
+      - [Chapter 12 - Part 5.5: Practical Examples and Demonstrations](#chapter12part5.5)
+    - [Chapter 12 - Part 6: Practical Exercise: Building a Modular Application Using Design Patterns](#chapter12part6)
+      - [Chapter 12 - Part 6.1: Understanding Modular Application Design](#chapter12part6.1)
+      - [Chapter 12 - Part 6.2: Case Study: A Plugin-Based Data Processing Application](#chapter12part6.2)
+      - [Chapter 12 - Part 6.3: Exercise: Extending the Plugin-Based Application](#chapter12part6.3)
+      - [Chapter 12 - Part 6.4: Real-World Application](#chapter12part6.4)
+13. [Chapter 13: Concurrency and Parallelism](#chapter13)
+    - [Chapter 13 - Part 1: Threads vs. Processes: Understanding the GIL](#chapter13part1)
+      - [Chapter 13 - Part 1.1: Threads vs. Processes: A Fundamental Distinction](#chapter13part1.1)
+      - [Chapter 13 - Part 1.2: The Global Interpreter Lock (GIL)](#chapter13part1.2)
+      - [Chapter 13 - Part 1.3: Choosing Between Threads and Processes](#chapter13part1.3)
+    - [Chapter 13 - Part 2: Multithreading: Thread Synchronization and Locking Mechanisms](#chapter13part2)
+      - [Chapter 13 - Part 2.1: Understanding Race Conditions and Critical Sections](#chapter13part2.1)
+      - [Chapter 13 - Part 2.2: Locking Mechanisms: Mutexes and RLock](#chapter13part2.2)
+      - [Chapter 13 - Part 2.3: Deadlocks: Causes and Prevention](#chapter13part2.3)
+    - [Chapter 13 - Part 3: Multiprocessing: Utilizing Multiple Cores for Parallel Execution](#chapter13part3)
+      - [Chapter 13 - Part 3.1: Understanding Processes and the GIL](#chapter13part3.1)
+      - [Chapter 13 - Part 3.2: The multiprocessing Module](#chapter13part3.2)
+      - [Chapter 13 - Part 3.3: Practical Examples and Demonstrations](#chapter13part3.3)
+    - [Chapter 13 - Part 4: Asynchronous Programming with `asyncio`: Event Loops and Coroutines](#chapter13part4)
+      - [Chapter 13 - Part 4.1: Understanding the Event Loop](#chapter13part4.1)
+      - [Chapter 13 - Part 4.2: Understanding Coroutines](#chapter13part4.2)
+    - [Chapter 13 - Part 5: Concurrent Data Structures: Queues and Thread-Safe Collections](#chapter13part5)
+      - [Chapter 13 - Part 5.1: Understanding Concurrent Data Structures](#chapter13part5.1)
+      - [Chapter 13 - Part 5.2: Queues in Concurrency](#chapter13part5.2)
+      - [Chapter 13 - Part 5.3: Thread-Safe Collections](#chapter13part5.3)
+    - [Chapter 13 - Part 6: Practical Exercise: Building a Concurrent Web Scraper](#chapter13part6)
+      - [Chapter 13 - Part 6.1: Understanding the Core Components of a Web Scraper](#chapter13part6.1)
+      - [Chapter 13 - Part 6.2: Implementing Concurrency with Threads](#chapter13part6.2)
+      - [Chapter 13 - Part 6.3: Implementing Concurrency with asyncio](#chapter13part6.3)
+      - [Chapter 13 - Part 6.4: Choosing Between Threads and asyncio](#chapter13part6.4)
+      - [Chapter 13 - Part 6.5: Best Practices for Concurrent Web Scraping](#chapter13part6.5)
+14. [Chapter 14: Working with Databases](#chapter14)
+    - [Chapter 14 - Part 1: Advanced SQLAlchemy: Relationships, Inheritance, and Custom Types](#chapter14part1)
+      - [Chapter 14 - Part 1.1: SQLAlchemy Relationships](#chapter14part1.1)
+      - [Chapter 14 - Part 1.2: SQLAlchemy Inheritance](#chapter14part1.2)
+      - [Chapter 14 - Part 1.3: SQLAlchemy Custom Types](#chapter14part1.3)
+    - [Chapter 14 - Part 2: NoSQL Databases: Introduction to MongoDB and PyMongo](#chapter14part2)
+      - [Chapter 14 - Part 2.1: Introduction to NoSQL Databases and MongoDB](#chapter14part2.1)
+      - [Chapter 14 - Part 2.2: Understanding NoSQL Databases](#chapter14part2.2)
+      - [Chapter 14 - Part 2.3: Introduction to MongoDB](#chapter14part2.3)
+      - [Chapter 14 - Part 2.4: Introduction to PyMongo](#chapter14part2.4)
+    - [Chapter 14 - Part 3: Database Design: Normalization and Indexing Strategies](#chapter14part3)
+      - [Chapter 14 - Part 3.1: Normalization](#chapter14part3.1)
+      - [Chapter 14 - Part 3.2: Indexing Strategies](#chapter14part3.2)
+      - [Chapter 14 - Part 3.3: Practical Examples and Demonstrations](#chapter14part3.3)
+    - [Chapter 14 - Part 4: Database Transactions: ACID Properties and Isolation Levels](#chapter14part4)
+      - [Chapter 14 - Part 4.1: ACID Properties of Transactions](#chapter14part4.1)
+      - [Chapter 14 - Part 4.2: Isolation Levels](#chapter14part4.2)
+      - [Chapter 14 - Part 4.3: Setting Isolation Levels in Python with SQLAlchemy](#chapter14part4.3)
+    - [Chapter 14 - Part 5: ORM Performance Optimization: Lazy Loading and Eager Loading](#chapter14part5)
+      - [Chapter 14 - Part 5.1: Understanding Lazy Loading](#chapter14part5.1)
+      - [Chapter 14 - Part 5.2: Understanding Eager Loading](#chapter14part5.2)
+      - [Chapter 14 - Part 5.3: Choosing Between Lazy Loading and Eager Loading](#chapter14part5.3)
+      - [Chapter 14 - Part 5.4: Advanced Eager Loading Techniques](#chapter14part5.4)
+      - [Chapter 14 - Part 5.5: Case Study: Optimizing a Blog Application](#chapter14part5.5)
+    - [Chapter 14 - Part 6: Practical Exercise: Building a Data-Driven Application with SQLAlchemy and PostgreSQL](#chapter14part6)
+      - [Chapter 14 - Part 6.1: Setting Up PostgreSQL](#chapter14part6.1)
+      - [Chapter 14 - Part 6.2: Defining Models with SQLAlchemy](#chapter14part6.2)
+      - [Chapter 14 - Part 6.3: Performing CRUD Operations](#chapter14part6.3)
+      - [Chapter 14 - Part 6.4: Structuring Your Application](#chapter14part6.4)
+15. [Chapter 15: Decorators and Metaprogramming](#chapter15)
+    - [Chapter 15 - Part 1: Advanced Decorator Techniques: Parameterized Decorators and Class Decorators](#chapter15part1)
+      - [Chapter 15 - Part 1.1: Parameterized Decorators](#chapter15part1.1)
+      - [Chapter 15 - Part 1.2: Class Decorators](#chapter15part1.2)
+      - [Chapter 15 - Part 1.3: Real-World Application](#chapter15part1.3)
+    - [Chapter 15 - Part 2: Understanding Metaclasses: Customizing Class Creation and Behavior](#chapter15part2)
+      - [Chapter 15 - Part 2.1: Understanding Metaclasses](#chapter15part2.1)
+      - [Chapter 15 - Part 2.2: Customizing Class Creation and Behavior](#chapter15part2.2)
+      - [Chapter 15 - Part 2.3: Practical Examples and Demonstrations](#chapter15part2.3)
+    - [Chapter 15 - Part 3: Dynamic Code Generation: Using `exec` and `eval` Safely](#chapter15part3)
+      - [Chapter 15 - Part 3.1: Understanding exec and eval](#chapter15part3.1)
+      - [Chapter 15 - Part 3.2: Security Risks](#chapter15part3.2)
+      - [Chapter 15 - Part 3.3: Safe Usage Strategies](#chapter15part3.3)
+      - [Chapter 15 - Part 3.4: Practical Examples](#chapter15part3.4)
+    - [Chapter 15 - Part 4: Introspection and Reflection: Examining Objects at Runtime](#chapter15part4)
+      - [Chapter 15 - Part 4.1: Understanding Introspection](#chapter15part4.1)
+      - [Chapter 15 - Part 4.2: Understanding Reflection](#chapter15part4.2)
+      - [Chapter 15 - Part 4.3: Practical Examples and Demonstrations](#chapter15part4.3)
+    - [Chapter 15 - Part 5: Practical Exercise: Creating a Custom Validation Framework Using Decorators](#chapter15part5)
+      - [Chapter 15 - Part 5.1: Advanced Decorator Techniques for Validation](#chapter15part5.1)
+      - [Chapter 15 - Part 5.2: Building a Custom Validation Framework](#chapter15part5.2)
+16. [Chapter 16: Testing and Debugging](#chapter16)
+    - [Chapter 16 - Part 1: Advanced Unit Testing with `pytest`: Fixtures, Parametrization, and Mocking](#chapter16part1)
+      - [Chapter 16 - Part 1.1: Fixtures: Managing Test Dependencies](#chapter16part1.1)
+      - [Chapter 16 - Part 1.2: Parametrization: Running Tests with Multiple Inputs](#chapter16part1.2)
+      - [Chapter 16 - Part 1.3: Mocking: Isolating Units of Code](#chapter16part1.3)
+    - [Chapter 16 - Part 2: Test-Driven Development (TDD): Writing Tests Before Code](#chapter16part2)
+      - [Chapter 16 - Part 2.1: Core Principles of Test-Driven Development](#chapter16part2.1)
+      - [Chapter 16 - Part 2.2: Benefits of Test-Driven Development](#chapter16part2.2)
+      - [Chapter 16 - Part 2.3: Practical Application of TDD](#chapter16part2.3)
+      - [Chapter 16 - Part 2.4: TDD in Different Scenarios](#chapter16part2.4)
+      - [Chapter 16 - Part 2.5: Hypothetical Scenario](#chapter16part2.5)
+    - [Chapter 16 - Part 3: Debugging Techniques: Using `pdb` and Profilers](#chapter16part3)
+      - [Chapter 16 - Part 3.1: Using pdb for Interactive Debugging](#chapter16part3.1)
+      - [Chapter 16 - Part 3.2: Profiling Your Code](#chapter16part3.2)
+      - [Chapter 16 - Part 3.3: Real-World Application](#chapter16part3.3)
+    - [Chapter 16 - Part 4: Code Coverage Analysis: Measuring Test Effectiveness](#chapter16part4)
+      - [Chapter 16 - Part 4.1: Understanding Code Coverage](#chapter16part4.1)
+      - [Chapter 16 - Part 4.2: Code Coverage Metrics](#chapter16part4.2)
+      - [Chapter 16 - Part 4.3: Tools for Code Coverage Analysis in Python](#chapter16part4.3)
+      - [Chapter 16 - Part 4.4: Using Code Coverage Data to Improve Testing](#chapter16part4.4)
+      - [Chapter 16 - Part 4.5: Advanced Coverage Techniques](#chapter16part4.5)
+    - [Chapter 16 - Part 5: Continuous Integration (CI): Setting up Automated Testing with GitHub Actions](#chapter16part5)
+      - [Chapter 16 - Part 5.1: Understanding Continuous Integration (CI)](#chapter16part5.1)
+      - [Chapter 16 - Part 5.2: Introduction to GitHub Actions](#chapter16part5.2)
+      - [Chapter 16 - Part 5.3: Setting Up Automated Testing with GitHub Actions](#chapter16part5.3)
+      - [Chapter 16 - Part 5.4: Advanced GitHub Actions Techniques](#chapter16part5.4)
+    - [Chapter 16 - Part 6: Practical Exercise: Implementing TDD for a Complex Algorithm](#chapter16part6)
+      - [Chapter 16 - Part 6.1: Understanding the TDD Cycle](#chapter16part6.1)
+      - [Chapter 16 - Part 6.2: Choosing a Complex Algorithm: The A* Pathfinding Algorithm](#chapter16part6.2)
+      - [Chapter 16 - Part 6.3: Setting Up the Testing Environment](#chapter16part6.3)
+      - [Chapter 16 - Part 6.4: Implementing TDD for A*](#chapter16part6.4)
+      - [Chapter 16 - Part 6.5: Benefits of TDD](#chapter16part6.5)
+17. [Chapter 17: Advanced Python Libraries and Frameworks](#chapter17)
+    - [Chapter 17 - Part 1: Data Science with Pandas: Advanced Data Manipulation and Analysis](#chapter17part1)
+      - [Chapter 17 - Part 1.1: Multi-Indexing](#chapter17part1.1)
+      - [Chapter 17 - Part 1.2: Advanced Grouping Operations](#chapter17part1.2)
+      - [Chapter 17 - Part 1.3: Working with Different Data Types](#chapter17part1.3)
+    - [Chapter 17 - Part 2: Machine Learning with Scikit-learn: Model Selection and Evaluation](#chapter17part2)
+      - [Chapter 17 - Part 2.1: Model Selection Techniques](#chapter17part2.1)
+      - [Chapter 17 - Part 2.2: Model Evaluation Metrics](#chapter17part2.2)
+    - [Chapter 17 - Part 3: Web Development with Flask, Django and FastAPI: Building RESTful APIs](#chapter17part3)
+      - [Chapter 17 - Part 3.1: Understanding RESTful Principles](#chapter17part3.1)
+      - [Chapter 17 - Part 3.2: Building RESTful APIs with Flask](#chapter17part3.2)
+      - [Chapter 17 - Part 3.3: Building RESTful APIs with Django](#chapter17part3.3)
+      - [Chapter 17 - Part 3.4: Building RESTful APIs with FastAPI](#chapter17part3.4)
+    - [Chapter 17 - Part 4: Data Visualization with Matplotlib and Seaborn: Creating Effective Visualizations](#chapter17part4)
+      - [Chapter 17 - Part 4.1: Understanding Matplotlib's Architecture](#chapter17part4.1)
+      - [Chapter 17 - Part 4.2: Essential Plot Types with Matplotlib](#chapter17part4.2)
+      - [Chapter 17 - Part 4.3: Enhancing Visualizations with Seaborn](#chapter17part4.3)
+      - [Chapter 17 - Part 4.4: Best Practices for Effective Visualizations](#chapter17part4.4)
+    - [Chapter 17 - Part 5: Practical Exercise: Building a Machine Learning Model and Deploying it as a Web API](#chapter17part5)
+      - [Chapter 17 - Part 5.1: Model Building with Scikit-learn](#chapter17part5.1)
+      - [Chapter 17 - Part 5.2: API Deployment with Flask](#chapter17part5.2)
+18. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
     - [Appendix A - Part 3: List all files of a directory based in a extension](#appendixapart3)
@@ -10847,6 +11028,368 @@ print(xml_order)
 ### <a name="chapter10part4"></a>Chapter 10 - Part 4: Behavioral Design Patterns
 
 [Behavioral Design Patterns List](https://refactoring.guru/design-patterns/behavioral-patterns)
+
+## <a name="chapter11"></a>Chapter 11: Advanced Data Structures and Algorithms
+
+#### <a name="chapter11part1"></a>Chapter 11 - Part 1: Understanding Time and Space Complexity
+
+#### <a name="chapter11part1.1"></a>Chapter 11 - Part 1.1: Time Complexity
+
+#### <a name="chapter11part1.2"></a>Chapter 11 - Part 1.2: Space Complexity
+
+#### <a name="chapter11part1.3"></a>Chapter 11 - Part 1.3: Trade-offs Between Time and Space Complexity
+
+#### <a name="chapter11part1.4"></a>Chapter 11 - Part 1.4: Practical Examples
+
+#### <a name="chapter11part2"></a>Chapter 11 - Part 2: Implementing and Analyzing Sorting Algorithms: Merge Sort, Quick Sort, Heap Sort
+
+#### <a name="chapter11part2.1"></a>Chapter 11 - Part 2.1: Merge Sort
+
+#### <a name="chapter11part2.2"></a>Chapter 11 - Part 2.2: Quick Sort
+
+#### <a name="chapter11part2.3"></a>Chapter 11 - Part 2.3: Heap Sort
+
+#### <a name="chapter11part2.4"></a>Chapter 11 - Part 2.4: Comparison of Sorting Algorithms
+
+#### <a name="chapter11part3"></a>Chapter 11 - Part 3: Graph Data Structures: Representation and Traversal (BFS, DFS)
+
+#### <a name="chapter11part3.1"></a>Chapter 11 - Part 3.1: Graph Representations
+
+#### <a name="chapter11part3.2"></a>Chapter 11 - Part 3.2: Graph Traversal Algorithms
+
+#### <a name="chapter11part4"></a>Chapter 11 - Part 4: Tree Data Structures: Binary Search Trees, AVL Trees, and B-Trees
+
+#### <a name="chapter11part4.1"></a>Chapter 11 - Part 4.1: Binary Search Trees (BSTs)
+
+#### <a name="chapter11part4.2"></a>Chapter 11 - Part 4.2: AVL Trees
+
+#### <a name="chapter11part4.3"></a>Chapter 11 - Part 4.3: B-Trees
+
+#### <a name="chapter11part5"></a>Chapter 11 - Part 5: Hash Tables: Collision Resolution Techniques and Performance Analysis
+
+#### <a name="chapter11part5.1"></a>Chapter 11 - Part 5.1: Collision Resolution Techniques
+
+#### <a name="chapter11part5.2"></a>Chapter 11 - Part 5.2: Performance Analysis
+
+#### <a name="chapter11part6"></a>Chapter 11 - Part 6: Practical Exercise: Optimizing a Search Algorithm for a Large Dataset
+
+#### <a name="chapter11part6.1"></a>Chapter 11 - Part 6.1: Understanding the Problem: Search in Large Datasets
+
+#### <a name="chapter11part6.2"></a>Chapter 11 - Part 6.2: Optimization Techniques
+
+#### <a name="chapter11part6.3"></a>Chapter 11 - Part 6.3: Practical Examples and Demonstrations
+
+## <a name="chapter12"></a>Chapter 12: Object-Oriented Programming (OOP) Deep Dive
+
+#### <a name="chapter12part1"></a>Chapter 12 - Part 1: Advanced Class Design: Abstract Classes and Interfaces
+
+#### <a name="chapter12part1.1"></a>Chapter 12 - Part 1.1: Abstract Classes
+
+#### <a name="chapter12part1.2"></a>Chapter 12 - Part 1.2: Interfaces
+
+#### <a name="chapter12part1.3"></a>Chapter 12 - Part 1.3: Abstract Classes vs. Interfaces: Key Differences
+
+#### <a name="chapter12part1.4"></a>Chapter 12 - Part 1.4: Practical Examples
+
+#### <a name="chapter12part2"></a>Chapter 12 - Part 2: Understanding and Implementing Design Patterns: Singleton, Factory, Observer
+
+#### <a name="chapter12part2.1"></a>Chapter 12 - Part 2.1: Singleton Pattern
+
+#### <a name="chapter12part2.2"></a>Chapter 12 - Part 2.2: Factory Pattern
+
+#### <a name="chapter12part2.3"></a>Chapter 12 - Part 2.3: Observer Pattern
+
+#### <a name="chapter12part3"></a>Chapter 12 - Part 3: Metaclasses: Customizing Class Creation
+
+#### <a name="chapter12part3.1"></a>Chapter 12 - Part 3.1: Understanding Metaclasses
+
+#### <a name="chapter12part3.2"></a>Chapter 12 - Part 3.2: Advanced Metaclass Usage
+
+#### <a name="chapter12part4"></a>Chapter 12 - Part 4: Working with Inheritance: Multiple Inheritance and Mixins
+
+#### <a name="chapter12part4.1"></a>Chapter 12 - Part 4.1: Understanding Multiple Inheritance
+
+#### <a name="chapter12part4.2"></a>Chapter 12 - Part 4.2: Mixins: A Powerful Alternative
+
+#### <a name="chapter12part5"></a>Chapter 12 - Part 5: Managing Object Lifecycles: Context Managers and Resource Management
+
+#### <a name="chapter12part5.1"></a>Chapter 12 - Part 5.1: Understanding Resource Management
+
+#### <a name="chapter12part5.2"></a>Chapter 12 - Part 5.2: Implementing Context Managers with Classes
+
+#### <a name="chapter12part5.3"></a>Chapter 12 - Part 5.3: Using contextlib for Simpler Context Managers
+
+#### <a name="chapter12part5.4"></a>Chapter 12 - Part 5.4: Nesting Context Managers
+
+#### <a name="chapter12part5.5"></a>Chapter 12 - Part 5.5: Practical Examples and Demonstrations
+
+#### <a name="chapter12part6"></a>Chapter 12 - Part 6: Practical Exercise: Building a Modular Application Using Design Patterns
+
+#### <a name="chapter12part6.1"></a>Chapter 12 - Part 6.1: Understanding Modular Application Design
+
+#### <a name="chapter12part6.2"></a>Chapter 12 - Part 6.2: Case Study: A Plugin-Based Data Processing Application
+
+#### <a name="chapter12part6.3"></a>Chapter 12 - Part 6.3: Exercise: Extending the Plugin-Based Application
+
+#### <a name="chapter12part6.4"></a>Chapter 12 - Part 6.4: Real-World Application
+
+## <a name="chapter13"></a>Chapter 13: Concurrency and Parallelism
+
+#### <a name="chapter13part1"></a>Chapter 13 - Part 1: Threads vs. Processes: Understanding the GIL
+
+#### <a name="chapter13part1.1"></a>Chapter 13 - Part 1.1: Threads vs. Processes: A Fundamental Distinction
+
+#### <a name="chapter13part1.2"></a>Chapter 13 - Part 1.2: The Global Interpreter Lock (GIL)
+
+#### <a name="chapter13part1.3"></a>Chapter 13 - Part 1.3: Choosing Between Threads and Processes
+
+#### <a name="chapter13part2"></a>Chapter 13 - Part 2: Multithreading: Thread Synchronization and Locking Mechanisms
+
+#### <a name="chapter13part2.1"></a>Chapter 13 - Part 2.1: Understanding Race Conditions and Critical Sections
+
+#### <a name="chapter13part2.2"></a>Chapter 13 - Part 2.2: Locking Mechanisms: Mutexes and RLock
+
+#### <a name="chapter13part2.3"></a>Chapter 13 - Part 2.3: Deadlocks: Causes and Prevention
+
+#### <a name="chapter13part3"></a>Chapter 13 - Part 3: Multiprocessing: Utilizing Multiple Cores for Parallel Execution
+
+#### <a name="chapter13part3.1"></a>Chapter 13 - Part 3.1: Understanding Processes and the GIL
+
+#### <a name="chapter13part3.2"></a>Chapter 13 - Part 3.2: The multiprocessing Module
+
+#### <a name="chapter13part3.3"></a>Chapter 13 - Part 3.3: Practical Examples and Demonstrations
+
+#### <a name="chapter13part4"></a>Chapter 13 - Part 4: Asynchronous Programming with `asyncio`: Event Loops and Coroutines
+
+#### <a name="chapter13part4.1"></a>Chapter 13 - Part 4.1: Understanding the Event Loop
+
+#### <a name="chapter13part4.2"></a>Chapter 13 - Part 4.2: Understanding Coroutines
+
+#### <a name="chapter13part5"></a>Chapter 13 - Part 5: Concurrent Data Structures: Queues and Thread-Safe Collections
+
+#### <a name="chapter13part5.1"></a>Chapter 13 - Part 5.1: Understanding Concurrent Data Structures
+
+#### <a name="chapter13part5.2"></a>Chapter 13 - Part 5.2: Queues in Concurrency
+
+#### <a name="chapter13part5.3"></a>Chapter 13 - Part 5.3: Thread-Safe Collections
+
+#### <a name="chapter13part6"></a>Chapter 13 - Part 6: Practical Exercise: Building a Concurrent Web Scraper
+
+#### <a name="chapter13part6.1"></a>Chapter 13 - Part 6.1: Understanding the Core Components of a Web Scraper
+
+#### <a name="chapter13part6.2"></a>Chapter 13 - Part 6.2: Implementing Concurrency with Threads
+
+#### <a name="chapter13part6.3"></a>Chapter 13 - Part 6.3: Implementing Concurrency with asyncio
+
+#### <a name="chapter13part6.4"></a>Chapter 13 - Part 6.4: Choosing Between Threads and asyncio
+
+#### <a name="chapter13part6.5"></a>Chapter 13 - Part 6.5: Best Practices for Concurrent Web Scraping
+
+## <a name="chapter14"></a>Chapter 14: Working with Databases
+
+#### <a name="chapter14part1"></a>Chapter 14 - Part 1: Advanced SQLAlchemy: Relationships, Inheritance, and Custom Types
+
+#### <a name="chapter14part1.1"></a>Chapter 14 - Part 1.1: SQLAlchemy Relationships
+
+#### <a name="chapter14part1.2"></a>Chapter 14 - Part 1.2: SQLAlchemy Inheritance
+
+#### <a name="chapter14part1.3"></a>Chapter 14 - Part 1.3: SQLAlchemy Custom Types
+
+#### <a name="chapter14part2"></a>Chapter 14 - Part 2: NoSQL Databases: Introduction to MongoDB and PyMongo
+
+#### <a name="chapter14part2.1"></a>Chapter 14 - Part 2.1: Introduction to NoSQL Databases and MongoDB
+
+#### <a name="chapter14part2.2"></a>Chapter 14 - Part 2.2: Understanding NoSQL Databases
+
+#### <a name="chapter14part2.3"></a>Chapter 14 - Part 2.3: Introduction to MongoDB
+
+#### <a name="chapter14part2.4"></a>Chapter 14 - Part 2.4: Introduction to PyMongo
+
+#### <a name="chapter14part3"></a>Chapter 14 - Part 3: Database Design: Normalization and Indexing Strategies
+
+#### <a name="chapter14part3.1"></a>Chapter 14 - Part 3.1: Normalization
+
+#### <a name="chapter14part3.2"></a>Chapter 14 - Part 3.2: Indexing Strategies
+
+#### <a name="chapter14part3.3"></a>Chapter 14 - Part 3.3: Practical Examples and Demonstrations
+
+#### <a name="chapter14part4"></a>Chapter 14 - Part 4: Database Transactions: ACID Properties and Isolation Levels
+
+#### <a name="chapter14part4.1"></a>Chapter 14 - Part 4.1: ACID Properties of Transactions
+
+#### <a name="chapter14part4.2"></a>Chapter 14 - Part 4.2: Isolation Levels
+
+#### <a name="chapter14part4.3"></a>Chapter 14 - Part 4.3: Setting Isolation Levels in Python with SQLAlchemy
+
+#### <a name="chapter14part5"></a>Chapter 14 - Part 5: ORM Performance Optimization: Lazy Loading and Eager Loading
+
+#### <a name="chapter14part5.1"></a>Chapter 14 - Part 5.1: Understanding Lazy Loading
+
+#### <a name="chapter14part5.2"></a>Chapter 14 - Part 5.2: Understanding Eager Loading
+
+#### <a name="chapter14part5.3"></a>Chapter 14 - Part 5.3: Choosing Between Lazy Loading and Eager Loading
+
+#### <a name="chapter14part5.4"></a>Chapter 14 - Part 5.4: Advanced Eager Loading Techniques
+
+#### <a name="chapter14part5.5"></a>Chapter 14 - Part 5.5: Case Study: Optimizing a Blog Application
+
+#### <a name="chapter14part6"></a>Chapter 14 - Part 6: Practical Exercise: Building a Data-Driven Application with SQLAlchemy and PostgreSQL
+
+#### <a name="chapter14part6.1"></a>Chapter 14 - Part 6.1: Setting Up PostgreSQL
+
+#### <a name="chapter14part6.2"></a>Chapter 14 - Part 6.2: Defining Models with SQLAlchemy
+
+#### <a name="chapter14part6.3"></a>Chapter 14 - Part 6.3: Performing CRUD Operations
+
+#### <a name="chapter14part6.4"></a>Chapter 14 - Part 6.4: Structuring Your Application
+
+## <a name="chapter15"></a>Chapter 15: Decorators and Metaprogramming
+
+#### <a name="chapter15part1"></a>Chapter 15 - Part 1: Advanced Decorator Techniques: Parameterized Decorators and Class Decorators
+
+#### <a name="chapter15part1.1"></a>Chapter 15 - Part 1.1: Parameterized Decorators
+
+#### <a name="chapter15part1.2"></a>Chapter 15 - Part 1.2: Class Decorators
+
+#### <a name="chapter15part1.3"></a>Chapter 15 - Part 1.3: Real-World Application
+
+#### <a name="chapter15part2"></a>Chapter 15 - Part 2: Understanding Metaclasses: Customizing Class Creation and Behavior
+
+#### <a name="chapter15part2.1"></a>Chapter 15 - Part 2.1: Understanding Metaclasses
+
+#### <a name="chapter15part2.2"></a>Chapter 15 - Part 2.2: Customizing Class Creation and Behavior
+
+#### <a name="chapter15part2.3"></a>Chapter 15 - Part 2.3: Practical Examples and Demonstrations
+
+#### <a name="chapter15part3"></a>Chapter 15 - Part 3: Dynamic Code Generation: Using `exec` and `eval` Safely
+
+#### <a name="chapter15part3.1"></a>Chapter 15 - Part 3.1: Understanding exec and eval
+
+#### <a name="chapter15part3.2"></a>Chapter 15 - Part 3.2: Security Risks
+
+#### <a name="chapter15part3.3"></a>Chapter 15 - Part 3.3: Safe Usage Strategies
+
+#### <a name="chapter15part3.4"></a>Chapter 15 - Part 3.4: Practical Examples
+
+#### <a name="chapter15part4"></a>Chapter 15 - Part 4: Introspection and Reflection: Examining Objects at Runtime
+
+#### <a name="chapter15part4.1"></a>Chapter 15 - Part 4.1: Understanding Introspection
+
+#### <a name="chapter15part4.2"></a>Chapter 15 - Part 4.2: Understanding Reflection
+
+#### <a name="chapter15part4.3"></a>Chapter 15 - Part 4.3: Practical Examples and Demonstrations
+
+#### <a name="chapter15part5"></a>Chapter 15 - Part 5: Practical Exercise: Creating a Custom Validation Framework Using Decorators
+
+#### <a name="chapter15part5.1"></a>Chapter 15 - Part 5.1: Advanced Decorator Techniques for Validation
+
+#### <a name="chapter15part5.2"></a>Chapter 15 - Part 5.2: Building a Custom Validation Framework
+
+## <a name="chapter16"></a>Chapter 16: Testing and Debugging
+
+#### <a name="chapter16part1"></a>Chapter 16 - Part 1: Advanced Unit Testing with `pytest`: Fixtures, Parametrization, and Mocking
+
+#### <a name="chapter16part1.1"></a>Chapter 16 - Part 1.1: Fixtures: Managing Test Dependencies
+
+#### <a name="chapter16part1.2"></a>Chapter 16 - Part 1.2: Parametrization: Running Tests with Multiple Inputs
+
+#### <a name="chapter16part1.3"></a>Chapter 16 - Part 1.3: Mocking: Isolating Units of Code
+
+#### <a name="chapter16part2"></a>Chapter 16 - Part 2: Test-Driven Development (TDD): Writing Tests Before Code
+
+#### <a name="chapter16part2.1"></a>Chapter 16 - Part 2.1: Core Principles of Test-Driven Development
+
+#### <a name="chapter16part2.2"></a>Chapter 16 - Part 2.2: Benefits of Test-Driven Development
+
+#### <a name="chapter16part2.3"></a>Chapter 16 - Part 2.3: Practical Application of TDD
+
+#### <a name="chapter16part2.4"></a>Chapter 16 - Part 2.4: TDD in Different Scenarios
+
+#### <a name="chapter16part2.5"></a>Chapter 16 - Part 2.5: Hypothetical Scenario
+
+#### <a name="chapter16part3"></a>Chapter 16 - Part 3: Debugging Techniques: Using `pdb` and Profilers
+
+#### <a name="chapter16part3.1"></a>Chapter 16 - Part 3.1: Using pdb for Interactive Debugging
+
+#### <a name="chapter16part3.2"></a>Chapter 16 - Part 3.2: Profiling Your Code
+
+#### <a name="chapter16part3.3"></a>Chapter 16 - Part 3.3: Real-World Application
+
+#### <a name="chapter16part4"></a>Chapter 16 - Part 4: Code Coverage Analysis: Measuring Test Effectiveness
+
+#### <a name="chapter16part4.1"></a>Chapter 16 - Part 4.1: Understanding Code Coverage
+
+#### <a name="chapter16part4.2"></a>Chapter 16 - Part 4.2: Code Coverage Metrics
+
+#### <a name="chapter16part4.3"></a>Chapter 16 - Part 4.3: Tools for Code Coverage Analysis in Python
+
+#### <a name="chapter16part4.4"></a>Chapter 16 - Part 4.4: Using Code Coverage Data to Improve Testing
+
+#### <a name="chapter16part4.5"></a>Chapter 16 - Part 4.5: Advanced Coverage Techniques
+
+#### <a name="chapter16part5"></a>Chapter 16 - Part 5: Continuous Integration (CI): Setting up Automated Testing with GitHub Actions
+
+#### <a name="chapter16part5.1"></a>Chapter 16 - Part 5.1: Understanding Continuous Integration (CI)
+
+#### <a name="chapter16part5.2"></a>Chapter 16 - Part 5.2: Introduction to GitHub Actions
+
+#### <a name="chapter16part5.3"></a>Chapter 16 - Part 5.3: Setting Up Automated Testing with GitHub Actions
+
+#### <a name="chapter16part5.4"></a>Chapter 16 - Part 5.4: Advanced GitHub Actions Techniques
+
+#### <a name="chapter16part6"></a>Chapter 16 - Part 6: Practical Exercise: Implementing TDD for a Complex Algorithm
+
+#### <a name="chapter16part6.1"></a>Chapter 16 - Part 6.1: Understanding the TDD Cycle
+
+#### <a name="chapter16part6.2"></a>Chapter 16 - Part 6.2: Choosing a Complex Algorithm: The A* Pathfinding Algorithm
+
+#### <a name="chapter16part6.3"></a>Chapter 16 - Part 6.3: Setting Up the Testing Environment
+
+#### <a name="chapter16part6.4"></a>Chapter 16 - Part 6.4: Implementing TDD for A*
+
+#### <a name="chapter16part6.5"></a>Chapter 16 - Part 6.5: Benefits of TDD
+
+## <a name="chapter17"></a>Chapter 17: Advanced Python Libraries and Frameworks
+
+#### <a name="chapter17part1"></a>Chapter 17 - Part 1: Data Science with Pandas: Advanced Data Manipulation and Analysis
+
+#### <a name="chapter17part1.1"></a>Chapter 17 - Part 1.1: Multi-Indexing
+
+#### <a name="chapter17part1.2"></a>Chapter 17 - Part 1.2: Advanced Grouping Operations
+
+#### <a name="chapter17part1.3"></a>Chapter 17 - Part 1.3: Working with Different Data Types
+
+#### <a name="chapter17part2"></a>Chapter 17 - Part 2: Machine Learning with Scikit-learn: Model Selection and Evaluation
+
+#### <a name="chapter17part2.1"></a>Chapter 17 - Part 2.1: Model Selection Techniques
+
+#### <a name="chapter17part2.2"></a>Chapter 17 - Part 2.2: Model Evaluation Metrics
+
+#### <a name="chapter17part3"></a>Chapter 17 - Part 3: Web Development with Flask, Django and FastAPI: Building RESTful APIs
+
+#### <a name="chapter17part3.1"></a>Chapter 17 - Part 3.1: Understanding RESTful Principles
+
+#### <a name="chapter17part3.2"></a>Chapter 17 - Part 3.2: Building RESTful APIs with Flask
+
+#### <a name="chapter17part3.3"></a>Chapter 17 - Part 3.3: Building RESTful APIs with Django
+
+#### <a name="chapter17part3.4"></a>Chapter 17 - Part 3.4: Building RESTful APIs with FastAPI
+
+#### <a name="chapter17part4"></a>Chapter 17 - Part 4: Data Visualization with Matplotlib and Seaborn: Creating Effective Visualizations
+
+#### <a name="chapter17part4.1"></a>Chapter 17 - Part 4.1: Understanding Matplotlib's Architecture
+
+#### <a name="chapter17part4.2"></a>Chapter 17 - Part 4.2: Essential Plot Types with Matplotlib
+
+#### <a name="chapter17part4.3"></a>Chapter 17 - Part 4.3: Enhancing Visualizations with Seaborn
+
+#### <a name="chapter17part4.4"></a>Chapter 17 - Part 4.4: Best Practices for Effective Visualizations
+
+#### <a name="chapter17part5"></a>Chapter 17 - Part 5: Practical Exercise: Building a Machine Learning Model and Deploying it as a Web API
+
+#### <a name="chapter17part5.1"></a>Chapter 17 - Part 5.1: Model Building with Scikit-learn
+
+#### <a name="chapter17part5.2"></a>Chapter 17 - Part 5.2: API Deployment with Flask
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
