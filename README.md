@@ -11788,31 +11788,1823 @@ Let's trace the execution of heap_sort([38, 27, 43, 3, 9, 82, 10]):
 
 #### <a name="chapter11part3"></a>Chapter 11 - Part 3: Graph Data Structures: Representation and Traversal (BFS, DFS)
 
+Graphs are fundamental data structures used to represent relationships between objects. They are incredibly versatile and find applications in diverse fields, from social networks and route planning to compiler design and recommendation systems. Understanding how to represent graphs and efficiently traverse them is crucial for solving many real-world problems. This lesson will delve into the common ways to represent graphs in code and explore two fundamental graph traversal algorithms: Breadth-First Search (BFS) and Depth-First Search (DFS).
+
 #### <a name="chapter11part3.1"></a>Chapter 11 - Part 3.1: Graph Representations
+
+A graph consists of nodes (also called vertices) and edges that connect these nodes. There are two primary ways to represent graphs in computer programs: Adjacency Matrix and Adjacency List.
+
+**Adjacency Matrix**
+
+An adjacency matrix is a 2D array (matrix) where the rows and columns represent the vertices of the graph. The value at matrix[i][j] indicates whether there is an edge from vertex i to vertex j.
+
+- If the graph is unweighted, the value at matrix[i][j] is typically a boolean (True/False) or a binary value (1/0), indicating the presence or absence of an edge.
+- If the graph is weighted, the value at matrix[i][j] represents the weight of the edge between vertex i and vertex j. If there is no edge, the value is typically set to infinity or a special "null" value.
+
+**Example:**
+
+Consider a graph with 4 vertices (A, B, C, D) and the following edges:
+
+- A -> B
+- A -> C
+- B -> C
+- C -> D
+
+The adjacency matrix representation of this graph would be:
+
+```
+      A     B     C     D
+A  [False, True, True, False]
+B  [False, False, True, False]
+C  [False, False, False, True]
+D  [False, False, False, False]
+```
+
+Or, using 0 and 1:
+
+```
+      A  B  C  D
+A  [0, 1, 1, 0]
+B  [0, 0, 1, 0]
+C  [0, 0, 0, 1]
+D  [0, 0, 0, 0]
+```
+
+**Python Implementation:**
+
+```py
+class GraphAdjMatrix:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
+
+    def add_edge(self, u, v, weight=1):
+        # Assuming a directed graph. For an undirected graph, set both (u, v) and (v, u).
+        self.adj_matrix[u][v] = weight
+
+    def remove_edge(self, u, v):
+        self.adj_matrix[u][v] = 0
+
+    def has_edge(self, u, v):
+        return self.adj_matrix[u][v] != 0
+
+    def print_matrix(self):
+        for row in self.adj_matrix:
+            print(row)
+
+# Example usage:
+graph = GraphAdjMatrix(4) # 4 vertices
+graph.add_edge(0, 1) # A -> B
+graph.add_edge(0, 2) # A -> C
+graph.add_edge(1, 2) # B -> C
+graph.add_edge(2, 3) # C -> D
+graph.print_matrix()
+# Expected Output:
+# [0, 1, 1, 0]
+# [0, 0, 1, 0]
+# [0, 0, 0, 1]
+# [0, 0, 0, 0]
+
+graph.remove_edge(0,1)
+graph.print_matrix()
+# Expected Output:
+# [0, 0, 1, 0]
+# [0, 0, 1, 0]
+# [0, 0, 0, 1]
+# [0, 0, 0, 0]
+```
+
+**Advantages:**
+
+- Simple to implement.
+- Edge lookup is O(1). Checking if an edge exists between two vertices is a direct array access.
+
+**Disadvantages:**
+
+- Requires O(V2) space, where V is the number of vertices. This can be inefficient for sparse graphs (graphs with relatively few edges).
+- Adding or removing a vertex requires resizing the matrix, which can be time-consuming.
+- Iterating over all edges takes O(V2) time, even if the number of edges is much smaller.
+
+**Adjacency List**
+
+An adjacency list represents a graph as an array of lists. Each element in the array represents a vertex, and the list at that index contains all the vertices that are adjacent to that vertex (i.e., all vertices connected to it by an edge).
+
+**Example**:
+
+Using the same graph as before (4 vertices A, B, C, D and edges A->B, A->C, B->C, C->D), the adjacency list representation would be:
+
+- A: [B, C]
+- B: [C]
+- C: [D]
+- D: [ ]
+
+**Python Implementation:**
+
+```py
+class GraphAdjList:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
+
+    def add_edge(self, u, v, weight=1):
+        # Assuming a directed graph. For an undirected graph, add (u, v) and (v, u).
+        self.adj_list[u].append((v, weight)) # Store the vertex and the weight
+
+    def remove_edge(self, u, v):
+        # Remove the edge (v, weight) from the adjacency list of u
+        self.adj_list[u] = [(neighbor, weight) for neighbor, weight in self.adj_list[u] if neighbor != v]
+
+    def has_edge(self, u, v):
+        # Check if vertex v is a neighbor of vertex u
+        for neighbor, _ in self.adj_list[u]:
+            if neighbor == v:
+                return True
+        return False
+
+    def print_list(self):
+        for i in range(self.num_vertices):
+            print(f"Vertex {i}: {self.adj_list[i]}")
+
+# Example usage:
+graph = GraphAdjList(4) # 4 vertices
+graph.add_edge(0, 1) # A -> B
+graph.add_edge(0, 2) # A -> C
+graph.add_edge(1, 2) # B -> C
+graph.add_edge(2, 3) # C -> D
+graph.print_list()
+# Expected Output:
+# Vertex 0: [(1, 1), (2, 1)]
+# Vertex 1: [(2, 1)]
+# Vertex 2: [(3, 1)]
+# Vertex 3: []
+
+graph.remove_edge(0,1)
+graph.print_list()
+# Expected Output:
+# Vertex 0: [(2, 1)]
+# Vertex 1: [(2, 1)]
+# Vertex 2: [(3, 1)]
+# Vertex 3: []
+```
+
+**Advantages:**
+
+- Requires O(V + E) space, where V is the number of vertices and E is the number of edges. This is more efficient for sparse graphs.
+- Adding or removing a vertex is generally faster than with an adjacency matrix.
+- Iterating over all edges connected to a vertex is efficient.
+
+**Disadvantages:**
+
+- Edge lookup is O(degree(V)), where degree(V) is the number of neighbors of vertex V. Checking if an edge exists requires iterating through the adjacency list.
+
+**Choosing a Representation**
+
+The choice between adjacency matrix and adjacency list depends on the specific application and the characteristics of the graph:
+
+- **Sparse graphs**: Adjacency lists are generally preferred due to their lower space complexity.
+- **Dense graphs**: Adjacency matrices can be more efficient if space is not a major concern and fast edge lookups are required.
+- **Frequent edge lookups**: Adjacency matrices offer O(1) edge lookup, making them suitable for applications where checking the existence of edges is a common operation.
+- **Frequent iteration over neighbors**: Adjacency lists are more efficient for iterating over the neighbors of a vertex.
 
 #### <a name="chapter11part3.2"></a>Chapter 11 - Part 3.2: Graph Traversal Algorithms
 
+Graph traversal involves visiting all the vertices in a graph in a systematic manner. Two fundamental graph traversal algorithms are Breadth-First Search (BFS) and Depth-First Search (DFS).
+
+**Breadth-First Search (BFS)**
+
+BFS explores a graph level by level. It starts at a given source vertex and visits all its neighbors before moving on to the neighbors of those neighbors. BFS uses a queue to keep track of the vertices to visit.
+
+**Algorithm:**
+
+- Enqueue the starting vertex into a queue.
+- Mark the starting vertex as visited.
+- While the queue is not empty: a. Dequeue a vertex from the queue. b. Visit the vertex (e.g., print its value). c. Enqueue all unvisited neighbors of the vertex. d. Mark the enqueued neighbors as visited.
+
+**Example:**
+
+Consider the following graph represented by an adjacency list:
+
+- 0: [1, 2]
+- 1: [2, 3]
+- 2: [3]
+- 3: [ ]
+
+Starting vertex: 0
+
+- Enqueue 0. Mark 0 as visited. Queue: [0]
+- Dequeue 0. Visit 0. Enqueue 1 and 2. Mark 1 and 2 as visited. Queue: [1, 2]
+- Dequeue 1. Visit 1. Enqueue 3. Mark 3 as visited. Queue: [2, 3]
+- Dequeue 2. Visit 2. Queue: [3]
+- Dequeue 3. Visit 3. Queue: [ ]
+
+Traversal order: 0, 1, 2, 3
+
+**Python Implementation:**
+
+```py
+from collections import deque
+
+def bfs(graph, start_vertex):
+    num_vertices = len(graph.adj_list)
+    visited = [False] * num_vertices  # Keep track of visited vertices
+    queue = deque([start_vertex])      # Use a deque for efficient queue operations
+    visited[start_vertex] = True       # Mark the starting vertex as visited
+    traversal_order = []
+
+    while queue:
+        vertex = queue.popleft()       # Dequeue a vertex
+        traversal_order.append(vertex) # Visit the vertex (add to traversal order)
+
+        for neighbor, _ in graph.adj_list[vertex]: # Iterate over neighbors
+            if not visited[neighbor]:      # If neighbor is not visited
+                queue.append(neighbor)   # Enqueue the neighbor
+                visited[neighbor] = True    # Mark the neighbor as visited
+
+    return traversal_order
+
+# Example usage:
+graph = GraphAdjList(4)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 3)
+
+traversal = bfs(graph, 0)
+print(f"BFS traversal starting from vertex 0: {traversal}")
+# Expected Output: BFS traversal starting from vertex 0: [0, 1, 2, 3]
+```
+
+- **Time Complexity**: O(V + E), where V is the number of vertices and E is the number of edges.
+
+- **Space Complexity**: O(V), as it needs to store the visited set and the queue, which in the worst case can contain all vertices.
+
+**Applications**:
+
+- Finding the shortest path in an unweighted graph.
+- Web crawling.
+- Social network analysis (e.g., finding friends of friends).
+
+**Depth-First Search (DFS)**
+
+DFS explores a graph by going as deep as possible along each branch before backtracking. It starts at a given source vertex and explores as far as possible along each branch before backtracking. DFS can be implemented recursively or iteratively using a stack.
+
+**Algorithm (Recursive)**:
+
+- Mark the current vertex as visited.
+- Visit the current vertex.
+- For each unvisited neighbor of the current vertex: a. Recursively call DFS on the neighbor.
+
+**Algorithm (Iterative)**:
+
+- Push the starting vertex onto a stack.
+- While the stack is not empty: a. Pop a vertex from the stack. b. If the vertex is not visited: i. Mark the vertex as visited. ii. Visit the vertex. iii. Push all unvisited neighbors of the vertex onto the stack.
+
+**Example**:
+
+Consider the same graph as before:
+
+- 0: [1, 2]
+- 1: [2, 3]
+- 2: [3]
+- 3: [ ]
+
+Starting vertex: 0
+
+**Recursive DFS**:
+
+- Visit 0. Mark 0 as visited.
+- Visit 1 (neighbor of 0). Mark 1 as visited.
+- Visit 2 (neighbor of 1). Mark 2 as visited.
+- Visit 3 (neighbor of 2). Mark 3 as visited.
+- Backtrack to 2, 1, 0.
+
+Traversal order: 0, 1, 2, 3
+
+**Iterative DFS**:
+
+- Push 0. Stack: [0]
+- Pop 0. Visit 0. Mark 0 as visited. Push 2, 1. Stack: [2, 1] (order matters for traversal)
+- Pop 1. Visit 1. Mark 1 as visited. Push 3, 2. Stack: [2, 3, 2]
+- Pop 2. 2 is visited, so ignore. Stack: [3, 2]
+- Pop 2. Visit 2. Mark 2 as visited. Push 3. Stack: [3, 3]
+- Pop 3. Visit 3. Mark 3 as visited. Stack: [3]
+- Pop 3. 3 is visited, so ignore. Stack: [ ]
+
+Traversal order: 0, 1, 2, 3 (Note: The exact order of neighbors being pushed onto the stack can affect the traversal order.)
+
+**Python Implementation (Recursive):**
+
+```py
+def dfs_recursive(graph, vertex, visited, traversal_order):
+    visited[vertex] = True            # Mark the current vertex as visited
+    traversal_order.append(vertex)  # Visit the vertex
+
+    for neighbor, _ in graph.adj_list[vertex]: # Iterate over neighbors
+        if not visited[neighbor]:      # If neighbor is not visited
+            dfs_recursive(graph, neighbor, visited, traversal_order) # Recursive call
+
+def dfs(graph, start_vertex):
+    num_vertices = len(graph.adj_list)
+    visited = [False] * num_vertices  # Keep track of visited vertices
+    traversal_order = []
+    dfs_recursive(graph, start_vertex, visited, traversal_order)
+    return traversal_order
+
+# Example usage:
+graph = GraphAdjList(4)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 3)
+
+traversal = dfs(graph, 0)
+print(f"DFS traversal starting from vertex 0: {traversal}")
+# Expected Output: DFS traversal starting from vertex 0: [0, 1, 2, 3] (or a different valid DFS order)
+```
+
+**Python Implementation (Iterative):**
+
+```py
+def dfs_iterative(graph, start_vertex):
+    num_vertices = len(graph.adj_list)
+    visited = [False] * num_vertices
+    stack = [start_vertex]
+    traversal_order = []
+
+    while stack:
+        vertex = stack.pop()
+        if not visited[vertex]:
+            visited[vertex] = True
+            traversal_order.append(vertex)
+            # Push neighbors in reverse order to maintain a consistent traversal order
+            neighbors = [neighbor for neighbor, _ in graph.adj_list[vertex]]
+            for neighbor in reversed(neighbors):
+                if not visited[neighbor]:
+                    stack.append(neighbor)
+
+    return traversal_order
+
+# Example usage:
+graph = GraphAdjList(4)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(2, 3)
+
+traversal = dfs_iterative(graph, 0)
+print(f"Iterative DFS traversal starting from vertex 0: {traversal}")
+# Expected Output: Iterative DFS traversal starting from vertex 0: [0, 2, 1, 3] (or a different valid DFS order)
+```
+
+- **Time Complexity**: O(V + E), where V is the number of vertices and E is the number of edges.
+
+- **Space Complexity**: O(V) in the worst case (e.g., a skewed tree), due to the recursion stack or the explicit stack used in the iterative version.
+
+**Applications**:
+
+- Detecting cycles in a graph.
+- Topological sorting.
+- Solving mazes.
+- Finding connected components.
+
+**Comparing BFS and DFS**
+
+
+|Feature	|BFS	|DFS|
+| :------: | :------: | :------: |
+|Data Structure|	Queue|	Stack (implicit with recursion)|
+|Traversal Order|	Level by level|	Depth-first|
+|Shortest Path|	Guarantees shortest path (unweighted)|	Does not guarantee shortest path|
+|Space Complexity|	Can be higher than DFS|	Can be lower than BFS|
+|Applications|	Shortest path, web crawling|	Cycle detection, topological sorting|
+
 #### <a name="chapter11part4"></a>Chapter 11 - Part 4: Tree Data Structures: Binary Search Trees, AVL Trees, and B-Trees
+
+Binary search trees, AVL trees, and B-trees are fundamental data structures for efficient data storage and retrieval. Understanding their properties, implementation, and performance characteristics is crucial for any intermediate Python programmer. This lesson will delve into the intricacies of these tree structures, equipping you with the knowledge to choose the right tree for your specific needs and implement them effectively.
 
 #### <a name="chapter11part4.1"></a>Chapter 11 - Part 4.1: Binary Search Trees (BSTs)
 
+A Binary Search Tree (BST) is a tree data structure where each node has at most two children, referred to as the left child and the right child. The key property of a BST is that for any node, all keys in its left subtree are less than the node's key, and all keys in its right subtree are greater than the node's key. This property allows for efficient searching, insertion, and deletion of nodes.
+
+**BST Properties**
+
+- Each node has a key (the value stored in the node).
+- Each node has at most two children: a left child and a right child.
+- For any node, all keys in its left subtree are less than the node's key.
+- For any node, all keys in its right subtree are greater than the node's key.
+- There are no duplicate keys (typically, but can be handled with slight modifications).
+
+**BST Operations**
+
+**Search**
+
+The search operation in a BST leverages the BST property to efficiently locate a node with a specific key. Starting from the root, we compare the target key with the current node's key. If the target key is less than the current node's key, we recursively search the left subtree. If the target key is greater than the current node's key, we recursively search the right subtree. If the target key is equal to the current node's key, we have found the node. If we reach a null node, the key is not present in the tree.
+
+```py
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+
+def search(root, key):
+    """Searches for a key in a BST.
+
+    Args:
+        root: The root node of the BST.
+        key: The key to search for.
+
+    Returns:
+        The node with the given key, or None if the key is not found.
+    """
+    if root is None or root.key == key:
+        return root
+
+    if key < root.key:
+        return search(root.left, key)
+    else:
+        return search(root.right, key)
+
+# Example usage:
+root = Node(50)
+root.left = Node(30)
+root.right = Node(70)
+root.left.left = Node(20)
+root.left.right = Node(40)
+root.right.left = Node(60)
+root.right.right = Node(80)
+
+node = search(root, 60)
+if node:
+    print("Found:", node.key)  # Output: Found: 60
+else:
+    print("Not found")
+```
+
+**Insertion**
+
+To insert a new node into a BST, we start at the root and traverse the tree, comparing the key of the new node with the keys of the existing nodes. If the new key is less than the current node's key, we move to the left child. If the new key is greater than the current node's key, we move to the right child. We continue this process until we reach a null node, which is where we insert the new node as a child of the current node.
+
+```py
+def insert(root, key):
+    """Inserts a new node with the given key into a BST.
+
+    Args:
+        root: The root node of the BST.
+        key: The key to insert.
+
+    Returns:
+        The root node of the modified BST.
+    """
+    if root is None:
+        return Node(key)
+    else:
+        if key < root.key:
+            root.left = insert(root.left, key)
+        else:
+            root.right = insert(root.right, key)
+        return root
+
+# Example usage:
+root = insert(root, 65) # Insert 65 into the BST
+```
+
+**Deletion**
+
+Deleting a node from a BST is more complex than searching or inserting. There are three possible cases:
+
+- **Node to be deleted is a leaf node**: Simply remove the node.
+- **Node to be deleted has one child**: Replace the node with its child.
+- **Node to be deleted has two children**: Find the inorder successor (the smallest key in the right subtree) of the node. Replace the node's key with the inorder successor's key, and then delete the inorder successor from the right subtree. The inorder successor is guaranteed to have at most one child, so its deletion is straightforward.
+
+```py
+def minValueNode(node):
+    """Finds the node with the minimum key in a BST."""
+    current = node
+    while(current.left is not None):
+        current = current.left
+    return current
+
+def deleteNode(root, key):
+    """Deletes a node with the given key from a BST.
+
+    Args:
+        root: The root node of the BST.
+        key: The key to delete.
+
+    Returns:
+        The root node of the modified BST.
+    """
+    if root is None:
+        return root
+
+    if key < root.key:
+        root.left = deleteNode(root.left, key)
+    elif key > root.key:
+        root.right = deleteNode(root.right, key)
+    else:
+        # Node with only one child or no child
+        if root.left is None:
+            temp = root.right
+            root = None
+            return temp
+
+        elif root.right is None:
+            temp = root.left
+            root = None
+            return temp
+
+        # Node with two children: Get the inorder successor
+        # (smallest in the right subtree)
+        temp = minValueNode(root.right)
+
+        # Copy the inorder successor's content to this node
+        root.key = temp.key
+
+        # Delete the inorder successor
+        root.right = deleteNode(root.right, temp.key)
+
+    return root
+
+# Example usage:
+root = deleteNode(root, 30) # Delete 30 from the BST
+```
+
+**BST Time Complexity**
+
+- **Search**: O(h) on average, O(n) in the worst case (where h is the height of the tree and n is the number of nodes).
+- **Insertion**: O(h) on average, O(n) in the worst case.
+- **Deletion**: O(h) on average, O(n) in the worst case.
+
+The worst-case time complexity occurs when the BST is skewed (i.e., resembles a linked list).
+
 #### <a name="chapter11part4.2"></a>Chapter 11 - Part 4.2: AVL Trees
+
+AVL Trees are self-balancing Binary Search Trees. The "AVL" comes from the initials of the inventors, Adelson-Velsky and Landis. The key idea behind AVL trees is to maintain a balanced tree structure, ensuring that the height of the tree remains logarithmic with respect to the number of nodes. This guarantees O(log n) time complexity for search, insertion, and deletion operations, even in the worst case.
+
+**AVL Tree Properties**
+
+- All properties of a BST.
+- Balance Factor: For every node, the absolute difference between the heights of its left and right subtrees is at most 1. The balance factor of a node is calculated as height(left subtree) - height(right subtree). A node is considered balanced if its balance factor is -1, 0, or 1.
+
+**Rotations**
+
+To maintain the balance property, AVL trees use rotations. Rotations are operations that change the structure of the tree while preserving the BST property. There are four types of rotations:
+
+- **Right Rotation**: Used when the left subtree is heavier.
+- **Left Rotation**: Used when the right subtree is heavier.
+- **Left-Right Rotation**: A combination of a left rotation on the left child followed by a right rotation on the node itself. Used when the left subtree's right child is heavier.
+- **Right-Left Rotation**: A combination of a right rotation on the right child followed by a left rotation on the node itself. Used when the right subtree's left child is heavier.
+
+```py
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.height = 1  # Initially, height is 1
+
+def height(node):
+    if node is None:
+        return 0
+    return node.height
+
+def update_height(node):
+    node.height = 1 + max(height(node.left), height(node.right))
+
+def get_balance(node):
+    if node is None:
+        return 0
+    return height(node.left) - height(node.right)
+
+def right_rotate(y):
+    x = y.left
+    T2 = x.right
+
+    # Perform rotation
+    x.right = y
+    y.left = T2
+
+    # Update heights
+    update_height(y)
+    update_height(x)
+
+    return x
+
+def left_rotate(x):
+    y = x.right
+    T2 = y.left
+
+    # Perform rotation
+    y.left = x
+    x.right = T2
+
+    # Update heights
+    update_height(x)
+    update_height(y)
+
+    return y
+```
+
+**AVL Tree Operations**
+
+**Insertion**
+
+Insertion in an AVL tree is similar to insertion in a BST. However, after inserting a node, we need to check if the balance property is violated. If it is, we perform rotations to restore the balance.
+
+```py
+def insert(root, key):
+    """Inserts a key into the AVL tree."""
+    if root is None:
+        return Node(key)
+
+    if key < root.key:
+        root.left = insert(root.left, key)
+    else:
+        root.right = insert(root.right, key)
+
+    update_height(root)
+
+    balance = get_balance(root)
+
+    # Left Left Case
+    if balance > 1 and key < root.left.key:
+        return right_rotate(root)
+
+    # Right Right Case
+    if balance < -1 and key > root.right.key:
+        return left_rotate(root)
+
+    # Left Right Case
+    if balance > 1 and key > root.left.key:
+        root.left = left_rotate(root.left)
+        return right_rotate(root)
+
+    # Right Left Case
+    if balance < -1 and key < root.right.key:
+        root.right = right_rotate(root.right)
+        return left_rotate(root)
+
+    return root
+```
+
+**Deletion**
+
+Deletion in an AVL tree is also similar to deletion in a BST. After deleting a node, we need to check if the balance property is violated and perform rotations if necessary. The rotations are similar to those used in insertion.
+
+```py
+def minValueNode(node):
+    current = node
+    while current.left is not None:
+        current = current.left
+    return current
+
+def deleteNode(root, key):
+    """Deletes a key from the AVL tree."""
+    if root is None:
+        return root
+
+    if key < root.key:
+        root.left = deleteNode(root.left, key)
+    elif key > root.key:
+        root.right = deleteNode(root.right, key)
+    else:
+        if root.left is None:
+            temp = root.right
+            root = None
+            return temp
+        elif root.right is None:
+            temp = root.left
+            root = None
+            return temp
+
+        temp = minValueNode(root.right)
+        root.key = temp.key
+        root.right = deleteNode(root.right, temp.key)
+
+    if root is None:
+        return root
+
+    update_height(root)
+
+    balance = get_balance(root)
+
+    # Left Left
+    if balance > 1 and get_balance(root.left) >= 0:
+        return right_rotate(root)
+
+    # Left Right
+    if balance > 1 and get_balance(root.left) < 0:
+        root.left = left_rotate(root.left)
+        return right_rotate(root)
+
+    # Right Right
+    if balance < -1 and get_balance(root.right) <= 0:
+        return left_rotate(root)
+
+    # Right Left
+    if balance < -1 and get_balance(root.right) > 0:
+        root.right = right_rotate(root.right)
+        return left_rotate(root)
+
+    return root
+```
+
+**AVL Tree Time Complexity**
+
+- **Search**: O(log n)
+- **Insertion**: O(log n)
+- **Deletion**: O(log n)
 
 #### <a name="chapter11part4.3"></a>Chapter 11 - Part 4.3: B-Trees
 
+B-Trees are self-balancing tree data structures that are particularly well-suited for disk-based data storage. Unlike binary trees, B-Trees can have multiple children per node, which allows them to minimize the height of the tree and reduce the number of disk accesses required to retrieve data. B-Trees are widely used in database systems and file systems.
+
+**B-Tree Properties**
+
+- A B-Tree of order m has the following properties:
+  - Every node has at most m children.
+  - Every non-leaf node (except the root) has at least m/2 children.
+  - The root has at least two children if it is not a leaf node.
+  - All leaves appear in the same level.
+  - A non-leaf node with k children contains k-1 keys.
+  - All keys in a node are sorted in increasing order.
+ 
+```py
+class BTreeNode:
+    def __init__(self, leaf=False):
+        self.keys = []       # List to hold the keys in the node
+        self.children = []   # List to hold child nodes
+        self.leaf = leaf       # Boolean indicating if the node is a leaf node
+
+    def __repr__(self):
+        return f"<BTreeNode(keys={self.keys}, leaf={self.leaf})>"
+```
+ 
+**B-Tree Operations**
+
+**Search**
+
+Searching in a B-Tree involves traversing the tree from the root, comparing the target key with the keys in each node. If the target key is found in a node, the search is successful. If the target key is less than the smallest key in the node, we recursively search the leftmost child. If the target key is greater than the largest key in the node, we recursively search the rightmost child. Otherwise, we search the child node that lies between the two keys that surround the target key.
+
+```py
+class BTree:
+    def __init__(self, t):
+        self.root = BTreeNode(leaf=True)
+        self.t = t  # Minimum degree
+
+    def search(self, key, node=None):
+        if node is None:
+            node = self.root
+
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+
+        if i < len(node.keys) and key == node.keys[i]:
+            return node, i  # Key found, return node and index
+
+        if node.leaf:
+            return None  # Key not found
+
+        # Recursively search in the appropriate child
+        return self.search(key, node.children[i])
+```
+
+**Insertion**
+
+Inserting a new key into a B-Tree involves finding the appropriate leaf node to insert the key into. If the leaf node is not full (i.e., has fewer than m-1 keys), we simply insert the key into the node in sorted order. If the leaf node is full, we need to split the node. Splitting involves creating a new node and distributing the keys between the original node and the new node. The middle key is then promoted to the parent node. If the parent node is also full, we need to split the parent node as well, and so on. This process may propagate up to the root node, in which case the root node is split and a new root node is created.
+
+```py
+  def insert(self, key):
+        root = self.root
+        if len(root.keys) == (2 * self.t) - 1:
+            # Root is full, need to split
+            new_root = BTreeNode()
+            new_root.children.append(root)
+            self._split_child(new_root, 0)
+            self.root = new_root
+            self._insert_non_full(new_root, key)
+        else:
+            self._insert_non_full(root, key)
+
+    def _split_child(self, parent, index):
+        t = self.t
+        child = parent.children[index]
+        new_node = BTreeNode(leaf=child.leaf)
+
+        # Copy the last t-1 keys from child to new_node
+        new_node.keys = child.keys[t:]
+        child.keys = child.keys[:t-1]
+
+        # Copy the last t children from child to new_node
+        if not child.leaf:
+            new_node.children = child.children[t:]
+            child.children = child.children[:t]
+
+        # Insert new_node into parent's children
+        parent.children.insert(index + 1, new_node)
+
+        # Insert the middle key from child to parent
+        parent.keys.insert(index, child.keys[t-1])
+
+    def _insert_non_full(self, node, key):
+        i = len(node.keys) - 1
+        if node.leaf:
+            # Insert key into leaf node
+            node.keys.append(None)  # Make space for the new key
+            while i >= 0 and key < node.keys[i]:
+                node.keys[i + 1] = node.keys[i]
+                i -= 1
+            node.keys[i + 1] = key
+        else:
+            # Find the child to insert into
+            while i >= 0 and key < node.keys[i]:
+                i -= 1
+            i += 1
+            if len(node.children[i].keys) == (2 * self.t) - 1:
+                self._split_child(node, i)
+                if key > node.keys[i]:
+                    i += 1
+            self._insert_non_full(node.children[i], key)
+```
+
+**Deletion**
+
+Deleting a key from a B-Tree is more complex than insertion. If the key is in a leaf node, we simply remove it. If the leaf node then has fewer than the minimum required number of keys, we need to either borrow a key from a sibling node or merge the node with a sibling node. If the key is in an internal node, we replace it with its inorder predecessor or successor (which will be in a leaf node) and then delete the predecessor or successor from the leaf node.
+
+```py
+    def delete(self, key):
+        self._delete_internal(self.root, key)
+
+    def _delete_internal(self, node, key):
+        t = self.t
+        i = 0
+        while i < len(node.keys) and key > node.keys[i]:
+            i += 1
+
+        if i < len(node.keys) and key == node.keys[i]:
+            # Key found in this node
+            if node.leaf:
+                # Case 1: Key is in a leaf node
+                self._delete_from_leaf(node, i)
+            else:
+                # Case 2: Key is in an internal node
+                self._delete_from_internal_node(node, key, i)
+        else:
+            # Key not found in this node
+            if node.leaf:
+                print(f"Key {key} not found in the tree")
+                return
+            else:
+                # Recur down to the appropriate child
+                flag = i == len(node.keys)
+                if len(node.children[i].keys) < t:
+                    self._fill(node, i)
+
+                if flag and i > len(node.keys):
+                    self._delete_internal(node.children[i-1], key)
+                else:
+                    self._delete_internal(node.children[i], key)
+
+    def _delete_from_leaf(self, node, index):
+        node.keys.pop(index)
+
+    def _delete_from_internal_node(self, node, key, index):
+        t = self.t
+        child = node.children[index]
+        
+        # Case 2a: Child to the left has at least t keys
+        if len(child.keys) >= t:
+            predecessor = self._get_predecessor(child)
+            node.keys[index] = predecessor
+            self._delete_internal(child, predecessor)
+        else:
+            right_child = node.children[index + 1]
+            # Case 2b: Child to the right has at least t keys
+            if len(right_child.keys) >= t:
+                successor = self._get_successor(right_child)
+                node.keys[index] = successor
+                self._delete_internal(right_child, successor)
+            else:
+                # Case 2c: Both children have less than t keys, merge them
+                self._merge(node, index)
+                self._delete_internal(child, key)
+
+    def _get_predecessor(self, node):
+        # Get the rightmost key from the left subtree
+        while not node.leaf:
+            node = node.children[-1]
+        return node.keys[-1]
+
+    def _get_successor(self, node):
+        # Get the leftmost key from the right subtree
+        while not node.leaf:
+            node = node.children[0]
+        return node.keys[0]
+
+    def _fill(self, node, index):
+        t = self.t
+
+        # If the previous child has more than t-1 keys, borrow from it
+        if index != 0 and len(node.children[index - 1].keys) >= t:
+            self._borrow_from_prev(node, index)
+        # If the next child has more than t-1 keys, borrow from it
+        elif index != len(node.keys) and len(node.children[index + 1].keys) >= t:
+            self._borrow_from_next(node, index)
+        # Merge the child with its sibling
+        else:
+            if index != len(node.keys):
+                self._merge(node, index)
+            else:
+                self._merge(node, index - 1)
+
+    def _borrow_from_prev(self, node, index):
+        t = self.t
+        child = node.children[index]
+        sibling = node.children[index - 1]
+
+        # Move the last key from the sibling to the current node
+        child.keys.insert(0, node.keys[index - 1])
+        node.keys[index - 1] = sibling.keys[-1]
+
+        # Move the last child from the sibling to the current node
+        if not child.leaf:
+            child.children.insert(0, sibling.children[-1])
+            sibling.children.pop()
+
+        sibling.keys.pop()
+
+    def _borrow_from_next(self, node, index):
+        t = self.t
+        child = node.children[index]
+        sibling = node.children[index + 1]
+
+        # Move the first key from the sibling to the current node
+        child.keys.append(node.keys[index])
+        node.keys[index] = sibling.keys[0]
+
+        # Move the first child from the sibling to the current node
+        if not child.leaf:
+            child.children.append(sibling.children[0])
+            sibling.children.pop(0)
+
+        sibling.keys.pop(0)
+
+    def _merge(self, node, index):
+        t = self.t
+        child = node.children[index]
+        sibling = node.children[index + 1]
+
+        # Add the key from the parent node to the child node
+        child.keys.append(node.keys[index])
+
+        # Copy all keys from the sibling to the child
+        child.keys.extend(sibling.keys)
+
+        # Copy all children from the sibling to the child
+        if not child.leaf:
+            child.children.extend(sibling.children)
+
+        # Remove the key and the sibling from the parent node
+        node.keys.pop(index)
+        node.children.pop(index + 1)
+
+        # If the root node is empty, make the child the new root
+        if node == self.root and not node.keys:
+            self.root = child
+```
+
+**Example**
+
+```py
+# Example usage:
+tree = BTree(t=2)  # Minimum degree of 2
+for key in [10, 20, 5, 6, 12, 30, 7, 17]:
+    tree.insert(key)
+
+# Search for a key
+result = tree.search(12)
+if result:
+    node, index = result
+    print(f"Found key 12 in node: {node}, at index: {index}")
+else:
+    print("Key 12 not found")
+
+# Search for a non-existing key
+result = tree.search(15)
+if result:
+    node, index = result
+    print(f"Found key 15 in node: {node}, at index: {index}")
+else:
+    print("Key 15 not found")
+```
+
+**B-Tree Time Complexity**
+
+- **Search**: O(logm/2 n)
+- **Insertion**: O(logm/2 n)
+- **Deletion**: O(logm/2 n)
+
+Where n is the number of keys in the tree and m is the order of the tree.
+
+**Real-World Applications**
+
+- **Database Systems**: B-Trees are the primary data structure used for indexing in most database systems, including MySQL, Oracle, and PostgreSQL. They provide efficient access to data stored on disk.
+- **File Systems**: B-Trees are also used in file systems, such as NTFS (Windows) and ext4 (Linux), to organize and manage files and directories.
+- **Hypothetical Scenario**: Imagine a large-scale online library system. B-Trees could be used to index the books by title, author, or ISBN. This would allow users to quickly search for and retrieve information about specific books, even if the library contains millions of titles.
+
 #### <a name="chapter11part5"></a>Chapter 11 - Part 5: Hash Tables: Collision Resolution Techniques and Performance Analysis
+
+Hash tables are a fundamental data structure that provides efficient storage and retrieval of data. However, the efficiency of a hash table hinges on how well collisions are handled. When two different keys hash to the same index in the underlying array, a collision occurs. This lesson delves into various collision resolution techniques and analyzes their impact on the performance of hash tables. Understanding these techniques is crucial for building robust and efficient data structures.
 
 #### <a name="chapter11part5.1"></a>Chapter 11 - Part 5.1: Collision Resolution Techniques
 
+When two or more keys hash to the same index in a hash table, it's called a collision. Several techniques exist to handle these collisions, each with its own trade-offs in terms of performance and memory usage. We'll explore the most common methods: separate chaining, linear probing, quadratic probing, and double hashing.
+
+**Separate Chaining**
+
+Separate chaining is a collision resolution technique where each index in the hash table points to a linked list (or another data structure like a balanced tree) of key-value pairs that hash to that index.
+
+**How it Works**:
+
+- When a collision occurs, the new key-value pair is simply added to the linked list at the corresponding index.
+- To search for a key, the hash function is used to find the index, and then the linked list at that index is traversed to find the key.
+- Deletion involves finding the key in the linked list and removing it.
+
+**Example:**
+
+Imagine a hash table of size 10, and we're using the simple hash function key % 10. Let's insert the following keys: 10, 22, 30, 42, 55, 67, 71, 89, 91, 51.
+
+- 10 % 10 = 0
+- 22 % 10 = 2
+- 30 % 10 = 0 (collision with 10)
+- 42 % 10 = 2 (collision with 22)
+- 55 % 10 = 5
+- 67 % 10 = 7
+- 71 % 10 = 1
+- 89 % 10 = 9
+- 91 % 10 = 1 (collision with 71)
+- 51 % 10 = 1 (collision with 71 and 91)
+
+The hash table would look like this (visualized conceptually):
+
+```
+Index | Key(s)
+-------|-------
+0     | 10 -> 30
+1     | 71 -> 91 -> 51
+2     | 22 -> 42
+3     |
+4     |
+5     | 55
+6     |
+7     | 67
+8     |
+9     | 89
+```
+
+**Python Implementation:**
+
+```py
+class HashTableChaining:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(size)]  # List of lists for chaining
+
+    def _hash(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self._hash(key)
+        self.table[index].append((key, value))
+
+    def search(self, key):
+        index = self._hash(key)
+        for k, v in self.table[index]:
+            if k == key:
+                return v
+        return None  # Key not found
+
+    def delete(self, key):
+        index = self._hash(key)
+        for i, (k, v) in enumerate(self.table[index]):
+            if k == key:
+                del self.table[index][i]
+                return
+        # Key not found, so nothing to delete
+
+# Example usage:
+ht = HashTableChaining(10)
+ht.insert(10, "value10")
+ht.insert(22, "value22")
+ht.insert(30, "value30")
+print(ht.search(22))  # Output: value22
+ht.delete(22)
+print(ht.search(22))  # Output: None
+```
+
+**Advantages:**
+
+- Simple to implement.
+- Collision handling is straightforward.
+- Can accommodate more elements than the table size (though performance degrades).
+
+**Disadvantages:**
+
+- Performance degrades if many keys hash to the same index, leading to long linked lists and O(n) search time in the worst case.
+- Requires extra memory for the linked lists.
+
+**Open Addressing: Linear Probing**
+
+Open addressing is a collision resolution technique where, instead of using linked lists, all elements are stored directly in the hash table itself. Linear probing is a specific type of open addressing.
+
+**How it Works:**
+
+- When a collision occurs, the algorithm probes the next available slot in the table (linearly).
+- If the next slot is occupied, it continues to probe until an empty slot is found.
+- To search for a key, the hash function is used to find the initial index. If the key is not found at that index, the algorithm probes linearly until the key is found or an empty slot is encountered (indicating the key is not present).
+- Deletion is more complex. Simply marking the slot as empty can break the chain for subsequent searches. A common approach is to use a special "deleted" marker.
+
+**Example:**
+
+Using the same hash function (key % 10) and keys as before: 10, 22, 30, 42, 55, 67, 71, 89, 91, 51.
+
+- 10 % 10 = 0
+- 22 % 10 = 2
+- 30 % 10 = 0 (collision with 10, probe to 1)
+- 42 % 10 = 2 (collision with 22, probe to 3)
+- 55 % 10 = 5
+- 67 % 10 = 7
+- 71 % 10 = 1 (collision with 30, probe to 2, collision with 22, probe to 3, collision with 42, probe to 4)
+- 89 % 10 = 9
+- 91 % 10 = 1 (collision with 30, probe to 2, collision with 22, probe to 3, collision with 42, probe to 4, collision with 71, probe to 5, collision with 55, probe to 6)
+- 51 % 10 = 1 (collision with 30, probe to 2, collision with 22, probe to 3, collision with 42, probe to 4, collision with 71, probe to 5, collision with 55, probe to 6, collision with 91, probe to 7, collision with 67, probe to 8)
+
+The hash table would look like this:
+
+```
+Index | Key
+-------|-------
+0     | 10
+1     | 30
+2     | 22
+3     | 42
+4     | 71
+5     | 55
+6     | 91
+7     | 67
+8     | 51
+9     | 89
+```
+
+**Python Implementation:**
+
+```py
+class HashTableLinearProbing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size  # Initialize with None
+        self.keys = [None] * size # Keep track of keys to differentiate empty vs deleted slots
+
+    def _hash(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self._hash(key)
+        original_index = index
+        while self.table[index] is not None and self.keys[index] != key: # Check for existing key
+            index = (index + 1) % self.size  # Linear probe
+            if index == original_index:
+                raise OverflowError("Hash table is full")
+
+        self.table[index] = value
+        self.keys[index] = key
+
+    def search(self, key):
+        index = self._hash(key)
+        original_index = index
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                return self.table[index]
+            index = (index + 1) % self.size
+            if index == original_index:
+                return None # Key not found (entire table searched)
+        return None  # Key not found
+
+    def delete(self, key):
+        index = self._hash(key)
+        original_index = index
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                self.table[index] = None  # Mark as deleted
+                self.keys[index] = None
+                return
+            index = (index + 1) % self.size
+            if index == original_index:
+                return # Key not found
+        return # Key not found
+
+# Example usage:
+ht = HashTableLinearProbing(10)
+ht.insert(10, "value10")
+ht.insert(22, "value22")
+ht.insert(30, "value30")
+print(ht.search(22))  # Output: value22
+ht.delete(22)
+print(ht.search(22))  # Output: None
+```
+
+**Advantages**:
+
+- Simple to implement.
+- No extra memory required for linked lists.
+
+**Disadvantages**:
+
+- Primary clustering: Long runs of occupied slots tend to form, increasing the average search time. This is because if multiple keys hash to the same region, the linear probing will cause them to cluster together.
+- Deletion is complex and requires careful handling to avoid breaking search chains.
+
+**Open Addressing: Quadratic Probing**
+
+Quadratic probing is another open addressing technique that attempts to address the primary clustering problem of linear probing.
+
+**How it Works**:
+
+- When a collision occurs, the algorithm probes the table at indices (hash(key) + i^2) % size, where i is the probe number (starting from 1).
+- This quadratic probing helps to distribute the keys more evenly across the table, reducing clustering.
+- Search and deletion are similar to linear probing, but with the quadratic probing sequence.
+
+**Example**:
+
+Using the same hash function (key % 10) and keys as before: 10, 22, 30, 42, 55, 67, 71, 89, 91, 51.
+
+- 10 % 10 = 0
+- 22 % 10 = 2
+- 30 % 10 = 0 (collision with 10, probe to (0 + 1^2) % 10 = 1)
+- 42 % 10 = 2 (collision with 22, probe to (2 + 1^2) % 10 = 3)
+- 55 % 10 = 5
+- 67 % 10 = 7
+- 71 % 10 = 1 (collision with 30, probe to (1 + 1^2) % 10 = 2, collision with 22, probe to (1 + 2^2) % 10 = 5, collision with 55, probe to (1 + 3^2) % 10 = 0, collision with 10, probe to (1 + 4^2) % 10 = 7, collision with 67, probe to (1 + 5^2) % 10 = 6)
+- 89 % 10 = 9
+- 91 % 10 = 1 (collision with 30, probe to (1 + 1^2) % 10 = 2, collision with 22, probe to (1 + 2^2) % 10 = 5, collision with 55, probe to (1 + 3^2) % 10 = 0, collision with 10, probe to (1 + 4^2) % 10 = 7, collision with 67, probe to (1 + 5^2) % 10 = 6, collision with 71, probe to (1 + 6^2) % 10 = 7, collision with 67, probe to (1 + 7^2) % 10 = 0, collision with 10, probe to (1 + 8^2) % 10 = 5, collision with 55, probe to (1 + 9^2) % 10 = 2, collision with 22, probe to (1 + 10^2) % 10 = 1)
+- 51 % 10 = 1 (collision with 30, probe to (1 + 1^2) % 10 = 2, collision with 22, probe to (1 + 2^2) % 10 = 5, collision with 55, probe to (1 + 3^2) % 10 = 0, collision with 10, probe to (1 + 4^2) % 10 = 7, collision with 67, probe to (1 + 5^2) % 10 = 6, collision with 71, probe to (1 + 6^2) % 10 = 7, collision with 67, probe to (1 + 7^2) % 10 = 0, collision with 10, probe to (1 + 8^2) % 10 = 5, collision with 55, probe to (1 + 9^2) % 10 = 2, collision with 22, probe to (1 + 10^2) % 10 = 1)
+
+The hash table would look like this:
+
+```
+Index | Key
+-------|-------
+0     | 10
+1     | 30
+2     | 22
+3     | 42
+4     |
+5     | 55
+6     | 71
+7     | 67
+8     |
+9     | 89
+```
+
+**Python Implementation:**
+
+```py
+class HashTableQuadraticProbing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+        self.keys = [None] * size
+
+    def _hash(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self._hash(key)
+        original_index = index
+        i = 1
+        while self.table[index] is not None and self.keys[index] != key:
+            index = (original_index + i**2) % self.size
+            if index == original_index:
+                raise OverflowError("Hash table is full")
+            i += 1
+
+        self.table[index] = value
+        self.keys[index] = key
+
+    def search(self, key):
+        index = self._hash(key)
+        original_index = index
+        i = 1
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                return self.table[index]
+            index = (original_index + i**2) % self.size
+            if index == original_index:
+                return None
+            i += 1
+        return None
+
+    def delete(self, key):
+        index = self._hash(key)
+        original_index = index
+        i = 1
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                self.table[index] = None
+                self.keys[index] = None
+                return
+            index = (original_index + i**2) % self.size
+            if index == original_index:
+                return
+            i += 1
+        return
+
+# Example usage:
+ht = HashTableQuadraticProbing(10)
+ht.insert(10, "value10")
+ht.insert(22, "value22")
+ht.insert(30, "value30")
+print(ht.search(22))
+ht.delete(22)
+print(ht.search(22))
+```
+
+**Advantages**:
+
+- Reduces primary clustering compared to linear probing.
+
+**Disadvantages**:
+
+- Secondary clustering: If multiple keys have the same initial hash value, they will follow the same probe sequence, leading to some clustering.
+- If the table size is not a prime number, it's possible that the probe sequence will not visit all slots in the table. Specifically, if the table size is a power of 2, only half of the table will be probed.
+
+**Open Addressing: Double Hashing**
+
+Double hashing is an open addressing technique that uses a second hash function to determine the probe sequence. This helps to further reduce clustering.
+
+**How it Works**:
+
+- When a collision occurs, a second hash function hash2(key) is used to calculate the step size for probing.
+- The algorithm probes the table at indices (hash1(key) + i * hash2(key)) % size, where hash1(key) is the primary hash function, hash2(key) is the secondary hash function, and i is the probe number (starting from 1).
+- The second hash function must be chosen carefully to ensure that it probes different slots in the table. A common choice is hash2(key) = R - (key % R), where R is a prime number smaller than the table size.
+- Search and deletion are similar to linear and quadratic probing, but with the double hashing probe sequence.
+
+**Example**:
+
+Let's use hash1(key) = key % 10 and hash2(key) = 7 - (key % 7). Keys: 10, 22, 30, 42, 55, 67, 71, 89, 91, 51.
+
+
+- 10 % 10 = 0, 7 - (10 % 7) = 4
+- 22 % 10 = 2, 7 - (22 % 7) = 6
+- 30 % 10 = 0 (collision with 10, probe to (0 + 1 * 4) % 10 = 4)
+- 42 % 10 = 2 (collision with 22, probe to (2 + 1 * 6) % 10 = 8)
+- 55 % 10 = 5, 7 - (55 % 7) = 2
+- 67 % 10 = 7, 7 - (67 % 7) = 4
+- 71 % 10 = 1, 7 - (71 % 7) = 3
+- 89 % 10 = 9, 7 - (89 % 7) = 6
+- 91 % 10 = 1 (collision with 71, probe to (1 + 1 * 3) % 10 = 4, collision with 30, probe to (1 + 2 * 3) % 10 = 7, collision with 67, probe to (1 + 3 * 3) % 10 = 0, collision with 10, probe to (1 + 4 * 3) % 10 = 3)
+- 51 % 10 = 1 (collision with 71, probe to (1 + 1 * 3) % 10 = 4, collision with 30, probe to (1 + 2 * 3) % 10 = 7, collision with 67, probe to (1 + 3 * 3) % 10 = 0, collision with 10, probe to (1 + 4 * 3) % 10 = 3, collision with 91, probe to (1 + 5 * 3) % 10 = 6)
+
+The hash table would look like this:
+
+```
+Index | Key
+-------|-------
+0     | 10
+1     | 71
+2     | 22
+3     | 91
+4     | 30
+5     | 55
+6     | 51
+7     | 67
+8     | 42
+9     | 89
+```
+
+**Python Implementation:**
+
+```py
+class HashTableDoubleHashing:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+        self.keys = [None] * size
+        self.R = 7 # A prime number smaller than size
+
+    def _hash1(self, key):
+        return key % self.size
+
+    def _hash2(self, key):
+        return self.R - (key % self.R)
+
+    def insert(self, key, value):
+        index = self._hash1(key)
+        hash2_value = self._hash2(key)
+        original_index = index
+        i = 1
+        while self.table[index] is not None and self.keys[index] != key:
+            index = (original_index + i * hash2_value) % self.size
+            if index == original_index:
+                raise OverflowError("Hash table is full")
+            i += 1
+
+        self.table[index] = value
+        self.keys[index] = key
+
+    def search(self, key):
+        index = self._hash1(key)
+        hash2_value = self._hash2(key)
+        original_index = index
+        i = 1
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                return self.table[index]
+            index = (original_index + i * hash2_value) % self.size
+            if index == original_index:
+                return None
+            i += 1
+        return None
+
+    def delete(self, key):
+        index = self._hash1(key)
+        hash2_value = self._hash2(key)
+        original_index = index
+        i = 1
+        while self.keys[index] is not None:
+            if self.keys[index] == key:
+                self.table[index] = None
+                self.keys[index] = None
+                return
+            index = (original_index + i * hash2_value) % self.size
+            if index == original_index:
+                return
+            i += 1
+        return
+
+# Example usage:
+ht = HashTableDoubleHashing(10)
+ht.insert(10, "value10")
+ht.insert(22, "value22")
+ht.insert(30, "value30")
+print(ht.search(22))
+ht.delete(22)
+print(ht.search(22))
+```
+
+**Advantages**:
+
+- Generally avoids primary and secondary clustering.
+- Provides good distribution of keys in the table.
+
+**Disadvantages**:
+
+- Requires careful selection of the second hash function.
+- More complex to implement than linear or quadratic probing.
+
 #### <a name="chapter11part5.2"></a>Chapter 11 - Part 5.2: Performance Analysis
+
+The performance of a hash table is heavily influenced by the collision resolution technique used and the load factor. The load factor (λ) is defined as the ratio of the number of elements in the hash table to the size of the table (λ = n/size).
+
+**Separate Chaining Performance**
+
+- **Worst-case**: O(n) for search, insertion, and deletion (when all keys hash to the same index).
+- **Average-case**: O(1 + λ) for search, insertion, and deletion. If λ is kept constant (e.g., by resizing the table when it exceeds a certain threshold), the average case performance approaches O(1).
+- **Space Complexity**: O(n), where n is the number of keys, due to the storage of linked lists.
+
+**Open Addressing Performance**
+
+- **Worst-case**: O(n) for search, insertion, and deletion (when many collisions occur and probing sequences become long).
+- **Average-case**: The average case performance depends on the load factor (λ). As λ approaches 1 (the table becomes full), the performance degrades significantly.
+  - **Linear Probing**: Average case performance degrades quickly as the load factor increases due to clustering.
+  - **Quadratic Probing**: Better performance than linear probing, but still degrades as the load factor increases.
+  - **Double Hashing**: Best performance among open addressing techniques, with performance close to O(1) for reasonable load factors.
+- **Space Complexity**: O(size), where size is the size of the hash table.
+
+**Load Factor and Resizing:**
+
+For open addressing techniques, it's crucial to keep the load factor below a certain threshold (e.g., 0.7) to maintain good performance. When the load factor exceeds this threshold, the hash table should be resized (typically doubled in size) and all elements rehashed into the new table. This is an expensive operation (O(n)), but it ensures that the average case performance remains close to O(1).
 
 #### <a name="chapter11part6"></a>Chapter 11 - Part 6: Practical Exercise: Optimizing a Search Algorithm for a Large Dataset
 
+Optimizing search algorithms is a crucial skill for any programmer, especially when dealing with large datasets. Inefficient search algorithms can lead to significant performance bottlenecks, impacting application responsiveness and scalability. This lesson focuses on practical techniques for optimizing search algorithms, enabling you to efficiently locate data within large collections. We'll explore various strategies, from leveraging appropriate data structures to employing advanced search techniques, all with the goal of minimizing search time and maximizing performance.
+
 #### <a name="chapter11part6.1"></a>Chapter 11 - Part 6.1: Understanding the Problem: Search in Large Datasets
+
+Searching becomes a performance bottleneck when dealing with large datasets. A naive approach, like iterating through every element, quickly becomes impractical. The key to optimization lies in reducing the number of elements that need to be examined. This can be achieved through better algorithms, appropriate data structures, or a combination of both.
+
+**The Impact of Dataset Size**
+
+The size of the dataset directly impacts the performance of search algorithms. Consider a dataset of 100 elements versus a dataset of 1 million elements. A linear search might be acceptable for the smaller dataset, but it would be unacceptably slow for the larger one.
+
+Example: Imagine searching for a specific name in a phone book. If the phone book has only a few pages, you might quickly scan through each name. However, if the phone book contains thousands of pages, a more efficient strategy, like using the alphabetical index, is necessary.
+
+**The Importance of Algorithm Choice**
+
+The choice of search algorithm is critical. Different algorithms have different time complexities, which describe how the execution time grows as the input size increases. Understanding these complexities is essential for selecting the most appropriate algorithm for a given task.
+
+Example: A linear search has a time complexity of O(n), meaning the execution time grows linearly with the number of elements. A binary search, on the other hand, has a time complexity of O(log n), meaning the execution time grows logarithmically with the number of elements. For large datasets, the difference between these complexities can be significant.
 
 #### <a name="chapter11part6.2"></a>Chapter 11 - Part 6.2: Optimization Techniques
 
+Several techniques can be employed to optimize search algorithms for large datasets. These techniques can be broadly categorized into:
+
+- Choosing the right data structure
+- Selecting an efficient search algorithm
+- Utilizing indexing
+- Applying caching strategies
+
+**Choosing the Right Data Structure**
+
+The data structure used to store the data can significantly impact search performance. Some data structures are inherently better suited for searching than others.
+
+**Hash Tables**
+
+Hash tables (or dictionaries in Python) provide very fast average-case search performance, typically O(1). They work by using a hash function to map keys to their corresponding values.
+
+Example: Consider a scenario where you need to quickly look up the price of a product given its product ID. A hash table, where the product ID is the key and the price is the value, would be an ideal choice.
+
+```py
+# Example: Using a hash table for fast lookups
+product_prices = {
+    "PID123": 25.99,
+    "PID456": 19.99,
+    "PID789": 32.50
+}
+
+# Looking up the price of product "PID456"
+price = product_prices["PID456"]  # O(1) average case
+print(f"The price of PID456 is: {price}")
+```
+
+Counterexample: Hash tables are not suitable for ordered data or range queries (e.g., finding all products with prices between $20 and $30).
+
+**Sorted Arrays and Binary Search Trees**
+
+If the data is sorted, binary search can be used to achieve O(log n) search performance. Sorted arrays and binary search trees are suitable data structures for this purpose.
+
+Example: Imagine searching for a specific word in a dictionary. Because the words are sorted alphabetically, you can quickly narrow down the search by repeatedly dividing the search space in half.
+
+```py
+# Example: Binary search in a sorted array
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1  # Target not found
+
+sorted_numbers = [2, 5, 7, 8, 11, 12]
+target = 11
+index = binary_search(sorted_numbers, target)
+if index != -1:
+    print(f"Target {target} found at index {index}")
+else:
+    print("Target not found")
+```
+
+Counterexample: Binary search requires the data to be sorted. If the data is frequently updated, maintaining the sorted order can be expensive.
+
+**Trees (Binary Search Trees, AVL Trees, B-Trees)**
+
+Trees, especially balanced trees like AVL trees and B-trees, offer efficient search, insertion, and deletion operations. They are particularly useful when the data is dynamic and needs to be frequently updated.
+
+Example: Databases often use B-trees to index data on disk. B-trees are designed to minimize disk I/O operations, which are expensive.
+
+Hypothetical Scenario: Consider a social media platform where users can search for other users by name. A balanced tree structure could be used to store the user data, allowing for efficient searching, insertion of new users, and deletion of inactive users.
+
+**Selecting an Efficient Search Algorithm**
+
+The choice of search algorithm depends on the data structure and the specific requirements of the application.
+
+**Linear Search**
+
+Linear search is the simplest search algorithm. It iterates through each element in the data structure until the target element is found or the end of the data structure is reached.
+
+Example: Searching for a specific book on a shelf by examining each book one by one.
+
+```py
+# Example: Linear search
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1  # Target not found
+
+numbers = [5, 2, 8, 1, 9]
+target = 8
+index = linear_search(numbers, target)
+if index != -1:
+    print(f"Target {target} found at index {index}")
+else:
+    print("Target not found")
+```
+
+Counterexample: Linear search is inefficient for large datasets.
+
+**Binary Search**
+
+Binary search is a much more efficient algorithm for sorted data. It repeatedly divides the search space in half until the target element is found or the search space is empty.
+
+Example: As mentioned earlier, searching for a word in a dictionary.
+
+**Jump Search**
+
+Jump Search is a search algorithm for sorted arrays. The basic idea is to search fewer elements by jumping ahead by fixed steps or skipping some elements in place of searching all elements.
+
+Example: Suppose you have a sorted array of 1000 elements and you want to search for the element 500. Using linear search, you would have to check up to 500 elements in the worst case. Using jump search with a block size of 10, you would only have to check 100 elements in the worst case.
+
+```py
+import math
+
+def jump_search(arr, target):
+    n = len(arr)
+    step = int(math.sqrt(n))  # Block size to be jumped
+    
+    # Finding the block where element is present (if it is present)
+    prev = 0
+    while arr[min(step, n)-1] < target:
+        prev = step
+        step += int(math.sqrt(n))
+        if prev >= n:
+            return -1
+    
+    # Doing a linear search for target in block beginning with prev.
+    while arr[prev] < target:
+        prev += 1
+        if prev == min(step, n):
+            return -1
+    
+    # If element is found
+    if arr[prev] == target:
+        return prev
+    
+    return -1
+
+sorted_numbers = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
+target = 55
+index = jump_search(sorted_numbers, target)
+
+if index != -1:
+    print(f"Target {target} found at index {index}")
+else:
+    print("Target not found")
+```
+
+**Interpolation Search**
+
+Interpolation search is an algorithm for searching a sorted array. It improves upon binary search by estimating the position of the target value based on the values at the boundaries of the search space.
+
+Example: Imagine searching for the number 99 in a sorted array from 1 to 100. Instead of starting in the middle like binary search, interpolation search would estimate that 99 is likely near the end of the array and start searching there.
+
+```py
+def interpolation_search(arr, target):
+    low = 0
+    high = (len(arr) - 1)
+    
+    while low <= high and target >= arr[low] and target <= arr[high]:
+        # Probing the position with keeping uniform distribution in mind.
+        pos  = low + ((high - low) // (arr[high] - arr[low]) * (target - arr[low]))
+        
+        if arr[pos] == target:
+            return pos
+
+        if arr[pos] < target:
+            low = pos + 1
+        else:
+            high = pos - 1
+            
+    return -1
+
+sorted_numbers = [10, 12, 13, 16, 18, 19, 20, 21, 22, 23, 24, 33, 35, 42, 47]
+target = 22
+index = interpolation_search(sorted_numbers, target)
+
+if index != -1:
+    print(f"Target {target} found at index {index}")
+else:
+    print("Target not found")
+```
+
+**Utilizing Indexing**
+
+Indexing involves creating auxiliary data structures that allow for faster searching. Indexes store a subset of the data in a more organized manner, enabling the search algorithm to quickly locate the desired elements.
+
+Example: Database indexes are a common example of indexing. They allow the database to quickly locate rows that match a specific query without having to scan the entire table.
+
+Hypothetical Scenario: Consider an e-commerce website with millions of products. Creating an index on product categories would allow users to quickly find all products within a specific category.
+
+**Applying Caching Strategies**
+
+Caching involves storing frequently accessed data in a faster storage medium, such as memory. When a search request is received, the cache is checked first. If the data is found in the cache (a "cache hit"), it can be returned quickly. If the data is not found in the cache (a "cache miss"), it must be retrieved from the slower storage medium and then added to the cache for future requests.
+
+Example: Web browsers use caching to store frequently accessed web pages and images. This allows the browser to load these resources more quickly when the user revisits the page.
+
+Hypothetical Scenario: Consider a content delivery network (CDN) that caches frequently accessed content closer to the users. When a user requests a piece of content, the CDN checks its cache first. If the content is found in the cache, it is delivered to the user directly. If the content is not found in the cache, it is retrieved from the origin server and then added to the cache.
+
 #### <a name="chapter11part6.3"></a>Chapter 11 - Part 6.3: Practical Examples and Demonstrations
+
+Let's consider a practical example of optimizing a search algorithm for a large dataset of customer records.
+
+Suppose you have a dataset of 1 million customer records, each containing information such as customer ID, name, address, and phone number. You need to implement a search function that allows you to quickly find a customer record given their customer ID.
+
+**Naive Approach: Linear Search**
+
+A naive approach would be to use linear search to iterate through the entire dataset until the customer record with the matching customer ID is found.
+
+```py
+# Naive approach: Linear search
+def linear_search_customer(customer_records, customer_id):
+    for record in customer_records:
+        if record["customer_id"] == customer_id:
+            return record
+    return None  # Customer not found
+```
+
+This approach has a time complexity of O(n), which means that the execution time grows linearly with the number of customer records. For a dataset of 1 million records, this can be unacceptably slow.
+
+**Optimized Approach: Hash Table**
+
+A more efficient approach would be to use a hash table (dictionary) to store the customer records, with the customer ID as the key.
+
+```py
+# Optimized approach: Hash table
+def create_customer_index(customer_records):
+    customer_index = {}
+    for record in customer_records:
+        customer_index[record["customer_id"]] = record
+    return customer_index
+
+def search_customer(customer_index, customer_id):
+    if customer_id in customer_index:
+        return customer_index[customer_id]
+    return None  # Customer not found
+```
+
+This approach has an average-case time complexity of O(1) for searching, which is significantly faster than linear search.
+
+**Demonstration**
+
+```py
+import time
+import random
+
+# Generate a large dataset of customer records
+def generate_customer_records(num_records):
+    customer_records = []
+    for i in range(num_records):
+        customer_id = f"CID{i:06}"
+        customer_records.append({
+            "customer_id": customer_id,
+            "name": f"Customer {i}",
+            "address": f"Address {i}",
+            "phone_number": f"555-123-{i:04}"
+        })
+    return customer_records
+
+# Number of customer records
+num_records = 1000000
+
+# Generate customer records
+customer_records = generate_customer_records(num_records)
+
+# Create customer index (hash table)
+customer_index = create_customer_index(customer_records)
+
+# Search for a customer using linear search
+start_time = time.time()
+customer_id_to_search = "CID500000"
+customer = linear_search_customer(customer_records, customer_id_to_search)
+end_time = time.time()
+linear_search_time = end_time - start_time
+
+if customer:
+    print(f"Linear Search: Found customer {customer_id_to_search} in {linear_search_time:.6f} seconds")
+else:
+    print("Customer not found")
+
+# Search for a customer using hash table
+start_time = time.time()
+customer = search_customer(customer_index, customer_id_to_search)
+end_time = time.time()
+hash_table_search_time = end_time - start_time
+
+if customer:
+    print(f"Hash Table Search: Found customer {customer_id_to_search} in {hash_table_search_time:.6f} seconds")
+else:
+    print("Customer not found")
+```
+
+This demonstration will show that the hash table approach is significantly faster than the linear search approach for large datasets.
 
 ## <a name="chapter12"></a>Chapter 12: Object-Oriented Programming (OOP) Deep Dive
 
