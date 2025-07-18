@@ -1459,6 +1459,7 @@ The correct way to extend a list is to use an iterable object, such as a list:
 ```py
 seeds += [5]
 print(seeds) # print: ['sesame', 'sunflower', 'pumpkin', 5]
+```
 
 And of course, the iterable object used to extend the list can itself have more than one item:
 
@@ -6889,7 +6890,7 @@ class Point:
 
   def __str__(self):
     return "({0.x!r}, {0.y!r})".format(self)
-```py
+```
 
 Since no base classes are specified, Point is a direct subclass of object, just as though we had written class Point(object).
 
