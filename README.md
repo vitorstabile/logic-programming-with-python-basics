@@ -11033,23 +11033,758 @@ print(xml_order)
 
 #### <a name="chapter11part1"></a>Chapter 11 - Part 1: Understanding Time and Space Complexity
 
+Understanding time and space complexity is fundamental to designing efficient algorithms and data structures. It allows us to predict how an algorithm's performance will scale with increasing input size, enabling informed decisions about which approach is best suited for a particular problem. This understanding is crucial for writing code that not only works correctly but also performs well, especially when dealing with large datasets or resource-constrained environments.
+
 #### <a name="chapter11part1.1"></a>Chapter 11 - Part 1.1: Time Complexity
+
+Time complexity describes how the runtime of an algorithm grows as the input size increases. It's typically expressed using Big O notation, which provides an upper bound on the growth rate. We focus on the dominant term, ignoring constant factors and lower-order terms, as these become insignificant for large input sizes.
+
+**Big O Notation**
+
+Big O notation represents the worst-case scenario for an algorithm's runtime. It provides an asymptotic upper bound, meaning it describes how the runtime grows as the input size approaches infinity.
+
+- **O(1) - Constant Time**: The runtime is independent of the input size.
+
+Example: Accessing an element in an array by its index.
+
+```py
+def access_element(arr, index):
+  """Accesses an element in an array by its index.
+
+  Args:
+    arr: The input array.
+    index: The index of the element to access.
+
+  Returns:
+    The element at the specified index.
+  """
+  return arr[index] # This operation takes constant time, regardless of the size of the array.
+
+my_array = [1, 2, 3, 4, 5]
+element = access_element(my_array, 2) # Accessing the element at index 2
+print(element) # Output: 3
+```
+
+- **O(log n) - Logarithmic Time**: The runtime grows logarithmically with the input size. This often occurs in algorithms that divide the problem into smaller subproblems in each step.
+
+Example: Binary search in a sorted array.
+
+```py
+def binary_search(arr, target):
+  """Performs binary search on a sorted array.
+
+  Args:
+    arr: The sorted input array.
+    target: The element to search for.
+
+  Returns:
+    The index of the target element if found, otherwise -1.
+  """
+  low = 0
+  high = len(arr) - 1
+
+  while low <= high:
+    mid = (low + high) // 2
+    if arr[mid] == target:
+      return mid
+    elif arr[mid] < target:
+      low = mid + 1
+    else:
+      high = mid - 1
+
+  return -1
+
+sorted_array = [2, 5, 7, 8, 11, 12]
+index = binary_search(sorted_array, 11) # Searching for the element 11
+print(index) # Output: 4
+```
+
+- **O(n) - Linear Time**: The runtime grows linearly with the input size.
+
+Example: Iterating through all elements in an array.
+
+```py
+def linear_search(arr, target):
+  """Performs linear search on an array.
+
+  Args:
+    arr: The input array.
+    target: The element to search for.
+
+  Returns:
+    The index of the target element if found, otherwise -1.
+  """
+  for i in range(len(arr)):
+    if arr[i] == target:
+      return i
+  return -1
+
+my_array = [1, 2, 3, 4, 5]
+index = linear_search(my_array, 3) # Searching for the element 3
+print(index) # Output: 2
+```
+
+- **O(n log n) - Linearithmic Time**: The runtime grows slightly faster than linear time. This is often seen in efficient sorting algorithms.
+
+Example: Merge sort (which will be covered in the next lesson).
+
+```py
+def merge_sort(data):
+    """
+    Sorts a list of items using the merge sort algorithm.
+
+    Args:
+        data (list): The list of items to sort.
+
+    Returns:
+        list: A new sorted list.
+    """
+    if len(data) <= 1:
+        return data  # Base case: already sorted
+
+    # Divide the list into two halves
+    mid = len(data) // 2
+    left = data[:mid]
+    right = data[mid:]
+
+    # Recursively sort each half
+    left = merge_sort(left)
+    right = merge_sort(right)
+
+    # Merge the sorted halves
+    return merge(left, right)
+
+
+def merge(left, right):
+    """
+    Merges two sorted lists into a single sorted list.
+
+    Args:
+        left (list): The first sorted list.
+        right (list): The second sorted list.
+
+    Returns:
+        list: A new sorted list containing all elements from both input lists.
+    """
+    merged = []
+    left_index = 0
+    right_index = 0
+
+    # Compare elements from both lists and add the smaller one to the merged list
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] <= right[right_index]:
+            merged.append(left[left_index])
+            left_index += 1
+        else:
+            merged.append(right[right_index])
+            right_index += 1
+
+    # Add any remaining elements from the left list
+    while left_index < len(left):
+        merged.append(left[left_index])
+        left_index += 1
+
+    # Add any remaining elements from the right list
+    while right_index < len(right):
+        merged.append(right[right_index])
+        right_index += 1
+
+    return merged
+
+# Example usage:
+data = [38, 27, 43, 3, 9, 82, 10]
+sorted_data = merge_sort(data)
+print(f"Sorted list: {sorted_data}")  # Output: Sorted list: [3, 9, 10, 27, 38, 43, 82]
+```
+
+- **O(n2) - Quadratic Time**: The runtime grows quadratically with the input size. This often occurs in algorithms with nested loops.
+
+Example: Comparing each element in an array to every other element.
+
+```py
+def find_duplicates(arr):
+  """Finds duplicate elements in an array using nested loops.
+
+  Args:
+    arr: The input array.
+
+  Returns:
+    A list of duplicate elements.
+  """
+  duplicates = []
+  for i in range(len(arr)):
+    for j in range(i + 1, len(arr)):
+      if arr[i] == arr[j]:
+        duplicates.append(arr[i])
+  return duplicates
+
+my_array = [1, 2, 3, 2, 4, 5, 1]
+duplicates = find_duplicates(my_array) # Finding duplicate elements
+print(duplicates) # Output: [1, 2]
+```
+
+- **O(2n) - Exponential Time**: The runtime grows exponentially with the input size. These algorithms are generally impractical for large inputs.
+
+Example: Finding all subsets of a set, fibonacci.
+
+```py
+def find_subsets(input_set):
+    """
+    Finds all subsets of a given set.
+
+    Args:
+        input_set (list): The input set.
+
+    Returns:
+        list: A list of all subsets of the input set.
+    """
+    subsets = [[]]  # Start with the empty set
+
+    for element in input_set:
+        new_subsets = []
+        for subset in subsets:
+            new_subsets.append(subset + [element])  # Add the element to existing subsets
+        subsets.extend(new_subsets)  # Add the new subsets to the list of subsets
+
+    return subsets
+
+# Example usage:
+input_set = [1, 2, 3]
+all_subsets = find_subsets(input_set)
+print(f"All subsets of {input_set}: {all_subsets}")
+# Output: All subsets of [1, 2, 3]: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+```
+
+```py
+def fibonacci_recursive(n):
+    """
+    Calculates the nth Fibonacci number using a naive recursive approach.
+
+    Args:
+        n (int): The index of the Fibonacci number to calculate.
+
+    Returns:
+        int: The nth Fibonacci number.
+    """
+    if n <= 1:
+        return n
+    else:
+        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+
+# Example usage:
+n = 10
+result = fibonacci_recursive(n)
+print(f"The {n}th Fibonacci number is: {result}")  # Output: The 10th Fibonacci number is: 55
+```
+
+- **O(n!) - Factorial Time**: The runtime grows factorially with the input size. These algorithms are extremely slow and only suitable for very small inputs.
+
+Example: Generating all permutations of a string.
+
+```py
+def string_permutations(s):
+    """
+    Generates all permutations of a string.
+
+    Args:
+        s (str): The input string.
+
+    Returns:
+        list: A list of all permutations of the string.
+    """
+    if len(s) <= 1:
+        return [s]  # Base case: a string of length 0 or 1 has only one permutation
+
+    permutations = []
+    for i in range(len(s)):
+        first_char = s[i]
+        rest_of_string = s[:i] + s[i+1:]  # Remove the first character from the string
+
+        # Recursively find permutations of the rest of the string
+        sub_permutations = string_permutations(rest_of_string)
+
+        # Add the first character to the beginning of each sub-permutation
+        for sub_permutation in sub_permutations:
+            permutations.append(first_char + sub_permutation)
+
+    return permutations
+
+# Example usage:
+s = "abc"
+all_permutations = string_permutations(s)
+print(f"All permutations of '{s}': {all_permutations}")
+# Output: All permutations of 'abc': ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+```
 
 #### <a name="chapter11part1.2"></a>Chapter 11 - Part 1.2: Space Complexity
 
+Space complexity describes how the amount of memory used by an algorithm grows as the input size increases. Like time complexity, it's also expressed using Big O notation. We consider both auxiliary space (the extra space used by the algorithm beyond the input) and the space used by the input itself. We are usually more concerned with auxiliary space complexity.
+
+**Auxiliary Space vs. Input Space**
+
+- **Auxiliary Space**: The extra space used by the algorithm, excluding the input. This is what we typically focus on when analyzing space complexity.
+
+- **Input Space**: The space used to store the input data.
+
+**Common Space Complexities**
+
+- **O(1) - Constant Space**: The amount of memory used is independent of the input size.
+
+Example: Using a few variables to store temporary values.
+
+```py
+def add_numbers(a, b):
+  """Adds two numbers and returns the sum.
+
+  Args:
+    a: The first number.
+    b: The second number.
+
+  Returns:
+    The sum of the two numbers.
+  """
+  sum = a + b  # Using a constant amount of extra space
+  return sum
+
+result = add_numbers(5, 10) # Adding two numbers
+print(result) # Output: 15
+```
+
+- **O(log n) - Logarithmic Space**: The amount of memory used grows logarithmically with the input size. This can occur in recursive algorithms where the call stack grows logarithmically.
+
+Example: Binary Search
+
+```py
+def binary_search_recursive(data, target, low, high):
+    """
+    Performs a binary search on a sorted list recursively.
+
+    Args:
+        data (list): The sorted list to search.
+        target (int): The value to search for.
+        low (int): The starting index of the search range.
+        high (int): The ending index of the search range.
+
+    Returns:
+        int: The index of the target if found, or -1 if not found.
+    """
+    if low > high:
+        return -1  # Base case: target not found
+
+    mid = (low + high) // 2
+    if data[mid] == target:
+        return mid  # Base case: target found
+    elif data[mid] < target:
+        return binary_search_recursive(data, target, mid + 1, high)  # Search the right half
+    else:
+        return binary_search_recursive(data, target, low, mid - 1)  # Search the left half
+
+def binary_search(data, target):
+    """
+    Wrapper function to call the recursive binary search with initial values.
+
+    Args:
+        data (list): The sorted list to search.
+        target (int): The value to search for.
+
+    Returns:
+        int: The index of the target if found, or -1 if not found.
+    """
+    return binary_search_recursive(data, target, 0, len(data) - 1)
+
+# Example usage:
+data = [2, 5, 7, 8, 11, 12]
+target = 13
+index = binary_search(data, target)
+
+if index != -1:
+    print(f"Target {target} found at index {index}")
+else:
+    print(f"Target {target} not found in the list")
+```
+
+- **O(n) - Linear Space**: The amount of memory used grows linearly with the input size.
+
+Example: Creating a copy of an array.
+
+```py
+def copy_array(arr):
+  """Creates a copy of an array.
+
+  Args:
+    arr: The input array.
+
+  Returns:
+    A new array that is a copy of the input array.
+  """
+  new_arr = arr[:]  # Creating a new array with the same elements
+  return new_arr
+
+my_array = [1, 2, 3, 4, 5]
+new_array = copy_array(my_array) # Copying the array
+print(new_array) # Output: [1, 2, 3, 4, 5]
+```
+
+- **O(n2) - Quadratic Space**: The amount of memory used grows quadratically with the input size.
+
+Example: Creating a 2D array where the dimensions are based on the input size.
+
+```py
+def create_2d_array(n):
+    """
+    Creates a 2D array (n x n) filled with zeros.
+
+    Args:
+        n (int): The size of the dimensions of the 2D array.
+
+    Returns:
+        list: A 2D array (list of lists) of size n x n.
+    """
+    # Create an empty 2D array
+    array_2d = []
+
+    # Populate the 2D array with zeros
+    for i in range(n):
+        row = [0] * n  # Create a row with n zeros
+        array_2d.append(row)  # Add the row to the 2D array
+
+    return array_2d
+
+# Example usage:
+n = 5
+matrix = create_2d_array(n)
+
+# Print the 2D array
+for row in matrix:
+    print(row)
+```
+
+**Analyzing Space Complexity**
+
+To determine the space complexity of an algorithm, we analyze the amount of memory it uses as a function of the input size. We consider the space used by variables, data structures, and recursive calls.
+
+- **Variables**: Each variable uses a constant amount of space.
+- **Data Structures**: The space used by a data structure depends on its size and the type of data it stores.
+- **Recursive Calls**: Each recursive call adds a new frame to the call stack, which uses memory to store the function's local variables and return address.
+
 #### <a name="chapter11part1.3"></a>Chapter 11 - Part 1.3: Trade-offs Between Time and Space Complexity
+
+Often, there's a trade-off between time and space complexity. We can sometimes reduce the runtime of an algorithm by using more memory, or vice versa. Choosing the right balance depends on the specific problem and the available resources.
+
+- **Example**: Consider searching for an element in an unsorted array.
+  - **Linear Search**: O(n) time complexity, O(1) space complexity.
+  - **Hash Table**: We could insert all elements into a hash table first (O(n) time and space), then look up the element in O(1) time. This trades space for time.
 
 #### <a name="chapter11part1.4"></a>Chapter 11 - Part 1.4: Practical Examples
 
+- **Real-world example**: Consider a social media platform. When displaying a user's feed, the platform needs to retrieve and display posts from the user's friends.
+  - Naive Approach: Retrieve all posts from all users and then filter for the user's friends. This would have a high time complexity, especially for users with many connections.
+  - Optimized Approach: Maintain a list of friends for each user and only retrieve posts from those friends. This significantly reduces the time complexity.
+ 
+- **Real-world example**: Consider a recommendation system for an e-commerce website.
+  - Naive Approach: Compare each user's purchase history with every other user's purchase history to find similar users. This would have a high time complexity, especially with a large user base.
+  - Optimized Approach: Use techniques like collaborative filtering or content-based filtering to reduce the number of comparisons needed, improving the time complexity.
+ 
+- **Hypothetical Scenario**: Imagine you are developing a system to process financial transactions. The system needs to validate each transaction against a set of rules. A poorly designed validation process could lead to significant delays, especially during peak hours. Understanding time complexity helps you choose efficient algorithms for rule validation, ensuring the system can handle a high volume of transactions without performance issues.
+
 #### <a name="chapter11part2"></a>Chapter 11 - Part 2: Implementing and Analyzing Sorting Algorithms: Merge Sort, Quick Sort, Heap Sort
+
+Sorting algorithms are fundamental to computer science and are used extensively in various applications, from database management to search engines. Understanding their principles, implementation, and performance characteristics is crucial for any programmer. This lesson will delve into three important sorting algorithms: Merge Sort, Quick Sort, and Heap Sort. We will explore their underlying logic, provide Python implementations, and analyze their time and space complexities. By the end of this lesson, you will have a solid understanding of these algorithms and be able to apply them effectively in your projects.
 
 #### <a name="chapter11part2.1"></a>Chapter 11 - Part 2.1: Merge Sort
 
+Merge Sort is a divide-and-conquer algorithm that recursively divides a list into smaller sublists, sorts them, and then merges them back together to produce a sorted list.
+
+**Algorithm Overview**
+
+- **Divide**: Divide the unsorted list into n sublists, each containing one element (a list of one element is considered sorted).
+
+- **Conquer**: Repeatedly merge sublists to produce new sorted sublists until there is only one sublist remaining. This will be the sorted list.
+
+**Python Implementation**
+
+```py
+def merge_sort(arr):
+    """
+    Sorts a list using the Merge Sort algorithm.
+
+    Args:
+        arr: The list to be sorted.
+
+    Returns:
+        A new sorted list.
+    """
+    if len(arr) <= 1:
+        return arr  # Base case: already sorted
+
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+
+    left = merge_sort(left)  # Recursive call on the left half
+    right = merge_sort(right)  # Recursive call on the right half
+
+    return merge(left, right)
+
+
+def merge(left, right):
+    """
+    Merges two sorted lists into a single sorted list.
+
+    Args:
+        left: The first sorted list.
+        right: The second sorted list.
+
+    Returns:
+        A new sorted list containing all elements from both input lists.
+    """
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    # Add any remaining elements from either list
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+# Example usage:
+my_list = [38, 27, 43, 3, 9, 82, 10]
+sorted_list = merge_sort(my_list)
+print(f"Sorted list: {sorted_list}")  # Output: Sorted list: [3, 9, 10, 27, 38, 43, 82]
+```
+
+**Time and Space Complexity**
+
+- **Time Complexity**: O(n log n) in all cases (best, average, and worst). This is because the list is always divided into halves, and the merge operation takes linear time.
+- **Space Complexity**: O(n). Merge Sort requires extra space proportional to the size of the input list to store the merged sublists.
+
+**Example**
+
+Let's trace the execution of merge_sort([38, 27, 43, 3, 9, 82, 10]):
+- The list is divided into [38, 27, 43, 3] and [9, 82, 10].
+- These sublists are further divided recursively until we have lists of size 1.
+- The merge operation starts combining these lists:
+  - [38] and [27] merge into [27, 38].
+  - [43] and [3] merge into [3, 43].
+  - [27, 38] and [3, 43] merge into [3, 27, 38, 43].
+  - Similarly, [9], [82], and [10] merge into [9, 10, 82].
+  - Finally, [3, 27, 38, 43] and [9, 10, 82] merge into [3, 9, 10, 27, 38, 43, 82].
+
 #### <a name="chapter11part2.2"></a>Chapter 11 - Part 2.2: Quick Sort
+
+Quick Sort is another divide-and-conquer algorithm that works by selecting a 'pivot' element from the list and partitioning the other elements into two sub-lists, according to whether they are less than or greater than the pivot. The sub-lists are then sorted recursively.
+
+**Algorithm Overview**
+
+- **Choose a Pivot**: Select an element from the list to be the pivot. There are different strategies for choosing a pivot (e.g., first element, last element, random element).
+- **Partition**: Reorder the list so that all elements with values less than the pivot come before the pivot, while all elements with values greater than the pivot come after it (equal values can go either way). After this partitioning, the pivot is in its final position.
+- **Recursively Sort**: Recursively apply the above steps to the sub-list of elements with smaller values and the sub-list of elements with greater values.
+
+**Python Implementation**
+
+```py
+def quick_sort(arr):
+    """
+    Sorts a list using the Quick Sort algorithm.
+
+    Args:
+        arr: The list to be sorted.
+
+    Returns:
+        The sorted list.
+    """
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[len(arr) // 2]  # Choose middle element as pivot
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    return quick_sort(left) + middle + quick_sort(right)
+
+
+# Example usage:
+my_list = [38, 27, 43, 3, 9, 82, 10]
+sorted_list = quick_sort(my_list)
+print(f"Sorted list: {sorted_list}")  # Output: Sorted list: [3, 9, 10, 27, 38, 43, 82]
+```
+
+**Time and Space Complexity**
+
+- **Time Complexity**:
+  - **Best Case**: O(n log n) - occurs when the pivot divides the list into roughly equal halves in each step.
+  - **Average Case**: O(n log n) - on average, Quick Sort performs very well.
+  - **Worst Case**: O(n^2) - occurs when the pivot consistently results in highly unbalanced partitions (e.g., when the list is already sorted and the first element is chosen as the pivot).
+ 
+- **Space Complexity**: O(log n) average, O(n) worst case. The space complexity is mainly due to the recursive calls. In the average case, the depth of the recursion is logarithmic. In the worst case (unbalanced partitions), the depth can be linear.
+
+**Pivot Selection Strategies**
+
+The choice of pivot significantly impacts Quick Sort's performance. Here are some common strategies:
+
+- **First Element**: Simple to implement but can lead to O(n^2) complexity for already sorted or nearly sorted lists.
+- **Last Element**: Similar to the first element, also susceptible to O(n^2) complexity.
+- **Random Element**: Helps to avoid worst-case scenarios by introducing randomness.
+- **Median-of-Three**: Choose the median of the first, middle, and last elements as the pivot. This often provides a better pivot than simply choosing one of these elements.
+
+**In-Place Quick Sort**
+
+The implementation above is not in-place because it creates new lists (left, middle, right) during each partition. An in-place Quick Sort modifies the original list directly, reducing space complexity.
+
+```py
+def quick_sort_in_place(arr, low, high):
+    """
+    Sorts a list in-place using the Quick Sort algorithm.
+
+    Args:
+        arr: The list to be sorted.
+        low: The starting index of the partition.
+        high: The ending index of the partition.
+    """
+    if low < high:
+        pi = partition(arr, low, high)
+
+        quick_sort_in_place(arr, low, pi - 1)  # Sort left partition
+        quick_sort_in_place(arr, pi + 1, high) # Sort right partition
+
+
+def partition(arr, low, high):
+    """
+    Partitions the list around a pivot element.
+
+    Args:
+        arr: The list to be partitioned.
+        low: The starting index of the partition.
+        high: The ending index of the partition.
+
+    Returns:
+        The index of the pivot element after partitioning.
+    """
+    pivot = arr[high]  # Choose the last element as the pivot
+    i = low - 1  # Index of smaller element
+
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]  # Swap elements
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+
+# Example usage:
+my_list = [38, 27, 43, 3, 9, 82, 10]
+quick_sort_in_place(my_list, 0, len(my_list) - 1)
+print(f"Sorted list: {my_list}")  # Output: Sorted list: [3, 9, 10, 27, 38, 43, 82]
+```
+
+**Example**
+
+Let's trace the execution of quick_sort_in_place([38, 27, 43, 3, 9, 82, 10], 0, 6):
+
+- Pivot is 10. The list is partitioned such that elements smaller than 10 are on the left, and larger elements are on the right.
+- After the first partition, the list might look like [3, 9, 10, 38, 27, 43, 82]. The pivot (10) is now in its correct sorted position.
+- The algorithm recursively sorts the sublists [3, 9] and [38, 27, 43, 82].
 
 #### <a name="chapter11part2.3"></a>Chapter 11 - Part 2.3: Heap Sort
 
+Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure. It leverages the properties of a heap to efficiently sort elements.
+
+**Algorithm Overview**
+
+- **Build a Heap**: Convert the list into a max-heap (for ascending order) or a min-heap (for descending order). In a max-heap, the value of each node is greater than or equal to the value of its children.
+- **Extract Elements**: Repeatedly extract the maximum element (from a max-heap) or the minimum element (from a min-heap) from the root of the heap, and place it at the end of the sorted portion of the list. After each extraction, the heap is re-heapified to maintain the heap property.
+
+**Python Implementation**
+
+```py
+def heap_sort(arr):
+    """
+    Sorts a list using the Heap Sort algorithm.
+
+    Args:
+        arr: The list to be sorted.
+
+    Returns:
+        The sorted list.
+    """
+    n = len(arr)
+
+    # Build a max-heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]  # Swap root with last element
+        heapify(arr, i, 0)  # Heapify the reduced heap
+    return arr
+
+
+def heapify(arr, n, i):
+    """
+    Heapifies a subtree rooted at index i.
+
+    Args:
+        arr: The list representing the heap.
+        n: The size of the heap.
+        i: The index of the root of the subtree.
+    """
+    largest = i  # Initialize largest as root
+    left = 2 * i + 1  # left = 2*i + 1
+    right = 2 * i + 2  # right = 2*i + 2
+
+    # See if left child of root exists and is greater than root
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    # See if right child of root exists and is greater than largest
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    # If largest is not root
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+
+        # Recursively heapify the affected sub-tree
+        heapify(arr, n, largest)
+
+
+# Example usage:
+my_list = [38, 27, 43, 3, 9, 82, 10]
+sorted_list = heap_sort(my_list)
+print(f"Sorted list: {sorted_list}")  # Output: Sorted list: [3, 9, 10, 27, 38, 43, 82]
+```
+
+**Time and Space Complexity**
+
+- **Time Complexity**: O(n log n) in all cases (best, average, and worst). Building the heap takes O(n) time, and extracting each element and heapifying takes O(log n) time, repeated n times.
+- **Space Complexity**: O(1). Heap Sort is an in-place sorting algorithm, meaning it requires only a constant amount of extra space.
+
+**Example**
+
+Let's trace the execution of heap_sort([38, 27, 43, 3, 9, 82, 10]):
+
+- The list is transformed into a max-heap.
+- The largest element (82) is swapped with the last element (10). The heap size is reduced by 1.
+- The heap is re-heapified.
+- This process is repeated until the list is sorted.
+
 #### <a name="chapter11part2.4"></a>Chapter 11 - Part 2.4: Comparison of Sorting Algorithms
+
+|Algorithm |	Time Complexity (Best) |	Time Complexity (Average) |	Time Complexity (Worst) |	Space Complexity |
+| :------: | :------: | :------: | :------: | :------: |
+|Merge Sort|	O(n log n)|	O(n log n)|	O(n log n)|	O(n)|
+|Quick Sort|	O(n log n)|	O(n log n)|	O(n^2)|	O(log n) avg, O(n) worst|
+|Heap Sort|	O(n log n)|	O(n log n)|	O(n log n)|	O(1)|
 
 #### <a name="chapter11part3"></a>Chapter 11 - Part 3: Graph Data Structures: Representation and Traversal (BFS, DFS)
 
