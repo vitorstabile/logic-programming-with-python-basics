@@ -155,7 +155,10 @@
     - [Chapter 9 - Part 6: Running a Python Script as a Subprocess](#chapter9part6)
     - [Chapter 9 - Part 7: Using Shell Commands (shell=True)](#chapter9part7)
     - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
-11. [Chapter 11: Advanced Data Structures and Algorithms](#chapter11)
+10. [Chapter 10: Operating System Module and Command-Line Arguments](#chapter10)
+    - [Chapter 10 - Part 1: Using the os Module](#chapter10part1)
+    - [Chapter 10 - Part 2: Using argparse for Command-Line Arguments](#chapter10part2)
+12. [Chapter 11: Advanced Data Structures and Algorithms](#chapter11)
     - [Chapter 11 - Part 1: Understanding Time and Space Complexity](#chapter11part1)
       - [Chapter 11 - Part 1.1: Time Complexity](#chapter11part1.1)
       - [Chapter 11 - Part 1.2: Space Complexity](#chapter11part1.2)
@@ -180,7 +183,7 @@
       - [Chapter 11 - Part 6.1: Understanding the Problem: Search in Large Datasets](#chapter11part6.1)
       - [Chapter 11 - Part 6.2: Optimization Techniques](#chapter11part6.2)
       - [Chapter 11 - Part 6.3: Practical Examples and Demonstrations](#chapter11part6.3)
-12. [Chapter 12: Object-Oriented Programming (OOP) Deep Dive](#chapter12)
+13. [Chapter 12: Object-Oriented Programming (OOP) Deep Dive](#chapter12)
     - [Chapter 12 - Part 1: Advanced Class Design: Abstract Classes and Interfaces](#chapter12part1)
       - [Chapter 12 - Part 1.1: Abstract Classes](#chapter12part1.1)
       - [Chapter 12 - Part 1.2: Interfaces](#chapter12part1.2)
@@ -207,7 +210,7 @@
       - [Chapter 12 - Part 6.2: Case Study: A Plugin-Based Data Processing Application](#chapter12part6.2)
       - [Chapter 12 - Part 6.3: Exercise: Extending the Plugin-Based Application](#chapter12part6.3)
       - [Chapter 12 - Part 6.4: Real-World Application](#chapter12part6.4)
-13. [Chapter 13: Concurrency and Parallelism](#chapter13)
+14. [Chapter 13: Concurrency and Parallelism](#chapter13)
     - [Chapter 13 - Part 1: Threads vs. Processes: Understanding the GIL](#chapter13part1)
       - [Chapter 13 - Part 1.1: Threads vs. Processes: A Fundamental Distinction](#chapter13part1.1)
       - [Chapter 13 - Part 1.2: The Global Interpreter Lock (GIL)](#chapter13part1.2)
@@ -233,7 +236,7 @@
       - [Chapter 13 - Part 6.3: Implementing Concurrency with asyncio](#chapter13part6.3)
       - [Chapter 13 - Part 6.4: Choosing Between Threads and asyncio](#chapter13part6.4)
       - [Chapter 13 - Part 6.5: Best Practices for Concurrent Web Scraping](#chapter13part6.5)
-14. [Chapter 14: Working with Databases](#chapter14)
+15. [Chapter 14: Working with Databases](#chapter14)
     - [Chapter 14 - Part 1: Advanced SQLAlchemy: Relationships, Inheritance, and Custom Types](#chapter14part1)
       - [Chapter 14 - Part 1.1: SQLAlchemy Relationships](#chapter14part1.1)
       - [Chapter 14 - Part 1.2: SQLAlchemy Inheritance](#chapter14part1.2)
@@ -262,7 +265,7 @@
       - [Chapter 14 - Part 6.2: Defining Models with SQLAlchemy](#chapter14part6.2)
       - [Chapter 14 - Part 6.3: Performing CRUD Operations](#chapter14part6.3)
       - [Chapter 14 - Part 6.4: Structuring Your Application](#chapter14part6.4)
-15. [Chapter 15: Decorators and Metaprogramming](#chapter15)
+16. [Chapter 15: Decorators and Metaprogramming](#chapter15)
     - [Chapter 15 - Part 1: Advanced Decorator Techniques: Parameterized Decorators and Class Decorators](#chapter15part1)
       - [Chapter 15 - Part 1.1: Parameterized Decorators](#chapter15part1.1)
       - [Chapter 15 - Part 1.2: Class Decorators](#chapter15part1.2)
@@ -283,7 +286,7 @@
     - [Chapter 15 - Part 5: Practical Exercise: Creating a Custom Validation Framework Using Decorators](#chapter15part5)
       - [Chapter 15 - Part 5.1: Advanced Decorator Techniques for Validation](#chapter15part5.1)
       - [Chapter 15 - Part 5.2: Building a Custom Validation Framework](#chapter15part5.2)
-16. [Chapter 16: Testing and Debugging](#chapter16)
+17. [Chapter 16: Testing and Debugging](#chapter16)
     - [Chapter 16 - Part 1: Advanced Unit Testing with `pytest`: Fixtures, Parametrization, and Mocking](#chapter16part1)
       - [Chapter 16 - Part 1.1: Fixtures: Managing Test Dependencies](#chapter16part1.1)
       - [Chapter 16 - Part 1.2: Parametrization: Running Tests with Multiple Inputs](#chapter16part1.2)
@@ -315,7 +318,7 @@
       - [Chapter 16 - Part 6.3: Setting Up the Testing Environment](#chapter16part6.3)
       - [Chapter 16 - Part 6.4: Implementing TDD for A*](#chapter16part6.4)
       - [Chapter 16 - Part 6.5: Benefits of TDD](#chapter16part6.5)
-17. [Chapter 17: Advanced Python Libraries and Frameworks](#chapter17)
+18. [Chapter 17: Advanced Python Libraries and Frameworks](#chapter17)
     - [Chapter 17 - Part 1: Data Science with Pandas: Advanced Data Manipulation and Analysis](#chapter17part1)
       - [Chapter 17 - Part 1.1: Multi-Indexing](#chapter17part1.1)
       - [Chapter 17 - Part 1.2: Advanced Grouping Operations](#chapter17part1.2)
@@ -336,7 +339,7 @@
     - [Chapter 17 - Part 5: Practical Exercise: Building a Machine Learning Model and Deploying it as a Web API](#chapter17part5)
       - [Chapter 17 - Part 5.1: Model Building with Scikit-learn](#chapter17part5.1)
       - [Chapter 17 - Part 5.2: API Deployment with Flask](#chapter17part5.2)
-18. [Chapter 18: Design Patterns](#chapter18)
+19. [Chapter 18: Design Patterns](#chapter18)
     - [Chapter 18 - Part 1: SOLID Principles Overview](#chapter18part1)
       - [Chapter 18 - Part 1.1: Single Responsibility Principle (SRP)](#chapter18part1.1)
       - [Chapter 18 - Part 1.2: Open/Closed Principle (OCP)](#chapter18part1.2)
@@ -8559,7 +8562,167 @@ if __name__ == "__main__":
 
 ```
 
+## <a name="chapter10"></a>Chapter 10: Operating System Module and Command-Line Arguments
+
+#### <a name="chapter10part1"></a>Chapter 10 - Part 1: Using the os Module
+
+Python’s os module lets you interact with the operating system—reading directories, managing files, environment variables, etc.
+
+**Getting Info About the Current Directory**
+
+```py
+import os
+
+# Get current working directory
+cwd = os.getcwd()
+print("Current Working Directory:", cwd)
+```
+
+**Listing Files in a Directory**
+
+```py
+files = os.listdir('.')
+print("Files in current directory:", files)
+```
+
+**Creating and Removing Directories**
+
+```py
+# Create a new directory
+os.mkdir('example_dir')
+
+# Remove a directory
+os.rmdir('example_dir')
+```
+
+**Walking Through a Directory Tree**
+
+```py
+for root, dirs, files in os.walk('.'):
+    print("Directory:", root)
+    print("Subdirectories:", dirs)
+    print("Files:", files)
+```
+
+**Environment Variables**
+
+```py
+# Get an environment variable
+home = os.environ.get('HOME')
+print("Home directory:", home)
+
+# Set an environment variable
+os.environ['MY_APP_ENV'] = 'development'
+```
+
+**File/Path Utilities (with os.path)**
+
+```py
+path = 'some_file.txt'
+
+# Check if a path exists
+print("Exists?", os.path.exists(path))
+
+# Join paths safely
+new_path = os.path.join('folder', 'file.txt')
+print("Joined Path:", new_path)
+
+# Get file name
+print("Base Name:", os.path.basename(new_path))
+
+# Get directory name
+print("Directory:", os.path.dirname(new_path))
+```
+
+#### <a name="chapter10part2"></a>Chapter 10 - Part 2: Using argparse for Command-Line Arguments
+
+The argparse module lets you add arguments to your Python script so users can pass input from the command line.
+
 ## <a name="chapter11"></a>Chapter 11: Advanced Data Structures and Algorithms
+
+**Basic Example**
+
+Create a file called greet.py:
+
+```py
+import argparse
+
+parser = argparse.ArgumentParser(description="Greet the user.")
+parser.add_argument("name", help="Your name")
+
+args = parser.parse_args()
+
+print(f"Hello, {args.name}!")
+```
+
+Run it:
+
+```py
+python greet.py Alice
+# Output: Hello, Alice!
+```
+
+**Adding Optional Arguments**
+
+```py
+import argparse
+
+parser = argparse.ArgumentParser(description="Greet the user optionally with enthusiasm.")
+parser.add_argument("name", help="Your name")
+parser.add_argument("--excited", action="store_true", help="Add excitement")
+
+args = parser.parse_args()
+
+if args.excited:
+    print(f"Hello, {args.name}!!! 🎉")
+else:
+    print(f"Hello, {args.name}.")
+```
+
+Run:
+
+```py
+python greet.py Bob --excited
+# Output: Hello, Bob!!! 🎉
+```
+
+**Adding Type and Default Value**
+
+```py
+parser.add_argument("--repeat", type=int, default=1, help="Number of repetitions")
+```
+
+Use it like this:
+
+```py
+python greet.py Alice --repeat 3
+```
+
+**Putting it All Together**
+
+```py
+import argparse
+
+parser = argparse.ArgumentParser(description="Custom greeting generator.")
+parser.add_argument("name", help="Name of the user")
+parser.add_argument("--excited", action="store_true", help="Greet with excitement")
+parser.add_argument("--repeat", type=int, default=1, help="Repeat the greeting N times")
+
+args = parser.parse_args()
+
+greeting = f"Hello, {args.name}"
+if args.excited:
+    greeting += "!!! 🎉"
+
+for _ in range(args.repeat):
+    print(greeting)
+```
+
+Try this:
+
+```py
+python greet.py Eve --excited --repeat 2
+```
 
 #### <a name="chapter11part1"></a>Chapter 11 - Part 1: Understanding Time and Space Complexity
 
