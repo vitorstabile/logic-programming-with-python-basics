@@ -109,6 +109,7 @@
 6. [Chapter 6: Object-Oriented Programming](#chapter6)
     - [Chapter 6 - Part 1: The Object-Oriented Approach](#chapter6part1)
       - [Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology](#chapter6part1.1)
+      - [Chapter 6 - Part 1.2: Type Hint](#chapter6part1.2)
     - [Chapter 6 - Part 2: Custom Classes](#chapter6part2)
       - [Chapter 6 - Part 2.1: Attributes and Methods](#chapter6part2.1)
       - [Chapter 6 - Part 2.2: Inheritance and Polymorphism](#chapter6part2.2)
@@ -154,22 +155,6 @@
     - [Chapter 9 - Part 6: Running a Python Script as a Subprocess](#chapter9part6)
     - [Chapter 9 - Part 7: Using Shell Commands (shell=True)](#chapter9part7)
     - [Chapter 9 - Part 8: Killing a Running Subprocess](#chapter9part8)
-10. [Chapter 10: Design Patterns](#chapter10)
-    - [Chapter 10 - Part 1: SOLID Principles Overview](#chapter10part1)
-      - [Chapter 10 - Part 1.1: Single Responsibility Principle (SRP)](#chapter10part1.1)
-      - [Chapter 10 - Part 1.2: Open/Closed Principle (OCP)](#chapter10part1.2)
-      - [Chapter 10 - Part 1.3: Liskov Substitution Principle (LSP)](#chapter10part1.3)
-      - [Chapter 10 - Part 1.4: Interface Segregation Principle (ISP)](#chapter10part1.4)
-      - [Chapter 10 - Part 1.5: Dependency Inversion Principle (DIP)](#chapter10part1.5)
-    - [Chapter 10 - Part 2: Creational Design Patterns](#chapter10part2)
-      - [Chapter 10 - Part 2.1: Factory Pattern](#chapter10part2.1)
-      - [Chapter 10 - Part 2.2: Singleton Pattern](#chapter10part2.2)
-      - [Chapter 10 - Part 2.3: Abstract Factory Pattern](#chapter10part2.3)
-      - [Chapter 10 - Part 2.4: Builder Pattern](#chapter10part2.4)
-      - [Chapter 10 - Part 2.5: Prototype Pattern](#chapter10part2.5)
-    - [Chapter 10 - Part 3: Structural Design Patterns](#chapter10part3)
-      - [Chapter 10 - Part 3.1: Adapter Pattern](#chapter10part3.1)
-    - [Chapter 10 - Part 4: Behavioral Design Patterns](#chapter10part4)
 11. [Chapter 11: Advanced Data Structures and Algorithms](#chapter11)
     - [Chapter 11 - Part 1: Understanding Time and Space Complexity](#chapter11part1)
       - [Chapter 11 - Part 1.1: Time Complexity](#chapter11part1.1)
@@ -351,6 +336,22 @@
     - [Chapter 17 - Part 5: Practical Exercise: Building a Machine Learning Model and Deploying it as a Web API](#chapter17part5)
       - [Chapter 17 - Part 5.1: Model Building with Scikit-learn](#chapter17part5.1)
       - [Chapter 17 - Part 5.2: API Deployment with Flask](#chapter17part5.2)
+18. [Chapter 18: Design Patterns](#chapter18)
+    - [Chapter 18 - Part 1: SOLID Principles Overview](#chapter18part1)
+      - [Chapter 18 - Part 1.1: Single Responsibility Principle (SRP)](#chapter18part1.1)
+      - [Chapter 18 - Part 1.2: Open/Closed Principle (OCP)](#chapter18part1.2)
+      - [Chapter 18 - Part 1.3: Liskov Substitution Principle (LSP)](#chapter18part1.3)
+      - [Chapter 18 - Part 1.4: Interface Segregation Principle (ISP)](#chapter18part1.4)
+      - [Chapter 18 - Part 1.5: Dependency Inversion Principle (DIP)](#chapter18part1.5)
+    - [Chapter 18 - Part 2: Creational Design Patterns](#chapter18part2)
+      - [Chapter 18 - Part 2.1: Factory Pattern](#chapter18part2.1)
+      - [Chapter 18 - Part 2.2: Singleton Pattern](#chapter18part2.2)
+      - [Chapter 18 - Part 2.3: Abstract Factory Pattern](#chapter18part2.3)
+      - [Chapter 18 - Part 2.4: Builder Pattern](#chapter18part2.4)
+      - [Chapter 18 - Part 2.5: Prototype Pattern](#chapter18part2.5)
+    - [Chapter 18 - Part 3: Structural Design Patterns](#chapter18part3)
+      - [Chapter 18 - Part 3.1: Adapter Pattern](#chapter10part3.1)
+    - [Chapter 18 - Part 4: Behavioral Design Patterns](#chapter10part4)
 18. [Appendix A: Useful Python Code Snippet](#appendixa)
     - [Appendix A - Part 1: Setting Up a Python Project and Properly Calling from Command Line](#appendixapart1)
     - [Appendix A - Part 2: Create a Log file](#appendixapart2)
@@ -6853,6 +6854,34 @@ class Dog:
         return f"{self.name} says woof!"
 ```
 
+#### <a name="chapter6part1.2"></a>Chapter 6 - Part 1.2: Type Hint
+
+Type hints in Python are a way of adding information about the expected data types of variables, function arguments, and function return values. They were introduced in Python 3.5 as part of PEP 484.
+
+- **Purpose**: Type hints enhance code readability and help catch type-related errors early on, especially when using static analysis tools like mypy. They don't cause runtime errors in standard Python execution (unless you explicitly enforce them)
+
+- **Syntax**: Type hints use a colon : after a variable name and -> after a function's parameter list to indicate the return type.
+  - ```variable: type = value```
+  - ```def function(argument: type) -> return_type:```
+ 
+**Examples:**
+
+```py
+name: str = "Alice"
+age: int = 30
+
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+```
+
+**Benefits:**
+
+- **Improved Readability**: Makes it easier to understand the expected data types.
+- **Early Error Detection**: Static analysis tools can identify type inconsistencies before runtime.
+- **Better Code Completion and Suggestions**: IDEs can provide more accurate suggestions.
+- **Enhanced Maintainability**: Easier to refactor and maintain code with clear type information.
+
+
 #### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
 
 - Attributes: Variables that belong to the class and are used to store data about the objects.
@@ -8529,2506 +8558,6 @@ if __name__ == "__main__":
 
 
 ```
-
-## <a name="chapter10"></a>Chapter 10: Design Patterns
-
-### <a name="chapter10part1"></a>Chapter 10 - Part 1: SOLID Principles Overview
-
-The SOLID principles are a set of five design principles intended to make software designs more understandable, flexible, and maintainable. They are a subset of many principles promoted by Robert C. Martin. By adhering to these principles, you reduce the likelihood of creating fragile, rigid, and immobile designs, making your code more resilient to change and easier to extend. Understanding and applying SOLID principles is crucial for any developer aiming to write clean, maintainable, and scalable code.
-
-SOLID is an acronym representing five key principles of object-oriented design:
-
-- Single Responsibility Principle (SRP)
-- Open/Closed Principle (OCP)
-- Liskov Substitution Principle (LSP)
-- Interface Segregation Principle (ISP)
-- Dependency Inversion Principle (DIP)
-
-#### <a name="chapter10part1.1"></a>Chapter 10 - Part 1.1: Single Responsibility Principle (SRP)
-
-The Single Responsibility Principle states that a class should have only one reason to change. In other words, a class should have only one job. This doesn't mean a class should only have one method, but rather that all its methods should be related to a single, well-defined purpose.
-
-**Example:**
-
-Consider a class responsible for both user authentication and logging:
-
-```py
-class UserAuthenticator:
-    def authenticate_user(self, username, password):
-        # Authentication logic here
-        if self._is_valid_user(username, password):
-            self.log_authentication(username) # Logging responsibility
-            return True
-        else:
-            return False
-
-    def _is_valid_user(self, username, password):
-        # Check if user exists in database
-        return True
-
-    def log_authentication(self, username):
-        # Logging logic here
-        print(f"User {username} authenticated")
-```
-
-This class violates SRP because it has two responsibilities: authenticating users and logging authentication events. If the logging mechanism needs to change (e.g., switch to a different logging library or format), this class would need to be modified, even if the authentication logic remains the same.
-
-**Solution:**
-
-Separate the logging responsibility into a dedicated class:
-
-```py
-class UserAuthenticator:
-    def authenticate_user(self, username, password):
-        # Authentication logic here
-        if self._is_valid_user(username, password):
-            self.logger.log_authentication(username) # Delegate logging
-            return True
-        else:
-            return False
-
-    def _is_valid_user(self, username, password):
-        # Check if user exists in database
-        return True
-
-    def __init__(self, logger):
-        self.logger = logger
-
-
-class AuthenticationLogger:
-    def log_authentication(self, username):
-        # Logging logic here
-        print(f"User {username} authenticated")
-
-# Usage
-logger = AuthenticationLogger()
-authenticator = UserAuthenticator(logger)
-authenticator.authenticate_user("john_doe", "password123")
-```
-
-Now, ```UserAuthenticator``` is only responsible for authenticating users, and ```AuthenticationLogger``` is responsible for logging. Changes to the logging mechanism will only affect the ```AuthenticationLogger``` class, adhering to SRP.
-
-**Benefits:**
-
-- **Improved Cohesion**: Classes are more focused and easier to understand.
-- **Reduced Coupling**: Changes in one area are less likely to affect other areas.
-- **Increased Reusability**: Single-purpose classes are easier to reuse in different contexts.
-
-#### <a name="chapter10part1.2"></a>Chapter 10 - Part 1.2: Open/Closed Principle (OCP)
-
-The Open/Closed Principle states that software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. This means you should be able to add new functionality without modifying existing code.
-
-**Example:**
-
-Consider a class that calculates the area of different shapes:
-
-```py
-class AreaCalculator:
-    def calculate_area(self, shape, width, height):
-        if shape == "rectangle":
-            return width * height
-        elif shape == "circle":
-            return 3.14 * (width/2) * (width/2) # Assuming width is diameter
-        # ... more shapes
-```
-
-This class violates OCP because every time a new shape is added, the calculate_area method needs to be modified.
-
-**Solution:**
-
-Use inheritance and polymorphism to create an abstract Shape class with a calculate_area method. Each shape class then inherits from Shape and implements its own calculate_area method.
-
-```py
-from abc import ABC, abstractmethod
-
-class Shape(ABC):
-    @abstractmethod
-    def calculate_area(self):
-        pass
-
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-    def calculate_area(self):
-        return self.width * self.height
-
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
-
-    def calculate_area(self):
-        return 3.14 * self.radius * self.radius
-
-class AreaCalculator:
-    def calculate_area(self, shape):
-        return shape.calculate_area()
-
-# Usage
-rectangle = Rectangle(5, 10)
-circle = Circle(7)
-calculator = AreaCalculator()
-print(f"Rectangle area: {calculator.calculate_area(rectangle)}")
-print(f"Circle area: {calculator.calculate_area(circle)}")
-```
-
-Now, to add a new shape, you simply create a new class that inherits from Shape and implements the calculate_area method, without modifying the existing AreaCalculator class.
-
-**Benefits:**
-
-- **Increased Stability**: Existing code remains unchanged, reducing the risk of introducing bugs.
-- **Improved Extensibility**: New functionality can be added easily without affecting existing code.
-- **Reduced Testing Effort**: Only the new code needs to be tested, not the existing code.
-
-#### <a name="chapter10part1.3"></a>Chapter 10 - Part 1.3: Liskov Substitution Principle (LSP)
-
-The Liskov Substitution Principle states that subtypes should be substitutable for their base types without altering the correctness of the program. In simpler terms, if you have a class ```A``` and a class ```B``` that inherits from ```A```, you should be able to use an object of class ```B``` anywhere an object of class ```A``` is expected, without causing unexpected behavior.
-
-**Example:**
-
-Consider a Rectangle class and a Square class that inherits from Rectangle:
-
-```py
-class Rectangle:
-    def __init__(self, width, height):
-        self._width = width
-        self._height = height
-
-    @property
-    def width(self):
-        return self._width
-
-    @width.setter
-    def width(self, width):
-        self._width = width
-
-    @property
-    def height(self):
-        return self._height
-
-    @height.setter
-    def height(self, height):
-        self._height = height
-
-    def calculate_area(self):
-        return self._width * self._height
-
-class Square(Rectangle):
-    def __init__(self, side):
-        super().__init__(side, side)
-        self._side = side
-
-    @property
-    def width(self):
-        return self._side
-
-    @width.setter
-    def width(self, width):
-        self._width = width
-        self._height = width # Ensure height is also updated
-
-    @property
-    def height(self):
-        return self._side
-
-    @height.setter
-    def height(self, height):
-        self._height = height
-        self._width = height # Ensure width is also updated
-```
-
-In this example, Square inherits from Rectangle. However, setting the width of a Square should also set its height, and vice versa. If you have a function that expects a Rectangle and sets its width and height independently, passing a Square to that function could lead to unexpected results, violating LSP.
-
-```py
-def process_rectangle(rectangle):
-    rectangle.width = 5
-    rectangle.height = 10
-    expected_area = 5 * 10
-    actual_area = rectangle.calculate_area()
-    print(f"Expected area: {expected_area}, Actual area: {actual_area}")
-    assert actual_area == expected_area, "LSP violation!"
-
-# Usage
-rectangle = Rectangle(2, 3)
-process_rectangle(rectangle) # Works fine
-
-square = Square(2)
-process_rectangle(square) # LSP violation!  The square's area will be 100, not 50
-```
-
-**Solution:**
-
-One way to solve this is to avoid inheritance in this case. Square and Rectangle are different concepts and should not be related through inheritance. Instead, they could both implement a common interface or abstract class, if needed.
-
-```py
-from abc import ABC, abstractmethod
-
-class Shape(ABC):
-    @abstractmethod
-    def calculate_area(self):
-        pass
-
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-
-    def calculate_area(self):
-        return self.width * self.height
-
-class Square(Shape):
-    def __init__(self, side):
-        self.side = side
-
-    def calculate_area(self):
-        return self.side * self.side
-```
-
-**Benefits:**
-
-- **Improved Reliability**: Ensures that subtypes behave as expected, preventing unexpected errors.
-- **Increased Maintainability**: Makes it easier to reason about the behavior of code that uses inheritance.
-- **Enhanced Reusability**: Allows subtypes to be used interchangeably with their base types.
-
-#### <a name="chapter10part1.4"></a>Chapter 10 - Part 1.4: Interface Segregation Principle (ISP)
-
-The Interface Segregation Principle states that a client should not be forced to depend on methods it does not use. In other words, a class should not be forced to implement interfaces that are irrelevant to it.
-
-**Example:**
-
-Consider an Animal interface with methods for flying, swimming, and running:
-
-```py
-from abc import ABC, abstractmethod
-
-class Animal(ABC):
-    @abstractmethod
-    def fly(self):
-        pass
-
-    @abstractmethod
-    def swim(self):
-        pass
-
-    @abstractmethod
-    def run(self):
-        pass
-
-class Bird(Animal):
-    def fly(self):
-        print("Bird flying")
-
-    def swim(self):
-        pass # Not all birds swim
-
-    def run(self):
-        print("Bird running")
-
-class Fish(Animal):
-    def fly(self):
-        pass # Fish cannot fly
-
-    def swim(self):
-        print("Fish swimming")
-
-    def run(self):
-        pass # Fish cannot run
-```
-
-This violates ISP because Fish is forced to implement the fly and run methods, even though it cannot fly or run. Similarly, Bird is forced to implement the swim method, even though not all birds swim.
-
-**Solution:**
-
-Segregate the Animal interface into smaller, more specific interfaces:
-
-```py
-from abc import ABC, abstractmethod
-
-class FlyingAnimal(ABC):
-    @abstractmethod
-    def fly(self):
-        pass
-
-class SwimmingAnimal(ABC):
-    @abstractmethod
-    def swim(self):
-        pass
-
-class RunningAnimal(ABC):
-    @abstractmethod
-    def run(self):
-        pass
-
-class Bird(FlyingAnimal, RunningAnimal):
-    def fly(self):
-        print("Bird flying")
-
-    def run(self):
-        print("Bird running")
-
-class Fish(SwimmingAnimal):
-    def swim(self):
-        print("Fish swimming")
-```
-
-Now, each class only implements the interfaces that are relevant to it, adhering to ISP.
-
-**Benefits:**
-
-- **Reduced Coupling**: Clients are not dependent on methods they do not use.
-- **Improved Cohesion**: Interfaces are more focused and easier to understand.
-- **Increased Flexibility**: Classes can implement only the interfaces that are relevant to them.
-
-#### <a name="chapter10part1.5"></a>Chapter 10 - Part 1.5: Dependency Inversion Principle (DIP)
-
-The Dependency Inversion Principle states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Secondly, abstractions should not depend on details. Details should depend on abstractions.
-
-**Example:**
-
-Consider a PasswordReminder class that depends directly on a MySQLConnection class:
-
-```py
-class MySQLConnection:
-    def connect(self):
-        print("Connecting to MySQL database")
-        return "MySQL Connection"
-
-class PasswordReminder:
-    def __init__(self, db_connection):
-        self.db_connection = db_connection
-
-    def remind_password(self, user_id):
-        connection = self.db_connection.connect()
-        print(f"Reminding password for user {user_id} using {connection}")
-
-# Usage
-db_connection = MySQLConnection()
-password_reminder = PasswordReminder(db_connection)
-password_reminder.remind_password(123)
-```
-
-This violates DIP because the PasswordReminder (high-level module) depends directly on the MySQLConnection (low-level module). If you want to switch to a different database (e.g., PostgreSQL), you would need to modify the PasswordReminder class.
-
-**Solution:**
-
-Introduce an abstraction (an interface or abstract class) between the high-level and low-level modules:
-
-```py
-from abc import ABC, abstractmethod
-
-class DBConnectionInterface(ABC):
-    @abstractmethod
-    def connect(self):
-        pass
-
-class MySQLConnection(DBConnectionInterface):
-    def connect(self):
-        print("Connecting to MySQL database")
-        return "MySQL Connection"
-
-class PostgreSQLConnection(DBConnectionInterface):
-    def connect(self):
-        print("Connecting to PostgreSQL database")
-        return "PostgreSQL Connection"
-
-class PasswordReminder:
-    def __init__(self, db_connection: DBConnectionInterface):
-        self.db_connection = db_connection
-
-    def remind_password(self, user_id):
-        connection = self.db_connection.connect()
-        print(f"Reminding password for user {user_id} using {connection}")
-
-# Usage
-mysql_connection = MySQLConnection()
-password_reminder = PasswordReminder(mysql_connection)
-password_reminder.remind_password(123)
-
-postgresql_connection = PostgreSQLConnection()
-password_reminder = PasswordReminder(postgresql_connection) # No changes needed in PasswordReminder
-password_reminder.remind_password(123)
-```
-
-Now, both PasswordReminder and MySQLConnection depend on the DBConnectionInterface abstraction. You can easily switch to a different database by creating a new class that implements the DBConnectionInterface without modifying the PasswordReminder class.
-
-**Benefits:**
-
-- **Reduced Coupling**: High-level modules are not dependent on low-level modules.
-- **Increased Reusability**: High-level modules can be reused with different low-level modules.
-- **Improved Testability**: It is easier to test high-level modules in isolation by using mock implementations of the abstractions.
-
-### <a name="chapter10part2"></a>Chapter 10 - Part 2: Creational Design Patterns
-
-Creational design patterns are fundamental tools in software development, offering elegant solutions to object creation challenges. They abstract the instantiation process, providing flexibility and control over how objects are created. This abstraction becomes crucial as systems grow in complexity, allowing developers to manage dependencies, improve code maintainability, and promote loose coupling. By understanding and applying creational patterns, you can build more robust, scalable, and adaptable software. This lesson will introduce you to the core concepts behind these patterns and set the stage for exploring specific creational patterns in detail.
-
-[Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
-
-Creational design patterns deal with the process of object creation. They provide mechanisms to create objects in a more controlled and flexible way than simply using the new operator or a constructor directly. The primary goal is to abstract the instantiation process, hiding the complexities of object creation from the client code. This abstraction offers several benefits:
-
-- **Decoupling**: Creational patterns decouple the client code from the specific classes being instantiated. The client interacts with an interface or abstract class, allowing for different concrete classes to be used without modifying the client code.
-
-- **Flexibility**: They provide flexibility in choosing which concrete class to instantiate at runtime. This is particularly useful when the specific class needed depends on configuration, user input, or other dynamic factors.
-
-- **Code Reusability**: Creational patterns often promote code reuse by encapsulating the object creation logic in a separate class or method. This avoids duplication of creation code throughout the application.
-
-- **Complexity Management**: They help manage the complexity of object creation, especially when objects require complex initialization or have dependencies on other objects.
-
-**Key Concepts**
-
-Several key concepts underpin creational design patterns:
-
-- **Abstraction**: Hiding the concrete implementation details of object creation behind an interface or abstract class.
-- **Encapsulation**: Encapsulating the object creation logic within a specific class or method.
-- **Delegation**: Delegating the responsibility of object creation to another class or method.
-- **Polymorphism**: Using polymorphism to create different types of objects based on the same interface.
-
-**Types of Creational Patterns**
-
-There are several well-established creational patterns, each addressing different object creation scenarios. We will be covering these in the following lessons:
-
-- **Singleton**: Ensures that only one instance of a class is created and provides a global point of access to it.
-- **Factory Method**: Defines an interface for creating an object, but lets subclasses decide which class to instantiate.
-- **Abstract Factory**: Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
-- **Builder**: Separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
-- **Prototype**: Creates new objects by copying an existing object, known as the prototype.
-
-#### <a name="chapter10part2.1"></a>Chapter 10 - Part 2.1: Factory Pattern
-
-The Factory Method pattern is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. This pattern promotes loose coupling by decoupling the object creation logic from the client code. Instead of directly instantiating objects, the client code relies on a factory method to create objects. This allows for greater flexibility and maintainability, as the object creation logic can be easily changed or extended without modifying the client code.
-
-[Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
-
-The Factory Method pattern revolves around defining an interface (or abstract class) for creating objects, but letting subclasses decide which class to instantiate. This means the superclass delegates the responsibility of object creation to its subclasses.
-
-**Key Components**
-
-- **Product**: The interface or abstract class that defines the type of object the factory method creates.
-- **Concrete Product**: Concrete classes that implement the Product interface. These are the actual objects that will be created.
-- **Creator**: The abstract class which declares the factory method. This method returns an object of type Product. The Creator also contains the core business logic that relies on Product objects.
-- **Concrete Creator**: Subclasses of the Creator which override the factory method to return an instance of a Concrete Product.
-
-**How it Works**
-
-- The client code interacts with the Creator class.
-- The Creator class defines a factory method, which is responsible for creating Product objects.
-- Concrete Creator subclasses override the factory method to return specific Concrete Product objects.
-- The client code calls the factory method to obtain a Product object, without needing to know the specific Concrete Product class being instantiated.
-
-**Benefits of Using the Factory Method Pattern**
-
-- **Decoupling**: Decouples the client code from the concrete classes of the objects it needs to create. The client only depends on the abstract Product interface and the Creator class.
-- **Flexibility**: Allows you to easily add new types of products without modifying existing client code. You simply create a new Concrete Product class and a corresponding Concrete Creator class.
-- **Single Responsibility Principle**: The responsibility of object creation is delegated to specialized factory classes, adhering to the Single Responsibility Principle.
-- **Open/Closed Principle**: You can extend the object creation logic without modifying the existing Creator class, adhering to the Open/Closed Principle.
-
-**Configuration-Based Factory**
-
-```py
-from abc import ABC, abstractmethod
-
-
-class Vehicle(ABC):
-
-    @abstractmethod
-    def drive(self):
-        pass
-
-
-class Car(Vehicle):
-    def drive(self):
-        print("Driving a Car")
-
-
-class Bike(Vehicle):
-    def drive(self):
-        print("Driving a Bike")
-
-
-class VehicleFactory(ABC):  # Abstract Factory
-
-    @abstractmethod
-    def create_vehicle(self, vehicle_type: str) -> Vehicle:
-        pass
-
-
-class ConcreteVehicleFactory(VehicleFactory):
-
-    def create_vehicle(self, vehicle_type: str) -> Vehicle:
-        if vehicle_type == "car":
-            return Car()
-        if vehicle_type == "bike":
-            return Bike()
-        else:
-            raise ValueError(f"Unknown vehicle type: {vehicle_type}")
-
-
-vehicle_factory = ConcreteVehicleFactory()
-vehicle_1 = vehicle_factory.create_vehicle("car")
-vehicle_2 = vehicle_factory.create_vehicle("bike")
-
-vehicle_1.drive() # Driving a Car
-vehicle_2.drive() # Driving a Bike
-```
-
-**Configuration-Based Factory Using Reflection (Obs: Based in the modules names and modules path)**
-
-
-```py
-# src/routes/interfaces.py
-
-from abc import ABC, abstractmethod
-
-
-class IRoute(ABC):
-    """Interface for route classes, enforcing method contracts."""
-
-    @abstractmethod
-    def common_function(self):
-        """A method that every route must implement."""
-        pass
-```
-
-```py
-# src/routes/route_example.py
-
-from src.routes.interfaces import IRoute
-
-
-class RouteExample(IRoute):
-    """Example implementation of a route following IRoute contract."""
-
-    def __init__(self):
-        print("RouteExample Class Instance Created")
-
-    def common_function(self):
-        print("RouteExample Class Executing a Function")
-
-```
-
-```py
-# src/routes/route_factory.py
-
-import importlib
-import inspect
-from src.routes.interfaces import IRoute
-
-class RouteFactory:
-    """Factory class for creating route instances dynamically."""
-
-    def __init__(self, route_name: str):
-        self.route_name = route_name
-
-    def create_route(self) -> IRoute:
-        """Dynamically imports and instantiates a route class."""
-        try:
-            route_path = "src.routes.{route_name}".format(route_name=self.route_name)
-            application_module = importlib.import_module(route_path)
-
-            route_classes = [
-                obj for name, obj in inspect.getmembers(application_module, inspect.isclass)
-                if issubclass(obj, IRoute) and obj.__module__ == route_path
-            ]
-
-            if not route_classes:
-                raise ImportError("No valid route class found in {route}".format(route=route_path))
-
-            return route_classes[0]()  # Instantiate the class
-
-        except Exception as e:
-            raise ImportError("Error trying to import route {route_name}. Error: {e}"
-                              .format(route_name=self.route_name, e=e))
-```
-
-
-```py
-# main.py
-
-from src.routes.route_factory import RouteFactory
-from src.routes.interfaces import IRoute
-
-def main(factory: RouteFactory):
-    """Main function that runs the application."""
-    class_instance: IRoute = factory.create_route()
-    class_instance.common_function()
-
-if __name__ == "__main__":
-    route_factory = RouteFactory("route_example")  # Dependency Injection
-    main(route_factory)
-```
-
-
-```
-RouteExample Class Instance Created
-RouteExample Class Executing a Function
-```
-
-In this code, we can see this
-
-| Category                 | Concept                               | Application in Code                                                                                                                      |
-| :-----------------------:| :------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------: |
-| Design Patterns          | Factory Pattern                       | RouteFactory is a Factory that dynamically loads and returns a route instance based on the input name.                                   |
-|                          | Dependency Injection                  | The create_route method returns an instance that adheres to the IRoute interface, allowing flexibility in adding new routes.             |
-| SOLID Principles         | Single Responsibility Principle (SRP) | RouteFactory is only responsible for creating route instances. RouteExample only implements business logic. IRoute defines the contract. |
-|                          | Open/Closed Principle (OCP)           | New route classes can be added without modifying existing code, as long as they implement IRoute.                                        |
-|                          | Liskov Substitution Principle (LSP)   | RouteExample correctly implements IRoute, ensuring it can be used interchangeably with any other IRoute implementation.                  |
-|                          | Interface Segregation Principle (ISP) | IRoute defines a minimal, specific contract (only common_function), preventing unnecessary method implementation in subclasses.          |
-|                          | Dependency Inversion Principle (DIP)  | RouteFactory depends on IRoute (abstraction) rather than concrete classes (RouteExample).                                                |
-| Architectural Principles | Modular Design                        | Each component (interface, factory, concrete class) is in its own module for separation of concerns.                                     |
-|                          | Plug-and-Play Architecture            | New routes can be added without changing the existing factory mechanism.                                                                 |
-|                          | Reflection & Dynamic Import           | Uses importlib and inspect to dynamically load route classes at runtime.                                                                 |
-
-
-#### <a name="chapter10part2.2"></a>Chapter 10 - Part 2.2: Singleton Pattern
-
-The Singleton pattern falls under the category of creational design patterns because it deals with object creation mechanisms, trying to create objects in a manner suitable to the situation. The core idea behind the Singleton pattern is to control the instantiation of a class, ensuring that only one instance exists. This single instance is then globally accessible, providing a centralized point of control or access for a specific resource or service.
-
-[Singleton Pattern](https://refactoring.guru/design-patterns/singleton)
-
-**Key Characteristics**
-
-- **Single Instance**: The class ensures that only one instance of itself is created.
-- **Global Access**: The single instance is accessible globally through a well-known access point.
-- **Controlled Instantiation**: The class is responsible for creating and managing its own instance.
-
-**When to Use the Singleton Pattern**
-
-The Singleton pattern is most appropriate in scenarios where:
-
-- **Exactly one instance of a class is required**: This is common for managing shared resources like database connections, configuration settings, or log files.
-- **Global access to the instance is necessary**: When different parts of the system need to access the same resource or service, a Singleton provides a convenient and controlled way to do so.
-- **Lazy initialization is desired**: The Singleton instance can be created only when it's first needed, which can improve performance in some cases.
-
-**Real-World Examples**
-
-- **Logger**: In many applications, a single logger instance is used to record events and errors. Using a Singleton ensures that all parts of the application write to the same log file, preventing inconsistencies and making it easier to analyze logs.
-
-- **Configuration Manager**: A configuration manager is often implemented as a Singleton to provide a single point of access to application settings. This ensures that all components of the application use the same configuration, avoiding conflicts and inconsistencies.
-
-- **Database Connection Pool**: Managing a pool of database connections can be efficiently handled by a Singleton. The Singleton ensures that all database operations use the same connection pool, optimizing resource usage and improving performance.
-
-**Basic Implementation**
-
-A simple way to implement the Singleton pattern is by using a class-level variable to store the instance and a static method to access it.
-
-```py
-class Singleton:
-    _instance = None  # Private class variable to hold the instance
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
-            # Perform any initialization here
-        return cls._instance
-
-# Example usage
-s1 = Singleton()
-s2 = Singleton()
-
-print(s1 is s2)  # Output: True (both variables point to the same instance)
-```
-
-**Thread-Safe Implementation**
-
-The basic implementation is not thread-safe. In a multithreaded environment, multiple threads could simultaneously check if not cls._instance and create multiple instances. To prevent this, we can use a locking mechanism.
-
-```py
-import threading
-
-class Singleton:
-    _instance = None
-    _lock = threading.Lock()
-
-    def __new__(cls, *args, **kwargs):
-        with cls._lock:
-            if not cls._instance:
-                cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
-# Example usage in a multithreaded environment
-def test_singleton():
-    singleton = Singleton()
-    print(f"Thread: {threading.current_thread().name}, Singleton ID: {id(singleton)}")
-
-threads = []
-for i in range(3):
-    thread = threading.Thread(target=test_singleton, name=f"Thread-{i+1}")
-    threads.append(thread)
-    thread.start()
-
-for thread in threads:
-    thread.join()
-```
-
-**Using Metaclasses**
-
-Another way to implement the Singleton pattern is by using metaclasses. Metaclasses are classes that define the behavior of other classes.
-
-```py
-class SingletonMeta(type):
-    _instances = {}
-    _lock = threading.Lock()
-
-    def __call__(cls, *args, **kwargs):
-        with cls._lock:
-            if cls not in cls._instances:
-                cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-class Singleton(metaclass=SingletonMeta):
-    def __init__(self):
-        # Perform initialization here
-        pass
-
-# Example usage
-singleton1 = Singleton()
-singleton2 = Singleton()
-
-print(singleton1 is singleton2)  # Output: True
-```
-
-**Borg Pattern (Shared State)**
-
-While not a strict Singleton, the Borg pattern (also known as the Monostate pattern) achieves a similar goal by ensuring that all instances of a class share the same state.
-
-```py
-class Borg:
-    _shared_state = {}
-
-    def __init__(self):
-        self.__dict__ = self._shared_state
-
-# Example usage
-borg1 = Borg()
-borg2 = Borg()
-
-borg1.state = "Initialized"
-print(borg2.state)  # Output: Initialized
-print(borg1.__dict__ is borg2.__dict__)  # Output: True
-```
-
-
-**Create a Configuration Class**
-
-```py
-class ConfigurationManager:
-    _shared_state = {}  # This dictionary will hold the shared state
-
-    def __new__(cls, *args, **kwargs):
-        obj = super().__new__(cls)
-        obj.__dict__ = cls._shared_state  # Make the instance's __dict__ reference the shared state
-        return obj
-
-    def __init__(self, config_name="default"):
-        if not hasattr(self, '_initialized'):  # Initialize only once
-            print(f"Initializing ConfigurationManager with config: {config_name}")
-            self.settings = {
-                "log_level": "INFO",
-                "database_url": "sqlite:///app.db",
-                "api_key": "your_default_api_key"
-            }
-            self.current_config_name = config_name
-            self._initialized = True
-        else:
-            print(f"ConfigurationManager already initialized. Current config: {self.current_config_name}")
-
-    def get_setting(self, key):
-        return self.settings.get(key)
-
-    def set_setting(self, key, value):
-        self.settings[key] = value
-        print(f"Setting '{key}' updated to '{value}'")
-
-
-config1 = ConfigurationManager('Developer')  # Output: Initializing ConfigurationManager with config: Developer
-config2 = ConfigurationManager('Production')  # Output: ConfigurationManager already initialized. Current config: Developer
-```
-
-**Manage Database Connection**
-
-```py
-import sqlite3
-import threading
-
-class DatabaseConnection:
-    _instance = None
-    _lock = threading.Lock()
-    _connection = None
-
-    def __new__(cls, db_name):
-        with cls._lock:
-            if not cls._instance:
-                cls._instance = super(DatabaseConnection, cls).__new__(cls)
-                cls._instance.db_name = db_name  # Store the database name
-                cls._instance._connect()  # Establish the connection
-        return cls._instance
-
-    def _connect(self):
-        try:
-            self._connection = sqlite3.connect(self.db_name)
-            print(f"Database connection established to: {self.db_name}")
-        except sqlite3.Error as e:
-            print(f"Error connecting to database: {e}")
-            self._connection = None
-
-    def get_connection(self):
-        if self._connection is None:
-            self._connect()  # Re-establish connection if it was lost
-        return self._connection
-
-    def close_connection(self):
-        if self._connection:
-            self._connection.close()
-            print("Database connection closed.")
-            self._connection = None
-
-# Example usage
-def test_database_connection():
-    db_connection1 = DatabaseConnection("mydatabase.db")
-    conn1 = db_connection1.get_connection()
-    cursor1 = conn1.cursor()
-    cursor1.execute("CREATE TABLE IF NOT EXISTS test_table (id INTEGER PRIMARY KEY, name TEXT)")
-    conn1.commit()
-    print(f"Thread: {threading.current_thread().name}, Connection: {id(conn1)}")
-
-    db_connection2 = DatabaseConnection("mydatabase.db")
-    conn2 = db_connection2.get_connection()
-    print(f"Thread: {threading.current_thread().name}, Connection: {id(conn2)}")
-    print(f"Are connections the same? {conn1 is conn2}")
-
-threads = []
-for i in range(2):
-    thread = threading.Thread(target=test_database_connection, name=f"Thread-{i+1}")
-    threads.append(thread)
-    thread.start()
-
-for thread in threads:
-    thread.join()
-```
-
-**Singleton and Factory Method**
-
-You might use a Singleton to manage a central configuration or resource, and a Factory Method to create different types of objects based on that configuration. Logging system where the logger is a Singleton, and a factory creates different types of log appenders (file, console, etc.).
-
-```py
-class GameObjectManager:
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(GameObjectManager, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
-
-    def __init__(self):
-        self._object_factory = GameObjectFactory()
-        self._objects = []
-
-    def create_object(self, object_type, *args, **kwargs):
-        obj = self._object_factory.create_object(object_type, *args, **kwargs)
-        self._objects.append(obj)
-        return obj
-
-    def get_objects(self):
-        return self._objects
-
-class GameObjectFactory:
-    def create_object(self, object_type, *args, **kwargs):
-        if object_type == "character":
-            return Character(*args, **kwargs)
-        elif object_type == "item":
-            return Item(*args, **kwargs)
-        elif object_type == "environment":
-            return Environment(*args, **kwargs)
-        else:
-            raise ValueError("Invalid object type")
-
-class Character:
-    def __init__(self, name, health):
-        self.name = name
-        self.health = health
-
-    def __repr__(self):
-        return f"Character(name='{self.name}', health={self.health})"
-
-class Item:
-    def __init__(self, name, power):
-        self.name = name
-        self.power = power
-
-    def __repr__(self):
-        return f"Item(name='{self.name}', power={self.power})"
-
-class Environment:
-    def __init__(self, name, size):
-        self.name = name
-        self.size = size
-
-    def __repr__(self):
-        return f"Environment(name='{self.name}', size={self.size})"
-
-# Usage
-manager1 = GameObjectManager()
-manager2 = GameObjectManager()
-
-# Verify that both variables point to the same instance
-print(manager1 is manager2)  # Output: True
-
-# Create game objects using the manager
-character = manager1.create_object("character", name="Hero", health=100)
-item = manager1.create_object("item", name="Sword", power=20)
-environment = manager1.create_object("environment", name="Forest", size="Large")
-
-# Retrieve all objects
-objects = manager1.get_objects()
-print(objects)
-# Output: [Character(name='Hero', health=100), Item(name='Sword', power=20), Environment(name='Forest', size='Large')]
-```
-
-#### <a name="chapter10part2.3"></a>Chapter 10 - Part 2.3: Abstract Factory Pattern
-
-The Abstract Factory pattern is a powerful creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes. It's like a "factory of factories," where each factory is responsible for creating a specific set of related products. This pattern promotes loose coupling and allows you to easily switch between different product families without modifying the client code. It builds upon the Factory Method pattern by providing a higher level of abstraction.
-
-[Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
-
-The Abstract Factory pattern revolves around the concept of creating families of related objects. Let's break down the key components:
-
-- **Abstract Factory**: This interface declares methods for creating each distinct product in a family.
-- **Concrete Factories**: These classes implement the Abstract Factory interface and are responsible for creating specific families of products. Each concrete factory creates a different set of related products.
-- **Abstract Product**: This interface declares the common interface for all products in a family.
-- **Concrete Products**: These classes implement the Abstract Product interface and represent the actual products created by the concrete factories.
-- **Client**: The client code uses the Abstract Factory and Abstract Product interfaces to work with the products without knowing their concrete classes.
-
-**Key Principles**
-
-- **Abstraction**: The pattern abstracts the creation process of related objects, allowing the client to work with interfaces rather than concrete implementations.
-- **Loose Coupling**: The client code is decoupled from the concrete product classes and the concrete factory classes. This makes the system more flexible and easier to maintain.
-- **Family of Products**: The pattern ensures that the client always works with products from the same family, maintaining consistency and avoiding compatibility issues.
-
-**When to Use the Abstract Factory Pattern**
-
-- When the system needs to be independent of how its products are created, composed, and represented.
-- When there are multiple families of related products, and you need to switch between them easily.
-- When you want to enforce that related product objects are used together.
-- When you want to provide a library of products and you want to reveal just their interfaces, not their implementations.
-
-**Real-World Examples**
-
-- **GUI Toolkit**: Imagine a GUI toolkit that supports multiple operating systems (Windows, macOS, Linux). Each operating system has its own look and feel for widgets like buttons, text fields, and windows. The Abstract Factory pattern can be used to create a factory for each operating system, which would then create the appropriate widgets for that platform.
-  - **Abstract Factory**: GUIFactory (creates buttons, text fields, windows)
-  - **Concrete Factories**: WindowsFactory, MacOSFactory, LinuxFactory
-  - **Abstract Product**: Button, TextField, Window
-  - **Concrete Products**: WindowsButton, MacOSButton, LinuxButton, etc.
- 
-- **Cross-Platform Game Development**: Consider a game that needs to run on different platforms (e.g., PC, mobile). Each platform might require different input methods (keyboard/mouse vs. touch screen) and rendering techniques (DirectX vs. OpenGL). An Abstract Factory can provide the appropriate input and rendering components for each platform.
-  - **Abstract Factory**: PlatformFactory (creates input handler, renderer)
-  - **Concrete Factories**: PCFactory, MobileFactory
-  - **Abstract Product**: InputHandler, Renderer
-  - **Concrete Products**: KeyboardMouseInput, TouchScreenInput, DirectXRenderer, OpenGLRenderer
- 
-- **Hypothetical Scenario**: Online Bookstore Theme Customization: Expanding on the Online Bookstore project, imagine you want to offer different themes (e.g., "Light," "Dark," "High Contrast"). Each theme requires a specific set of UI elements like header styles, button styles, and background colors. An Abstract Factory can be used to create a factory for each theme, which would then create the appropriate UI elements for that theme.
-  - **Abstract Factory**: ThemeFactory (creates header, button, background)
-  - **Concrete Factories**: LightThemeFactory, DarkThemeFactory, HighContrastThemeFactory
-  - **Abstract Product**: Header, Button, Background
-  - **Concrete Products**: LightHeader, DarkButton, HighContrastBackground, etc.
- 
-**Implementing the Abstract Factory Pattern in Python**
-
-```py
-from abc import ABC, abstractmethod
-from typing import Protocol
-
-
-# Abstract Products
-class Button(ABC):
-    @abstractmethod
-    def render(self) -> str:
-        pass
-
-
-class TextField(ABC):
-    @abstractmethod
-    def render(self) -> str:
-        pass
-
-
-# Concrete Products
-class WindowsButton(Button):
-    def render(self) -> str:
-        return "Rendering Windows Button"
-
-
-class MacOSButton(Button):
-    def render(self) -> str:
-        return "Rendering MacOS Button"
-
-
-class WindowsTextField(TextField):
-    def render(self) -> str:
-        return "Rendering Windows TextField"
-
-
-class MacOSTextField(TextField):
-    def render(self) -> str:
-        return "Rendering MacOS TextField"
-
-
-# Abstract Factory
-class GUIFactory(ABC):
-    @abstractmethod
-    def create_button(self) -> Button:
-        pass
-
-    @abstractmethod
-    def create_text_field(self) -> TextField:
-        pass
-
-
-# Concrete Factories
-class WindowsFactory(GUIFactory):
-    def create_button(self) -> Button:
-        return WindowsButton()
-
-    def create_text_field(self) -> TextField:
-        return WindowsTextField()
-
-
-class MacOSFactory(GUIFactory):
-    def create_button(self) -> Button:
-        return MacOSButton()
-
-    def create_text_field(self) -> TextField:
-        return MacOSTextField()
-
-
-# Client code
-def create_ui(factory: GUIFactory) -> str:
-    button = factory.create_button()
-    text_field = factory.create_text_field()
-    return button.render() + "\n" + text_field.render()
-
-
-# Usage
-windows_ui = create_ui(WindowsFactory())
-print("Windows UI:\n" + windows_ui)
-
-macos_ui = create_ui(MacOSFactory())
-print("\nMacOS UI:\n" + macos_ui)
-```
-
-**Explanation**:
-
-- **Abstract Products (Button, TextField)**: Define the interface for the products. They declare the render method, which is common to all buttons and text fields.
-- **Concrete Products (WindowsButton, MacOSButton, WindowsTextField, MacOSTextField)**: Implement the abstract product interfaces. Each concrete product is specific to a particular operating system.
-- **Abstract Factory (GUIFactory)**: Defines the interface for creating families of related products (buttons and text fields).
-- **Concrete Factories (WindowsFactory, MacOSFactory)**: Implement the abstract factory interface. Each concrete factory is responsible for creating a specific family of products (e.g., Windows widgets or macOS widgets).
-- **Client Code (create_ui)**: The client code takes a GUIFactory as input and uses it to create the UI elements. It doesn't need to know the specific type of factory being used, only that it conforms to the GUIFactory interface.
-
-**Benefits of this Implementation**
-- **Flexibility**: You can easily switch between different GUI styles by simply changing the factory that is passed to the create_ui function.
-- **Maintainability**: The code is well-organized and easy to understand. Each class has a specific responsibility, making it easier to modify or extend the code in the future.
-- **Testability**: The code is easy to test because the client code is decoupled from the concrete product classes.
-
-**OBS:How does the Abstract Factory pattern differ from the Factory Method pattern?**
-
-In essence, if you need to create different types of individual objects, use the Factory Method. If you need to create families of related objects that need to be used together, use the Abstract Factory.The Factory Method focuses on creating single objects with the creation logic deferred to subclasses, while the Abstract Factory focuses on creating families of related objects, ensuring consistency among the created products. Choose Factory Method for simple object creation and Abstract Factory for creating coherent sets of objects.
-
-#### <a name="chapter10part2.4"></a>Chapter 10 - Part 2.4: Builder Pattern
-
-The Builder pattern is a creational design pattern that separates the construction of a complex object from its representation. This allows the same construction process to create different representations. Unlike other creational patterns that focus on object creation in a single step, the Builder pattern constructs the object step-by-step, providing more control and flexibility. This is particularly useful when dealing with objects that have many optional attributes or require a specific construction order.
-
-[Builder](https://refactoring.guru/design-patterns/builder)
-
-The Builder pattern addresses the problem of constructing complex objects, especially when the construction process involves multiple steps or optional configurations. It decouples the object's construction from its representation, allowing you to create different variations of the object using the same construction code.
-
-**Key Components**
-
-The Builder pattern consists of the following key components:
-
-- **Builder Interface**: Defines an interface for creating parts of a Product object.
-- **Concrete Builder**: Implements the Builder interface to construct and assemble the parts of the Product. Each Concrete Builder is responsible for creating a specific representation of the Product.
-- **Product**: Represents the complex object being constructed.
-- **Director (Optional)**: Constructs the Product object using the Builder interface. The Director defines the order in which the construction steps are executed. Clients can also directly call the builder to construct the product.
-
-**How it Works**
-
-- The client creates a Director object (if used) and associates it with a Concrete Builder object. Alternatively, the client can directly interact with the Concrete Builder.
-- The Director (or client) calls the construction steps on the Concrete Builder in a specific order.
-- The Concrete Builder builds the parts of the Product and assembles them.
-- The client retrieves the final Product from the Concrete Builder.
-
-**Benefits of Using the Builder Pattern**
-
-- **Improved Code Readability**: The step-by-step construction process makes the code easier to understand and maintain.
-- **Flexibility**: Allows you to create different representations of the object using the same construction code.
-- **Encapsulation**: Encapsulates the construction logic within the Builder classes, hiding the complexity from the client.
-- **Control**: Provides fine-grained control over the construction process.
-- **Separation of Concerns**: Separates the construction of the object from its representation.
-
-**When to Use the Builder Pattern**
-
-- When the algorithm for creating a complex object should be independent of the parts that make up the object and how they're assembled.
-- When the construction process must allow different representations for the object that's constructed.
-- When you want to avoid a "telescoping constructor" anti-pattern (a constructor with many optional parameters).
-
-**Implementing the Builder Pattern in Python**
-
-Let's illustrate the Builder pattern with a practical example: building a computer. A computer consists of several components like CPU, RAM, storage, and graphics card. We can use the Builder pattern to construct different computer configurations.
-
-**Defining the Product: The Computer Class**
-
-First, we define the Computer class, which represents the complex object we want to build.
-
-```py
-from typing import Optional
-
-class Computer:
-    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
-        self.cpu = cpu
-        self.ram = ram
-        self.storage = storage
-        self.graphics_card = graphics_card
-
-    def display_configuration(self):
-        print("Computer Configuration:")
-        print(f"CPU: {self.cpu}")
-        print(f"RAM: {self.ram}")
-        print(f"Storage: {self.storage}")
-        if self.graphics_card:
-            print(f"Graphics Card: {self.graphics_card}")
-```
-
-**Defining the Builder Interface: The ComputerBuilder Class**
-
-Next, we define the ComputerBuilder interface, which specifies the methods for building the different parts of the computer.
-
-```py
-from abc import ABC, abstractmethod
-from typing import Optional
-
-class ComputerBuilder(ABC):
-    @abstractmethod
-    def reset(self) -> None:
-        pass
-
-    @abstractmethod
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
-        pass
-```
-
-**Implementing Concrete Builders: GamingComputerBuilder and OfficeComputerBuilder**
-
-Now, we create concrete builder classes that implement the ComputerBuilder interface. These builders will construct specific types of computers, such as a gaming computer and an office computer.
-
-```py
-from typing import Optional
-
-class GamingComputerBuilder(ComputerBuilder):
-    def __init__(self) -> None:
-        self.computer: Optional["Computer"] = None  # Forward reference
-
-    def reset(self) -> None:
-        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
-
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.cpu = cpu
-        return self
-
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.ram = ram
-        return self
-
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.storage = storage
-        return self
-
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.graphics_card = graphics_card
-        return self
-
-    def get_computer(self) -> "Computer":
-        if self.computer is None:
-            self.reset()
-        return self.computer
-
-class OfficeComputerBuilder(ComputerBuilder):
-    def __init__(self) -> None:
-        self.computer: Optional["Computer"] = None  # Forward reference
-
-    def reset(self) -> None:
-        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
-
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.cpu = cpu
-        return self
-
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.ram = ram
-        return self
-
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.storage = storage
-        return self
-
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.graphics_card = graphics_card
-        return self
-
-    def get_computer(self) -> "Computer":
-        if self.computer is None:
-            self.reset()
-        return self.computer
-```
-
-**Implementing the Director: The ComputerAssembler Class**
-
-The Director class is responsible for orchestrating the construction process. It takes a builder as input and calls the builder's methods in a specific order to construct the computer.
-
-```py
-from typing import Optional
-
-class ComputerAssembler:
-    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
-        self.builder = builder
-
-    def assemble_computer(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None) -> "Computer":
-        self.builder.reset()
-        self.builder.set_cpu(cpu)
-        self.builder.set_ram(ram)
-        self.builder.set_storage(storage)
-        if graphics_card:
-            self.builder.set_graphics_card(graphics_card)
-        return self.builder.get_computer()
-```
-
-**Client Code**
-
-Finally, let's see how the client code uses the Builder pattern to construct different computer configurations.
-
-```py
-# Using the GamingComputerBuilder
-gaming_builder = GamingComputerBuilder()
-assembler = ComputerAssembler(gaming_builder)
-gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD", graphics_card="Nvidia RTX 3080")
-gaming_computer.display_configuration()
-
-# Using the OfficeComputerBuilder
-office_builder = OfficeComputerBuilder()
-assembler = ComputerAssembler(office_builder)
-office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
-office_computer.display_configuration()
-```
-
-This example demonstrates how the Builder pattern allows us to create different computer configurations using the same construction process. The client code doesn't need to know the details of how the computer is built; it only needs to specify the desired components.
-
-**All Example**
-
-```py
-from abc import abstractmethod, ABC
-from typing import Optional
-
-
-class Computer:
-    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
-        self.cpu = cpu
-        self.ram = ram
-        self.storage = storage
-        self.graphics_card = graphics_card
-
-    def display_configuration(self):
-        print("Computer Configuration:")
-        print(f"CPU: {self.cpu}")
-        print(f"RAM: {self.ram}")
-        print(f"Storage: {self.storage}")
-        if self.graphics_card:
-            print(f"Graphics Card: {self.graphics_card}")
-
-
-class ComputerBuilder(ABC):
-    @abstractmethod
-    def reset(self) -> None:
-        pass
-
-    @abstractmethod
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        pass
-
-    @abstractmethod
-    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
-        pass
-
-
-class GamingComputerBuilder(ComputerBuilder):
-    def __init__(self) -> None:
-        self.computer: Optional["Computer"] = None  # Forward reference
-
-    def reset(self) -> None:
-        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
-
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.cpu = cpu
-        return self
-
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.ram = ram
-        return self
-
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.storage = storage
-        return self
-
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.graphics_card = graphics_card
-        return self
-
-    def get_computer(self) -> "Computer":
-        if self.computer is None:
-            self.reset()
-        return self.computer
-
-
-class OfficeComputerBuilder(ComputerBuilder):
-    def __init__(self) -> None:
-        self.computer: Optional["Computer"] = None  # Forward reference
-
-    def reset(self) -> None:
-        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
-
-    def set_cpu(self, cpu: str) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.cpu = cpu
-        return self
-
-    def set_ram(self, ram: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.ram = ram
-        return self
-
-    def set_storage(self, storage: int) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.storage = storage
-        return self
-
-    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
-        if self.computer is None:
-            self.reset()
-        self.computer.graphics_card = graphics_card
-        return self
-
-    def get_computer(self) -> "Computer":
-        if self.computer is None:
-            self.reset()
-        return self.computer
-
-
-class ComputerAssembler:
-    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
-        self.builder = builder
-
-    def assemble_computer(self, cpu: str, ram: int, storage: int,
-                          graphics_card: Optional[str] = None) -> "Computer":
-        self.builder.reset()
-        self.builder.set_cpu(cpu)
-        self.builder.set_ram(ram)
-        self.builder.set_storage(storage)
-        if graphics_card:
-            self.builder.set_graphics_card(graphics_card)
-        return self.builder.get_computer()
-
-
-# Using the GamingComputerBuilder
-gaming_builder = GamingComputerBuilder()
-assembler = ComputerAssembler(gaming_builder)
-gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD",
-                                              graphics_card="Nvidia RTX 3080")
-gaming_computer.display_configuration()
-
-# Using the OfficeComputerBuilder
-office_builder = OfficeComputerBuilder()
-assembler = ComputerAssembler(office_builder)
-office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
-office_computer.display_configuration()
-```
-
-**Alternative Implementation: Without a Director**
-
-The Director is an optional component of the Builder pattern. You can also implement the pattern without a Director by having the client directly interact with the Concrete Builder.
-
-Here's how the client code would look without a Director:
-
-```py
-# Using the GamingComputerBuilder directly
-gaming_builder = GamingComputerBuilder()
-gaming_builder.reset()
-gaming_builder.set_cpu("Intel i9")
-gaming_builder.set_ram("32GB")
-gaming_builder.set_storage("1TB SSD")
-gaming_builder.set_graphics_card("Nvidia RTX 3080")
-gaming_computer = gaming_builder.get_computer()
-gaming_computer.display_configuration()
-
-# Using the OfficeComputerBuilder directly
-office_builder = OfficeComputerBuilder()
-office_builder.reset()
-office_builder.set_cpu("Intel i5")
-office_builder.set_ram("8GB")
-office_builder.set_storage("512GB SSD")
-office_computer = office_builder.get_computer()
-office_computer.display_configuration()
-```
-
-In this case, the client is responsible for calling the builder's methods in the correct order. This approach can be simpler, but it also puts more responsibility on the client.
-
-**Create a Mapper Class**
-
-```py
-import json
-import copy
-from typing import Final, List, Tuple, Any, Optional
-
-# 1. Define the Immutable Classes
-class Order:
-    def __init__(self, order_id: str, customer_id: str, items: Tuple["OrderItem", ...], total_amount: float, shipping_address: "Address"):
-        self.__order_id: Final[str] = order_id
-        self.__customer_id: Final[str] = customer_id
-        self.__items: Final[Tuple["OrderItem", ...]] = items  # Make it immutable
-        self.__total_amount: Final[float] = total_amount
-        self.__shipping_address: Final["Address"] = shipping_address
-
-    @property
-    def order_id(self) -> str:
-        return self.__order_id
-
-    @property
-    def customer_id(self) -> str:
-        return self.__customer_id
-
-    @property
-    def items(self) -> Tuple["OrderItem", ...]:
-        return self.__items
-
-    @property
-    def total_amount(self) -> float:
-        return self.__total_amount
-
-    @property
-    def shipping_address(self) -> "Address":
-        return self.__shipping_address
-
-    def __repr__(self) -> str:
-        return (f"Order(order_id={self.__order_id}, customer_id={self.__customer_id}, "
-                f"items={self.__items}, total_amount={self.__total_amount}, "
-                f"shipping_address={self.__shipping_address})")
-
-
-class OrderItem:
-    def __init__(self, product_id: str, quantity: int, price: float):
-        self.__product_id: Final[str] = product_id
-        self.__quantity: Final[int] = quantity
-        self.__price: Final[float] = price
-
-    @property
-    def product_id(self) -> str:
-        return self.__product_id
-
-    @property
-    def quantity(self) -> int:
-        return self.__quantity
-
-    @property
-    def price(self) -> float:
-        return self.__price
-
-    def __repr__(self) -> str:
-        return f"OrderItem(product_id={self.__product_id}, quantity={self.__quantity}, price={self.__price})"
-
-
-class Address:
-    def __init__(self, street: str, city: str, zip_code: str, country: str):
-        self.__street: Final[str] = street
-        self.__city: Final[str] = city
-        self.__zip_code: Final[str] = zip_code
-        self.__country: Final[str] = country
-
-    @property
-    def street(self) -> str:
-        return self.__street
-
-    @property
-    def city(self) -> str:
-        return self.__city
-
-    @property
-    def zip_code(self) -> str:
-        return self.__zip_code
-
-    @property
-    def country(self) -> str:
-        return self.__country
-
-    def __repr__(self) -> str:
-        return f"Address(street={self.__street}, city={self.__city}, zip_code={self.__zip_code}, country={self.__country})"
-
-
-# 2. Create a Builder Class
-class OrderBuilder:
-    def __init__(self) -> None:
-        self.order_id: Optional[str] = None
-        self.customer_id: Optional[str] = None
-        self.items: List["OrderItem"] = []
-        self.total_amount: Optional[float] = None
-        self.shipping_address: Optional["Address"] = None
-        self.errors: List[str] = []
-
-    def from_json(self, json_data: str) -> "OrderBuilder":
-        try:
-            data: dict = json.loads(json_data)
-            self.with_order_id(data.get('order_id'))
-            self.with_customer_id(data.get('customer_id'))
-            self.with_total_amount(data.get('total_amount'))
-
-            for item in data.get('items', []):
-                self.with_item(item.get('product_id'), item.get('quantity'), item.get('price'))
-
-            shipping_address: dict = data.get('shipping_address', {})
-            self.with_shipping_address(
-                shipping_address.get('street'),
-                shipping_address.get('city'),
-                shipping_address.get('zip_code'),
-                shipping_address.get('country')
-            )
-
-        except (json.JSONDecodeError, TypeError) as e:
-            self.errors.append(f"Error parsing JSON: {str(e)}")
-        return self
-
-    def with_order_id(self, order_id: Any) -> "OrderBuilder":
-        if not isinstance(order_id, str) or not order_id.strip():
-            self.errors.append("Order ID must be a non-empty string")
-        else:
-            self.order_id = order_id
-        return self
-
-    def with_customer_id(self, customer_id: Any) -> "OrderBuilder":
-        if not isinstance(customer_id, str) or not customer_id.strip():
-            self.errors.append("Customer ID must be a non-empty string")
-        else:
-            self.customer_id = customer_id
-        return self
-
-    def with_item(self, product_id: str, quantity: Any, price: Any) -> "OrderBuilder":
-        if not all(isinstance(arg, (int, float)) and arg > 0 for arg in [quantity, price]):
-            self.errors.append("Quantity and price must be positive numbers")
-        else:
-            item = OrderItem(product_id=product_id, quantity=int(quantity), price=float(price))
-            self.items.append(item)
-        return self
-
-    def with_total_amount(self, total_amount: Any) -> "OrderBuilder":
-        if not isinstance(total_amount, (int, float)) or total_amount <= 0:
-            self.errors.append("Total amount must be a positive number")
-        else:
-            self.total_amount = float(total_amount)
-        return self
-
-    def with_shipping_address(self, street: Any, city: Any, zip_code: Any, country: Any) -> "OrderBuilder":
-        if not all(isinstance(arg, str) and arg.strip() for arg in [street, city, zip_code, country]):
-            self.errors.append("Shipping address fields must be non-empty strings")
-        else:
-            self.shipping_address = Address(street=street, city=city, zip_code=zip_code, country=country)
-        return self
-
-    def build(self) -> "Order":
-        if self.errors:
-            raise ValueError("Validation errors: " + ", ".join(self.errors))
-
-        if not all([self.order_id, self.customer_id, self.items, self.total_amount, self.shipping_address]):
-            raise ValueError("Order ID, customer ID, items, total amount, and shipping address must be set")
-
-        return Order(
-            order_id=self.order_id,
-            customer_id=self.customer_id,
-            items=tuple(self.items),  # Convert to tuple for immutability
-            total_amount=self.total_amount,
-            shipping_address=self.shipping_address
-        )
-
-
-# Usage
-json_data = """
-{
-    "order_id": "ORD-123",
-    "customer_id": "CUST-456",
-    "items": [
-        {"product_id": "PROD-001", "quantity": 2, "price": 25.0},
-        {"product_id": "PROD-002", "quantity": 1, "price": 50.0}
-    ],
-    "total_amount": 100.0,
-    "shipping_address": {
-        "street": "123 Main St",
-        "city": "Anytown",
-        "zip_code": "12345",
-        "country": "USA"
-    }
-}
-"""
-
-try:
-    builder = OrderBuilder()
-    order = builder.from_json(json_data).build()
-    print(order)
-except ValueError as e:
-    print(f"Error creating order: {e}")
-```
-
-**When should I use the Builder pattern versus a simple constructor with optional arguments?**
-
-Use a simple constructor with optional arguments when:
-
-- The object has a small number of optional parameters.
-- The object creation process is straightforward.
-- Readability isn't significantly compromised.
-
-Use the Builder pattern when:
-
-- The object has many optional parameters.
-- You want to improve code readability and maintainability.
-- You need to create immutable objects.
-- The object creation process is complex, involving multiple steps or dependencies.
-- You want to centralize default value and validation logic.
-
-**How can I handle complex validation rules during the object construction process using the Builder pattern?**
-
-- **Validation Methods in the Builder**: Implement validation methods within the builder class. These methods check the state of the builder at various stages of construction.
-
-```py
-from typing import Optional, List, Any
-
-class Product:
-    def __init__(self, name: str, price: float, quantity: int) -> None:
-        self.name: str = name
-        self.price: float = price
-        self.quantity: int = quantity
-
-    def __str__(self) -> str:
-        return f"Product(name={self.name}, price={self.price}, quantity={self.quantity})"
-
-
-class ProductBuilder:
-    def __init__(self) -> None:
-        self.name: Optional[str] = None
-        self.price: Optional[float] = None
-        self.quantity: Optional[int] = None
-        self.errors: List[str] = []
-
-    def with_name(self, name: Any) -> "ProductBuilder":
-        if not isinstance(name, str) or not name.strip():
-            self.errors.append("Name must be a non-empty string")
-        else:
-            self.name = name
-        return self
-
-    def with_price(self, price: Any) -> "ProductBuilder":
-        if not isinstance(price, (int, float)) or price <= 0:
-            self.errors.append("Price must be a positive number")
-        else:
-            self.price = float(price)
-        return self
-
-    def with_quantity(self, quantity: Any) -> "ProductBuilder":
-        if not isinstance(quantity, int) or quantity < 0:
-            self.errors.append("Quantity must be a non-negative integer")
-        else:
-            self.quantity = int(quantity)
-        return self
-
-    def build(self) -> "Product":
-        if self.errors:
-            raise ValueError("Validation errors: " + ", ".join(self.errors))
-
-        if not all([self.name, self.price, self.quantity]):
-            raise ValueError("Name, price and quantity must be set")
-
-        return Product(name=self.name, price=self.price, quantity=self.quantity)
-
-
-# Usage
-try:
-    product = ProductBuilder() \
-        .with_name("Example Product") \
-        .with_price(10.0) \
-        .with_quantity(2) \
-        .build()
-    print(product)
-
-    invalid_product = ProductBuilder()
-    try:
-        invalid_product.with_name("").with_price(-5.0).with_quantity(2).build()
-    except ValueError as e:
-        print(f"Error creating invalid product: {e}")
-
-except ValueError as e:
-    print(f"Error creating product: {e}")
-```
-
-#### <a name="chapter10part2.5"></a>Chapter 10 - Part 2.5: Prototype Pattern
-
-The Prototype pattern is a creational design pattern that allows you to create new objects by copying an existing object, known as the prototype. This is particularly useful when creating objects is expensive or complex, and you need to create many similar objects. Instead of creating each object from scratch, you can clone a prototype object and then modify the clone as needed. This pattern promotes code reuse and reduces the need for complex object creation logic.
-
-[Prototype](https://refactoring.guru/design-patterns/prototype)
-
-The Prototype pattern relies on the concept of cloning. Cloning involves creating a new object that is a copy of an existing object. There are two main types of cloning:
-
-- **Shallow Copy**: A shallow copy creates a new object, but the object's fields that are references to other objects are copied as references as well. This means that the new object and the original object share the same referenced objects. If you modify a referenced object in one object, the change will be reflected in the other object.
-
-- **Deep Copy**: A deep copy creates a new object, and it recursively copies all the objects referenced by the original object. This means that the new object and the original object have completely independent copies of all objects. Modifying an object in one object will not affect the other object.
-
-The Prototype pattern typically involves the following participants:
-
-- **Prototype Interface**: An interface or abstract class that declares the clone() method. This method is responsible for creating a copy of the object.
-- **Concrete Prototype**: Concrete classes that implement the Prototype interface and provide the implementation for the clone() method. Each concrete prototype class defines how to create a copy of itself.
-- **Client**: The client is responsible for requesting new objects by cloning the prototype objects. The client does not need to know the concrete classes of the objects it is creating.
-
-**Implementing the Prototype Pattern in Python**
-
-```py
-import copy
-from typing import Any
-
-class Prototype:
-    def __init__(self) -> None:
-        self._value: Any = None
-
-    def clone(self) -> "Prototype":
-        return copy.copy(self)  # Shallow copy
-
-    @property
-    def value(self) -> Any:
-        return self._value
-
-    @value.setter
-    def value(self, new_value: Any) -> None:
-        self._value = new_value
-
-# Client code
-prototype = Prototype()
-prototype.value = "Original Value"
-
-clone = prototype.clone()
-clone.value = "Cloned Value"
-
-print(f"Original: {prototype.value}")
-print(f"Clone: {clone.value}")
-```
-
-In this example:
-
-- We define a Prototype class with a value attribute.
-- The clone() method uses copy.copy() to create a shallow copy of the object.
-- The client creates a prototype object, sets its value, and then clones it.
-- The clone's value is modified, and we can see that the original object's value remains unchanged because the value attribute is a simple string (immutable).
-
-**Deep Copy Example: Cloning Objects with References**
-
-Now, let's consider a more complex example where the object contains references to other objects. In this case, we'll need to use a deep copy to ensure that the cloned object has its own independent copies of the referenced objects.
-
-```py
-import copy
-from typing import Any
-
-class Address:
-    def __init__(self, street: str, city: str) -> None:
-        self.street: str = street
-        self.city: str = city
-
-    def __str__(self) -> str:
-        return f"{self.street}, {self.city}"
-
-
-class Person:
-    def __init__(self, name: str, address: Address) -> None:
-        self.name: str = name
-        self.address: Address = address
-
-    def clone(self, deep_copy: bool = True) -> "Person":
-        if deep_copy:
-            return copy.deepcopy(self)
-        else:
-            return copy.copy(self)
-
-    def __str__(self) -> str:
-        return f"{self.name} lives at {self.address}"
-
-
-# Client code
-address = Address("123 Main St", "Anytown")
-person = Person("John Doe", address)
-
-person2 = person.clone()
-person2.name = "Jane Doe"
-person2.address.street = "456 Oak Ave"  # Modifying the address of person2
-
-print(person)
-print(person2)
-
-person3 = person.clone(deep_copy=False)  # Shallow copy
-person3.name = "Peter Pan"
-person3.address.street = "789 Pine Ln"
-
-print(person)
-print(person3)
-```
-
-In this example:
-
-- We have two classes: Address and Person. The Person class has a reference to an Address object.
-- The clone() method in the Person class takes a deep_copy argument. If deep_copy is True, it creates a deep copy using copy.deepcopy(). Otherwise, it creates a shallow copy using copy.copy().
-- The client creates a Person object and then clones it using both deep and shallow copies.
-- When we use a deep copy, modifying the address of person2 does not affect the address of the original person.
-- However, when we use a shallow copy to create person3, modifying the address of person3 does affect the address of the original person because they share the same Address object.
-
-**Prototype Registry**
-
-A Prototype Registry is a useful addition to the Prototype pattern. It acts as a central repository for prototype objects. Clients can then request clones of these prototypes by specifying a key or identifier. This eliminates the need for the client to know the concrete classes of the prototype objects.
-
-```py
-import copy
-from typing import Dict, Optional, Any
-
-class Prototype:
-    def __init__(self) -> None:
-        pass
-
-    def clone(self) -> "Prototype":
-        return copy.deepcopy(self)
-
-class ConcretePrototype1(Prototype):
-    def __init__(self, value: str) -> None:
-        super().__init__()
-        self.value: str = value
-
-    def __str__(self) -> str:
-        return f"ConcretePrototype1 with value: {self.value}"
-
-class ConcretePrototype2(Prototype):
-    def __init__(self, data: list[int]) -> None:
-        super().__init__()
-        self.data: list[int] = data
-
-    def __str__(self) -> str:
-        return f"ConcretePrototype2 with data: {self.data}"
-
-class PrototypeRegistry:
-    def __init__(self) -> None:
-        self._prototypes: Dict[str, Prototype] = {}
-
-    def register(self, name: str, prototype: Prototype) -> None:
-        self._prototypes[name] = prototype
-
-    def unregister(self, name: str) -> None:
-        del self._prototypes[name]
-
-    def get_prototype(self, name: str) -> Optional[Prototype]:
-        prototype = self._prototypes.get(name)
-        if prototype:
-            return prototype.clone()
-        else:
-            return None
-
-# Client Code
-registry = PrototypeRegistry()
-
-# Create and register prototypes
-proto1 = ConcretePrototype1("Initial Value")
-proto2 = ConcretePrototype2([1, 2, 3])
-
-registry.register("proto1", proto1)
-registry.register("proto2", proto2)
-
-# Get clones from the registry
-clone1 = registry.get_prototype("proto1")
-clone2 = registry.get_prototype("proto2")
-
-print(clone1)
-print(clone2)
-
-clone1.value = "Modified Value"  # type: ignore # Safe because clone1 is ConcretePrototype1
-print(clone1)
-print(proto1)
-```
-
-In this example:
-
-- We define a PrototypeRegistry class that stores prototype objects in a dictionary.
-- The register() method adds a prototype to the registry with a given name.
-- The get_prototype() method retrieves a prototype from the registry by name and returns a clone of it.
-- The client creates a registry, registers some prototype objects, and then retrieves clones of those objects from the registry.
-
-**Benefits of the Prototype Pattern**
-
-- **Reduced Object Creation Cost**: Cloning an existing object can be more efficient than creating a new object from scratch, especially when object creation is complex or resource-intensive.
-- **Improved Performance**: By avoiding complex object creation logic, the Prototype pattern can improve the performance of your application.
-- **Flexibility**: The Prototype pattern allows you to create new objects without knowing their concrete classes. This makes your code more flexible and easier to maintain.
-- **Dynamic Object Creation**: You can add or remove prototypes at runtime, allowing you to dynamically change the types of objects that can be created.
-- **Simplified Object Creation**: The client code doesn't need to know the details of object creation. It simply requests a clone of a prototype.
-
-**When to Use the Prototype Pattern**
-
-- When the cost of creating an object is high, and cloning is more efficient.
-- When you need to create many similar objects with only slight variations.
-- When you want to avoid creating a hierarchy of factory classes, as in the Factory Method or Abstract Factory patterns.
-- When the concrete classes of the objects to be created are not known at compile time.
-- When you want to add or remove objects dynamically at runtime.
-
-**real-world examples where the Prototype Pattern can be effectively applied**
-
-- Game Development: Creating Multiple Game Objects. Create a "prototype" object for each enemy type. This prototype holds the default configuration.
-When you need a new enemy instance, clone the appropriate prototype. This is much faster than creating a new enemy object from scratch each time, especially if the object creation is complex (e.g., loading textures, setting up animations).
-
-**key differences between shallow copy and deep copy**
-
-Shallow copy creates a new object, but it doesn't create new copies of the nested objects (references) within the original object. Instead, the new object contains references to the same nested objects as the original. Changes to mutable nested objects in the copied object will affect the original object, and vice versa.
-
-Deep copy creates a new object and recursively creates new copies of all the nested objects within the original object.Deep copying can be more time-consuming and memory-intensive, especially for complex objects with many levels of nesting.
-
-### <a name="chapter10part3"></a>Chapter 10 - Part 3: Structural Design Patterns
-
-Structural design patterns are concerned with how classes and objects are composed to form larger structures. They simplify the design by identifying a way to realize relationships between entities. These patterns focus on how to assemble objects and classes into larger structures while keeping the structures flexible and efficient. They deal with relationships between entities, providing different ways to create class structures.
-
-[Structural Design Patterns List](https://refactoring.guru/design-patterns/structural-patterns)
-
-Structural patterns provide solutions for building complex systems by focusing on the relationships and compositions of classes and objects. They offer different ways to organize classes and objects to create larger structures that are flexible, efficient, and maintainable.
-
-**Abstraction**
-
-Abstraction involves simplifying complex reality by modeling classes appropriate to the problem. It focuses on hiding complex implementation details and exposing only essential information. In structural patterns, abstraction allows you to work with high-level interfaces without needing to know the underlying complexities of the composed objects.
-
-Example: Consider a car. You interact with it through the steering wheel, accelerator, and brakes. You don't need to know the intricate details of the engine, transmission, or exhaust system to drive the car. The car provides an abstraction layer that simplifies the interaction.
-
-Example: In software, an abstract class in Python defines a template for other classes. It can declare methods without implementing them, forcing subclasses to provide the specific implementation. This hides the implementation details and provides a common interface.
-
-```py
-from abc import ABC, abstractmethod
-from typing import Union
-
-class Shape(ABC):
-    @abstractmethod
-    def area(self) -> float:
-        pass
-
-class Circle(Shape):
-    def __init__(self, radius: Union[int, float]):
-        if not isinstance(radius, (int, float)):
-            raise TypeError("Radius must be a number")
-        self.radius = radius
-
-    def area(self) -> float:
-        return 3.14 * self.radius * self.radius
-
-class Square(Shape):
-    def __init__(self, side: Union[int, float]):
-        if not isinstance(side, (int, float)):
-            raise TypeError("Side must be a number")
-        self.side = side
-
-    def area(self) -> float:
-        return self.side * self.side
-
-circle = Circle(5)
-square = Square(4)
-
-print(f"Area of circle: {circle.area()}")
-print(f"Area of square: {square.area()}")
-```
-
-**Composition**
-
-Composition is a design technique where a class contains instances of other classes. It enables you to create complex objects by combining simpler ones. This is a "has-a" relationship, as opposed to inheritance's "is-a" relationship. Composition promotes code reuse and flexibility.
-
-Example: A computer is composed of a CPU, memory, storage, and peripherals. Each component is a separate object, but they work together to form a complete computer system.
-
-Example: In Python, you can create a Car class that is composed of an Engine class and a Wheel class.
-
-```py
-from typing import List
-
-class Engine:
-    def start(self) -> str:
-        return "Engine started"
-
-class Wheel:
-    def rotate(self) -> str:
-        return "Wheel rotating"
-
-class Car:
-    def __init__(self):
-        self.engine: Engine = Engine()  # Composition: Car has-a Engine
-        self.wheels: List[Wheel] = [Wheel() for _ in range(4)]  # Car has-a Wheels
-
-    def drive(self) -> str:
-        return f"{self.engine.start()}, {self.wheels[0].rotate()}"
-
-my_car = Car()
-print(my_car.drive())
-```
-
-**Decoupling**
-
-Decoupling minimizes the dependencies between different parts of a system. Highly coupled systems are difficult to maintain and modify because changes in one part can have unintended consequences in other parts. Structural patterns often aim to reduce coupling by introducing interfaces or abstract classes that mediate interactions between objects.
-
-Example: Consider a light switch and a light bulb. If the switch is directly wired to the bulb, they are tightly coupled. If the switch controls a relay that then controls the bulb, they are decoupled. The relay acts as an intermediary, allowing you to change the bulb without affecting the switch, and vice versa.
-
-Example: Using interfaces in Python can decouple classes.
-
-```py
-from abc import ABC, abstractmethod
-
-class Switchable(ABC):  # Abstract class
-    @abstractmethod
-    def turn_on(self) -> str:
-        pass
-
-    @abstractmethod
-    def turn_off(self) -> str:
-        pass
-
-class LightBulb(Switchable):  # Concrete class inheriting from Switchable
-    def turn_on(self) -> str:
-        return "LightBulb: turned on..."
-
-    def turn_off(self) -> str:
-        return "LightBulb: turned off..."
-
-class Fan(Switchable):  # Concrete class inheriting from Switchable
-    def turn_on(self) -> str:
-        return "Fan: turned on..."
-
-    def turn_off(self) -> str:
-        return "Fan: turned off..."
-
-class ElectricPowerSwitch:
-    def __init__(self, client: Switchable):
-        self.client: Switchable = client
-        self.on: bool = False
-
-    def press(self) -> None:
-        if self.on:
-            print(self.client.turn_off())
-            self.on = False
-        else:
-            print(self.client.turn_on())
-            self.on = True
-
-bulb = LightBulb()
-switch = ElectricPowerSwitch(bulb)
-switch.press()
-switch.press()
-
-fan = Fan()
-switch = ElectricPowerSwitch(fan)
-switch.press()
-switch.press()
-```
-
-**Interface Segregation**
-
-Interface Segregation Principle (ISP) states that clients should not be forced to depend on methods they do not use. Structural patterns often help in creating smaller, more cohesive interfaces, so that classes only need to implement the methods that are relevant to them.
-
-Example: Imagine a multi-function printer that can print, scan, and fax. If you have a class that represents this printer with a single interface containing all three functions, any class that uses only the printing function would still be forced to implement the scan and fax functions. ISP suggests breaking this into separate interfaces: Printable, Scannable, and Faxable.
-
-Example: In Python:
-
-```py
-from abc import ABC, abstractmethod
-
-class Printable(ABC):  # Abstract class
-    @abstractmethod
-    def print_document(self, document: str) -> str:
-        pass
-
-class Scannable(ABC):  # Abstract class
-    @abstractmethod
-    def scan_document(self, document: str) -> str:
-        pass
-
-class Faxable(ABC):  # Abstract class
-    @abstractmethod
-    def fax_document(self, document: str) -> str:
-        pass
-
-class MultiFunctionPrinter(Printable, Scannable, Faxable):  # Concrete class inheriting from multiple abstract classes
-    def print_document(self, document: str) -> str:
-        return f"Printing {document}"
-
-    def scan_document(self, document: str) -> str:
-        return f"Scanning {document}"
-
-    def fax_document(self, document: str) -> str:
-        return f"Faxing {document}"
-
-class SimplePrinter(Printable):  # Concrete class inheriting from Printable
-    def print_document(self, document: str) -> str:
-        return f"Printing {document}"
-
-printer = MultiFunctionPrinter()
-print(printer.print_document("MyDocument.txt"))
-print(printer.scan_document("MyDocument.txt"))
-print(printer.fax_document("MyDocument.txt"))
-
-simple_printer = SimplePrinter()
-print(simple_printer.print_document("MyDocument.txt"))
-```
-
-**Types of Structural Patterns**
-
-Structural patterns address different problems related to object composition and relationships. Here's a brief overview of the structural patterns we'll be covering in this module:
-
-- **Adapter**: Converts the interface of a class into another interface clients expect.
-- **Bridge**: Decouples an abstraction from its implementation so that the two can vary independently.
-- **Composite**: Composes objects into tree structures to represent part-whole hierarchies.
-- **Decorator**: Dynamically adds responsibilities to an object.
-- **Facade**: Provides a unified interface to a set of interfaces in a subsystem.
-- **Flyweight**: Uses sharing to support large numbers of fine-grained objects efficiently.
-- **Proxy**: Provides a surrogate or placeholder for another object to control access to it.
-
-**Benefits of Using Structural Patterns**
-
-- **Improved Code Organization**: Structural patterns provide a clear and organized way to structure complex systems, making the code easier to understand and maintain.
-- **Increased Flexibility**: They allow you to create flexible systems that can adapt to changing requirements.
-- **Enhanced Reusability**: By promoting composition and decoupling, structural patterns encourage code reuse.
-- **Simplified Design**: They offer proven solutions to common design problems, simplifying the design process.
-
-#### <a name="chapter10part3.1"></a>Chapter 10 - Part 3.1: Adapter Pattern
-
-The Adapter Pattern is a structural design pattern that allows incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces, converting the interface of one class into an interface that another class expects. This pattern is particularly useful when you want to use an existing class, but its interface doesn't match the one you need.
-
-[Adapter Pattern](https://refactoring.guru/design-patterns/adapter)
-
-The Adapter Pattern revolves around the concept of adapting an existing class (the "Adaptee") to conform to a desired interface (the "Target"). The "Adapter" class is the key component, as it implements the Target interface and internally uses the Adaptee to fulfill the requests.
-
-**Key Components**
-
-- **Target**: This is the interface that the client expects to use. It defines the methods that the client will call.
-- **Adaptee**: This is the existing class with an incompatible interface. It contains the functionality that the client needs, but its interface doesn't match the Target interface.
-- **Adapter**: This class implements the Target interface and adapts the Adaptee's interface to the Target interface. It contains a reference to the Adaptee object and translates the client's requests into calls to the Adaptee's methods.
-
-**Types of Adapters**
-
-There are two main types of Adapters:
-
-- **Object Adapter**: This type of adapter uses composition. The Adapter class contains an instance of the Adaptee class. The Adapter then calls the Adaptee's methods to perform the required operations. This is generally preferred because it promotes loose coupling.
-- **Class Adapter**: This type of adapter uses inheritance. The Adapter class inherits from both the Target and the Adaptee classes. This approach is less flexible because it requires multiple inheritance, which is not supported in some languages or can lead to complexities.
-
-We will focus on the Object Adapter in this lesson due to its flexibility and wider applicability.
-
-**When to Use the Adapter Pattern**
-
-- You want to use an existing class, but its interface doesn't match the one you need.
-- You want to create a reusable class that can cooperate with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
-- You need to use several existing subclasses, but it's impractical to adapt their interface by subclassing every one. An object adapter can adapt the interface of its parent class.
-
-**Implementation in Python**
-
-Let's illustrate the Adapter Pattern with a practical example. Suppose we have an existing class called LegacyCalculator that performs calculations using a specific interface. However, our client code expects a different interface defined by CalculatorInterface. We can use the Adapter Pattern to bridge this gap.
-
-```py
-from typing import Protocol
-
-# Target Interface
-class CalculatorInterface(Protocol):
-    def operate(self, num1: float, num2: float) -> float:
-        ...
-
-# Adaptee (Existing Class with Incompatible Interface)
-class LegacyCalculator:
-    def calculate(self, num1: float, num2: float, operation: str) -> float | None:
-        if operation == 'add':
-            return num1 + num2
-        elif operation == 'subtract':
-            return num1 - num2
-        else:
-            return None
-
-# Adapter Class
-class CalculatorAdapter:
-    def __init__(self, legacy_calculator: LegacyCalculator):
-        self.legacy_calculator = legacy_calculator
-
-    def operate(self, num1: float, num2: float) -> float | None:
-        # Adapt the LegacyCalculator's interface to the CalculatorInterface
-        return self.legacy_calculator.calculate(num1, num2, 'add')
-
-# Client Code
-class Client:
-    def __init__(self, calculator: CalculatorInterface):
-        self.calculator = calculator
-
-    def perform_operation(self, num1: float, num2: float) -> None:
-        result = self.calculator.operate(num1, num2)
-        print(f"Result: {result}")
-
-# Usage
-legacy_calculator = LegacyCalculator()
-adapter = CalculatorAdapter(legacy_calculator)
-client = Client(adapter)
-client.perform_operation(10.0, 5.0)
-```
-
-In this example:
-
-- CalculatorInterface is the Target interface that the client expects.
-- LegacyCalculator is the Adaptee class with an incompatible calculate method.
-- CalculatorAdapter is the Adapter class that implements CalculatorInterface and uses LegacyCalculator internally to perform the calculation. It adapts the calculate method to the operate method.
-- Client uses the CalculatorInterface to perform operations.
-
-**Detailed Explanation**
-
-- **Target Interface (CalculatorInterface)**: This defines the operate method, which takes two numbers as input and returns the result of an operation. This is the interface that our client code wants to use.
-- **Adaptee (LegacyCalculator)**: This class has a calculate method that takes two numbers and an operation type as input. Its interface is different from what the client expects.
-- **Adapter (CalculatorAdapter)**: This class implements the CalculatorInterface. Inside its operate method, it calls the calculate method of the LegacyCalculator, adapting the interface to match the - CalculatorInterface. The adapter holds a reference to an instance of the LegacyCalculator.
-- **Client (Client)**: The client code interacts with the CalculatorInterface through the adapter. It doesn't need to know about the LegacyCalculator or its incompatible interface.
-
-**Benefits of Using the Adapter Pattern**
-
-- **Improved Reusability**: Allows you to reuse existing classes that have incompatible interfaces.
-- **Increased Flexibility**: Decouples the client from the specific implementation of the Adaptee.
-- **Enhanced Maintainability**: Simplifies code by separating the adaptation logic from the core functionality.
-- **Single Responsibility Principle**: The adapter has a single responsibility: adapting one interface to another.
-
-**Advanced Example: Adapting Multiple Adaptees**
-
-```py
-from typing import Protocol, Any, Dict
-
-# Target Interface
-class DataProcessorInterface(Protocol):
-    def process_data(self, data: str) -> Dict[str, str]:
-        ...
-
-# Adaptee 1: Legacy XML Data Processor
-class LegacyXMLProcessor:
-    def parse_xml(self, xml_data: str) -> Dict[str, str]:
-        # Simulate XML parsing logic
-        return {"xml_data": xml_data}
-
-# Adaptee 2: Legacy CSV Data Processor
-class LegacyCSVProcessor:
-    def read_csv(self, csv_data: str) -> Dict[str, str]:
-        # Simulate CSV reading logic
-        return {"csv_data": csv_data}
-
-# Adapter 1: XML Adapter
-class XMLAdapter:
-    def __init__(self, xml_processor: LegacyXMLProcessor):
-        self.xml_processor = xml_processor
-
-    def process_data(self, data: str) -> Dict[str, str]:
-        return self.xml_processor.parse_xml(data)
-
-# Adapter 2: CSV Adapter
-class CSVAdapter:
-    def __init__(self, csv_processor: LegacyCSVProcessor):
-        self.csv_processor = csv_processor
-
-    def process_data(self, data: str) -> Dict[str, str]:
-        return self.csv_processor.read_csv(data)
-
-# Client Code
-class DataAnalyzer:
-    def __init__(self, processor: DataProcessorInterface):
-        self.processor = processor
-
-    def analyze_data(self, data: str) -> None:
-        processed_data = self.processor.process_data(data)
-        print(f"Analyzing data: {processed_data}")
-
-# Usage
-xml_processor = LegacyXMLProcessor()
-csv_processor = LegacyCSVProcessor()
-
-xml_adapter = XMLAdapter(xml_processor)
-csv_adapter = CSVAdapter(csv_processor)
-
-analyzer1 = DataAnalyzer(xml_adapter)
-analyzer2 = DataAnalyzer(csv_adapter)
-
-analyzer1.analyze_data("<xml><data>example</data></xml>")
-analyzer2.analyze_data("header1,header2\nvalue1,value2")
-```
-
-In this example, we have two legacy data processors: LegacyXMLProcessor and LegacyCSVProcessor. Each processor has its own way of handling data. We create two adapters, XMLAdapter and CSVAdapter, to adapt these processors to the DataProcessorInterface. The DataAnalyzer class can then use these adapters to analyze data from different sources without needing to know the specifics of each data processor.
-
-**Adapter with Factory Pattern**
-
-You receive different input formats (JSON and XML) but need to process them uniformly as an Order object in another class. How can I use Adapter with factory pattern in this case? Use Type checking
-
-```py
-# Target Interface
-from typing import List, Dict, Any
-from abc import ABC, abstractmethod
-import json
-import xml.etree.ElementTree as ET
-
-class Order:
-    def __init__(self, order_id: str, customer_name: str, items: List[str], total_amount: float):
-        self.order_id = order_id
-        self.customer_name = customer_name
-        self.items = items
-        self.total_amount = total_amount
-
-    def __str__(self) -> str:
-        return f"Order ID: {self.order_id}, Customer: {self.customer_name}, Total: {self.total_amount}"
-
-# Adaptee Interfaces (JSON and XML Parser)
-class JsonOrderParser:
-    def parse_json(self, json_data: str) -> Dict[str, Any]:
-        data = json.loads(json_data)
-        return data  # Returns a Python dictionary
-
-class XmlOrderParser:
-    def parse_xml(self, xml_data: str) -> ET.Element:
-        root = ET.fromstring(xml_data)
-        return root  # Returns an ElementTree object
-
-# Adapter Interface
-class OrderDataAdapter(ABC):
-    @abstractmethod
-    def to_order(self) -> Order:
-        pass
-
-# Implement the Adapters
-class JsonOrderAdapter(OrderDataAdapter):
-    def __init__(self, json_parser: JsonOrderParser, json_data: str):
-        self.json_parser = json_parser
-        self.json_data = json_data
-
-    def to_order(self) -> Order:
-        data = self.json_parser.parse_json(self.json_data)
-        order_id = str(data.get("order_id", ""))  # Ensure it's a string
-        customer_name = str(data.get("customer_name", ""))  # Ensure it's a string
-        items = [str(item) for item in data.get("items", [])]  # Ensure items are strings
-        total_amount = float(data.get("total_amount", 0.0))  # Provide a default value
-        return Order(order_id, customer_name, items, total_amount)
-
-
-class XmlOrderAdapter(OrderDataAdapter):
-    def __init__(self, xml_parser: XmlOrderParser, xml_data: str):
-        self.xml_parser = xml_parser
-        self.xml_data = xml_data
-
-    def to_order(self) -> Order:
-        root = self.xml_parser.parse_xml(self.xml_data)
-        order_id = str(root.find("order_id").text) if root.find("order_id") is not None else ""
-        customer_name = str(root.find("customer_name").text) if root.find("customer_name") is not None else ""
-        items = [item.text for item in root.findall("items/item")]
-        total_amount = float(root.find("total_amount").text) if root.find("total_amount") is not None else 0.0
-        return Order(order_id, customer_name, items, total_amount)
-
-# Implement the Factory
-from typing import Literal, Union
-
-class OrderAdapterFactory:
-    def create_adapter(self, data_format: Literal["json", "xml"], data: str) -> OrderDataAdapter:
-        if data_format == "json":
-            return JsonOrderAdapter(JsonOrderParser(), data)
-        elif data_format == "xml":
-            return XmlOrderAdapter(XmlOrderParser(), data)
-        else:
-            raise ValueError("Unsupported data format")
-
-# Sample data
-json_data = """
-{
-    "order_id": "123",
-    "customer_name": "Alice",
-    "items": ["Book", "Pen"],
-    "total_amount": 25.00
-}
-"""
-
-xml_data = """
-<order>
-    <order_id>456</order_id>
-    <customer_name>Bob</customer_name>
-    <items>
-        <item>Shirt</item>
-        <item>Pants</item>
-    </items>
-    <total_amount>50.00</total_amount>
-</order>
-"""
-
-# Create the factory
-factory = OrderAdapterFactory()
-
-# Process JSON data
-json_adapter = factory.create_adapter("json", json_data)
-json_order = json_adapter.to_order()
-print(json_order)
-
-# Process XML data
-xml_adapter = factory.create_adapter("xml", xml_data)
-xml_order = xml_adapter.to_order()
-print(xml_order)
-```
-
-### <a name="chapter10part4"></a>Chapter 10 - Part 4: Behavioral Design Patterns
-
-[Behavioral Design Patterns List](https://refactoring.guru/design-patterns/behavioral-patterns)
 
 ## <a name="chapter11"></a>Chapter 11: Advanced Data Structures and Algorithms
 
@@ -14855,6 +12384,2507 @@ This example demonstrates how to use a metaclass to validate attributes during a
 #### <a name="chapter17part5.1"></a>Chapter 17 - Part 5.1: Model Building with Scikit-learn
 
 #### <a name="chapter17part5.2"></a>Chapter 17 - Part 5.2: API Deployment with Flask
+
+## <a name="chapter18"></a>Chapter 18: Design Patterns
+
+### <a name="chapter18part1"></a>Chapter 18 - Part 1: SOLID Principles Overview
+
+The SOLID principles are a set of five design principles intended to make software designs more understandable, flexible, and maintainable. They are a subset of many principles promoted by Robert C. Martin. By adhering to these principles, you reduce the likelihood of creating fragile, rigid, and immobile designs, making your code more resilient to change and easier to extend. Understanding and applying SOLID principles is crucial for any developer aiming to write clean, maintainable, and scalable code.
+
+SOLID is an acronym representing five key principles of object-oriented design:
+
+- Single Responsibility Principle (SRP)
+- Open/Closed Principle (OCP)
+- Liskov Substitution Principle (LSP)
+- Interface Segregation Principle (ISP)
+- Dependency Inversion Principle (DIP)
+
+#### <a name="chapter18part1.1"></a>Chapter 18 - Part 1.1: Single Responsibility Principle (SRP)
+
+The Single Responsibility Principle states that a class should have only one reason to change. In other words, a class should have only one job. This doesn't mean a class should only have one method, but rather that all its methods should be related to a single, well-defined purpose.
+
+**Example:**
+
+Consider a class responsible for both user authentication and logging:
+
+```py
+class UserAuthenticator:
+    def authenticate_user(self, username, password):
+        # Authentication logic here
+        if self._is_valid_user(username, password):
+            self.log_authentication(username) # Logging responsibility
+            return True
+        else:
+            return False
+
+    def _is_valid_user(self, username, password):
+        # Check if user exists in database
+        return True
+
+    def log_authentication(self, username):
+        # Logging logic here
+        print(f"User {username} authenticated")
+```
+
+This class violates SRP because it has two responsibilities: authenticating users and logging authentication events. If the logging mechanism needs to change (e.g., switch to a different logging library or format), this class would need to be modified, even if the authentication logic remains the same.
+
+**Solution:**
+
+Separate the logging responsibility into a dedicated class:
+
+```py
+class UserAuthenticator:
+    def authenticate_user(self, username, password):
+        # Authentication logic here
+        if self._is_valid_user(username, password):
+            self.logger.log_authentication(username) # Delegate logging
+            return True
+        else:
+            return False
+
+    def _is_valid_user(self, username, password):
+        # Check if user exists in database
+        return True
+
+    def __init__(self, logger):
+        self.logger = logger
+
+
+class AuthenticationLogger:
+    def log_authentication(self, username):
+        # Logging logic here
+        print(f"User {username} authenticated")
+
+# Usage
+logger = AuthenticationLogger()
+authenticator = UserAuthenticator(logger)
+authenticator.authenticate_user("john_doe", "password123")
+```
+
+Now, ```UserAuthenticator``` is only responsible for authenticating users, and ```AuthenticationLogger``` is responsible for logging. Changes to the logging mechanism will only affect the ```AuthenticationLogger``` class, adhering to SRP.
+
+**Benefits:**
+
+- **Improved Cohesion**: Classes are more focused and easier to understand.
+- **Reduced Coupling**: Changes in one area are less likely to affect other areas.
+- **Increased Reusability**: Single-purpose classes are easier to reuse in different contexts.
+
+#### <a name="chapter18part1.2"></a>Chapter 18 - Part 1.2: Open/Closed Principle (OCP)
+
+The Open/Closed Principle states that software entities (classes, modules, functions, etc.) should be open for extension but closed for modification. This means you should be able to add new functionality without modifying existing code.
+
+**Example:**
+
+Consider a class that calculates the area of different shapes:
+
+```py
+class AreaCalculator:
+    def calculate_area(self, shape, width, height):
+        if shape == "rectangle":
+            return width * height
+        elif shape == "circle":
+            return 3.14 * (width/2) * (width/2) # Assuming width is diameter
+        # ... more shapes
+```
+
+This class violates OCP because every time a new shape is added, the calculate_area method needs to be modified.
+
+**Solution:**
+
+Use inheritance and polymorphism to create an abstract Shape class with a calculate_area method. Each shape class then inherits from Shape and implements its own calculate_area method.
+
+```py
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def calculate_area(self):
+        return 3.14 * self.radius * self.radius
+
+class AreaCalculator:
+    def calculate_area(self, shape):
+        return shape.calculate_area()
+
+# Usage
+rectangle = Rectangle(5, 10)
+circle = Circle(7)
+calculator = AreaCalculator()
+print(f"Rectangle area: {calculator.calculate_area(rectangle)}")
+print(f"Circle area: {calculator.calculate_area(circle)}")
+```
+
+Now, to add a new shape, you simply create a new class that inherits from Shape and implements the calculate_area method, without modifying the existing AreaCalculator class.
+
+**Benefits:**
+
+- **Increased Stability**: Existing code remains unchanged, reducing the risk of introducing bugs.
+- **Improved Extensibility**: New functionality can be added easily without affecting existing code.
+- **Reduced Testing Effort**: Only the new code needs to be tested, not the existing code.
+
+#### <a name="chapter18part1.3"></a>Chapter 18 - Part 1.3: Liskov Substitution Principle (LSP)
+
+The Liskov Substitution Principle states that subtypes should be substitutable for their base types without altering the correctness of the program. In simpler terms, if you have a class ```A``` and a class ```B``` that inherits from ```A```, you should be able to use an object of class ```B``` anywhere an object of class ```A``` is expected, without causing unexpected behavior.
+
+**Example:**
+
+Consider a Rectangle class and a Square class that inherits from Rectangle:
+
+```py
+class Rectangle:
+    def __init__(self, width, height):
+        self._width = width
+        self._height = height
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, width):
+        self._width = width
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, height):
+        self._height = height
+
+    def calculate_area(self):
+        return self._width * self._height
+
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+        self._side = side
+
+    @property
+    def width(self):
+        return self._side
+
+    @width.setter
+    def width(self, width):
+        self._width = width
+        self._height = width # Ensure height is also updated
+
+    @property
+    def height(self):
+        return self._side
+
+    @height.setter
+    def height(self, height):
+        self._height = height
+        self._width = height # Ensure width is also updated
+```
+
+In this example, Square inherits from Rectangle. However, setting the width of a Square should also set its height, and vice versa. If you have a function that expects a Rectangle and sets its width and height independently, passing a Square to that function could lead to unexpected results, violating LSP.
+
+```py
+def process_rectangle(rectangle):
+    rectangle.width = 5
+    rectangle.height = 10
+    expected_area = 5 * 10
+    actual_area = rectangle.calculate_area()
+    print(f"Expected area: {expected_area}, Actual area: {actual_area}")
+    assert actual_area == expected_area, "LSP violation!"
+
+# Usage
+rectangle = Rectangle(2, 3)
+process_rectangle(rectangle) # Works fine
+
+square = Square(2)
+process_rectangle(square) # LSP violation!  The square's area will be 100, not 50
+```
+
+**Solution:**
+
+One way to solve this is to avoid inheritance in this case. Square and Rectangle are different concepts and should not be related through inheritance. Instead, they could both implement a common interface or abstract class, if needed.
+
+```py
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def calculate_area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def calculate_area(self):
+        return self.side * self.side
+```
+
+**Benefits:**
+
+- **Improved Reliability**: Ensures that subtypes behave as expected, preventing unexpected errors.
+- **Increased Maintainability**: Makes it easier to reason about the behavior of code that uses inheritance.
+- **Enhanced Reusability**: Allows subtypes to be used interchangeably with their base types.
+
+#### <a name="chapter18part1.4"></a>Chapter 18 - Part 1.4: Interface Segregation Principle (ISP)
+
+The Interface Segregation Principle states that a client should not be forced to depend on methods it does not use. In other words, a class should not be forced to implement interfaces that are irrelevant to it.
+
+**Example:**
+
+Consider an Animal interface with methods for flying, swimming, and running:
+
+```py
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+
+    @abstractmethod
+    def swim(self):
+        pass
+
+    @abstractmethod
+    def run(self):
+        pass
+
+class Bird(Animal):
+    def fly(self):
+        print("Bird flying")
+
+    def swim(self):
+        pass # Not all birds swim
+
+    def run(self):
+        print("Bird running")
+
+class Fish(Animal):
+    def fly(self):
+        pass # Fish cannot fly
+
+    def swim(self):
+        print("Fish swimming")
+
+    def run(self):
+        pass # Fish cannot run
+```
+
+This violates ISP because Fish is forced to implement the fly and run methods, even though it cannot fly or run. Similarly, Bird is forced to implement the swim method, even though not all birds swim.
+
+**Solution:**
+
+Segregate the Animal interface into smaller, more specific interfaces:
+
+```py
+from abc import ABC, abstractmethod
+
+class FlyingAnimal(ABC):
+    @abstractmethod
+    def fly(self):
+        pass
+
+class SwimmingAnimal(ABC):
+    @abstractmethod
+    def swim(self):
+        pass
+
+class RunningAnimal(ABC):
+    @abstractmethod
+    def run(self):
+        pass
+
+class Bird(FlyingAnimal, RunningAnimal):
+    def fly(self):
+        print("Bird flying")
+
+    def run(self):
+        print("Bird running")
+
+class Fish(SwimmingAnimal):
+    def swim(self):
+        print("Fish swimming")
+```
+
+Now, each class only implements the interfaces that are relevant to it, adhering to ISP.
+
+**Benefits:**
+
+- **Reduced Coupling**: Clients are not dependent on methods they do not use.
+- **Improved Cohesion**: Interfaces are more focused and easier to understand.
+- **Increased Flexibility**: Classes can implement only the interfaces that are relevant to them.
+
+#### <a name="chapter18part1.5"></a>Chapter 18 - Part 1.5: Dependency Inversion Principle (DIP)
+
+The Dependency Inversion Principle states that high-level modules should not depend on low-level modules. Both should depend on abstractions. Secondly, abstractions should not depend on details. Details should depend on abstractions.
+
+**Example:**
+
+Consider a PasswordReminder class that depends directly on a MySQLConnection class:
+
+```py
+class MySQLConnection:
+    def connect(self):
+        print("Connecting to MySQL database")
+        return "MySQL Connection"
+
+class PasswordReminder:
+    def __init__(self, db_connection):
+        self.db_connection = db_connection
+
+    def remind_password(self, user_id):
+        connection = self.db_connection.connect()
+        print(f"Reminding password for user {user_id} using {connection}")
+
+# Usage
+db_connection = MySQLConnection()
+password_reminder = PasswordReminder(db_connection)
+password_reminder.remind_password(123)
+```
+
+This violates DIP because the PasswordReminder (high-level module) depends directly on the MySQLConnection (low-level module). If you want to switch to a different database (e.g., PostgreSQL), you would need to modify the PasswordReminder class.
+
+**Solution:**
+
+Introduce an abstraction (an interface or abstract class) between the high-level and low-level modules:
+
+```py
+from abc import ABC, abstractmethod
+
+class DBConnectionInterface(ABC):
+    @abstractmethod
+    def connect(self):
+        pass
+
+class MySQLConnection(DBConnectionInterface):
+    def connect(self):
+        print("Connecting to MySQL database")
+        return "MySQL Connection"
+
+class PostgreSQLConnection(DBConnectionInterface):
+    def connect(self):
+        print("Connecting to PostgreSQL database")
+        return "PostgreSQL Connection"
+
+class PasswordReminder:
+    def __init__(self, db_connection: DBConnectionInterface):
+        self.db_connection = db_connection
+
+    def remind_password(self, user_id):
+        connection = self.db_connection.connect()
+        print(f"Reminding password for user {user_id} using {connection}")
+
+# Usage
+mysql_connection = MySQLConnection()
+password_reminder = PasswordReminder(mysql_connection)
+password_reminder.remind_password(123)
+
+postgresql_connection = PostgreSQLConnection()
+password_reminder = PasswordReminder(postgresql_connection) # No changes needed in PasswordReminder
+password_reminder.remind_password(123)
+```
+
+Now, both PasswordReminder and MySQLConnection depend on the DBConnectionInterface abstraction. You can easily switch to a different database by creating a new class that implements the DBConnectionInterface without modifying the PasswordReminder class.
+
+**Benefits:**
+
+- **Reduced Coupling**: High-level modules are not dependent on low-level modules.
+- **Increased Reusability**: High-level modules can be reused with different low-level modules.
+- **Improved Testability**: It is easier to test high-level modules in isolation by using mock implementations of the abstractions.
+
+### <a name="chapter18part2"></a>Chapter 18 - Part 2: Creational Design Patterns
+
+Creational design patterns are fundamental tools in software development, offering elegant solutions to object creation challenges. They abstract the instantiation process, providing flexibility and control over how objects are created. This abstraction becomes crucial as systems grow in complexity, allowing developers to manage dependencies, improve code maintainability, and promote loose coupling. By understanding and applying creational patterns, you can build more robust, scalable, and adaptable software. This lesson will introduce you to the core concepts behind these patterns and set the stage for exploring specific creational patterns in detail.
+
+[Creational Design Patterns List](https://refactoring.guru/design-patterns/creational-patterns)
+
+Creational design patterns deal with the process of object creation. They provide mechanisms to create objects in a more controlled and flexible way than simply using the new operator or a constructor directly. The primary goal is to abstract the instantiation process, hiding the complexities of object creation from the client code. This abstraction offers several benefits:
+
+- **Decoupling**: Creational patterns decouple the client code from the specific classes being instantiated. The client interacts with an interface or abstract class, allowing for different concrete classes to be used without modifying the client code.
+
+- **Flexibility**: They provide flexibility in choosing which concrete class to instantiate at runtime. This is particularly useful when the specific class needed depends on configuration, user input, or other dynamic factors.
+
+- **Code Reusability**: Creational patterns often promote code reuse by encapsulating the object creation logic in a separate class or method. This avoids duplication of creation code throughout the application.
+
+- **Complexity Management**: They help manage the complexity of object creation, especially when objects require complex initialization or have dependencies on other objects.
+
+**Key Concepts**
+
+Several key concepts underpin creational design patterns:
+
+- **Abstraction**: Hiding the concrete implementation details of object creation behind an interface or abstract class.
+- **Encapsulation**: Encapsulating the object creation logic within a specific class or method.
+- **Delegation**: Delegating the responsibility of object creation to another class or method.
+- **Polymorphism**: Using polymorphism to create different types of objects based on the same interface.
+
+**Types of Creational Patterns**
+
+There are several well-established creational patterns, each addressing different object creation scenarios. We will be covering these in the following lessons:
+
+- **Singleton**: Ensures that only one instance of a class is created and provides a global point of access to it.
+- **Factory Method**: Defines an interface for creating an object, but lets subclasses decide which class to instantiate.
+- **Abstract Factory**: Provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+- **Builder**: Separates the construction of a complex object from its representation, allowing the same construction process to create different representations.
+- **Prototype**: Creates new objects by copying an existing object, known as the prototype.
+
+#### <a name="chapter18part2.1"></a>Chapter 18 - Part 2.1: Factory Pattern
+
+The Factory Method pattern is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created. This pattern promotes loose coupling by decoupling the object creation logic from the client code. Instead of directly instantiating objects, the client code relies on a factory method to create objects. This allows for greater flexibility and maintainability, as the object creation logic can be easily changed or extended without modifying the client code.
+
+[Factory Pattern](https://refactoring.guru/design-patterns/factory-method)
+
+The Factory Method pattern revolves around defining an interface (or abstract class) for creating objects, but letting subclasses decide which class to instantiate. This means the superclass delegates the responsibility of object creation to its subclasses.
+
+**Key Components**
+
+- **Product**: The interface or abstract class that defines the type of object the factory method creates.
+- **Concrete Product**: Concrete classes that implement the Product interface. These are the actual objects that will be created.
+- **Creator**: The abstract class which declares the factory method. This method returns an object of type Product. The Creator also contains the core business logic that relies on Product objects.
+- **Concrete Creator**: Subclasses of the Creator which override the factory method to return an instance of a Concrete Product.
+
+**How it Works**
+
+- The client code interacts with the Creator class.
+- The Creator class defines a factory method, which is responsible for creating Product objects.
+- Concrete Creator subclasses override the factory method to return specific Concrete Product objects.
+- The client code calls the factory method to obtain a Product object, without needing to know the specific Concrete Product class being instantiated.
+
+**Benefits of Using the Factory Method Pattern**
+
+- **Decoupling**: Decouples the client code from the concrete classes of the objects it needs to create. The client only depends on the abstract Product interface and the Creator class.
+- **Flexibility**: Allows you to easily add new types of products without modifying existing client code. You simply create a new Concrete Product class and a corresponding Concrete Creator class.
+- **Single Responsibility Principle**: The responsibility of object creation is delegated to specialized factory classes, adhering to the Single Responsibility Principle.
+- **Open/Closed Principle**: You can extend the object creation logic without modifying the existing Creator class, adhering to the Open/Closed Principle.
+
+**Configuration-Based Factory**
+
+```py
+from abc import ABC, abstractmethod
+
+
+class Vehicle(ABC):
+
+    @abstractmethod
+    def drive(self):
+        pass
+
+
+class Car(Vehicle):
+    def drive(self):
+        print("Driving a Car")
+
+
+class Bike(Vehicle):
+    def drive(self):
+        print("Driving a Bike")
+
+
+class VehicleFactory(ABC):  # Abstract Factory
+
+    @abstractmethod
+    def create_vehicle(self, vehicle_type: str) -> Vehicle:
+        pass
+
+
+class ConcreteVehicleFactory(VehicleFactory):
+
+    def create_vehicle(self, vehicle_type: str) -> Vehicle:
+        if vehicle_type == "car":
+            return Car()
+        if vehicle_type == "bike":
+            return Bike()
+        else:
+            raise ValueError(f"Unknown vehicle type: {vehicle_type}")
+
+
+vehicle_factory = ConcreteVehicleFactory()
+vehicle_1 = vehicle_factory.create_vehicle("car")
+vehicle_2 = vehicle_factory.create_vehicle("bike")
+
+vehicle_1.drive() # Driving a Car
+vehicle_2.drive() # Driving a Bike
+```
+
+**Configuration-Based Factory Using Reflection (Obs: Based in the modules names and modules path)**
+
+
+```py
+# src/routes/interfaces.py
+
+from abc import ABC, abstractmethod
+
+
+class IRoute(ABC):
+    """Interface for route classes, enforcing method contracts."""
+
+    @abstractmethod
+    def common_function(self):
+        """A method that every route must implement."""
+        pass
+```
+
+```py
+# src/routes/route_example.py
+
+from src.routes.interfaces import IRoute
+
+
+class RouteExample(IRoute):
+    """Example implementation of a route following IRoute contract."""
+
+    def __init__(self):
+        print("RouteExample Class Instance Created")
+
+    def common_function(self):
+        print("RouteExample Class Executing a Function")
+
+```
+
+```py
+# src/routes/route_factory.py
+
+import importlib
+import inspect
+from src.routes.interfaces import IRoute
+
+class RouteFactory:
+    """Factory class for creating route instances dynamically."""
+
+    def __init__(self, route_name: str):
+        self.route_name = route_name
+
+    def create_route(self) -> IRoute:
+        """Dynamically imports and instantiates a route class."""
+        try:
+            route_path = "src.routes.{route_name}".format(route_name=self.route_name)
+            application_module = importlib.import_module(route_path)
+
+            route_classes = [
+                obj for name, obj in inspect.getmembers(application_module, inspect.isclass)
+                if issubclass(obj, IRoute) and obj.__module__ == route_path
+            ]
+
+            if not route_classes:
+                raise ImportError("No valid route class found in {route}".format(route=route_path))
+
+            return route_classes[0]()  # Instantiate the class
+
+        except Exception as e:
+            raise ImportError("Error trying to import route {route_name}. Error: {e}"
+                              .format(route_name=self.route_name, e=e))
+```
+
+
+```py
+# main.py
+
+from src.routes.route_factory import RouteFactory
+from src.routes.interfaces import IRoute
+
+def main(factory: RouteFactory):
+    """Main function that runs the application."""
+    class_instance: IRoute = factory.create_route()
+    class_instance.common_function()
+
+if __name__ == "__main__":
+    route_factory = RouteFactory("route_example")  # Dependency Injection
+    main(route_factory)
+```
+
+
+```
+RouteExample Class Instance Created
+RouteExample Class Executing a Function
+```
+
+In this code, we can see this
+
+| Category                 | Concept                               | Application in Code                                                                                                                      |
+| :-----------------------:| :------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------: |
+| Design Patterns          | Factory Pattern                       | RouteFactory is a Factory that dynamically loads and returns a route instance based on the input name.                                   |
+|                          | Dependency Injection                  | The create_route method returns an instance that adheres to the IRoute interface, allowing flexibility in adding new routes.             |
+| SOLID Principles         | Single Responsibility Principle (SRP) | RouteFactory is only responsible for creating route instances. RouteExample only implements business logic. IRoute defines the contract. |
+|                          | Open/Closed Principle (OCP)           | New route classes can be added without modifying existing code, as long as they implement IRoute.                                        |
+|                          | Liskov Substitution Principle (LSP)   | RouteExample correctly implements IRoute, ensuring it can be used interchangeably with any other IRoute implementation.                  |
+|                          | Interface Segregation Principle (ISP) | IRoute defines a minimal, specific contract (only common_function), preventing unnecessary method implementation in subclasses.          |
+|                          | Dependency Inversion Principle (DIP)  | RouteFactory depends on IRoute (abstraction) rather than concrete classes (RouteExample).                                                |
+| Architectural Principles | Modular Design                        | Each component (interface, factory, concrete class) is in its own module for separation of concerns.                                     |
+|                          | Plug-and-Play Architecture            | New routes can be added without changing the existing factory mechanism.                                                                 |
+|                          | Reflection & Dynamic Import           | Uses importlib and inspect to dynamically load route classes at runtime.                                                                 |
+
+
+#### <a name="chapter18part2.2"></a>Chapter 18 - Part 2.2: Singleton Pattern
+
+The Singleton pattern falls under the category of creational design patterns because it deals with object creation mechanisms, trying to create objects in a manner suitable to the situation. The core idea behind the Singleton pattern is to control the instantiation of a class, ensuring that only one instance exists. This single instance is then globally accessible, providing a centralized point of control or access for a specific resource or service.
+
+[Singleton Pattern](https://refactoring.guru/design-patterns/singleton)
+
+**Key Characteristics**
+
+- **Single Instance**: The class ensures that only one instance of itself is created.
+- **Global Access**: The single instance is accessible globally through a well-known access point.
+- **Controlled Instantiation**: The class is responsible for creating and managing its own instance.
+
+**When to Use the Singleton Pattern**
+
+The Singleton pattern is most appropriate in scenarios where:
+
+- **Exactly one instance of a class is required**: This is common for managing shared resources like database connections, configuration settings, or log files.
+- **Global access to the instance is necessary**: When different parts of the system need to access the same resource or service, a Singleton provides a convenient and controlled way to do so.
+- **Lazy initialization is desired**: The Singleton instance can be created only when it's first needed, which can improve performance in some cases.
+
+**Real-World Examples**
+
+- **Logger**: In many applications, a single logger instance is used to record events and errors. Using a Singleton ensures that all parts of the application write to the same log file, preventing inconsistencies and making it easier to analyze logs.
+
+- **Configuration Manager**: A configuration manager is often implemented as a Singleton to provide a single point of access to application settings. This ensures that all components of the application use the same configuration, avoiding conflicts and inconsistencies.
+
+- **Database Connection Pool**: Managing a pool of database connections can be efficiently handled by a Singleton. The Singleton ensures that all database operations use the same connection pool, optimizing resource usage and improving performance.
+
+**Basic Implementation**
+
+A simple way to implement the Singleton pattern is by using a class-level variable to store the instance and a static method to access it.
+
+```py
+class Singleton:
+    _instance = None  # Private class variable to hold the instance
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
+            # Perform any initialization here
+        return cls._instance
+
+# Example usage
+s1 = Singleton()
+s2 = Singleton()
+
+print(s1 is s2)  # Output: True (both variables point to the same instance)
+```
+
+**Thread-Safe Implementation**
+
+The basic implementation is not thread-safe. In a multithreaded environment, multiple threads could simultaneously check if not cls._instance and create multiple instances. To prevent this, we can use a locking mechanism.
+
+```py
+import threading
+
+class Singleton:
+    _instance = None
+    _lock = threading.Lock()
+
+    def __new__(cls, *args, **kwargs):
+        with cls._lock:
+            if not cls._instance:
+                cls._instance = super(Singleton, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+# Example usage in a multithreaded environment
+def test_singleton():
+    singleton = Singleton()
+    print(f"Thread: {threading.current_thread().name}, Singleton ID: {id(singleton)}")
+
+threads = []
+for i in range(3):
+    thread = threading.Thread(target=test_singleton, name=f"Thread-{i+1}")
+    threads.append(thread)
+    thread.start()
+
+for thread in threads:
+    thread.join()
+```
+
+**Using Metaclasses**
+
+Another way to implement the Singleton pattern is by using metaclasses. Metaclasses are classes that define the behavior of other classes.
+
+```py
+class SingletonMeta(type):
+    _instances = {}
+    _lock = threading.Lock()
+
+    def __call__(cls, *args, **kwargs):
+        with cls._lock:
+            if cls not in cls._instances:
+                cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Singleton(metaclass=SingletonMeta):
+    def __init__(self):
+        # Perform initialization here
+        pass
+
+# Example usage
+singleton1 = Singleton()
+singleton2 = Singleton()
+
+print(singleton1 is singleton2)  # Output: True
+```
+
+**Borg Pattern (Shared State)**
+
+While not a strict Singleton, the Borg pattern (also known as the Monostate pattern) achieves a similar goal by ensuring that all instances of a class share the same state.
+
+```py
+class Borg:
+    _shared_state = {}
+
+    def __init__(self):
+        self.__dict__ = self._shared_state
+
+# Example usage
+borg1 = Borg()
+borg2 = Borg()
+
+borg1.state = "Initialized"
+print(borg2.state)  # Output: Initialized
+print(borg1.__dict__ is borg2.__dict__)  # Output: True
+```
+
+
+**Create a Configuration Class**
+
+```py
+class ConfigurationManager:
+    _shared_state = {}  # This dictionary will hold the shared state
+
+    def __new__(cls, *args, **kwargs):
+        obj = super().__new__(cls)
+        obj.__dict__ = cls._shared_state  # Make the instance's __dict__ reference the shared state
+        return obj
+
+    def __init__(self, config_name="default"):
+        if not hasattr(self, '_initialized'):  # Initialize only once
+            print(f"Initializing ConfigurationManager with config: {config_name}")
+            self.settings = {
+                "log_level": "INFO",
+                "database_url": "sqlite:///app.db",
+                "api_key": "your_default_api_key"
+            }
+            self.current_config_name = config_name
+            self._initialized = True
+        else:
+            print(f"ConfigurationManager already initialized. Current config: {self.current_config_name}")
+
+    def get_setting(self, key):
+        return self.settings.get(key)
+
+    def set_setting(self, key, value):
+        self.settings[key] = value
+        print(f"Setting '{key}' updated to '{value}'")
+
+
+config1 = ConfigurationManager('Developer')  # Output: Initializing ConfigurationManager with config: Developer
+config2 = ConfigurationManager('Production')  # Output: ConfigurationManager already initialized. Current config: Developer
+```
+
+**Manage Database Connection**
+
+```py
+import sqlite3
+import threading
+
+class DatabaseConnection:
+    _instance = None
+    _lock = threading.Lock()
+    _connection = None
+
+    def __new__(cls, db_name):
+        with cls._lock:
+            if not cls._instance:
+                cls._instance = super(DatabaseConnection, cls).__new__(cls)
+                cls._instance.db_name = db_name  # Store the database name
+                cls._instance._connect()  # Establish the connection
+        return cls._instance
+
+    def _connect(self):
+        try:
+            self._connection = sqlite3.connect(self.db_name)
+            print(f"Database connection established to: {self.db_name}")
+        except sqlite3.Error as e:
+            print(f"Error connecting to database: {e}")
+            self._connection = None
+
+    def get_connection(self):
+        if self._connection is None:
+            self._connect()  # Re-establish connection if it was lost
+        return self._connection
+
+    def close_connection(self):
+        if self._connection:
+            self._connection.close()
+            print("Database connection closed.")
+            self._connection = None
+
+# Example usage
+def test_database_connection():
+    db_connection1 = DatabaseConnection("mydatabase.db")
+    conn1 = db_connection1.get_connection()
+    cursor1 = conn1.cursor()
+    cursor1.execute("CREATE TABLE IF NOT EXISTS test_table (id INTEGER PRIMARY KEY, name TEXT)")
+    conn1.commit()
+    print(f"Thread: {threading.current_thread().name}, Connection: {id(conn1)}")
+
+    db_connection2 = DatabaseConnection("mydatabase.db")
+    conn2 = db_connection2.get_connection()
+    print(f"Thread: {threading.current_thread().name}, Connection: {id(conn2)}")
+    print(f"Are connections the same? {conn1 is conn2}")
+
+threads = []
+for i in range(2):
+    thread = threading.Thread(target=test_database_connection, name=f"Thread-{i+1}")
+    threads.append(thread)
+    thread.start()
+
+for thread in threads:
+    thread.join()
+```
+
+**Singleton and Factory Method**
+
+You might use a Singleton to manage a central configuration or resource, and a Factory Method to create different types of objects based on that configuration. Logging system where the logger is a Singleton, and a factory creates different types of log appenders (file, console, etc.).
+
+```py
+class GameObjectManager:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(GameObjectManager, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def __init__(self):
+        self._object_factory = GameObjectFactory()
+        self._objects = []
+
+    def create_object(self, object_type, *args, **kwargs):
+        obj = self._object_factory.create_object(object_type, *args, **kwargs)
+        self._objects.append(obj)
+        return obj
+
+    def get_objects(self):
+        return self._objects
+
+class GameObjectFactory:
+    def create_object(self, object_type, *args, **kwargs):
+        if object_type == "character":
+            return Character(*args, **kwargs)
+        elif object_type == "item":
+            return Item(*args, **kwargs)
+        elif object_type == "environment":
+            return Environment(*args, **kwargs)
+        else:
+            raise ValueError("Invalid object type")
+
+class Character:
+    def __init__(self, name, health):
+        self.name = name
+        self.health = health
+
+    def __repr__(self):
+        return f"Character(name='{self.name}', health={self.health})"
+
+class Item:
+    def __init__(self, name, power):
+        self.name = name
+        self.power = power
+
+    def __repr__(self):
+        return f"Item(name='{self.name}', power={self.power})"
+
+class Environment:
+    def __init__(self, name, size):
+        self.name = name
+        self.size = size
+
+    def __repr__(self):
+        return f"Environment(name='{self.name}', size={self.size})"
+
+# Usage
+manager1 = GameObjectManager()
+manager2 = GameObjectManager()
+
+# Verify that both variables point to the same instance
+print(manager1 is manager2)  # Output: True
+
+# Create game objects using the manager
+character = manager1.create_object("character", name="Hero", health=100)
+item = manager1.create_object("item", name="Sword", power=20)
+environment = manager1.create_object("environment", name="Forest", size="Large")
+
+# Retrieve all objects
+objects = manager1.get_objects()
+print(objects)
+# Output: [Character(name='Hero', health=100), Item(name='Sword', power=20), Environment(name='Forest', size='Large')]
+```
+
+#### <a name="chapter18part2.3"></a>Chapter 18 - Part 2.3: Abstract Factory Pattern
+
+The Abstract Factory pattern is a powerful creational design pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes. It's like a "factory of factories," where each factory is responsible for creating a specific set of related products. This pattern promotes loose coupling and allows you to easily switch between different product families without modifying the client code. It builds upon the Factory Method pattern by providing a higher level of abstraction.
+
+[Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory)
+
+The Abstract Factory pattern revolves around the concept of creating families of related objects. Let's break down the key components:
+
+- **Abstract Factory**: This interface declares methods for creating each distinct product in a family.
+- **Concrete Factories**: These classes implement the Abstract Factory interface and are responsible for creating specific families of products. Each concrete factory creates a different set of related products.
+- **Abstract Product**: This interface declares the common interface for all products in a family.
+- **Concrete Products**: These classes implement the Abstract Product interface and represent the actual products created by the concrete factories.
+- **Client**: The client code uses the Abstract Factory and Abstract Product interfaces to work with the products without knowing their concrete classes.
+
+**Key Principles**
+
+- **Abstraction**: The pattern abstracts the creation process of related objects, allowing the client to work with interfaces rather than concrete implementations.
+- **Loose Coupling**: The client code is decoupled from the concrete product classes and the concrete factory classes. This makes the system more flexible and easier to maintain.
+- **Family of Products**: The pattern ensures that the client always works with products from the same family, maintaining consistency and avoiding compatibility issues.
+
+**When to Use the Abstract Factory Pattern**
+
+- When the system needs to be independent of how its products are created, composed, and represented.
+- When there are multiple families of related products, and you need to switch between them easily.
+- When you want to enforce that related product objects are used together.
+- When you want to provide a library of products and you want to reveal just their interfaces, not their implementations.
+
+**Real-World Examples**
+
+- **GUI Toolkit**: Imagine a GUI toolkit that supports multiple operating systems (Windows, macOS, Linux). Each operating system has its own look and feel for widgets like buttons, text fields, and windows. The Abstract Factory pattern can be used to create a factory for each operating system, which would then create the appropriate widgets for that platform.
+  - **Abstract Factory**: GUIFactory (creates buttons, text fields, windows)
+  - **Concrete Factories**: WindowsFactory, MacOSFactory, LinuxFactory
+  - **Abstract Product**: Button, TextField, Window
+  - **Concrete Products**: WindowsButton, MacOSButton, LinuxButton, etc.
+ 
+- **Cross-Platform Game Development**: Consider a game that needs to run on different platforms (e.g., PC, mobile). Each platform might require different input methods (keyboard/mouse vs. touch screen) and rendering techniques (DirectX vs. OpenGL). An Abstract Factory can provide the appropriate input and rendering components for each platform.
+  - **Abstract Factory**: PlatformFactory (creates input handler, renderer)
+  - **Concrete Factories**: PCFactory, MobileFactory
+  - **Abstract Product**: InputHandler, Renderer
+  - **Concrete Products**: KeyboardMouseInput, TouchScreenInput, DirectXRenderer, OpenGLRenderer
+ 
+- **Hypothetical Scenario**: Online Bookstore Theme Customization: Expanding on the Online Bookstore project, imagine you want to offer different themes (e.g., "Light," "Dark," "High Contrast"). Each theme requires a specific set of UI elements like header styles, button styles, and background colors. An Abstract Factory can be used to create a factory for each theme, which would then create the appropriate UI elements for that theme.
+  - **Abstract Factory**: ThemeFactory (creates header, button, background)
+  - **Concrete Factories**: LightThemeFactory, DarkThemeFactory, HighContrastThemeFactory
+  - **Abstract Product**: Header, Button, Background
+  - **Concrete Products**: LightHeader, DarkButton, HighContrastBackground, etc.
+ 
+**Implementing the Abstract Factory Pattern in Python**
+
+```py
+from abc import ABC, abstractmethod
+from typing import Protocol
+
+
+# Abstract Products
+class Button(ABC):
+    @abstractmethod
+    def render(self) -> str:
+        pass
+
+
+class TextField(ABC):
+    @abstractmethod
+    def render(self) -> str:
+        pass
+
+
+# Concrete Products
+class WindowsButton(Button):
+    def render(self) -> str:
+        return "Rendering Windows Button"
+
+
+class MacOSButton(Button):
+    def render(self) -> str:
+        return "Rendering MacOS Button"
+
+
+class WindowsTextField(TextField):
+    def render(self) -> str:
+        return "Rendering Windows TextField"
+
+
+class MacOSTextField(TextField):
+    def render(self) -> str:
+        return "Rendering MacOS TextField"
+
+
+# Abstract Factory
+class GUIFactory(ABC):
+    @abstractmethod
+    def create_button(self) -> Button:
+        pass
+
+    @abstractmethod
+    def create_text_field(self) -> TextField:
+        pass
+
+
+# Concrete Factories
+class WindowsFactory(GUIFactory):
+    def create_button(self) -> Button:
+        return WindowsButton()
+
+    def create_text_field(self) -> TextField:
+        return WindowsTextField()
+
+
+class MacOSFactory(GUIFactory):
+    def create_button(self) -> Button:
+        return MacOSButton()
+
+    def create_text_field(self) -> TextField:
+        return MacOSTextField()
+
+
+# Client code
+def create_ui(factory: GUIFactory) -> str:
+    button = factory.create_button()
+    text_field = factory.create_text_field()
+    return button.render() + "\n" + text_field.render()
+
+
+# Usage
+windows_ui = create_ui(WindowsFactory())
+print("Windows UI:\n" + windows_ui)
+
+macos_ui = create_ui(MacOSFactory())
+print("\nMacOS UI:\n" + macos_ui)
+```
+
+**Explanation**:
+
+- **Abstract Products (Button, TextField)**: Define the interface for the products. They declare the render method, which is common to all buttons and text fields.
+- **Concrete Products (WindowsButton, MacOSButton, WindowsTextField, MacOSTextField)**: Implement the abstract product interfaces. Each concrete product is specific to a particular operating system.
+- **Abstract Factory (GUIFactory)**: Defines the interface for creating families of related products (buttons and text fields).
+- **Concrete Factories (WindowsFactory, MacOSFactory)**: Implement the abstract factory interface. Each concrete factory is responsible for creating a specific family of products (e.g., Windows widgets or macOS widgets).
+- **Client Code (create_ui)**: The client code takes a GUIFactory as input and uses it to create the UI elements. It doesn't need to know the specific type of factory being used, only that it conforms to the GUIFactory interface.
+
+**Benefits of this Implementation**
+- **Flexibility**: You can easily switch between different GUI styles by simply changing the factory that is passed to the create_ui function.
+- **Maintainability**: The code is well-organized and easy to understand. Each class has a specific responsibility, making it easier to modify or extend the code in the future.
+- **Testability**: The code is easy to test because the client code is decoupled from the concrete product classes.
+
+**OBS:How does the Abstract Factory pattern differ from the Factory Method pattern?**
+
+In essence, if you need to create different types of individual objects, use the Factory Method. If you need to create families of related objects that need to be used together, use the Abstract Factory.The Factory Method focuses on creating single objects with the creation logic deferred to subclasses, while the Abstract Factory focuses on creating families of related objects, ensuring consistency among the created products. Choose Factory Method for simple object creation and Abstract Factory for creating coherent sets of objects.
+
+#### <a name="chapter18part2.4"></a>Chapter 18 - Part 2.4: Builder Pattern
+
+The Builder pattern is a creational design pattern that separates the construction of a complex object from its representation. This allows the same construction process to create different representations. Unlike other creational patterns that focus on object creation in a single step, the Builder pattern constructs the object step-by-step, providing more control and flexibility. This is particularly useful when dealing with objects that have many optional attributes or require a specific construction order.
+
+[Builder](https://refactoring.guru/design-patterns/builder)
+
+The Builder pattern addresses the problem of constructing complex objects, especially when the construction process involves multiple steps or optional configurations. It decouples the object's construction from its representation, allowing you to create different variations of the object using the same construction code.
+
+**Key Components**
+
+The Builder pattern consists of the following key components:
+
+- **Builder Interface**: Defines an interface for creating parts of a Product object.
+- **Concrete Builder**: Implements the Builder interface to construct and assemble the parts of the Product. Each Concrete Builder is responsible for creating a specific representation of the Product.
+- **Product**: Represents the complex object being constructed.
+- **Director (Optional)**: Constructs the Product object using the Builder interface. The Director defines the order in which the construction steps are executed. Clients can also directly call the builder to construct the product.
+
+**How it Works**
+
+- The client creates a Director object (if used) and associates it with a Concrete Builder object. Alternatively, the client can directly interact with the Concrete Builder.
+- The Director (or client) calls the construction steps on the Concrete Builder in a specific order.
+- The Concrete Builder builds the parts of the Product and assembles them.
+- The client retrieves the final Product from the Concrete Builder.
+
+**Benefits of Using the Builder Pattern**
+
+- **Improved Code Readability**: The step-by-step construction process makes the code easier to understand and maintain.
+- **Flexibility**: Allows you to create different representations of the object using the same construction code.
+- **Encapsulation**: Encapsulates the construction logic within the Builder classes, hiding the complexity from the client.
+- **Control**: Provides fine-grained control over the construction process.
+- **Separation of Concerns**: Separates the construction of the object from its representation.
+
+**When to Use the Builder Pattern**
+
+- When the algorithm for creating a complex object should be independent of the parts that make up the object and how they're assembled.
+- When the construction process must allow different representations for the object that's constructed.
+- When you want to avoid a "telescoping constructor" anti-pattern (a constructor with many optional parameters).
+
+**Implementing the Builder Pattern in Python**
+
+Let's illustrate the Builder pattern with a practical example: building a computer. A computer consists of several components like CPU, RAM, storage, and graphics card. We can use the Builder pattern to construct different computer configurations.
+
+**Defining the Product: The Computer Class**
+
+First, we define the Computer class, which represents the complex object we want to build.
+
+```py
+from typing import Optional
+
+class Computer:
+    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
+        self.cpu = cpu
+        self.ram = ram
+        self.storage = storage
+        self.graphics_card = graphics_card
+
+    def display_configuration(self):
+        print("Computer Configuration:")
+        print(f"CPU: {self.cpu}")
+        print(f"RAM: {self.ram}")
+        print(f"Storage: {self.storage}")
+        if self.graphics_card:
+            print(f"Graphics Card: {self.graphics_card}")
+```
+
+**Defining the Builder Interface: The ComputerBuilder Class**
+
+Next, we define the ComputerBuilder interface, which specifies the methods for building the different parts of the computer.
+
+```py
+from abc import ABC, abstractmethod
+from typing import Optional
+
+class ComputerBuilder(ABC):
+    @abstractmethod
+    def reset(self) -> None:
+        pass
+
+    @abstractmethod
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
+        pass
+```
+
+**Implementing Concrete Builders: GamingComputerBuilder and OfficeComputerBuilder**
+
+Now, we create concrete builder classes that implement the ComputerBuilder interface. These builders will construct specific types of computers, such as a gaming computer and an office computer.
+
+```py
+from typing import Optional
+
+class GamingComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+
+class OfficeComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+```
+
+**Implementing the Director: The ComputerAssembler Class**
+
+The Director class is responsible for orchestrating the construction process. It takes a builder as input and calls the builder's methods in a specific order to construct the computer.
+
+```py
+from typing import Optional
+
+class ComputerAssembler:
+    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
+        self.builder = builder
+
+    def assemble_computer(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None) -> "Computer":
+        self.builder.reset()
+        self.builder.set_cpu(cpu)
+        self.builder.set_ram(ram)
+        self.builder.set_storage(storage)
+        if graphics_card:
+            self.builder.set_graphics_card(graphics_card)
+        return self.builder.get_computer()
+```
+
+**Client Code**
+
+Finally, let's see how the client code uses the Builder pattern to construct different computer configurations.
+
+```py
+# Using the GamingComputerBuilder
+gaming_builder = GamingComputerBuilder()
+assembler = ComputerAssembler(gaming_builder)
+gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD", graphics_card="Nvidia RTX 3080")
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder
+office_builder = OfficeComputerBuilder()
+assembler = ComputerAssembler(office_builder)
+office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
+office_computer.display_configuration()
+```
+
+This example demonstrates how the Builder pattern allows us to create different computer configurations using the same construction process. The client code doesn't need to know the details of how the computer is built; it only needs to specify the desired components.
+
+**All Example**
+
+```py
+from abc import abstractmethod, ABC
+from typing import Optional
+
+
+class Computer:
+    def __init__(self, cpu: str, ram: int, storage: int, graphics_card: Optional[str] = None):
+        self.cpu = cpu
+        self.ram = ram
+        self.storage = storage
+        self.graphics_card = graphics_card
+
+    def display_configuration(self):
+        print("Computer Configuration:")
+        print(f"CPU: {self.cpu}")
+        print(f"RAM: {self.ram}")
+        print(f"Storage: {self.storage}")
+        if self.graphics_card:
+            print(f"Graphics Card: {self.graphics_card}")
+
+
+class ComputerBuilder(ABC):
+    @abstractmethod
+    def reset(self) -> None:
+        pass
+
+    @abstractmethod
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        pass
+
+    @abstractmethod
+    def get_computer(self) -> "Computer":  # Assuming you have a Computer class
+        pass
+
+
+class GamingComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+
+
+class OfficeComputerBuilder(ComputerBuilder):
+    def __init__(self) -> None:
+        self.computer: Optional["Computer"] = None  # Forward reference
+
+    def reset(self) -> None:
+        self.computer = Computer(cpu="", ram=0, storage=0)  # Initialize with default values
+
+    def set_cpu(self, cpu: str) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.cpu = cpu
+        return self
+
+    def set_ram(self, ram: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.ram = ram
+        return self
+
+    def set_storage(self, storage: int) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.storage = storage
+        return self
+
+    def set_graphics_card(self, graphics_card: Optional[str]) -> "ComputerBuilder":
+        if self.computer is None:
+            self.reset()
+        self.computer.graphics_card = graphics_card
+        return self
+
+    def get_computer(self) -> "Computer":
+        if self.computer is None:
+            self.reset()
+        return self.computer
+
+
+class ComputerAssembler:
+    def __init__(self, builder: "ComputerBuilder") -> None:  # Forward reference
+        self.builder = builder
+
+    def assemble_computer(self, cpu: str, ram: int, storage: int,
+                          graphics_card: Optional[str] = None) -> "Computer":
+        self.builder.reset()
+        self.builder.set_cpu(cpu)
+        self.builder.set_ram(ram)
+        self.builder.set_storage(storage)
+        if graphics_card:
+            self.builder.set_graphics_card(graphics_card)
+        return self.builder.get_computer()
+
+
+# Using the GamingComputerBuilder
+gaming_builder = GamingComputerBuilder()
+assembler = ComputerAssembler(gaming_builder)
+gaming_computer = assembler.assemble_computer(cpu="Intel i9", ram="32GB", storage="1TB SSD",
+                                              graphics_card="Nvidia RTX 3080")
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder
+office_builder = OfficeComputerBuilder()
+assembler = ComputerAssembler(office_builder)
+office_computer = assembler.assemble_computer(cpu="Intel i5", ram="8GB", storage="512GB SSD")
+office_computer.display_configuration()
+```
+
+**Alternative Implementation: Without a Director**
+
+The Director is an optional component of the Builder pattern. You can also implement the pattern without a Director by having the client directly interact with the Concrete Builder.
+
+Here's how the client code would look without a Director:
+
+```py
+# Using the GamingComputerBuilder directly
+gaming_builder = GamingComputerBuilder()
+gaming_builder.reset()
+gaming_builder.set_cpu("Intel i9")
+gaming_builder.set_ram("32GB")
+gaming_builder.set_storage("1TB SSD")
+gaming_builder.set_graphics_card("Nvidia RTX 3080")
+gaming_computer = gaming_builder.get_computer()
+gaming_computer.display_configuration()
+
+# Using the OfficeComputerBuilder directly
+office_builder = OfficeComputerBuilder()
+office_builder.reset()
+office_builder.set_cpu("Intel i5")
+office_builder.set_ram("8GB")
+office_builder.set_storage("512GB SSD")
+office_computer = office_builder.get_computer()
+office_computer.display_configuration()
+```
+
+In this case, the client is responsible for calling the builder's methods in the correct order. This approach can be simpler, but it also puts more responsibility on the client.
+
+**Create a Mapper Class**
+
+```py
+import json
+import copy
+from typing import Final, List, Tuple, Any, Optional
+
+# 1. Define the Immutable Classes
+class Order:
+    def __init__(self, order_id: str, customer_id: str, items: Tuple["OrderItem", ...], total_amount: float, shipping_address: "Address"):
+        self.__order_id: Final[str] = order_id
+        self.__customer_id: Final[str] = customer_id
+        self.__items: Final[Tuple["OrderItem", ...]] = items  # Make it immutable
+        self.__total_amount: Final[float] = total_amount
+        self.__shipping_address: Final["Address"] = shipping_address
+
+    @property
+    def order_id(self) -> str:
+        return self.__order_id
+
+    @property
+    def customer_id(self) -> str:
+        return self.__customer_id
+
+    @property
+    def items(self) -> Tuple["OrderItem", ...]:
+        return self.__items
+
+    @property
+    def total_amount(self) -> float:
+        return self.__total_amount
+
+    @property
+    def shipping_address(self) -> "Address":
+        return self.__shipping_address
+
+    def __repr__(self) -> str:
+        return (f"Order(order_id={self.__order_id}, customer_id={self.__customer_id}, "
+                f"items={self.__items}, total_amount={self.__total_amount}, "
+                f"shipping_address={self.__shipping_address})")
+
+
+class OrderItem:
+    def __init__(self, product_id: str, quantity: int, price: float):
+        self.__product_id: Final[str] = product_id
+        self.__quantity: Final[int] = quantity
+        self.__price: Final[float] = price
+
+    @property
+    def product_id(self) -> str:
+        return self.__product_id
+
+    @property
+    def quantity(self) -> int:
+        return self.__quantity
+
+    @property
+    def price(self) -> float:
+        return self.__price
+
+    def __repr__(self) -> str:
+        return f"OrderItem(product_id={self.__product_id}, quantity={self.__quantity}, price={self.__price})"
+
+
+class Address:
+    def __init__(self, street: str, city: str, zip_code: str, country: str):
+        self.__street: Final[str] = street
+        self.__city: Final[str] = city
+        self.__zip_code: Final[str] = zip_code
+        self.__country: Final[str] = country
+
+    @property
+    def street(self) -> str:
+        return self.__street
+
+    @property
+    def city(self) -> str:
+        return self.__city
+
+    @property
+    def zip_code(self) -> str:
+        return self.__zip_code
+
+    @property
+    def country(self) -> str:
+        return self.__country
+
+    def __repr__(self) -> str:
+        return f"Address(street={self.__street}, city={self.__city}, zip_code={self.__zip_code}, country={self.__country})"
+
+
+# 2. Create a Builder Class
+class OrderBuilder:
+    def __init__(self) -> None:
+        self.order_id: Optional[str] = None
+        self.customer_id: Optional[str] = None
+        self.items: List["OrderItem"] = []
+        self.total_amount: Optional[float] = None
+        self.shipping_address: Optional["Address"] = None
+        self.errors: List[str] = []
+
+    def from_json(self, json_data: str) -> "OrderBuilder":
+        try:
+            data: dict = json.loads(json_data)
+            self.with_order_id(data.get('order_id'))
+            self.with_customer_id(data.get('customer_id'))
+            self.with_total_amount(data.get('total_amount'))
+
+            for item in data.get('items', []):
+                self.with_item(item.get('product_id'), item.get('quantity'), item.get('price'))
+
+            shipping_address: dict = data.get('shipping_address', {})
+            self.with_shipping_address(
+                shipping_address.get('street'),
+                shipping_address.get('city'),
+                shipping_address.get('zip_code'),
+                shipping_address.get('country')
+            )
+
+        except (json.JSONDecodeError, TypeError) as e:
+            self.errors.append(f"Error parsing JSON: {str(e)}")
+        return self
+
+    def with_order_id(self, order_id: Any) -> "OrderBuilder":
+        if not isinstance(order_id, str) or not order_id.strip():
+            self.errors.append("Order ID must be a non-empty string")
+        else:
+            self.order_id = order_id
+        return self
+
+    def with_customer_id(self, customer_id: Any) -> "OrderBuilder":
+        if not isinstance(customer_id, str) or not customer_id.strip():
+            self.errors.append("Customer ID must be a non-empty string")
+        else:
+            self.customer_id = customer_id
+        return self
+
+    def with_item(self, product_id: str, quantity: Any, price: Any) -> "OrderBuilder":
+        if not all(isinstance(arg, (int, float)) and arg > 0 for arg in [quantity, price]):
+            self.errors.append("Quantity and price must be positive numbers")
+        else:
+            item = OrderItem(product_id=product_id, quantity=int(quantity), price=float(price))
+            self.items.append(item)
+        return self
+
+    def with_total_amount(self, total_amount: Any) -> "OrderBuilder":
+        if not isinstance(total_amount, (int, float)) or total_amount <= 0:
+            self.errors.append("Total amount must be a positive number")
+        else:
+            self.total_amount = float(total_amount)
+        return self
+
+    def with_shipping_address(self, street: Any, city: Any, zip_code: Any, country: Any) -> "OrderBuilder":
+        if not all(isinstance(arg, str) and arg.strip() for arg in [street, city, zip_code, country]):
+            self.errors.append("Shipping address fields must be non-empty strings")
+        else:
+            self.shipping_address = Address(street=street, city=city, zip_code=zip_code, country=country)
+        return self
+
+    def build(self) -> "Order":
+        if self.errors:
+            raise ValueError("Validation errors: " + ", ".join(self.errors))
+
+        if not all([self.order_id, self.customer_id, self.items, self.total_amount, self.shipping_address]):
+            raise ValueError("Order ID, customer ID, items, total amount, and shipping address must be set")
+
+        return Order(
+            order_id=self.order_id,
+            customer_id=self.customer_id,
+            items=tuple(self.items),  # Convert to tuple for immutability
+            total_amount=self.total_amount,
+            shipping_address=self.shipping_address
+        )
+
+
+# Usage
+json_data = """
+{
+    "order_id": "ORD-123",
+    "customer_id": "CUST-456",
+    "items": [
+        {"product_id": "PROD-001", "quantity": 2, "price": 25.0},
+        {"product_id": "PROD-002", "quantity": 1, "price": 50.0}
+    ],
+    "total_amount": 100.0,
+    "shipping_address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "zip_code": "12345",
+        "country": "USA"
+    }
+}
+"""
+
+try:
+    builder = OrderBuilder()
+    order = builder.from_json(json_data).build()
+    print(order)
+except ValueError as e:
+    print(f"Error creating order: {e}")
+```
+
+**When should I use the Builder pattern versus a simple constructor with optional arguments?**
+
+Use a simple constructor with optional arguments when:
+
+- The object has a small number of optional parameters.
+- The object creation process is straightforward.
+- Readability isn't significantly compromised.
+
+Use the Builder pattern when:
+
+- The object has many optional parameters.
+- You want to improve code readability and maintainability.
+- You need to create immutable objects.
+- The object creation process is complex, involving multiple steps or dependencies.
+- You want to centralize default value and validation logic.
+
+**How can I handle complex validation rules during the object construction process using the Builder pattern?**
+
+- **Validation Methods in the Builder**: Implement validation methods within the builder class. These methods check the state of the builder at various stages of construction.
+
+```py
+from typing import Optional, List, Any
+
+class Product:
+    def __init__(self, name: str, price: float, quantity: int) -> None:
+        self.name: str = name
+        self.price: float = price
+        self.quantity: int = quantity
+
+    def __str__(self) -> str:
+        return f"Product(name={self.name}, price={self.price}, quantity={self.quantity})"
+
+
+class ProductBuilder:
+    def __init__(self) -> None:
+        self.name: Optional[str] = None
+        self.price: Optional[float] = None
+        self.quantity: Optional[int] = None
+        self.errors: List[str] = []
+
+    def with_name(self, name: Any) -> "ProductBuilder":
+        if not isinstance(name, str) or not name.strip():
+            self.errors.append("Name must be a non-empty string")
+        else:
+            self.name = name
+        return self
+
+    def with_price(self, price: Any) -> "ProductBuilder":
+        if not isinstance(price, (int, float)) or price <= 0:
+            self.errors.append("Price must be a positive number")
+        else:
+            self.price = float(price)
+        return self
+
+    def with_quantity(self, quantity: Any) -> "ProductBuilder":
+        if not isinstance(quantity, int) or quantity < 0:
+            self.errors.append("Quantity must be a non-negative integer")
+        else:
+            self.quantity = int(quantity)
+        return self
+
+    def build(self) -> "Product":
+        if self.errors:
+            raise ValueError("Validation errors: " + ", ".join(self.errors))
+
+        if not all([self.name, self.price, self.quantity]):
+            raise ValueError("Name, price and quantity must be set")
+
+        return Product(name=self.name, price=self.price, quantity=self.quantity)
+
+
+# Usage
+try:
+    product = ProductBuilder() \
+        .with_name("Example Product") \
+        .with_price(10.0) \
+        .with_quantity(2) \
+        .build()
+    print(product)
+
+    invalid_product = ProductBuilder()
+    try:
+        invalid_product.with_name("").with_price(-5.0).with_quantity(2).build()
+    except ValueError as e:
+        print(f"Error creating invalid product: {e}")
+
+except ValueError as e:
+    print(f"Error creating product: {e}")
+```
+
+#### <a name="chapter18part2.5"></a>Chapter 18 - Part 2.5: Prototype Pattern
+
+The Prototype pattern is a creational design pattern that allows you to create new objects by copying an existing object, known as the prototype. This is particularly useful when creating objects is expensive or complex, and you need to create many similar objects. Instead of creating each object from scratch, you can clone a prototype object and then modify the clone as needed. This pattern promotes code reuse and reduces the need for complex object creation logic.
+
+[Prototype](https://refactoring.guru/design-patterns/prototype)
+
+The Prototype pattern relies on the concept of cloning. Cloning involves creating a new object that is a copy of an existing object. There are two main types of cloning:
+
+- **Shallow Copy**: A shallow copy creates a new object, but the object's fields that are references to other objects are copied as references as well. This means that the new object and the original object share the same referenced objects. If you modify a referenced object in one object, the change will be reflected in the other object.
+
+- **Deep Copy**: A deep copy creates a new object, and it recursively copies all the objects referenced by the original object. This means that the new object and the original object have completely independent copies of all objects. Modifying an object in one object will not affect the other object.
+
+The Prototype pattern typically involves the following participants:
+
+- **Prototype Interface**: An interface or abstract class that declares the clone() method. This method is responsible for creating a copy of the object.
+- **Concrete Prototype**: Concrete classes that implement the Prototype interface and provide the implementation for the clone() method. Each concrete prototype class defines how to create a copy of itself.
+- **Client**: The client is responsible for requesting new objects by cloning the prototype objects. The client does not need to know the concrete classes of the objects it is creating.
+
+**Implementing the Prototype Pattern in Python**
+
+```py
+import copy
+from typing import Any
+
+class Prototype:
+    def __init__(self) -> None:
+        self._value: Any = None
+
+    def clone(self) -> "Prototype":
+        return copy.copy(self)  # Shallow copy
+
+    @property
+    def value(self) -> Any:
+        return self._value
+
+    @value.setter
+    def value(self, new_value: Any) -> None:
+        self._value = new_value
+
+# Client code
+prototype = Prototype()
+prototype.value = "Original Value"
+
+clone = prototype.clone()
+clone.value = "Cloned Value"
+
+print(f"Original: {prototype.value}")
+print(f"Clone: {clone.value}")
+```
+
+In this example:
+
+- We define a Prototype class with a value attribute.
+- The clone() method uses copy.copy() to create a shallow copy of the object.
+- The client creates a prototype object, sets its value, and then clones it.
+- The clone's value is modified, and we can see that the original object's value remains unchanged because the value attribute is a simple string (immutable).
+
+**Deep Copy Example: Cloning Objects with References**
+
+Now, let's consider a more complex example where the object contains references to other objects. In this case, we'll need to use a deep copy to ensure that the cloned object has its own independent copies of the referenced objects.
+
+```py
+import copy
+from typing import Any
+
+class Address:
+    def __init__(self, street: str, city: str) -> None:
+        self.street: str = street
+        self.city: str = city
+
+    def __str__(self) -> str:
+        return f"{self.street}, {self.city}"
+
+
+class Person:
+    def __init__(self, name: str, address: Address) -> None:
+        self.name: str = name
+        self.address: Address = address
+
+    def clone(self, deep_copy: bool = True) -> "Person":
+        if deep_copy:
+            return copy.deepcopy(self)
+        else:
+            return copy.copy(self)
+
+    def __str__(self) -> str:
+        return f"{self.name} lives at {self.address}"
+
+
+# Client code
+address = Address("123 Main St", "Anytown")
+person = Person("John Doe", address)
+
+person2 = person.clone()
+person2.name = "Jane Doe"
+person2.address.street = "456 Oak Ave"  # Modifying the address of person2
+
+print(person)
+print(person2)
+
+person3 = person.clone(deep_copy=False)  # Shallow copy
+person3.name = "Peter Pan"
+person3.address.street = "789 Pine Ln"
+
+print(person)
+print(person3)
+```
+
+In this example:
+
+- We have two classes: Address and Person. The Person class has a reference to an Address object.
+- The clone() method in the Person class takes a deep_copy argument. If deep_copy is True, it creates a deep copy using copy.deepcopy(). Otherwise, it creates a shallow copy using copy.copy().
+- The client creates a Person object and then clones it using both deep and shallow copies.
+- When we use a deep copy, modifying the address of person2 does not affect the address of the original person.
+- However, when we use a shallow copy to create person3, modifying the address of person3 does affect the address of the original person because they share the same Address object.
+
+**Prototype Registry**
+
+A Prototype Registry is a useful addition to the Prototype pattern. It acts as a central repository for prototype objects. Clients can then request clones of these prototypes by specifying a key or identifier. This eliminates the need for the client to know the concrete classes of the prototype objects.
+
+```py
+import copy
+from typing import Dict, Optional, Any
+
+class Prototype:
+    def __init__(self) -> None:
+        pass
+
+    def clone(self) -> "Prototype":
+        return copy.deepcopy(self)
+
+class ConcretePrototype1(Prototype):
+    def __init__(self, value: str) -> None:
+        super().__init__()
+        self.value: str = value
+
+    def __str__(self) -> str:
+        return f"ConcretePrototype1 with value: {self.value}"
+
+class ConcretePrototype2(Prototype):
+    def __init__(self, data: list[int]) -> None:
+        super().__init__()
+        self.data: list[int] = data
+
+    def __str__(self) -> str:
+        return f"ConcretePrototype2 with data: {self.data}"
+
+class PrototypeRegistry:
+    def __init__(self) -> None:
+        self._prototypes: Dict[str, Prototype] = {}
+
+    def register(self, name: str, prototype: Prototype) -> None:
+        self._prototypes[name] = prototype
+
+    def unregister(self, name: str) -> None:
+        del self._prototypes[name]
+
+    def get_prototype(self, name: str) -> Optional[Prototype]:
+        prototype = self._prototypes.get(name)
+        if prototype:
+            return prototype.clone()
+        else:
+            return None
+
+# Client Code
+registry = PrototypeRegistry()
+
+# Create and register prototypes
+proto1 = ConcretePrototype1("Initial Value")
+proto2 = ConcretePrototype2([1, 2, 3])
+
+registry.register("proto1", proto1)
+registry.register("proto2", proto2)
+
+# Get clones from the registry
+clone1 = registry.get_prototype("proto1")
+clone2 = registry.get_prototype("proto2")
+
+print(clone1)
+print(clone2)
+
+clone1.value = "Modified Value"  # type: ignore # Safe because clone1 is ConcretePrototype1
+print(clone1)
+print(proto1)
+```
+
+In this example:
+
+- We define a PrototypeRegistry class that stores prototype objects in a dictionary.
+- The register() method adds a prototype to the registry with a given name.
+- The get_prototype() method retrieves a prototype from the registry by name and returns a clone of it.
+- The client creates a registry, registers some prototype objects, and then retrieves clones of those objects from the registry.
+
+**Benefits of the Prototype Pattern**
+
+- **Reduced Object Creation Cost**: Cloning an existing object can be more efficient than creating a new object from scratch, especially when object creation is complex or resource-intensive.
+- **Improved Performance**: By avoiding complex object creation logic, the Prototype pattern can improve the performance of your application.
+- **Flexibility**: The Prototype pattern allows you to create new objects without knowing their concrete classes. This makes your code more flexible and easier to maintain.
+- **Dynamic Object Creation**: You can add or remove prototypes at runtime, allowing you to dynamically change the types of objects that can be created.
+- **Simplified Object Creation**: The client code doesn't need to know the details of object creation. It simply requests a clone of a prototype.
+
+**When to Use the Prototype Pattern**
+
+- When the cost of creating an object is high, and cloning is more efficient.
+- When you need to create many similar objects with only slight variations.
+- When you want to avoid creating a hierarchy of factory classes, as in the Factory Method or Abstract Factory patterns.
+- When the concrete classes of the objects to be created are not known at compile time.
+- When you want to add or remove objects dynamically at runtime.
+
+**real-world examples where the Prototype Pattern can be effectively applied**
+
+- Game Development: Creating Multiple Game Objects. Create a "prototype" object for each enemy type. This prototype holds the default configuration.
+When you need a new enemy instance, clone the appropriate prototype. This is much faster than creating a new enemy object from scratch each time, especially if the object creation is complex (e.g., loading textures, setting up animations).
+
+**key differences between shallow copy and deep copy**
+
+Shallow copy creates a new object, but it doesn't create new copies of the nested objects (references) within the original object. Instead, the new object contains references to the same nested objects as the original. Changes to mutable nested objects in the copied object will affect the original object, and vice versa.
+
+Deep copy creates a new object and recursively creates new copies of all the nested objects within the original object.Deep copying can be more time-consuming and memory-intensive, especially for complex objects with many levels of nesting.
+
+### <a name="chapter18part3"></a>Chapter 18 - Part 3: Structural Design Patterns
+
+Structural design patterns are concerned with how classes and objects are composed to form larger structures. They simplify the design by identifying a way to realize relationships between entities. These patterns focus on how to assemble objects and classes into larger structures while keeping the structures flexible and efficient. They deal with relationships between entities, providing different ways to create class structures.
+
+[Structural Design Patterns List](https://refactoring.guru/design-patterns/structural-patterns)
+
+Structural patterns provide solutions for building complex systems by focusing on the relationships and compositions of classes and objects. They offer different ways to organize classes and objects to create larger structures that are flexible, efficient, and maintainable.
+
+**Abstraction**
+
+Abstraction involves simplifying complex reality by modeling classes appropriate to the problem. It focuses on hiding complex implementation details and exposing only essential information. In structural patterns, abstraction allows you to work with high-level interfaces without needing to know the underlying complexities of the composed objects.
+
+Example: Consider a car. You interact with it through the steering wheel, accelerator, and brakes. You don't need to know the intricate details of the engine, transmission, or exhaust system to drive the car. The car provides an abstraction layer that simplifies the interaction.
+
+Example: In software, an abstract class in Python defines a template for other classes. It can declare methods without implementing them, forcing subclasses to provide the specific implementation. This hides the implementation details and provides a common interface.
+
+```py
+from abc import ABC, abstractmethod
+from typing import Union
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        pass
+
+class Circle(Shape):
+    def __init__(self, radius: Union[int, float]):
+        if not isinstance(radius, (int, float)):
+            raise TypeError("Radius must be a number")
+        self.radius = radius
+
+    def area(self) -> float:
+        return 3.14 * self.radius * self.radius
+
+class Square(Shape):
+    def __init__(self, side: Union[int, float]):
+        if not isinstance(side, (int, float)):
+            raise TypeError("Side must be a number")
+        self.side = side
+
+    def area(self) -> float:
+        return self.side * self.side
+
+circle = Circle(5)
+square = Square(4)
+
+print(f"Area of circle: {circle.area()}")
+print(f"Area of square: {square.area()}")
+```
+
+**Composition**
+
+Composition is a design technique where a class contains instances of other classes. It enables you to create complex objects by combining simpler ones. This is a "has-a" relationship, as opposed to inheritance's "is-a" relationship. Composition promotes code reuse and flexibility.
+
+Example: A computer is composed of a CPU, memory, storage, and peripherals. Each component is a separate object, but they work together to form a complete computer system.
+
+Example: In Python, you can create a Car class that is composed of an Engine class and a Wheel class.
+
+```py
+from typing import List
+
+class Engine:
+    def start(self) -> str:
+        return "Engine started"
+
+class Wheel:
+    def rotate(self) -> str:
+        return "Wheel rotating"
+
+class Car:
+    def __init__(self):
+        self.engine: Engine = Engine()  # Composition: Car has-a Engine
+        self.wheels: List[Wheel] = [Wheel() for _ in range(4)]  # Car has-a Wheels
+
+    def drive(self) -> str:
+        return f"{self.engine.start()}, {self.wheels[0].rotate()}"
+
+my_car = Car()
+print(my_car.drive())
+```
+
+**Decoupling**
+
+Decoupling minimizes the dependencies between different parts of a system. Highly coupled systems are difficult to maintain and modify because changes in one part can have unintended consequences in other parts. Structural patterns often aim to reduce coupling by introducing interfaces or abstract classes that mediate interactions between objects.
+
+Example: Consider a light switch and a light bulb. If the switch is directly wired to the bulb, they are tightly coupled. If the switch controls a relay that then controls the bulb, they are decoupled. The relay acts as an intermediary, allowing you to change the bulb without affecting the switch, and vice versa.
+
+Example: Using interfaces in Python can decouple classes.
+
+```py
+from abc import ABC, abstractmethod
+
+class Switchable(ABC):  # Abstract class
+    @abstractmethod
+    def turn_on(self) -> str:
+        pass
+
+    @abstractmethod
+    def turn_off(self) -> str:
+        pass
+
+class LightBulb(Switchable):  # Concrete class inheriting from Switchable
+    def turn_on(self) -> str:
+        return "LightBulb: turned on..."
+
+    def turn_off(self) -> str:
+        return "LightBulb: turned off..."
+
+class Fan(Switchable):  # Concrete class inheriting from Switchable
+    def turn_on(self) -> str:
+        return "Fan: turned on..."
+
+    def turn_off(self) -> str:
+        return "Fan: turned off..."
+
+class ElectricPowerSwitch:
+    def __init__(self, client: Switchable):
+        self.client: Switchable = client
+        self.on: bool = False
+
+    def press(self) -> None:
+        if self.on:
+            print(self.client.turn_off())
+            self.on = False
+        else:
+            print(self.client.turn_on())
+            self.on = True
+
+bulb = LightBulb()
+switch = ElectricPowerSwitch(bulb)
+switch.press()
+switch.press()
+
+fan = Fan()
+switch = ElectricPowerSwitch(fan)
+switch.press()
+switch.press()
+```
+
+**Interface Segregation**
+
+Interface Segregation Principle (ISP) states that clients should not be forced to depend on methods they do not use. Structural patterns often help in creating smaller, more cohesive interfaces, so that classes only need to implement the methods that are relevant to them.
+
+Example: Imagine a multi-function printer that can print, scan, and fax. If you have a class that represents this printer with a single interface containing all three functions, any class that uses only the printing function would still be forced to implement the scan and fax functions. ISP suggests breaking this into separate interfaces: Printable, Scannable, and Faxable.
+
+Example: In Python:
+
+```py
+from abc import ABC, abstractmethod
+
+class Printable(ABC):  # Abstract class
+    @abstractmethod
+    def print_document(self, document: str) -> str:
+        pass
+
+class Scannable(ABC):  # Abstract class
+    @abstractmethod
+    def scan_document(self, document: str) -> str:
+        pass
+
+class Faxable(ABC):  # Abstract class
+    @abstractmethod
+    def fax_document(self, document: str) -> str:
+        pass
+
+class MultiFunctionPrinter(Printable, Scannable, Faxable):  # Concrete class inheriting from multiple abstract classes
+    def print_document(self, document: str) -> str:
+        return f"Printing {document}"
+
+    def scan_document(self, document: str) -> str:
+        return f"Scanning {document}"
+
+    def fax_document(self, document: str) -> str:
+        return f"Faxing {document}"
+
+class SimplePrinter(Printable):  # Concrete class inheriting from Printable
+    def print_document(self, document: str) -> str:
+        return f"Printing {document}"
+
+printer = MultiFunctionPrinter()
+print(printer.print_document("MyDocument.txt"))
+print(printer.scan_document("MyDocument.txt"))
+print(printer.fax_document("MyDocument.txt"))
+
+simple_printer = SimplePrinter()
+print(simple_printer.print_document("MyDocument.txt"))
+```
+
+**Types of Structural Patterns**
+
+Structural patterns address different problems related to object composition and relationships. Here's a brief overview of the structural patterns we'll be covering in this module:
+
+- **Adapter**: Converts the interface of a class into another interface clients expect.
+- **Bridge**: Decouples an abstraction from its implementation so that the two can vary independently.
+- **Composite**: Composes objects into tree structures to represent part-whole hierarchies.
+- **Decorator**: Dynamically adds responsibilities to an object.
+- **Facade**: Provides a unified interface to a set of interfaces in a subsystem.
+- **Flyweight**: Uses sharing to support large numbers of fine-grained objects efficiently.
+- **Proxy**: Provides a surrogate or placeholder for another object to control access to it.
+
+**Benefits of Using Structural Patterns**
+
+- **Improved Code Organization**: Structural patterns provide a clear and organized way to structure complex systems, making the code easier to understand and maintain.
+- **Increased Flexibility**: They allow you to create flexible systems that can adapt to changing requirements.
+- **Enhanced Reusability**: By promoting composition and decoupling, structural patterns encourage code reuse.
+- **Simplified Design**: They offer proven solutions to common design problems, simplifying the design process.
+
+#### <a name="chapter18part3.1"></a>Chapter 18 - Part 3.1: Adapter Pattern
+
+The Adapter Pattern is a structural design pattern that allows incompatible interfaces to work together. It acts as a bridge between two incompatible interfaces, converting the interface of one class into an interface that another class expects. This pattern is particularly useful when you want to use an existing class, but its interface doesn't match the one you need.
+
+[Adapter Pattern](https://refactoring.guru/design-patterns/adapter)
+
+The Adapter Pattern revolves around the concept of adapting an existing class (the "Adaptee") to conform to a desired interface (the "Target"). The "Adapter" class is the key component, as it implements the Target interface and internally uses the Adaptee to fulfill the requests.
+
+**Key Components**
+
+- **Target**: This is the interface that the client expects to use. It defines the methods that the client will call.
+- **Adaptee**: This is the existing class with an incompatible interface. It contains the functionality that the client needs, but its interface doesn't match the Target interface.
+- **Adapter**: This class implements the Target interface and adapts the Adaptee's interface to the Target interface. It contains a reference to the Adaptee object and translates the client's requests into calls to the Adaptee's methods.
+
+**Types of Adapters**
+
+There are two main types of Adapters:
+
+- **Object Adapter**: This type of adapter uses composition. The Adapter class contains an instance of the Adaptee class. The Adapter then calls the Adaptee's methods to perform the required operations. This is generally preferred because it promotes loose coupling.
+- **Class Adapter**: This type of adapter uses inheritance. The Adapter class inherits from both the Target and the Adaptee classes. This approach is less flexible because it requires multiple inheritance, which is not supported in some languages or can lead to complexities.
+
+We will focus on the Object Adapter in this lesson due to its flexibility and wider applicability.
+
+**When to Use the Adapter Pattern**
+
+- You want to use an existing class, but its interface doesn't match the one you need.
+- You want to create a reusable class that can cooperate with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
+- You need to use several existing subclasses, but it's impractical to adapt their interface by subclassing every one. An object adapter can adapt the interface of its parent class.
+
+**Implementation in Python**
+
+Let's illustrate the Adapter Pattern with a practical example. Suppose we have an existing class called LegacyCalculator that performs calculations using a specific interface. However, our client code expects a different interface defined by CalculatorInterface. We can use the Adapter Pattern to bridge this gap.
+
+```py
+from typing import Protocol
+
+# Target Interface
+class CalculatorInterface(Protocol):
+    def operate(self, num1: float, num2: float) -> float:
+        ...
+
+# Adaptee (Existing Class with Incompatible Interface)
+class LegacyCalculator:
+    def calculate(self, num1: float, num2: float, operation: str) -> float | None:
+        if operation == 'add':
+            return num1 + num2
+        elif operation == 'subtract':
+            return num1 - num2
+        else:
+            return None
+
+# Adapter Class
+class CalculatorAdapter:
+    def __init__(self, legacy_calculator: LegacyCalculator):
+        self.legacy_calculator = legacy_calculator
+
+    def operate(self, num1: float, num2: float) -> float | None:
+        # Adapt the LegacyCalculator's interface to the CalculatorInterface
+        return self.legacy_calculator.calculate(num1, num2, 'add')
+
+# Client Code
+class Client:
+    def __init__(self, calculator: CalculatorInterface):
+        self.calculator = calculator
+
+    def perform_operation(self, num1: float, num2: float) -> None:
+        result = self.calculator.operate(num1, num2)
+        print(f"Result: {result}")
+
+# Usage
+legacy_calculator = LegacyCalculator()
+adapter = CalculatorAdapter(legacy_calculator)
+client = Client(adapter)
+client.perform_operation(10.0, 5.0)
+```
+
+In this example:
+
+- CalculatorInterface is the Target interface that the client expects.
+- LegacyCalculator is the Adaptee class with an incompatible calculate method.
+- CalculatorAdapter is the Adapter class that implements CalculatorInterface and uses LegacyCalculator internally to perform the calculation. It adapts the calculate method to the operate method.
+- Client uses the CalculatorInterface to perform operations.
+
+**Detailed Explanation**
+
+- **Target Interface (CalculatorInterface)**: This defines the operate method, which takes two numbers as input and returns the result of an operation. This is the interface that our client code wants to use.
+- **Adaptee (LegacyCalculator)**: This class has a calculate method that takes two numbers and an operation type as input. Its interface is different from what the client expects.
+- **Adapter (CalculatorAdapter)**: This class implements the CalculatorInterface. Inside its operate method, it calls the calculate method of the LegacyCalculator, adapting the interface to match the - CalculatorInterface. The adapter holds a reference to an instance of the LegacyCalculator.
+- **Client (Client)**: The client code interacts with the CalculatorInterface through the adapter. It doesn't need to know about the LegacyCalculator or its incompatible interface.
+
+**Benefits of Using the Adapter Pattern**
+
+- **Improved Reusability**: Allows you to reuse existing classes that have incompatible interfaces.
+- **Increased Flexibility**: Decouples the client from the specific implementation of the Adaptee.
+- **Enhanced Maintainability**: Simplifies code by separating the adaptation logic from the core functionality.
+- **Single Responsibility Principle**: The adapter has a single responsibility: adapting one interface to another.
+
+**Advanced Example: Adapting Multiple Adaptees**
+
+```py
+from typing import Protocol, Any, Dict
+
+# Target Interface
+class DataProcessorInterface(Protocol):
+    def process_data(self, data: str) -> Dict[str, str]:
+        ...
+
+# Adaptee 1: Legacy XML Data Processor
+class LegacyXMLProcessor:
+    def parse_xml(self, xml_data: str) -> Dict[str, str]:
+        # Simulate XML parsing logic
+        return {"xml_data": xml_data}
+
+# Adaptee 2: Legacy CSV Data Processor
+class LegacyCSVProcessor:
+    def read_csv(self, csv_data: str) -> Dict[str, str]:
+        # Simulate CSV reading logic
+        return {"csv_data": csv_data}
+
+# Adapter 1: XML Adapter
+class XMLAdapter:
+    def __init__(self, xml_processor: LegacyXMLProcessor):
+        self.xml_processor = xml_processor
+
+    def process_data(self, data: str) -> Dict[str, str]:
+        return self.xml_processor.parse_xml(data)
+
+# Adapter 2: CSV Adapter
+class CSVAdapter:
+    def __init__(self, csv_processor: LegacyCSVProcessor):
+        self.csv_processor = csv_processor
+
+    def process_data(self, data: str) -> Dict[str, str]:
+        return self.csv_processor.read_csv(data)
+
+# Client Code
+class DataAnalyzer:
+    def __init__(self, processor: DataProcessorInterface):
+        self.processor = processor
+
+    def analyze_data(self, data: str) -> None:
+        processed_data = self.processor.process_data(data)
+        print(f"Analyzing data: {processed_data}")
+
+# Usage
+xml_processor = LegacyXMLProcessor()
+csv_processor = LegacyCSVProcessor()
+
+xml_adapter = XMLAdapter(xml_processor)
+csv_adapter = CSVAdapter(csv_processor)
+
+analyzer1 = DataAnalyzer(xml_adapter)
+analyzer2 = DataAnalyzer(csv_adapter)
+
+analyzer1.analyze_data("<xml><data>example</data></xml>")
+analyzer2.analyze_data("header1,header2\nvalue1,value2")
+```
+
+In this example, we have two legacy data processors: LegacyXMLProcessor and LegacyCSVProcessor. Each processor has its own way of handling data. We create two adapters, XMLAdapter and CSVAdapter, to adapt these processors to the DataProcessorInterface. The DataAnalyzer class can then use these adapters to analyze data from different sources without needing to know the specifics of each data processor.
+
+**Adapter with Factory Pattern**
+
+You receive different input formats (JSON and XML) but need to process them uniformly as an Order object in another class. How can I use Adapter with factory pattern in this case? Use Type checking
+
+```py
+# Target Interface
+from typing import List, Dict, Any
+from abc import ABC, abstractmethod
+import json
+import xml.etree.ElementTree as ET
+
+class Order:
+    def __init__(self, order_id: str, customer_name: str, items: List[str], total_amount: float):
+        self.order_id = order_id
+        self.customer_name = customer_name
+        self.items = items
+        self.total_amount = total_amount
+
+    def __str__(self) -> str:
+        return f"Order ID: {self.order_id}, Customer: {self.customer_name}, Total: {self.total_amount}"
+
+# Adaptee Interfaces (JSON and XML Parser)
+class JsonOrderParser:
+    def parse_json(self, json_data: str) -> Dict[str, Any]:
+        data = json.loads(json_data)
+        return data  # Returns a Python dictionary
+
+class XmlOrderParser:
+    def parse_xml(self, xml_data: str) -> ET.Element:
+        root = ET.fromstring(xml_data)
+        return root  # Returns an ElementTree object
+
+# Adapter Interface
+class OrderDataAdapter(ABC):
+    @abstractmethod
+    def to_order(self) -> Order:
+        pass
+
+# Implement the Adapters
+class JsonOrderAdapter(OrderDataAdapter):
+    def __init__(self, json_parser: JsonOrderParser, json_data: str):
+        self.json_parser = json_parser
+        self.json_data = json_data
+
+    def to_order(self) -> Order:
+        data = self.json_parser.parse_json(self.json_data)
+        order_id = str(data.get("order_id", ""))  # Ensure it's a string
+        customer_name = str(data.get("customer_name", ""))  # Ensure it's a string
+        items = [str(item) for item in data.get("items", [])]  # Ensure items are strings
+        total_amount = float(data.get("total_amount", 0.0))  # Provide a default value
+        return Order(order_id, customer_name, items, total_amount)
+
+
+class XmlOrderAdapter(OrderDataAdapter):
+    def __init__(self, xml_parser: XmlOrderParser, xml_data: str):
+        self.xml_parser = xml_parser
+        self.xml_data = xml_data
+
+    def to_order(self) -> Order:
+        root = self.xml_parser.parse_xml(self.xml_data)
+        order_id = str(root.find("order_id").text) if root.find("order_id") is not None else ""
+        customer_name = str(root.find("customer_name").text) if root.find("customer_name") is not None else ""
+        items = [item.text for item in root.findall("items/item")]
+        total_amount = float(root.find("total_amount").text) if root.find("total_amount") is not None else 0.0
+        return Order(order_id, customer_name, items, total_amount)
+
+# Implement the Factory
+from typing import Literal, Union
+
+class OrderAdapterFactory:
+    def create_adapter(self, data_format: Literal["json", "xml"], data: str) -> OrderDataAdapter:
+        if data_format == "json":
+            return JsonOrderAdapter(JsonOrderParser(), data)
+        elif data_format == "xml":
+            return XmlOrderAdapter(XmlOrderParser(), data)
+        else:
+            raise ValueError("Unsupported data format")
+
+# Sample data
+json_data = """
+{
+    "order_id": "123",
+    "customer_name": "Alice",
+    "items": ["Book", "Pen"],
+    "total_amount": 25.00
+}
+"""
+
+xml_data = """
+<order>
+    <order_id>456</order_id>
+    <customer_name>Bob</customer_name>
+    <items>
+        <item>Shirt</item>
+        <item>Pants</item>
+    </items>
+    <total_amount>50.00</total_amount>
+</order>
+"""
+
+# Create the factory
+factory = OrderAdapterFactory()
+
+# Process JSON data
+json_adapter = factory.create_adapter("json", json_data)
+json_order = json_adapter.to_order()
+print(json_order)
+
+# Process XML data
+xml_adapter = factory.create_adapter("xml", xml_data)
+xml_order = xml_adapter.to_order()
+print(xml_order)
+```
+
+### <a name="chapter18part4"></a>Chapter 18 - Part 4: Behavioral Design Patterns
+
+[Behavioral Design Patterns List](https://refactoring.guru/design-patterns/behavioral-patterns)
+
 
 ## <a name="appendixa"></a>Appendix A: Useful Python Code Snippet
 
