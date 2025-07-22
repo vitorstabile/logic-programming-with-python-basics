@@ -17150,19 +17150,466 @@ This structure promotes separation of concerns and makes your application more o
 
 #### <a name="chapter15part1"></a>Chapter 15 - Part 1: Advanced Decorator Techniques: Parameterized Decorators and Class Decorators
 
+Decorators are a powerful feature in Python that allows you to modify or enhance functions and methods. While basic decorators are useful, parameterized decorators and class decorators offer even greater flexibility and control. This lesson delves into these advanced techniques, providing you with the knowledge to create highly reusable and adaptable decorators. We'll build upon the foundational understanding of decorators established in previous lessons, focusing on how to pass arguments to decorators and how to use classes to manage decorator state and behavior.
+
 #### <a name="chapter15part1.1"></a>Chapter 15 - Part 1.1: Parameterized Decorators
+
+Parameterized decorators are decorators that accept arguments. This allows you to customize the behavior of the decorator based on specific parameters. The key to creating parameterized decorators is to wrap the actual decorator logic inside another function.
+
+**Basic Structure**
+
+The basic structure of a parameterized decorator involves three nested functions:
+
+- The outermost function accepts the parameters for the decorator.
+- The middle function acts as the decorator itself, taking the function to be decorated as an argument.
+- The innermost function is the wrapper function that executes the decorated function with any modifications.
+
+```py
+def parameterized_decorator(parameter):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            # Modify the function's behavior based on the parameter
+            print(f"Decorator parameter: {parameter}")
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+
+@parameterized_decorator("Example Parameter")
+def my_function():
+    print("Inside my_function")
+
+my_function()
+```
+
+In this example:
+
+- parameterized_decorator is the outermost function, accepting a parameter.
+- decorator is the actual decorator, taking the function func as input.
+- wrapper is the function that will be executed when my_function is called. It prints the decorator parameter and then calls the original function.
+
+**Example: Retry Decorator**
+
+Let's create a more practical example: a retry decorator that retries a function a specified number of times if it raises an exception.
+
+```py
+import time
+
+def retry(attempts=3, delay=1):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            for attempt in range(attempts):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    print(f"Attempt {attempt + 1} failed: {e}")
+                    time.sleep(delay)
+            print(f"Function failed after {attempts} attempts.")
+        return wrapper
+    return decorator
+
+@retry(attempts=5, delay=2)
+def unreliable_function():
+    import random
+    if random.randint(0, 4) != 0:
+        raise Exception("Simulated failure")
+    print("Function succeeded!")
+    return "Success"
+
+unreliable_function()
+```
+
+In this example:
+
+- retry takes attempts and delay as parameters.
+- The wrapper function tries to execute the decorated function. If an exception occurs, it retries up to the specified number of attempts, waiting delay seconds between each attempt.
+
+**Example: Logging Decorator**
+
+Here's another example of a parameterized decorator that logs function calls with custom log levels.
+
+```py
+import logging
+
+def log(level=logging.INFO):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            logging.basicConfig(level=logging.INFO)
+            logger = logging.getLogger(func.__name__)
+            logger.log(level, f"Calling {func.__name__} with args: {args}, kwargs: {kwargs}")
+            result = func(*args, **kwargs)
+            logger.log(level, f"{func.__name__} returned: {result}")
+            return result
+        return wrapper
+    return decorator
+
+@log(level=logging.DEBUG)
+def add(x, y):
+    return x + y
+
+add(5, 3)
+```
+
+This decorator allows you to specify the logging level for each function you decorate.
 
 #### <a name="chapter15part1.2"></a>Chapter 15 - Part 1.2: Class Decorators
 
+Class decorators provide an alternative way to implement decorators, especially when you need to maintain state or perform more complex operations. A class decorator is a class that overloads the __call__ method. When you decorate a function with a class, the function becomes an instance of that class.
+
+**Basic Structure**
+
+```py
+class MyDecorator:
+    def __init__(self, func):
+        self.func = func
+        # Initialize any state variables here
+
+    def __call__(self, *args, **kwargs):
+        # Modify the function's behavior here
+        print("Before function call")
+        result = self.func(*args, **kwargs)
+        print("After function call")
+        return result
+
+@MyDecorator
+def my_function():
+    print("Inside my_function")
+
+my_function()
+```
+
+In this example:
+
+- MyDecorator is a class that takes the function func in its constructor (__init__).
+- The __call__ method is what gets executed when you call the decorated function (my_function). It can modify the function's behavior before and after the original function is called.
+
+**Example: Counting Function Calls**
+
+Let's create a class decorator that counts the number of times a function is called.
+
+```py
+class CallCounter:
+    def __init__(self, func):
+        self.func = func
+        self.call_count = 0
+
+    def __call__(self, *args, **kwargs):
+        self.call_count += 1
+        print(f"Call count for {self.func.__name__}: {self.call_count}")
+        return self.func(*args, **kwargs)
+
+@CallCounter
+def my_function():
+    print("Inside my_function")
+
+my_function()
+my_function()
+my_function()
+```
+
+This decorator keeps track of how many times my_function is called.
+
+**Example: Memoization Decorator**
+
+Memoization is an optimization technique where you cache the results of expensive function calls and return the cached result when the same inputs occur again. Let's implement a memoization decorator using a class.
+
+```py
+class Memoize:
+    def __init__(self, func):
+        self.func = func
+        self.cache = {}
+
+    def __call__(self, *args):  # Consider only positional arguments for simplicity
+        if args in self.cache:
+            return self.cache[args]
+        else:
+            result = self.func(*args)
+            self.cache[args] = result
+            return result
+
+@Memoize
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(10))  # The first call will be slow
+print(fibonacci(10))  # The second call will be much faster because it's cached
+```
+
+This decorator caches the results of the fibonacci function, making subsequent calls with the same arguments much faster.
+
+**Parameterized Class Decorators**
+
+You can also create parameterized class decorators. This involves adding another layer of nesting, similar to parameterized function decorators.
+
+```py
+class ParameterizedDecorator:
+    def __init__(self, parameter):
+        self.parameter = parameter
+
+    def __call__(self, func):
+        def wrapper(*args, **kwargs):
+            print(f"Decorator parameter: {self.parameter}")
+            result = func(*args, **kwargs)
+            return result
+        return wrapper
+
+@ParameterizedDecorator("Custom Parameter")
+def my_function():
+    print("Inside my_function")
+
+my_function()
+```
+
+In this case, ParameterizedDecorator takes the parameter in its constructor, and the __call__ method returns a wrapper function that uses this parameter.
+
 #### <a name="chapter15part1.3"></a>Chapter 15 - Part 1.3: Real-World Application
+
+Parameterized decorators and class decorators are widely used in various real-world scenarios:
+
+- **Web Frameworks**: Frameworks like Flask and Django use decorators extensively for routing, authentication, and authorization. Parameterized decorators allow you to define routes with specific HTTP methods or apply middleware with custom configurations.
+- **API Rate Limiting**: Many APIs use decorators to enforce rate limits, preventing abuse and ensuring fair usage. Parameterized decorators can be used to specify the number of requests allowed per time period.
+- **Data Validation**: Decorators can be used to validate input data before it is processed by a function. Parameterized decorators allow you to specify the validation rules.
+- **Caching**: Decorators can be used to cache the results of expensive function calls, improving performance. Class decorators are particularly useful for managing the cache state.
+- **Monitoring and Logging**: Decorators can be used to log function calls, execution times, and other metrics, providing valuable insights for monitoring and debugging.
 
 #### <a name="chapter15part2"></a>Chapter 15 - Part 2: Understanding Metaclasses: Customizing Class Creation and Behavior
 
+Metaclasses are a powerful, albeit complex, feature of Python that allows you to control the creation of classes themselves. They provide a way to dynamically customize class creation, enabling you to enforce coding standards, automatically register classes, or even implement advanced design patterns. While not needed for everyday programming, understanding metaclasses unlocks a deeper understanding of Python's object model and allows you to write more flexible and maintainable code. This lesson will delve into the intricacies of metaclasses, exploring how they work and how you can leverage them to customize class creation and behavior.
+
 #### <a name="chapter15part2.1"></a>Chapter 15 - Part 2.1: Understanding Metaclasses
+
+At its core, a metaclass is a class that defines how other classes are created. Just as a class is a blueprint for creating objects (instances), a metaclass is a blueprint for creating classes. In Python, everything is an object, including classes. Therefore, a class is an instance of a metaclass.
+
+The default metaclass in Python is type. When you define a class using the class keyword, Python uses type to create that class object. You can think of type as the "class of classes."
+
+**The type Metaclass**
+
+The type metaclass has two primary uses:
+
+- **To determine the type of an object**: When you call type(object), it returns the class of that object.
+- **To create a new class dynamically**: When you call type(name, bases, attrs), it creates a new class with the given name, bases (parent classes), and attributes (methods and variables).
+
+Let's illustrate the second use with an example:
+
+```py
+# Creating a class using the class keyword
+class MyClass:
+    x = 5
+
+# Creating the same class dynamically using type()
+MyClassDynamic = type('MyClassDynamic', (), {'x': 5})
+
+print(MyClass().x)
+print(MyClassDynamic().x)
+
+print(type(MyClass))
+print(type(MyClassDynamic))
+```
+
+In this example, MyClass and MyClassDynamic are essentially the same. The type() function allows us to create classes programmatically. The arguments to type() are:
+
+- name: The name of the class (a string).
+- bases: A tuple of base classes (parent classes). If the class doesn't inherit from any other classes, use an empty tuple ().
+- attrs: A dictionary where the keys are attribute names (strings) and the values are the corresponding attribute values.
+
+**Custom Metaclasses**
+
+To customize class creation, you create your own metaclass by inheriting from type. You can then override methods like __new__ and __init__ to control how the class is created and initialized.
+
+- __new__(mcs, name, bases, attrs): This method is called before the class is created. It's responsible for creating and returning the class object. mcs refers to the metaclass itself (similar to self for instances).
+- __init__(cls, name, bases, attrs): This method is called after the class is created. It's used to initialize the class object. cls refers to the class being created.
+- __call__(cls, *args, **kwargs): This method is called when you instantiate the class (i.e., create an instance of the class). It allows you to control the instance creation process.
+
+Let's create a simple metaclass that adds an attribute to every class created with it:
+
+```py
+class MyMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        attrs['added_attribute'] = 'This attribute was added by the metaclass'
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=MyMeta):
+    pass
+
+print(MyClass.added_attribute)
+```
+
+In this example, MyMeta is a metaclass that adds the attribute added_attribute to any class that uses it. The metaclass=MyMeta argument in the MyClass definition tells Python to use MyMeta to create the MyClass class object.
 
 #### <a name="chapter15part2.2"></a>Chapter 15 - Part 2.2: Customizing Class Creation and Behavior
 
+Metaclasses provide a powerful mechanism for customizing various aspects of class creation and behavior. Here are some common use cases:
+
+**Enforcing Coding Standards**
+
+You can use metaclasses to enforce coding standards by checking class attributes and methods during class creation. For example, you can ensure that all classes have a docstring or that certain methods are implemented.
+
+```py
+class EnforceDocstringMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        if '__doc__' not in attrs or not attrs['__doc__']:
+            raise ValueError(f"Class {name} must have a docstring.")
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=EnforceDocstringMeta):
+    """This is a valid class with a docstring."""
+    pass
+
+# This will raise a ValueError because it lacks a docstring
+# class BadClass(metaclass=EnforceDocstringMeta):
+#     pass
+```
+
+This metaclass, EnforceDocstringMeta, checks if a docstring (__doc__) is present in the class attributes. If not, it raises a ValueError, preventing the class from being created.
+
+**Automatically Registering Classes**
+
+Metaclasses can be used to automatically register classes with a central registry. This is useful for plugins, factories, or other situations where you need to keep track of available classes.
+
+```py
+class PluginRegistry(type):
+    plugins = []
+    def __new__(mcs, name, bases, attrs):
+        cls = super().__new__(mcs, name, bases, attrs)
+        PluginRegistry.plugins.append(cls)
+        return cls
+
+class PluginBase(metaclass=PluginRegistry):
+    pass
+
+class MyPlugin(PluginBase):
+    pass
+
+class AnotherPlugin(PluginBase):
+    pass
+
+print(PluginRegistry.plugins)
+```
+
+In this example, PluginRegistry keeps track of all classes that inherit from PluginBase. Each time a new plugin class is defined, it's automatically added to the plugins list.
+
+**Implementing Singleton Pattern**
+
+While there are other ways to implement the Singleton pattern in Python, metaclasses offer a clean and elegant solution.
+
+```py
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class MySingletonClass(metaclass=Singleton):
+    pass
+
+instance1 = MySingletonClass()
+instance2 = MySingletonClass()
+
+print(instance1 is instance2)  # Output: True
+```
+
+The Singleton metaclass ensures that only one instance of the class can be created. The __call__ method intercepts the class instantiation and either returns the existing instance or creates a new one if it doesn't exist.
+
+**Modifying Class Attributes**
+
+Metaclasses can modify class attributes during class creation. This can be useful for adding default values, validating attribute types, or transforming attribute names.
+
+```py
+class AttributeValidationMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        for key, value in attrs.items():
+            if key.startswith('_') and not key.startswith('__'):
+                raise ValueError(f"Attribute {key} should not start with a single underscore.")
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=AttributeValidationMeta):
+    x = 5
+    # _y = 10  # This will raise a ValueError
+    __z = 15 # This is allowed because it starts with double underscore
+```
+
+This metaclass, AttributeValidationMeta, prevents the creation of classes with attributes that start with a single underscore (but allows double underscores, which are used for name mangling).
+
 #### <a name="chapter15part2.3"></a>Chapter 15 - Part 2.3: Practical Examples and Demonstrations
+
+Let's explore some more complex examples to solidify your understanding of metaclasses.
+
+**Example 1: Automatic Property Creation**
+
+This example demonstrates how to use a metaclass to automatically create properties for class attributes. This can simplify the process of defining getters and setters for attributes.
+
+```py
+class AutoPropertyMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        for key, value in attrs.items():
+            if not key.startswith('__') and not isinstance(value, property) and not callable(value):
+                # Create a property for the attribute
+                private_name = '_' + key
+                attrs[private_name] = value  # Store the original value in a private attribute
+
+                def getter(self):
+                    return getattr(self, private_name)
+
+                def setter(self, value):
+                    setattr(self, private_name, value)
+
+                attrs[key] = property(getter, setter)  # Replace the attribute with a property
+        return super().__new__(mcs, name, bases, attrs)
+
+class MyClass(metaclass=AutoPropertyMeta):
+    name = "Default Name"
+    age = 30
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+instance = MyClass("Alice", 25)
+print(instance.name)  # Accessing the property
+instance.name = "Bob"  # Setting the property
+print(instance.name)
+print(instance._name) # Accessing the private attribute
+```
+
+In this example, the AutoPropertyMeta metaclass automatically creates properties for the name and age attributes. When you access instance.name, you're actually calling the getter method defined by the property. When you assign a value to instance.name, you're calling the setter method.
+
+**Example 2: Abstract Class Enforcement**
+
+This example demonstrates how to use a metaclass to enforce that abstract methods are implemented in subclasses. This is similar to using the abc module, but it provides a more direct way to enforce abstract method implementation at class creation time.
+
+```py
+import abc
+
+class AbstractClassMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        abstract_methods = set()
+        for base in bases:
+            if hasattr(base, '__abstractmethods__'):
+                abstract_methods.update(base.__abstractmethods__)
+        for name, value in attrs.items():
+            if isinstance(value, abc.abstractmethod):
+                abstract_methods.add(name)
+        if abstract_methods:
+            attrs['__abstractmethods__'] = frozenset(abstract_methods)
+        return super().__new__(mcs, name, bases, attrs)
+
+class BaseClass(metaclass=AbstractClassMeta):
+    @abc.abstractmethod
+    def my_abstract_method(self):
+        pass
+
+class ConcreteClass(BaseClass):
+    def my_abstract_method(self):
+        print("Implemented abstract method")
+
+instance = ConcreteClass()
+instance.my_abstract_method()
+```
+
+The AbstractClassMeta metaclass collects all abstract methods from the base classes and the current class. If there are any abstract methods, it sets the __abstractmethods__ attribute on the class. This attribute is then used by the abc module to enforce that abstract methods are implemented in subclasses.
 
 #### <a name="chapter15part3"></a>Chapter 15 - Part 3: Dynamic Code Generation: Using `exec` and `eval` Safely
 
