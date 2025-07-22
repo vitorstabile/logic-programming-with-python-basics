@@ -16055,25 +16055,927 @@ Important Considerations:
 
 #### <a name="chapter14part5"></a>Chapter 14 - Part 5: ORM Performance Optimization: Lazy Loading and Eager Loading
 
+Lazy Loading and Eager Loading are crucial optimization techniques when working with Object-Relational Mappers (ORMs) like SQLAlchemy. Understanding and implementing these strategies can significantly impact the performance of your database interactions, especially when dealing with complex relationships between tables. By strategically choosing when to load related data, you can minimize the number of queries executed and improve the overall efficiency of your application.
+
 #### <a name="chapter14part5.1"></a>Chapter 14 - Part 5.1: Understanding Lazy Loading
+
+Lazy loading, also known as deferred loading, is a design pattern where related data is loaded only when it is explicitly accessed. In the context of ORMs, this means that when you query for an object, only the data for that object's table is retrieved from the database. Related objects, defined through relationships, are not loaded until you try to access them.
+
+**How Lazy Loading Works**
+
+When you retrieve an object using an ORM with lazy loading enabled, the ORM creates a "proxy" object for each related object. This proxy object holds the information necessary to load the related data when it's needed. When you access a property that represents a relationship, the proxy object triggers a database query to fetch the related data.
+
+**Example of Lazy Loading**
+
+Consider a scenario with two tables: users and addresses. A user can have multiple addresses. In SQLAlchemy, this relationship might be defined as follows:
+
+```py
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+       return f"<User(name='{self.name}')>"
+
+class Address(Base):
+    __tablename__ = 'addresses'
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+engine = create_engine('sqlite:///:memory:') # Using in-memory SQLite for example
+Base.metadata.create_all(engine)
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Create a user and some addresses
+user1 = User(name='Alice')
+address1 = Address(email_address='alice1@example.com', user=user1)
+address2 = Address(email_address='alice2@example.com', user=user1)
+
+session.add_all([user1, address1, address2])
+session.commit()
+
+# Query for a user
+user = session.query(User).filter_by(name='Alice').first()
+print(user) # Output: <User(name='Alice')>
+
+# Access the user's addresses (this triggers a lazy load)
+for address in user.addresses:
+    print(address)
+    # Output:
+    # <Address(email_address='alice1@example.com')>
+    # <Address(email_address='alice2@example.com')>
+```
+
+In this example, when you query for the User object, the addresses relationship is not immediately loaded. Only when you iterate through user.addresses does SQLAlchemy execute a separate query to fetch the associated addresses.
+
+**Advantages of Lazy Loading**
+
+- **Reduced Initial Query Time**: Only the data that is immediately needed is loaded, resulting in faster initial query times.
+- **Lower Memory Consumption**: Related objects are only loaded when accessed, reducing memory usage, especially when dealing with large datasets.
+- **Avoids Unnecessary Data Retrieval**: If you don't need the related data, it is never loaded, saving database resources.
+
+**Disadvantages of Lazy Loading**
+
+- **N+1 Problem**: The most significant drawback is the potential for the "N+1" problem. If you need to access related data for multiple objects, lazy loading can result in N+1 queries: one query to fetch the initial objects and N additional queries to fetch the related data for each object. This can severely impact performance.
+- **Increased Database Round Trips**: Each time you access a lazily loaded relationship, a new database query is executed, increasing the number of round trips to the database.
+
+**Addressing the N+1 Problem with Lazy Loading**
+
+While lazy loading can lead to the N+1 problem, it's important to understand that it doesn't always cause it. The N+1 problem arises when you iterate over a collection of objects and access a lazily-loaded relationship within the loop. If you're only accessing the relationship for a single object, or if you're able to batch the loading of related data, lazy loading can still be efficient.
 
 #### <a name="chapter14part5.2"></a>Chapter 14 - Part 5.2: Understanding Eager Loading
 
+Eager loading is a technique where related data is loaded along with the initial object in a single query. Instead of waiting until the related data is accessed, the ORM fetches it upfront.
+
+**How Eager Loading Works**
+
+When you use eager loading, the ORM generates a more complex SQL query that includes joins or subqueries to retrieve the related data along with the main object's data. This reduces the number of database round trips and avoids the N+1 problem.
+
+**Example of Eager Loading**
+
+Using the same users and addresses example, you can use SQLAlchemy's joinedload to eagerly load the addresses when querying for a user:
+
+```py
+from sqlalchemy.orm import joinedload
+
+# Eagerly load the addresses when querying for a user
+user = session.query(User).options(joinedload(User.addresses)).filter_by(name='Alice').first()
+
+print(user) # Output: <User(name='Alice')>
+
+# Access the user's addresses (no additional query is executed)
+for address in user.addresses:
+    print(address)
+    # Output:
+    # <Address(email_address='alice1@example.com')>
+    # <Address(email_address='alice2@example.com')>
+```
+
+In this example, the joinedload(User.addresses) option tells SQLAlchemy to load the addresses relationship eagerly. As a result, when you access user.addresses, the data is already available, and no additional database query is executed.
+
+**Types of Eager Loading in SQLAlchemy**
+
+SQLAlchemy provides several options for eager loading:
+
+- **joinedload**: Uses a SQL JOIN to load the related data in a single query. This is the most common and efficient form of eager loading for simple relationships.
+- **subqueryload**: Uses a subquery to load the related data. This can be more efficient than joinedload for complex relationships or when dealing with large datasets, as it avoids Cartesian products.
+- **selectinload**: Uses a separate SELECT statement with an IN clause to load the related data. This is particularly useful for loading multiple collections at once, as it avoids the performance issues associated with multiple JOINs.
+
+**Advantages of Eager Loading**
+
+- **Avoids N+1 Problem**: Eager loading eliminates the N+1 problem by loading all necessary data in a single query.
+- **Reduced Database Round Trips**: By fetching related data upfront, eager loading reduces the number of round trips to the database, improving performance.
+
+**Disadvantages of Eager Loading**
+
+- **Increased Initial Query Time**: The initial query can take longer because it retrieves more data.
+- **Higher Memory Consumption**: Eager loading can increase memory consumption, especially when dealing with large datasets or complex relationships.
+- **Unnecessary Data Retrieval**: If you don't need the related data, eager loading can result in unnecessary data retrieval, wasting database resources.
+
 #### <a name="chapter14part5.3"></a>Chapter 14 - Part 5.3: Choosing Between Lazy Loading and Eager Loading
+
+The choice between lazy loading and eager loading depends on the specific use case and the relationships between your data. Here's a general guideline:
+
+- **Use Lazy Loading**:
+  - When you only need the related data in a small percentage of cases.
+  - When memory consumption is a major concern.
+  - When the relationships are complex and eager loading would result in very large or inefficient queries.
+ 
+- **Use Eager Loading**:
+  - When you frequently need the related data.
+  - When you are experiencing the N+1 problem with lazy loading.
+  - When the relationships are relatively simple and eager loading can be done efficiently with JOINs or subqueries.
+ 
+**Practical Considerations**
+
+- **Profile Your Application**: Use profiling tools to identify slow queries and determine whether lazy loading or eager loading is causing performance issues.
+- **Experiment with Different Eager Loading Strategies**: Try different eager loading options (e.g., joinedload, subqueryload, selectinload) to see which performs best for your specific relationships and data.
+- **Consider Hybrid Approaches**: In some cases, a hybrid approach may be appropriate. For example, you might use lazy loading by default but use eager loading in specific cases where you know you'll need the related data.
 
 #### <a name="chapter14part5.4"></a>Chapter 14 - Part 5.4: Advanced Eager Loading Techniques
 
+Beyond the basic joinedload, subqueryload, and selectinload options, SQLAlchemy offers more advanced techniques for controlling how eager loading is performed.
+
+**Conditional Eager Loading**
+
+You can use conditional eager loading to load related data only when certain conditions are met. This can be useful when you only need the related data in specific cases.
+
+```py
+from sqlalchemy import or_
+from sqlalchemy.orm import Load
+
+# Eagerly load addresses only for users with names starting with 'A'
+users = session.query(User).options(
+    Load(User).joinedload(User.addresses, innerjoin=True).where(User.name.like('A%'))
+).all()
+```
+
+**Dynamic Relationships**
+
+SQLAlchemy allows you to define dynamic relationships, which are not loaded automatically. Instead, they return a query object that you can use to filter or order the related data before loading it. This can be useful when you need to apply complex filtering or ordering to the related data.
+
+```py
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    addresses = relationship("Address", back_populates="user", lazy="dynamic")
+
+    def __repr__(self):
+       return f"<User(name='{self.name}')>"
+
+class Address(Base):
+    __tablename__ = 'addresses'
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+# Example Usage
+user = session.query(User).filter_by(name='Alice').first()
+
+# Access the addresses through the dynamic relationship
+# Apply filtering before loading the data
+filtered_addresses = user.addresses.filter(Address.email_address.like('%example.com%')).all()
+
+for address in filtered_addresses:
+    print(address)
+```
+
+In this example, user.addresses returns a query object that you can use to filter the addresses before loading them. The lazy="dynamic" argument in the relationship definition enables this behavior.
+
 #### <a name="chapter14part5.5"></a>Chapter 14 - Part 5.5: Case Study: Optimizing a Blog Application
+
+Consider a blog application with the following models: Post, Comment, and User. Each post has multiple comments, and each comment is associated with a user.
+
+```py
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Text
+from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String)
+    comments = relationship("Comment", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(username='{self.username}')>"
+
+class Post(Base):
+    __tablename__ = 'posts'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    content = Column(Text)
+    comments = relationship("Comment", back_populates="post")
+
+    def __repr__(self):
+        return f"<Post(title='{self.title}')>"
+
+class Comment(Base):
+    __tablename__ = 'comments'
+    id = Column(Integer, primary_key=True)
+    text = Column(Text)
+    post_id = Column(Integer, ForeignKey('posts.id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
+    post = relationship("Post", back_populates="comments")
+    user = relationship("User", back_populates="comments")
+
+    def __repr__(self):
+        return f"<Comment(text='{self.text}')>"
+
+engine = create_engine('sqlite:///:memory:') # Using in-memory SQLite for example
+Base.metadata.create_all(engine)
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Create some data
+user1 = User(username='Alice')
+user2 = User(username='Bob')
+post1 = Post(title='My First Post', content='This is the content of my first post.')
+comment1 = Comment(text='Great post!', post=post1, user=user1)
+comment2 = Comment(text='I agree!', post=post1, user=user2)
+post1.comments.extend([comment1, comment2])
+
+session.add_all([user1, user2, post1, comment1, comment2])
+session.commit()
+```
+
+**Scenario 1: Displaying a List of Posts with Comment Counts**
+
+If you need to display a list of posts with the number of comments for each post, lazy loading can lead to the N+1 problem.
+
+```py
+posts = session.query(Post).all()
+for post in posts:
+    print(f"Post: {post.title}, Comment Count: {len(post.comments)}") # N+1 problem here
+```
+
+In this case, each time you access post.comments, a new query is executed to fetch the comments for that post. To optimize this, you can use eager loading with joinedload:
+
+```py
+from sqlalchemy.orm import joinedload
+
+posts = session.query(Post).options(joinedload(Post.comments)).all()
+for post in posts:
+    print(f"Post: {post.title}, Comment Count: {len(post.comments)}") # No N+1 problem
+```
+
+**Scenario 2: Displaying a Single Post with Comments and Usernames**
+
+If you need to display a single post with its comments and the usernames of the users who wrote the comments, you can use nested eager loading:
+
+```py
+from sqlalchemy.orm import joinedload
+
+post = session.query(Post).options(
+    joinedload(Post.comments).joinedload(Comment.user)
+).filter_by(title='My First Post').first()
+
+print(f"Post: {post.title}")
+for comment in post.comments:
+    print(f"- {comment.text} (by {comment.user.username})")
+```
+
+In this example, joinedload(Post.comments).joinedload(Comment.user) tells SQLAlchemy to eagerly load the comments for the post and then eagerly load the users for each comment. This avoids the N+1 problem for both relationships.
 
 #### <a name="chapter14part6"></a>Chapter 14 - Part 6: Practical Exercise: Building a Data-Driven Application with SQLAlchemy and PostgreSQL
 
+Building a Data-Driven Application with SQLAlchemy and PostgreSQL involves integrating the SQLAlchemy ORM with a PostgreSQL database to create a functional application. This lesson will guide you through the process of setting up a PostgreSQL database, defining models using SQLAlchemy, performing CRUD (Create, Read, Update, Delete) operations, and structuring your application for maintainability.
+
 #### <a name="chapter14part6.1"></a>Chapter 14 - Part 6.1: Setting Up PostgreSQL
+
+Before diving into SQLAlchemy, you need a PostgreSQL database.
+
+**Installation and Configuration**
+
+- **Installation**:
+  - **Linux (Debian/Ubuntu)**: sudo apt-get update && sudo apt-get install postgresql postgresql-contrib
+  - **macOS (using Homebrew)**: brew install postgresql
+  - **Windows**: Download the installer from the official PostgreSQL website (https://www.postgresql.org/download/windows/).
+ 
+- **Starting the PostgreSQL Service**:
+  - **Linux**: sudo systemctl start postgresql
+  - **macOS**: brew services start postgresql
+  - **Windows**: The service should start automatically after installation. If not, you can start it from the Services application.
+ 
+- **Accessing the PostgreSQL Shell (psql)**:
+  - Open a terminal and type psql -U postgres. You might need to switch to the postgres user first (sudo su postgres on Linux).
+ 
+- **Creating a Database and User**:
+
+```sql
+CREATE DATABASE my_app_db;
+CREATE USER my_app_user WITH PASSWORD 'my_app_password';
+GRANT ALL PRIVILEGES ON DATABASE my_app_db TO my_app_user;
+```
+
+This SQL script creates a database named my_app_db and a user my_app_user with a password. It then grants all privileges on the database to the user.
+
+**Connecting with SQLAlchemy**
+
+To connect SQLAlchemy to your PostgreSQL database, you'll need the psycopg2 driver.
+
+```pip install psycopg2-binary```
+
+Here's how you can establish a connection:
+
+```py
+from sqlalchemy import create_engine
+
+# Replace with your actual database credentials
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+
+engine = create_engine(DATABASE_URL)
+
+# Test the connection
+try:
+    connection = engine.connect()
+    print("Connection successful!")
+    connection.close()
+except Exception as e:
+    print(f"Connection failed: {e}")
+```
+
+This code snippet creates an engine that SQLAlchemy uses to communicate with the database. The DATABASE_URL string specifies the database dialect (PostgreSQL), username, password, host, and database name.
 
 #### <a name="chapter14part6.2"></a>Chapter 14 - Part 6.2: Defining Models with SQLAlchemy
 
+SQLAlchemy models represent database tables as Python classes.
+
+**Basic Model Definition**
+
+Let's define a simple User model:
+
+```py
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+```
+
+- declarative_base(): Creates a base class for declarative models.
+- __tablename__: Specifies the table name in the database.
+- Column: Represents a column in the table. The first argument is the data type (e.g., Integer, String), and primary_key=True designates the primary key column. unique=True enforces uniqueness for the email column.
+- __repr__: Provides a string representation of the object, useful for debugging.
+
+**Creating Tables**
+
+To create the tables in the database, use the following:
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+Base.metadata.create_all(engine) creates all tables defined as SQLAlchemy models in the database.
+
+**Relationships**
+
+SQLAlchemy supports defining relationships between tables. Let's add an Address model and create a one-to-many relationship with the User model.
+
+```py
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+- ForeignKey: Defines a foreign key relationship to the users table.
+- relationship: Creates a relationship between the User and Address models. back_populates creates a bidirectional relationship.
+
 #### <a name="chapter14part6.3"></a>Chapter 14 - Part 6.3: Performing CRUD Operations
 
+CRUD operations are fundamental to any data-driven application.
+
+**Creating Records**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Example usage
+db = SessionLocal()
+
+new_user = User(name="Alice", email="alice@example.com")
+db.add(new_user)
+db.commit()
+db.refresh(new_user) # Refresh to get the id
+
+new_address = Address(email_address="alice@example.com", user_id=new_user.id)
+db.add(new_address)
+db.commit()
+
+print(f"Created user with id: {new_user.id}")
+```
+
+This code creates a new User and an associated Address and adds them to the database. db.commit() persists the changes. db.refresh(new_user) fetches the newly generated id from the database.
+
+**Reading Records**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Example usage
+db = SessionLocal()
+
+# Read a user
+user = db.query(User).filter(User.email == "alice@example.com").first()
+if user:
+    print(f"Found user: {user}")
+    for address in user.addresses:
+        print(f"  Address: {address}")
+else:
+    print("User not found.")
+```
+
+This code retrieves a User from the database based on their email address and prints their information, including associated addresses.
+
+**Updating Records**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Example usage
+db = SessionLocal()
+
+# Update a user
+user = db.query(User).filter(User.email == "alice@example.com").first()
+if user:
+    user.name = "Alice Smith"
+    db.commit()
+    print(f"Updated user: {user}")
+else:
+    print("User not found.")
+```
+
+This code updates the name of an existing User in the database.
+
+**Deleting Records**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Example usage
+db = SessionLocal()
+
+# Delete a user
+user = db.query(User).filter(User.email == "alice@example.com").first()
+if user:
+    db.delete(user)
+    db.commit()
+    print("User deleted.")
+else:
+    print("User not found.")
+```
+
+This code deletes a User from the database.
+
 #### <a name="chapter14part6.4"></a>Chapter 14 - Part 6.4: Structuring Your Application
+
+A well-structured application is easier to maintain and scale.
+
+**Modular Design**
+
+Separate your application into modules:
+
+- models.py: Contains SQLAlchemy model definitions.
+- database.py: Contains database connection and session management logic.
+- crud.py: Contains functions for performing CRUD operations.
+- main.py: Contains the application entry point.
+
+**Example Structure**
+
+```
+my_app/
+├── models.py
+├── database.py
+├── crud.py
+└── main.py
+```
+
+**models.py**
+
+```py
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+```
+
+**database.py**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+**crud.py**
+
+```py
+from sqlalchemy.orm import Session
+from . import models
+
+def get_user(db: Session, user_id: int):
+    return db.query(models.User).filter(models.User.id == user_id).first()
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
+def create_user(db: Session, user: dict):
+    db_user = models.User(name=user['name'], email=user['email'])
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+```
+
+**main.py**
+
+```py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from database import get_db
+from crud import create_user, get_user_by_email
+from sqlalchemy.orm import Session
+
+DATABASE_URL = "postgresql://my_app_user:my_app_password@localhost/my_app_db"
+engine = create_engine(DATABASE_URL)
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    email = Column(String, unique=True)
+    addresses = relationship("Address", back_populates="user")
+
+    def __repr__(self):
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="addresses")
+
+    def __repr__(self):
+        return f"<Address(email_address='{self.email_address}')>"
+
+Base.metadata.create_all(engine)
+
+# Create a session
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Example usage
+db: Session = next(get_db())
+
+user_data = {'name': 'Bob', 'email': 'bob@example.com'}
+new_user = create_user(db, user_data)
+print(f"Created user: {new_user}")
+
+retrieved_user = get_user_by_email(db, 'bob@example.com')
+print(f"Retrieved user: {retrieved_user}")
+```
+
+This structure promotes separation of concerns and makes your application more organized.
 
 ## <a name="chapter15"></a>Chapter 15: Decorators and Metaprogramming
 
