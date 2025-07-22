@@ -17613,27 +17613,920 @@ The AbstractClassMeta metaclass collects all abstract methods from the base clas
 
 #### <a name="chapter15part3"></a>Chapter 15 - Part 3: Dynamic Code Generation: Using `exec` and `eval` Safely
 
+Dynamic code generation, the ability to construct and execute code at runtime, offers immense flexibility in Python. While powerful, it also presents significant security risks if not handled carefully. This lesson explores the use of exec and eval for dynamic code generation, emphasizing secure coding practices to mitigate potential vulnerabilities. We'll delve into the functionalities of these functions, their potential dangers, and strategies for safe implementation.
+
 #### <a name="chapter15part3.1"></a>Chapter 15 - Part 3.1: Understanding exec and eval
+
+exec and eval are built-in Python functions that allow you to execute code dynamically. However, they differ in their scope and purpose.
+
+**exec**
+
+The exec function executes a string of Python code. It can execute multi-line code, including statements, loops, and function definitions. exec modifies the current scope or a specified scope.
+
+```py
+# Example of exec executing a simple assignment
+code_string = "x = 10"
+exec(code_string)
+print(x)  # Output: 10
+
+# Example of exec executing a function definition
+code_string = """
+def my_function():
+    print("Hello from dynamic function!")
+"""
+exec(code_string)
+my_function()  # Output: Hello from dynamic function!
+
+# Example of exec with a custom namespace
+global_namespace = {}
+local_namespace = {}
+code_string = "y = 20"
+exec(code_string, global_namespace, local_namespace)
+print(local_namespace['y']) # Output: 20
+```
+
+In the first example, exec executes the string "x = 10", which assigns the value 10 to the variable x in the current scope. Consequently, print(x) outputs 10. The second example demonstrates defining a function dynamically using exec. The function my_function is created and then called. The third example shows how to control the namespaces where the code is executed. By passing global_namespace and local_namespace dictionaries to exec, we can isolate the execution environment.
+
+**eval**
+
+The eval function evaluates a single Python expression. It returns the result of the expression. eval is generally used for evaluating simple expressions, not for executing complex code blocks.
+
+```py
+# Example of eval evaluating a simple expression
+expression_string = "2 + 3"
+result = eval(expression_string)
+print(result)  # Output: 5
+
+# Example of eval evaluating an expression with variables
+x = 5
+expression_string = "x * 2"
+result = eval(expression_string)
+print(result)  # Output: 10
+
+# Example of eval with custom namespaces
+x = 5
+global_namespace = {'x': 10}
+local_namespace = {}
+expression_string = "x * 2"
+result = eval(expression_string, global_namespace, local_namespace)
+print(result) # Output: 20
+```
+
+In the first example, eval evaluates the expression "2 + 3" and returns the result, 5. The second example shows eval using a variable x defined in the current scope. The third example demonstrates how to control the namespaces where the expression is evaluated. By passing global_namespace and local_namespace dictionaries to eval, we can specify the context in which the expression is evaluated.
+
+**Key Differences**
+
+
+|Feature	|exec	|eval|
+| :--: | :--: | :--: |
+|Purpose	|Executes a block of code	|Evaluates a single expression|
+|Return Value	|None	|Result of the expression|
+|Complexity	|Can handle multi-line code and statements	|Limited to single expressions|
+|Scope	|Modifies the current or specified scope	|Operates within the current or specified scope|
 
 #### <a name="chapter15part3.2"></a>Chapter 15 - Part 3.2: Security Risks
 
+The primary security risk associated with exec and eval is the potential for arbitrary code execution. If the input to these functions comes from an untrusted source (e.g., user input, network data), an attacker could inject malicious code that compromises the system.
+
+**Arbitrary Code Execution**
+
+If you allow untrusted input to be executed by exec or eval, an attacker can run any code they want on your system.
+
+```py
+# Vulnerable code:
+user_input = input("Enter a Python expression: ")
+result = eval(user_input)
+print(result)
+```
+
+In this example, if a user enters __import__('os').system('rm -rf /'), the eval function will execute this command, potentially deleting all files on the system (on a Unix-like system).
+
+**Data Exposure**
+
+Malicious code executed via exec or eval can access sensitive data stored in variables or files.
+
+```py
+# Vulnerable code:
+secret_key = "ThisIsASecretKey"
+user_input = input("Enter a Python expression: ")
+result = eval(user_input)
+print(result)
+```
+
+An attacker could enter secret_key as the input, and eval would return the value of secret_key, exposing sensitive information.
+
+**Denial of Service**
+
+Malicious code can also cause a denial of service by consuming excessive resources or crashing the application.
+
+```py
+# Vulnerable code:
+user_input = input("Enter a Python expression: ")
+result = eval(user_input)
+print(result)
+```
+
+An attacker could enter an infinite loop like while True: pass, which would consume CPU resources and potentially crash the application.
+
 #### <a name="chapter15part3.3"></a>Chapter 15 - Part 3.3: Safe Usage Strategies
+
+To mitigate the security risks associated with exec and eval, it's crucial to implement robust security measures.
+
+**Input Validation and Sanitization**
+
+Always validate and sanitize any input before passing it to exec or eval. This involves checking the input against a whitelist of allowed characters, keywords, or patterns.
+
+```py
+import re
+
+def safe_eval(expression):
+    # Whitelist of allowed characters and operators
+    allowed_chars = r"^[0-9+\-*/()\s]+$"
+    if not re.match(allowed_chars, expression):
+        raise ValueError("Invalid characters in expression")
+    return eval(expression)
+
+# Example usage
+user_input = input("Enter a simple arithmetic expression: ")
+try:
+    result = safe_eval(user_input)
+    print(result)
+except ValueError as e:
+    print(f"Error: {e}")
+except Exception as e:
+    print("An unexpected error occurred.")
+```
+
+This example uses a regular expression to ensure that the input contains only digits, basic arithmetic operators, parentheses, and whitespace. Any other characters will raise a ValueError.
+
+**Restricted Execution Environment**
+
+Execute exec and eval in a restricted environment with limited access to resources and sensitive data. This can be achieved by providing custom global and local namespaces.
+
+```py
+def safe_eval(expression):
+    # Create a safe namespace with only allowed functions and variables
+    safe_globals = {'__builtins__': {'abs': abs, 'round': round, 'float': float, 'int': int}}  # Only allow abs and round
+    safe_locals = {}
+    return eval(expression, safe_globals, safe_locals)
+
+# Example usage
+user_input = input("Enter an expression: ")
+try:
+    result = safe_eval(user_input)
+    print(result)
+except Exception as e:
+    print(f"Error: {e}")
+```
+
+In this example, safe_globals is a dictionary that only includes the abs, round, float, and int functions from the __builtins__ module. This prevents the executed code from accessing other potentially dangerous functions.
+
+**Abstract Syntax Trees (AST)**
+
+Use the ast module to parse and analyze the code before execution. This allows you to identify and reject potentially dangerous constructs.
+
+```py
+import ast
+
+def safe_eval(expression):
+    try:
+        # Parse the expression into an AST
+        tree = ast.parse(expression, mode='eval')
+
+        # Define a list of allowed node types
+        allowed_nodes = (ast.Expression, ast.Load, ast.Num, ast.BinOp, ast.UnaryOp, ast.Name,
+                         ast.Add, ast.Sub, ast.Mult, ast.Div, ast.USub, ast.Pow)
+
+        # Check if all nodes in the AST are allowed
+        for node in ast.walk(tree):
+            if not isinstance(node, allowed_nodes):
+                raise ValueError("Disallowed construct in expression")
+
+        # If all checks pass, evaluate the expression
+        return eval(compile(tree, '<string>', 'eval'), {'__builtins__': None}, {})
+
+    except SyntaxError:
+        raise ValueError("Invalid syntax")
+    except Exception as e:
+        raise ValueError(f"Unsafe expression: {e}")
+
+# Example usage
+user_input = input("Enter a mathematical expression: ")
+try:
+    result = safe_eval(user_input)
+    print("Result:", result)
+except ValueError as e:
+    print("Error:", e)
+```
+
+This example parses the input expression into an Abstract Syntax Tree (AST) and checks if the tree contains any disallowed node types. Only simple mathematical operations and numbers are allowed. This approach provides a more robust way to prevent malicious code execution.
+
+**Sandboxing**
+
+Use sandboxing techniques to isolate the execution of dynamic code in a restricted environment. This can involve using separate processes or virtual machines with limited privileges.
+
+While implementing full sandboxing is beyond the scope of this lesson, it's important to be aware of tools like firejail or containerization technologies like Docker that can provide a secure execution environment.
 
 #### <a name="chapter15part3.4"></a>Chapter 15 - Part 3.4: Practical Examples
 
+**Configuration Files**
+
+Dynamic code generation can be used to load configuration files that contain Python code. However, this can be risky if the configuration files are not trusted.
+
+**Unsafe Example**:
+
+```py
+# Unsafe: Directly executing code from a config file
+with open("config.py", "r") as f:
+    config_code = f.read()
+    exec(config_code)
+
+print(api_key) # Assuming api_key is defined in config.py
+```
+
+**Safer Example**
+
+```py
+# Safer: Using a data format like JSON or YAML
+import json
+
+with open("config.json", "r") as f:
+    config = json.load(f)
+
+print(config['api_key'])
+```
+
+The safer example uses JSON to store the configuration data. JSON is a data serialization format, not a programming language, so it cannot execute arbitrary code.
+
+**Dynamic Plugin Loading**
+
+Dynamic code generation can be used to load plugins at runtime. However, this can be risky if the plugins are not trusted.
+
+**Unsafe Example**:
+
+```py
+# Unsafe: Directly importing and using a plugin
+plugin_name = input("Enter plugin name: ")
+module = __import__(plugin_name)
+module.run()
+```
+
+**Safer Example**:
+
+```py
+# Safer: Using a plugin system with a defined interface
+import importlib
+
+def load_plugin(plugin_name):
+    try:
+        module = importlib.import_module(f"plugins.{plugin_name}")
+        if hasattr(module, 'Plugin') and callable(getattr(module, 'Plugin')):
+            plugin_class = getattr(module, 'Plugin')
+            plugin_instance = plugin_class()
+            return plugin_instance
+        else:
+            raise ValueError("Plugin does not implement the required interface.")
+    except ImportError:
+        raise ValueError("Plugin not found.")
+    except Exception as e:
+        raise ValueError(f"Error loading plugin: {e}")
+
+# Example usage
+plugin_name = input("Enter plugin name: ")
+try:
+    plugin = load_plugin(plugin_name)
+    plugin.run()
+except ValueError as e:
+    print(f"Error: {e}")
+```
+
+This safer example uses a defined interface for plugins. The load_plugin function checks if the plugin module has a Plugin class and if it implements the required methods. This helps to prevent malicious code from being executed.
+
 #### <a name="chapter15part4"></a>Chapter 15 - Part 4: Introspection and Reflection: Examining Objects at Runtime
+
+Introspection and reflection are powerful capabilities in Python that allow you to examine and modify the structure and behavior of objects at runtime. This is particularly useful for building flexible and dynamic systems, creating generic code, and implementing advanced features like object serialization and automated testing. Understanding these concepts is crucial for mastering metaprogramming techniques and building more sophisticated Python applications.
 
 #### <a name="chapter15part4.1"></a>Chapter 15 - Part 4.1: Understanding Introspection
 
+Introspection refers to the ability of a program to examine the type or properties of an object at runtime. Python provides several built-in functions and attributes that facilitate introspection.
+
+**type()**
+
+The type() function returns the type of an object. This is the most basic form of introspection.
+
+```py
+x = 5
+print(type(x))  # Output: <class 'int'>
+
+s = "hello"
+print(type(s))  # Output: <class 'str'>
+
+def my_function():
+    pass
+
+print(type(my_function))  # Output: <class 'function'>
+
+class MyClass:
+    pass
+
+obj = MyClass()
+print(type(obj))  # Output: <class '__main__.MyClass'>
+```
+
+**dir()**
+
+The dir() function returns a list of valid attributes and methods of an object. Without arguments, it returns the names in the current local scope.
+
+```py
+x = [1, 2, 3]
+print(dir(x))
+# Output: ['__add__', '__class__', ..., 'append', 'clear', 'copy', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        print(f"Hello, my name is {self.name}")
+
+p = Person("Alice", 30)
+print(dir(p))
+# Output: ['__class__', '__delattr__', ..., 'age', 'greet', 'name', '__weakref__']
+```
+
+**id()**
+
+The id() function returns the unique identity of an object, which is an integer guaranteed to be unique and constant for this object during its lifetime.
+
+```py
+x = 10
+y = 10
+print(id(x))
+print(id(y)) # Might be the same, especially for small integers due to interning
+
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(id(a))
+print(id(b)) # Will be different, as lists are mutable and not interned
+```
+
+**isinstance() and issubclass()**
+
+isinstance() checks if an object is an instance of a class or a tuple of classes. issubclass() checks if a class is a subclass of another class or a tuple of classes.
+
+```py
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+dog = Dog()
+
+print(isinstance(dog, Dog))    # Output: True
+print(isinstance(dog, Animal)) # Output: True
+print(isinstance(dog, int))    # Output: False
+
+print(issubclass(Dog, Animal)) # Output: True
+print(issubclass(Animal, Dog)) # Output: False
+```
+
+**hasattr(), getattr(), and setattr()**
+
+These functions allow you to check, get, and set attributes of an object by name (as strings).
+
+```py
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p = Person("Bob", 25)
+
+print(hasattr(p, 'name'))  # Output: True
+print(getattr(p, 'name'))  # Output: Bob
+
+setattr(p, 'age', 26)
+print(p.age)            # Output: 26
+
+setattr(p, 'city', 'New York')
+print(p.city)            # Output: New York
+```
+
+**callable()**
+
+The callable() function checks if an object is callable (i.e., can be called like a function).
+
+```py
+def my_function():
+    pass
+
+class MyClass:
+    def __call__(self):
+        print("Instance is being called")
+
+obj = MyClass()
+
+print(callable(my_function)) # Output: True
+print(callable(obj))         # Output: True, because of __call__
+print(callable(5))           # Output: False
+```
+
 #### <a name="chapter15part4.2"></a>Chapter 15 - Part 4.2: Understanding Reflection
+
+Reflection goes beyond simply examining an object; it involves the ability to modify the structure and behavior of objects at runtime. Python's dynamic nature makes reflection possible.
+
+**Modifying Classes Dynamically**
+
+You can add or modify methods and attributes of a class after it has been defined
+
+```py
+class MyClass:
+    def __init__(self, x):
+        self.x = x
+
+def new_method(self):
+    return self.x * 2
+
+MyClass.new_method = new_method
+
+obj = MyClass(5)
+print(obj.new_method())  # Output: 10
+```
+
+**Creating Classes Dynamically**
+
+You can create classes programmatically using the type function (yes, the same function used for introspection!). The type function, when called with three arguments, acts as a class constructor.
+
+```py
+# type(name, bases, attrs)
+MyDynamicClass = type('MyDynamicClass', (), {'attribute': 'value'})
+
+obj = MyDynamicClass()
+print(obj.attribute)  # Output: value
+
+# Creating a class with a method
+def my_method(self):
+    return "Hello from dynamic method!"
+
+MySecondDynamicClass = type('MySecondDynamicClass', (), {'method': my_method})
+
+obj2 = MySecondDynamicClass()
+print(obj2.method()) # Output: Hello from dynamic method!
+```
+
+**Using exec() and eval() (with caution)**
+
+exec() executes a string as Python code, and eval() evaluates a string as a Python expression. These functions provide powerful reflection capabilities but should be used with extreme caution due to security risks (e.g., code injection).
+
+```py
+# Example of exec
+code = """
+x = 5
+y = 10
+print(x + y)
+"""
+exec(code)  # Output: 15
+
+# Example of eval
+expression = "2 + 3 * 4"
+result = eval(expression)
+print(result)  # Output: 14
+```
+
+**Security Warning**: Never use exec() or eval() with untrusted input, as it can lead to arbitrary code execution.
+
+**Using inspect Module**
+
+The inspect module provides useful functions for gathering information about objects, such as their source code, arguments, and more.
+
+```py
+import inspect
+
+def my_function(a, b=1, *args, **kwargs):
+    """This is a docstring for my_function."""
+    pass
+
+print(inspect.getsource(my_function))
+# Output:
+# def my_function(a, b=1, *args, **kwargs):
+#     """This is a docstring for my_function."""
+#     pass
+
+print(inspect.signature(my_function)) # Output: (a, b=1, *args, **kwargs)
+print(inspect.getdoc(my_function))    # Output: This is a docstring for my_function.
+```
 
 #### <a name="chapter15part4.3"></a>Chapter 15 - Part 4.3: Practical Examples and Demonstrations
 
+**Example 1: Dynamic Attribute Validation**
+
+Let's say you want to create a class where attribute values must adhere to certain types. You can use reflection to enforce this dynamically.
+
+```py
+class ValidatedClass:
+    def __setattr__(self, name, value):
+        if name in self.__class__.__annotations__:
+            expected_type = self.__class__.__annotations__[name]
+            if not isinstance(value, expected_type):
+                raise TypeError(f"Attribute '{name}' must be of type {expected_type}")
+        super().__setattr__(name, value)
+
+class MyData(ValidatedClass):
+    name: str
+    age: int
+
+data = MyData()
+data.name = "Alice"  # OK
+data.age = 30       # OK
+
+try:
+    data.age = "thirty"  # Raises TypeError
+except TypeError as e:
+    print(e) # Output: Attribute 'age' must be of type <class 'int'>
+```
+
+In this example, __setattr__ is overridden to check the type annotations defined in the class. This allows for dynamic validation of attribute types.
+
+**Example 2: Generic Object Serialization**
+
+You can use reflection to create a generic object serializer that can convert any object into a dictionary representation.
+
+```py
+def serialize_object(obj):
+    if isinstance(obj, (int, str, float, bool, type(None))):
+        return obj
+    elif isinstance(obj, list):
+        return [serialize_object(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {key: serialize_object(value) for key, value in obj.items()}
+    else:
+        return {attr: serialize_object(getattr(obj, attr)) for attr in dir(obj) if not attr.startswith('__') and not callable(getattr(obj, attr))}
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+point = Point(10, 20)
+serialized_point = serialize_object(point)
+print(serialized_point) # Output: {'x': 10, 'y': 20}
+```
+
+This function recursively serializes the object's attributes into a dictionary, handling basic data types, lists, and dictionaries.
+
+**Example 3: Dynamic Method Dispatch**
+
+Reflection can be used to implement dynamic method dispatch based on the object's type or attributes.
+
+```py
+class Handler:
+    def handle(self, obj):
+        method_name = f"handle_{obj.__class__.__name__.lower()}"
+        handler_method = getattr(self, method_name, self.default_handler)
+        return handler_method(obj)
+
+    def handle_int(self, obj):
+        return f"Handling integer: {obj}"
+
+    def handle_str(self, obj):
+        return f"Handling string: {obj}"
+
+    def default_handler(self, obj):
+        return f"Unknown type: {type(obj)}"
+
+handler = Handler()
+print(handler.handle(10))       # Output: Handling integer: 10
+print(handler.handle("hello"))  # Output: Handling string: hello
+print(handler.handle([1, 2]))   # Output: Unknown type: <class 'list'>
+```
+
+This example demonstrates how to dynamically call different methods based on the type of the input object.
+
+**Instanciate a class dinamic based in his name**
+
+```py
+class MyClass:
+    def __init__(self, name):
+        self.name = name
+
+    def display_name(self):
+        print(f"Hello, my name is {self.name}")
+
+class AnotherClass:
+    def __init__(self, value):
+        self.value = value
+
+    def show_value(self):
+        print(f"The value is: {self.value}")
+
+def create_instance(class_name, *args, **kwargs):
+    """
+    Dynamically creates an instance of a class given its name as a string.
+
+    Args:
+        class_name (str): The name of the class to instantiate.
+        *args: Positional arguments to pass to the class constructor.
+        **kwargs: Keyword arguments to pass to the class constructor.
+
+    Returns:
+        object: An instance of the specified class, or None if the class is not found.
+    """
+    try:
+        # Use globals() to access classes defined in the global scope
+        cls = globals()[class_name]
+        return cls(*args, **kwargs)
+    except KeyError:
+        print(f"Class '{class_name}' not found.")
+        return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+# Example usage:
+instance1 = create_instance("MyClass", "Alice")
+if instance1:
+    instance1.display_name()  # Output: Hello, my name is Alice
+
+instance2 = create_instance("AnotherClass", value=123)
+if instance2:
+    instance2.show_value()  # Output: The value is: 123
+
+instance3 = create_instance("NonExistentClass")  # Output: Class 'NonExistentClass' not found.
+# Output: Class 'NonExistentClass' not found.
+```
+
+- **globals()**: This built-in function returns a dictionary representing the current global symbol table. It includes all globally defined variables, functions, and classes in the current module. We use it to look up the class by its name (string).
+- **Error Handling**: The try...except block is crucial. It handles the KeyError that occurs if the class name is not found in the global scope, as well as any other potential exceptions during instantiation.
+- **Dynamic Instantiation**: cls(*args, **kwargs) unpacks the positional and keyword arguments and passes them to the class constructor, effectively creating a new instance.
+- **Factory Function**: The create_instance function acts as a simple factory. It takes the class name as input and returns an instance of that class.
+
+**Important Considerations**:
+
+- **Security**: Be extremely cautious when using reflection with user-provided input (e.g., class names from a configuration file or user interface). It can open security vulnerabilities if not handled carefully, allowing users to instantiate arbitrary classes and potentially execute malicious code. Input validation and sanitization are essential. Consider using a whitelist of allowed class names.
+- **Scope**: The globals() function only searches the global scope of the current module. If your classes are defined in other modules, you'll need to import those modules and access the classes through the module's namespace (e.g., import my_module; cls = get
+- **getattr()**: If you need to access attributes or methods of an object dynamically by name, the getattr(object, attribute_name) function is very useful.
+
 #### <a name="chapter15part5"></a>Chapter 15 - Part 5: Practical Exercise: Creating a Custom Validation Framework Using Decorators
+
+Decorators provide a powerful way to modify or enhance functions and classes in Python. This lesson delves into creating a custom validation framework using decorators, allowing you to enforce constraints on function arguments and return values in a clean and reusable manner. This approach promotes code readability, reduces redundancy, and centralizes validation logic, making your code more maintainable and robust.
 
 #### <a name="chapter15part5.1"></a>Chapter 15 - Part 5.1: Advanced Decorator Techniques for Validation
 
+**Parameterized Decorators**
+
+Parameterized decorators are decorators that accept arguments. This allows you to customize the behavior of the decorator based on specific validation rules.
+
+```py
+def validate_type(expected_type):
+    """
+    Parameterized decorator to validate the type of a function's return value.
+
+    Args:
+        expected_type: The expected type of the return value.
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            if not isinstance(result, expected_type):
+                raise TypeError(f"Return value must be of type {expected_type.__name__}, but got {type(result).__name__}")
+            return result
+        return wrapper
+    return decorator
+
+@validate_type(int)
+def add(x, y):
+    """
+    Adds two numbers and returns the result.
+    """
+    return x + y
+
+@validate_type(str)
+def greet(name):
+    """
+    Returns a greeting string.
+    """
+    return f"Hello, {name}!"
+
+print(add(5, 3))  # Output: 8
+print(greet("Alice")) # Output: Hello, Alice!
+
+try:
+    add(5, "3")
+except TypeError as e:
+    print(e) # Output: Return value must be of type <class 'int'>, but got <class 'str'>
+
+try:
+    greet(123)
+except TypeError as e:
+    print(e) # Output: Return value must be of type <class 'str'>, but got <class 'int'>
+```
+
+In this example, validate_type is a parameterized decorator. It takes expected_type as an argument and returns a decorator function. The decorator function then wraps the original function and checks if the return value is of the expected type. If not, it raises a TypeError.
+
+**Class Decorators**
+
+Class decorators can be used to modify or enhance classes. For validation, you can use class decorators to add validation methods or properties to a class.
+
+```py
+def validate_attributes(*attribute_validators):
+    """
+    Class decorator to add validation methods for class attributes.
+
+    Args:
+        *attribute_validators: A list of tuples, where each tuple contains the attribute name and a validation function.
+    """
+    def decorator(cls):
+        def validate(self):
+            errors = {}
+            for attr_name, validator in attribute_validators:
+                value = getattr(self, attr_name)
+                try:
+                    validator(value)
+                except ValueError as e:
+                    errors[attr_name] = str(e)
+            if errors:
+                raise ValueError(f"Validation errors: {errors}")
+
+        cls.validate = validate
+        return cls
+    return decorator
+
+def is_positive(value):
+    """
+    Validation function to check if a value is positive.
+    """
+    if value <= 0:
+        raise ValueError("Value must be positive")
+
+@validate_attributes(("age", is_positive), ("salary", is_positive))
+class Employee:
+    """
+    Represents an employee with age and salary attributes.
+    """
+    def __init__(self, age, salary):
+        self.age = age
+        self.salary = salary
+
+    def __repr__(self):
+        return f"Employee(age={self.age}, salary={self.salary})"
+
+# Valid employee
+employee1 = Employee(age=30, salary=50000)
+employee1.validate() # No error
+
+# Invalid employee
+employee2 = Employee(age=-5, salary=60000)
+try:
+    employee2.validate()
+except ValueError as e:
+    print(e) # Output: Validation errors: {'age': 'Value must be positive'}
+
+employee3 = Employee(age=35, salary=-1000)
+try:
+    employee3.validate()
+except ValueError as e:
+    print(e) # Output: Validation errors: {'salary': 'Value must be positive'}
+
+employee4 = Employee(age=-10, salary=-1000)
+try:
+    employee4.validate()
+except ValueError as e:
+    print(e) # Output: Validation errors: {'age': 'Value must be positive', 'salary': 'Value must be positive'}
+```
+
+In this example, validate_attributes is a class decorator that takes a list of attribute validators as arguments. It adds a validate method to the class, which iterates through the attribute validators and calls the corresponding validation function for each attribute. If any validation fails, it raises a ValueError with the validation errors.
+
 #### <a name="chapter15part5.2"></a>Chapter 15 - Part 5.2: Building a Custom Validation Framework
+
+**Defining Validation Rules**
+
+Start by defining a set of reusable validation rules. These rules can be simple functions that check specific conditions.
+
+```py
+def is_not_empty(value):
+    """
+    Validation function to check if a string is not empty.
+    """
+    if not value:
+        raise ValueError("Value cannot be empty")
+
+def is_valid_email(value):
+    """
+    Validation function to check if a string is a valid email address.
+    """
+    import re
+    email_regex = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if not re.match(email_regex, value):
+        raise ValueError("Value must be a valid email address")
+
+def is_positive_integer(value):
+    """
+    Validation function to check if a value is a positive integer.
+    """
+    if not isinstance(value, int) or value <= 0:
+        raise ValueError("Value must be a positive integer")
+
+def is_valid_length(min_length, max_length):
+    """
+    Parameterized validation function to check if a string has a valid length.
+    """
+    def validator(value):
+        if not min_length <= len(value) <= max_length:
+            raise ValueError(f"Value must be between {min_length} and {max_length} characters long")
+    return validator
+```
+
+These are just a few examples of validation rules. You can define any number of rules based on your specific needs.
+
+**Creating a Validation Decorator**
+
+Create a decorator that takes a dictionary of validation rules as an argument. The keys of the dictionary should be the names of the function arguments, and the values should be the validation rules to apply to those arguments.
+
+```py
+def validate_arguments(validation_rules):
+    """
+    Decorator to validate function arguments based on the given validation rules.
+
+    Args:
+        validation_rules: A dictionary where keys are argument names and values are validation functions.
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            # Get the function's signature
+            import inspect
+            signature = inspect.signature(func)
+            bound_arguments = signature.bind(*args, **kwargs)
+            bound_arguments.apply_defaults()
+
+            # Validate each argument
+            for arg_name, value in bound_arguments.arguments.items():
+                if arg_name in validation_rules:
+                    validator = validation_rules[arg_name]
+                    try:
+                        if isinstance(validator, list): # Handle multiple validators for one argument
+                            for v in validator:
+                                v(value)
+                        else:
+                            validator(value)
+                    except ValueError as e:
+                        raise ValueError(f"Invalid value for argument '{arg_name}': {e}")
+
+            # Call the original function if all validations pass
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+```
+
+This decorator uses the inspect module to get the function's signature and bind the arguments to the signature. This allows you to validate both positional and keyword arguments, and also handles default values.
+
+**Applying the Validation Decorator**
+
+Apply the validation decorator to your functions, specifying the validation rules for each argument.
+
+```py
+@validate_arguments({
+    "name": [is_not_empty, is_valid_length(3, 20)],
+    "email": is_valid_email,
+    "age": is_positive_integer
+})
+def create_user(name, email, age):
+    """
+    Creates a new user with the given name, email, and age.
+    """
+    return {"name": name, "email": email, "age": age}
+
+# Valid user
+user1 = create_user(name="Alice", email="alice@example.com", age=30)
+print(user1) # Output: {'name': 'Alice', 'email': 'alice@example.com', 'age': 30}
+
+# Invalid user (empty name)
+try:
+    user2 = create_user(name="", email="bob@example.com", age=25)
+except ValueError as e:
+    print(e) # Output: Invalid value for argument 'name': Value cannot be empty
+
+# Invalid user (invalid email)
+try:
+    user3 = create_user(name="Charlie", email="invalid-email", age=40)
+except ValueError as e:
+    print(e) # Output: Invalid value for argument 'email': Value must be a valid email address
+
+# Invalid user (invalid age)
+try:
+    user4 = create_user(name="David", email="david@example.com", age=-10)
+except ValueError as e:
+    print(e) # Output: Invalid value for argument 'age': Value must be a positive integer
+
+# Invalid user (name too short)
+try:
+    user5 = create_user(name="Al", email="eve@example.com", age=22)
+except ValueError as e:
+    print(e) # Output: Invalid value for argument 'name': Value must be between 3 and 20 characters long
+```
+
+This example demonstrates how to use the validate_arguments decorator to validate the arguments of the create_user function. The validation_rules dictionary specifies the validation rules for each argument.
 
 ## <a name="chapter16"></a>Chapter 16: Testing and Debugging
 
