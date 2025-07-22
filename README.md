@@ -110,6 +110,8 @@
     - [Chapter 6 - Part 1: The Object-Oriented Approach](#chapter6part1)
       - [Chapter 6 - Part 1.1: Object-Oriented Concepts and Terminology](#chapter6part1.1)
       - [Chapter 6 - Part 1.2: Type Hint](#chapter6part1.2)
+      - [Chapter 6 - Part 1.3: @dataclass decorator](#chapter6part1.3)
+      - [Chapter 6 - Part 1.4: Protected and Private Convention](#chapter6part1.4)
     - [Chapter 6 - Part 2: Custom Classes](#chapter6part2)
       - [Chapter 6 - Part 2.1: Attributes and Methods](#chapter6part2.1)
       - [Chapter 6 - Part 2.2: Inheritance and Polymorphism](#chapter6part2.2)
@@ -6881,6 +6883,173 @@ def greet(name: str) -> str:
 - **Better Code Completion and Suggestions**: IDEs can provide more accurate suggestions.
 - **Enhanced Maintainability**: Easier to refactor and maintain code with clear type information.
 
+#### <a name="chapter6part1.3"></a>Chapter 6 - Part 1.3: @dataclass decorator
+
+The @dataclass decorator in Python is used to automatically generate special methods in classes, such as __init__(), __repr__(), __eq__(), and more. It was introduced in Python 3.7 via the dataclasses module to reduce boilerplate code when creating classes that are primarily used to store data.
+
+**Key Features of @dataclass**
+
+- Automatic __init__ Method
+  - It automatically creates an __init__ method based on class fields.
+ 
+- Readable __repr__
+  - It generates a string representation of the object for easy debugging and logging.
+ 
+- Comparison Methods
+  - Automatically adds methods like __eq__, __lt__, etc., for comparisons.
+ 
+- Immutability (Optional)
+  - You can make a dataclass immutable with frozen=True.
+ 
+**Basic Example**
+
+```py
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int
+    y: int
+```
+
+This is functionally equivalent to:
+
+```py
+class Point:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return f"Point(x={self.x}, y={self.y})"
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+```
+
+**Advanced Options**
+
+- Default values:
+
+```py
+@dataclass
+class Point:
+    x: int = 0
+    y: int = 0
+```
+
+- Post-init logic:
+
+```py
+@dataclass
+class Point:
+    x: int
+    y: int
+
+    def __post_init__(self):
+        print(f"Created Point({self.x}, {self.y})")
+```
+
+- Frozen classes:
+
+```py
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+```
+
+#### <a name="chapter6part1.4"></a>Chapter 6 - Part 1.4: Protected and Private Convention
+
+**_single_leading_underscore: Protected by Convention**
+
+- Signals that a variable or method is internal.
+- It’s not enforced by Python.
+- Should be treated as “protected” (like in Java) — usable in subclasses but not meant for public use.
+
+**Example**:
+
+```py
+class Car:
+    def __init__(self):
+        self._speed = 100  # Protected attribute
+
+    def _increase_speed(self):
+        self._speed += 10
+```
+
+```py
+car = Car()
+print(car._speed)            # Allowed, but discouraged
+car._increase_speed()        # Works, but marked as internal
+```
+
+**__double_leading_underscore: Private (Name Mangling)**
+
+- Triggers name mangling → Python renames it to _ClassName__attribute.
+- Makes it harder to accidentally override or access from outside.
+- Emulates "private" behavior like in Java/C++.
+
+```py
+class BankAccount:
+    def __init__(self):
+        self.__balance = 1000  # Private attribute
+
+    def __secure_method(self):
+        print("Accessing sensitive info")
+```
+
+```py
+account = BankAccount()
+# print(account.__balance)         # ❌ AttributeError
+print(account._BankAccount__balance)    # ✅ Technically possible
+```
+
+**Pythonic Way: Forcing Getters and Setters**
+
+Here’s how to do it correctly and idiomatically in Python:
+
+```py
+class Person:
+    def __init__(self, name: str, age: int):
+        self.__name = name     # private attribute
+        self.__age = age       # private attribute
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        if isinstance(value, str) and value.strip():
+            self.__name = value
+        else:
+            raise ValueError("Name must be a non-empty string")
+
+    @property
+    def age(self) -> int:
+        return self.__age
+
+    @age.setter
+    def age(self, value: int):
+        if isinstance(value, int) and value >= 0:
+            self.__age = value
+        else:
+            raise ValueError("Age must be a non-negative integer")
+```
+
+```py
+p = Person("Alice", 30)
+
+print(p.name)   # calls getter
+p.name = "Bob"  # calls setter
+
+print(p.age)    # calls getter
+p.age = 35      # calls setter
+
+# p.__name = "Hacked"  ❌ This won’t change the actual __name attribute
+# print(p.__name)      ❌ AttributeError
+```
 
 #### <a name="chapter6part2.1"></a>Chapter 6 - Part 2.1: Attributes and Methods
 
