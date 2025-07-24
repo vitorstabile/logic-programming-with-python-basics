@@ -7397,6 +7397,75 @@ def radius(self, radius):
 
 The decorator for the setter may look strange at first sight. Every property that is created has a getter, setter, and deleter attribute, so once the radius property is created using @property, the radius.getter, radius.setter, and radius.deleter attributes become available. The radius.getter is set to the getter method by the @property decorator. The other two are set up by Python so that they do nothing (so the attribute cannot be written to or deleted), unless they are used as decorators, in which case they in effect replace themselves with the method they are used to decorate.
 
+**Another Example - Using Setter in the initialization of the object**
+
+```py
+import re
+
+
+class Person:
+    def __init__(self, name: str, age: int):
+        self.name = name  # Uses @name.setter — validation runs
+        self.age = age # Uses @age.setter — validation runs
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        if isinstance(value, str) and value.strip():
+            self.__name = value
+        else:
+            raise ValueError("Name must be a non-empty string")
+
+    @property
+    def age(self) -> int:
+        return self.__age
+
+    @age.setter
+    def age(self, value: int):
+        if isinstance(value, int) and value >= 0:
+            self.__age = value
+        else:
+            raise ValueError("Age must be a non-negative integer")
+
+
+class Employee(Person):
+    def __init__(self, name: str, age: int, email: str, salary: float):
+        super().__init__(name, age)
+        self.email = email  # Uses @email.setter — validation runs
+        self.salary = salary  # Uses @email.setter — validation runs
+
+    @property
+    def email(self) -> str:
+        return self.__email
+
+    @email.setter
+    def email(self, value: str):
+        pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if re.match(pattern, value):
+            self.__email = value
+        else:
+            raise ValueError("Invalid email format")
+
+    @property
+    def salary(self) -> float:
+        return self.__salary
+
+    @salary.setter
+    def salary(self, value: float):
+        if isinstance(value, (int, float)) and value >= 30000:
+            self.__salary = float(value)
+        else:
+            raise ValueError("Salary must be at least 30,000")
+
+
+e1 = Employee("Alice", -1, "alice@example.com", 50000) # Raises ValueError - Age must be a non-negative integer
+
+e2 = Employee("Alice", 28, "alice@example.com", 2) # Raises ValueError - Salary must be at least 30,000
+```
+
 #### <a name="chapter6part2.4"></a>Chapter 6 - Part 2.4: Creating Complete Fully Integrated Data Types
 
 Creating fully integrated data types in Python involves defining classes that encapsulate both data and functionality. This means not only defining attributes and methods but also implementing special methods to interact seamlessly with Python's built-in operations and data structures. Here’s a step-by-step guide to creating such a data type:
@@ -8804,8 +8873,6 @@ print("Directory:", os.path.dirname(new_path))
 
 The argparse module lets you add arguments to your Python script so users can pass input from the command line.
 
-## <a name="chapter11"></a>Chapter 11: Advanced Data Structures and Algorithms
-
 **Basic Example**
 
 Create a file called greet.py:
@@ -8889,6 +8956,8 @@ Try this:
 ```py
 python greet.py Eve --excited --repeat 2
 ```
+
+## <a name="chapter11"></a>Chapter 11: Advanced Data Structures and Algorithms
 
 #### <a name="chapter11part1"></a>Chapter 11 - Part 1: Understanding Time and Space Complexity
 
